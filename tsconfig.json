@@ -1,5 +1,22 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+    "compilerOptions": {
+        "paths": {
+            "@components/*": ["./src/components/*"],
+            "@layouts/*": ["./src/layouts/*"],
+            "@lib/*": ["./src/lib/*"],
+            "@pages/*": ["./src/pages/*"],
+            "@styles/*": ["./src/styles/*"],
+            "@typez/*": ["./src/types/*"]
+        },
+        "plugins": [
+            {
+                "name": "@astrojs/ts-plugin"
+            }
+        ],
+        "types": ["astro/client"],
+        "verbatimModuleSyntax": true
+    },
+    "extends": "astro/tsconfigs/strictest",
+    "include": [".astro/types.d.ts", "**/*"],
+    "exclude": ["dist"]
 }
