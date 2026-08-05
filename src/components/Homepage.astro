@@ -1,0 +1,28 @@
+---
+import Layout from '@layouts/Layout.astro'
+import LangSelector from '@components/LangSelector.astro'
+
+const { title } = Astro.props
+---
+
+<Layout>
+    <div class="header">
+        <h1 class="title">{title}</h1>
+    </div>
+
+    <LangSelector />
+</Layout>
+
+<style>
+    .header {
+        background-color: var(--color-ivory);
+        text-align: center;
+    }
+
+    .title {
+        color: var(--color-royal-blue);
+        font-weight: var(--font-weight-black);
+        font-size: var(--font-size-7);
+        padding-block: var(--space-9);
+    }
+</style>

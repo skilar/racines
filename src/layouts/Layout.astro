@@ -1,0 +1,16 @@
+---
+import '@styles/styles.css'
+
+import Head from './Head.astro'
+---
+
+<html lang={Astro.currentLocale}>
+    <head>
+        <meta charset="utf-8" />
+        <Head />
+    </head>
+
+    <body>
+        <slot />
+    </body>
+</html>

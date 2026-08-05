@@ -1,0 +1,28 @@
+---
+import { Font } from 'astro:assets'
+
+const { description, title = 'Racines', ...props } = Astro.props
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" />
+<meta name="viewport" content="width=device-width" />
+
+<Font cssVariable="--font-le-grand" preload />
+<Font cssVariable="--font-romain-du-roi" preload />
+
+<!-- Open Graph tags -->
+<meta property="og:title" content={title} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.example.com/" />
+<meta property="og:description" content={description} />
+<meta
+    property="og:image"
+    content="https://www.example.com/_astro/seo-banner.BZD7kegZ.webp"
+/>
+
+<meta property="og:image:alt" content="" />
