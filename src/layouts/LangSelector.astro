@@ -1,0 +1,23 @@
+---
+
+---
+
+<ul class="langs">
+    <li>
+        {Astro.currentLocale !== 'fr' ? <a href="/fr/">Fr</a> : 'Fr'}
+    </li>
+    <li>
+        {Astro.currentLocale !== 'en' ? <a href="/">En</a> : 'En'}
+    </li>
+</ul>
+
+<style>
+    .langs {
+        display: flex;
+        gap: var(--space-3);
+
+        a {
+            color: var(--color-royal-blue);
+        }
+    }
+</style>

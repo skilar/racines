@@ -1,28 +1,19 @@
 ---
-import Layout from '@layouts/Layout.astro'
-import LangSelector from '@components/LangSelector.astro'
+import { client } from '@lib/prismic'
 
-const { title } = Astro.props
+import Layout from '@layouts/Layout.astro'
+
+interface Props {
+    lang?: 'en-us' | 'fr-fr'
+}
+
+const { lang = 'en-us' } = Astro.props
+
+const page = await client.getSingle('homepage', { lang })
+console.log(page)
 ---
 
-<Layout>
-    <div class="header">
-        <h1 class="title">{title}</h1>
-    </div>
-
-    <LangSelector />
+<Layout lang={lang}>
+    <h2>{page.data.title}</h2>
+    <p>{page.data.meta_description}</p>
 </Layout>
-
-<style>
-    .header {
-        background-color: var(--color-ivory);
-        text-align: center;
-    }
-
-    .title {
-        color: var(--color-royal-blue);
-        font-weight: var(--font-weight-black);
-        font-size: var(--font-size-7);
-        padding-block: var(--space-9);
-    }
-</style>
