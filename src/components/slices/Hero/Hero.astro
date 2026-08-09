@@ -1,0 +1,20 @@
+---
+import Default from './Default.astro'
+import FullBleed from './FullBleed.astro'
+
+import type { HomepageDocument } from '@typez/prismic'
+
+interface Props {
+    slice: HomepageDocument['data']['slices'][number]
+}
+
+const { slice } = Astro.props
+---
+
+{
+    slice.variation === 'fullBleed' ? (
+        <FullBleed slice={slice} />
+    ) : (
+        <Default slice={slice} />
+    )
+}

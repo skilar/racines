@@ -1,0 +1,52 @@
+---
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+
+import type { HomepageDocument } from '@typez/prismic'
+
+interface Props {
+    slice: HomepageDocument['data']['slices'][number]
+}
+
+const { slice } = Astro.props
+---
+
+<div class="hero">
+    {
+        slice.primary.image.url && (
+            <img src={slice.primary.image.url} alt={slice.primary.image.alt} />
+        )
+    }
+
+    <div>
+        {slice.primary.title && <h2>{slice.primary.title}</h2>}
+        <PrismicRichText
+            class="description"
+            richText={slice.primary.description}
+        />
+    </div>
+</div>
+
+<style>
+    .hero {
+        display: grid;
+        gap: var(--space-5);
+        grid-template-columns: 20vw 50ch;
+    }
+
+    h2 {
+        font-family: var(--font-serif);
+        font-size: var(--font-size-5);
+        font-variation-settings: 'CNTR' 100;
+        font-weight: var(--font-weight-black);
+        margin-bottom: var(--space-3);
+    }
+
+    .description {
+        line-height: 1.4;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+</style>

@@ -55,17 +55,6 @@ type HomepageDocumentDataSlicesSlice = HeroSlice
  */
 interface HomepageDocumentData {
 	/**
-	 * Title field in *Homepage*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: homepage.title
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	title: prismic.KeyTextField;
-	
-	/**
 	 * Slice Zone field in *Homepage*
 	 *
 	 * - **Field Type**: Slice Zone
@@ -122,6 +111,17 @@ interface LayoutDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	title: prismic.KeyTextField;
+	
+	/**
+	 * Subtitle field in *Layout*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: layout.subtitle
+	 * - **Tab**: Header
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	subtitle: prismic.RichTextField;
 	
 	/**
 	 * Menu field in *Layout*
@@ -193,9 +193,53 @@ export interface HeroSliceDefaultPrimary {
 export type HeroSliceDefault = prismic.SharedSliceVariation<"default", Simplify<HeroSliceDefaultPrimary>, never>;
 
 /**
+ * Primary content in *Hero → Full Bleed → Primary*
+ */
+export interface HeroSliceFullBleedPrimary {
+	/**
+	 * Title field in *Hero → Full Bleed → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.fullBleed.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Description field in *Hero → Full Bleed → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.fullBleed.primary.description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Image field in *Hero → Full Bleed → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.fullBleed.primary.image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
+ * Full Bleed variation for Hero Slice
+ *
+ * - **API ID**: `fullBleed`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HeroSliceFullBleed = prismic.SharedSliceVariation<"fullBleed", Simplify<HeroSliceFullBleedPrimary>, never>;
+
+/**
  * Slice variation for *Hero*
  */
-type HeroSliceVariation = HeroSliceDefault
+type HeroSliceVariation = HeroSliceDefault | HeroSliceFullBleed
 
 /**
  * Hero Shared Slice
@@ -229,8 +273,10 @@ declare module "@prismicio/client" {
 			AllDocumentTypes,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
+			HeroSliceFullBleedPrimary,
 			HeroSliceVariation,
-			HeroSliceDefault
+			HeroSliceDefault,
+			HeroSliceFullBleed
 		}
 	}
 }

@@ -1,0 +1,15 @@
+---
+import { asHTML } from '@prismicio/client'
+
+import type { RichTextField } from '@prismicio/types'
+
+interface Props {
+    class?: string
+    richText: RichTextField
+}
+
+const { class: className, richText, ...rest } = Astro.props
+const htmlRichText = richText ? asHTML(richText) : null
+---
+
+{htmlRichText && <div class={className} set:html={htmlRichText} {...rest} />}
