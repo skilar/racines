@@ -1,15 +1,10 @@
 import { defineConfig, fontProviders } from 'astro/config'
-
 import sitemap from '@astrojs/sitemap'
+import netlify from '@astrojs/netlify'
 
 export default defineConfig({
-    site: 'https://www.agathegiraud.com',
+    adapter: netlify(),
     base: '/',
-    trailingSlash: 'always',
-    i18n: {
-        locales: ['en', 'fr'],
-        defaultLocale: 'en',
-    },
     fonts: [
         {
             cssVariable: '--font-fern-ornaments',
@@ -56,5 +51,11 @@ export default defineConfig({
             provider: fontProviders.local(),
         },
     ],
+    i18n: {
+        locales: ['en', 'fr'],
+        defaultLocale: 'en',
+    },
     integrations: [sitemap()],
+    site: 'https://www.agathegiraud.com',
+    trailingSlash: 'always',
 })
