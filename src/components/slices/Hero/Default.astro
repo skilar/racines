@@ -28,21 +28,45 @@ const { slice } = Astro.props
 
 <style>
     .hero {
+        border-top: 4px double var(--color-blue-10);
         display: grid;
         gap: var(--space-5);
-        grid-template-columns: 20vw 50ch;
+        padding-top: var(--space-4);
+
+        &:has(> div:has(+ div)) {
+            grid-template-columns: 20vw 50ch;
+        }
+
+        &:has(+ .hero) {
+            margin-bottom: var(--space-9);
+        }
     }
 
     h2 {
-        font-family: var(--font-serif);
+        color: var(--color-blue-10);
         font-size: var(--font-size-5);
-        font-variation-settings: 'CNTR' 100;
-        font-weight: var(--font-weight-black);
+        font-variation-settings: 'opsz' 6;
         margin-bottom: var(--space-3);
     }
 
     .description {
+        font-size: var(--font-size-4);
         line-height: 1.4;
+
+        h3 {
+            font-variation-settings: 'opsz' 6;
+            margin-bottom: var(--space-3);
+        }
+
+        p {
+            &:has(+ h3) {
+                margin-bottom: var(--space-7);
+            }
+
+            &:has(+ p) {
+                margin-bottom: var(--space-5);
+            }
+        }
     }
 
     img {

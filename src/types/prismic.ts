@@ -146,7 +146,7 @@ interface LayoutDocumentData {
  */
 export type LayoutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<LayoutDocumentData>, "layout", Lang>;
 
-type TempHomepageDocumentDataSlicesSlice = never
+type TempHomepageDocumentDataSlicesSlice = HeroSlice
 
 /**
  * Content for Temp Homepage documents

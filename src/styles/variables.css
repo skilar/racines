@@ -10,15 +10,8 @@
     --color-blue-10: oklch(0.3629 0.1167 261);
     --color-blue-11: oklch(0.2759 0.1167 261);
 
-    /* --color-lightest-grey: oklch(0.9314 0.0035 174.48);
-    --color-light-grey: oklch(0.8858 0.0035 174.47);
-    --color-medium-grey: oklch(0.6392 0.0103 171.61);
-    --color-dark-grey: oklch(0.5008 0.0081 174.11);
-    --color-pale-green: oklch(0.5299 0.0275 162.4); */
-
     /* Fonts */
     --font-headline: var(--font-bodoni);
-    --font-serif: var(--font-bodoni);
     --font-serif: var(--font-prociono);
 
     --font-weight-normal: 400;
@@ -57,5 +50,5 @@
     --space-8: calc(var(--baseSize) * pow(var(--scaleInt), 4));
     --space-9: calc(var(--baseSize) * pow(var(--scaleInt), 5));
 
-    --text-max-width: 65ch;
+    --text-max-width: 75ch;
 }

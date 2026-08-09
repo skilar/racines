@@ -3,7 +3,8 @@ import { client } from '@lib/prismic'
 
 import Layout from '@layouts/Layout.astro'
 import LangSelector from '@layouts/LangSelector.astro'
-import PrismicRichText from '@components/common/PrismicRichText.astro'
+import PrismicRichText from './common/PrismicRichText.astro'
+import Hero from './slices/Hero/Hero.astro'
 
 import type { Lang } from '@lib/constants'
 
@@ -23,32 +24,56 @@ const page = await client.getSingle('temp_homepage', { lang })
 >
     <div class="container">
         <header>
+            <div class="lang">
+                <LangSelector />
+            </div>
+
             <h1 class="title">{page.data.title}</h1>
             <PrismicRichText class="subtitle" richText={page.data.subtitle} />
-        </header>
 
-        <main>
             <div class="description">
                 <PrismicRichText richText={page.data.description} />
             </div>
+        </header>
 
-            <LangSelector />
+        <main id="main">
+            {
+                page.data.slices.map((slice) => {
+                    switch (slice.slice_type) {
+                        case 'hero':
+                            return <Hero slice={slice} />
+                        default:
+                            return null
+                    }
+                })
+            }
         </main>
     </div>
 </Layout>
 
 <style>
     .container {
+        --padding-block: calc(var(--space-9) * 2);
         align-items: center;
         display: flex;
         flex-direction: column;
-        height: 100dvh;
         justify-content: center;
         margin-inline: auto;
         max-width: var(--text-max-width);
-        padding-block: var(--space-9);
-        text-align: center;
+        min-height: 100dvh;
+        padding-block: var(--padding-block);
         width: 100%;
+    }
+
+    header {
+        --header-spacing: var(--space-8);
+        padding-bottom: var(--padding-block);
+        text-align: center;
+    }
+
+    .lang {
+        margin-bottom: var(--space-5);
+        text-align: center;
     }
 
     .title {
@@ -60,15 +85,10 @@ const page = await client.getSingle('temp_homepage', { lang })
         font-weight: var(--font-weight-bold);
         font-variation-settings: 'opsz' 10;
         letter-spacing: 2px;
-        margin-bottom: var(--space-8);
+        margin-bottom: var(--header-spacing);
         padding-bottom: var(--space-3);
         text-box-trim: trim-both;
         text-box-edge: cap alphabetic;
-    }
-
-    .description,
-    .subtitle {
-        font-variation-settings: 'opsz' 6;
     }
 
     .subtitle {
@@ -78,7 +98,7 @@ const page = await client.getSingle('temp_homepage', { lang })
         line-height: 1.2;
 
         p:has(+ p) {
-            margin-bottom: var(--space-8);
+            margin-bottom: var(--header-spacing);
         }
 
         strong {
@@ -87,19 +107,16 @@ const page = await client.getSingle('temp_homepage', { lang })
             font-family: var(--font-headline);
             font-size: var(--font-size-5);
             font-variant-caps: normal;
+            font-variation-settings: 'opsz' 6;
             font-weight: var(--font-weight-heavy);
             letter-spacing: 1px;
             margin-top: var(--space-1);
         }
     }
 
-    main {
-        margin-top: var(--space-9);
-    }
-
     .description {
         font-size: var(--font-size-3);
-        margin-bottom: var(--space-5);
+        margin-top: var(--header-spacing);
 
         p:has(+ p) {
             margin-bottom: var(--space-5);
