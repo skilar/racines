@@ -1,28 +1,47 @@
 ---
 import { Font } from 'astro:assets'
+import { getOgLangs } from '@lib/get-og-langs'
 
-const { description, title = 'Racines' } = Astro.props
+import type { LayoutProps } from '@typez/types'
+
+type Props = LayoutProps
+
+const {
+    description,
+    lang,
+    ogImage,
+    ogImageAlt,
+    title = 'Racines',
+} = Astro.props
+
+const BASE_URL = Astro.site?.toString() || 'http://www.agathegiraud.com/'
+const ogUrl = new URL(Astro.url.pathname, BASE_URL).toString()
+const { currentLang, otherLangs } = getOgLangs(lang)
 ---
 
-<title>{title}</title>
-<meta name="description" content={description} />
+<head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
 
-<link rel="sitemap" href="/sitemap-index.xml" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="icon" href="/favicon.ico" />
-<meta name="viewport" content="width=device-width" />
+    <!-- <link rel="sitemap" href="/sitemap-index.xml" /> -->
+    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+    <!-- <link rel="icon" href="/favicon.ico" /> -->
+    <meta name="viewport" content="width=device-width" />
 
-<Font cssVariable="--font-fern-ornaments" preload />
-<Font cssVariable="--font-bodoni" preload />
+    <Font cssVariable="--font-fern-ornaments" preload />
+    <Font cssVariable="--font-bodoni" preload />
 
-<!-- Open Graph tags -->
-<meta property="og:title" content={title} />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.example.com/" />
-<meta property="og:description" content={description} />
-<meta
-    property="og:image"
-    content="https://www.example.com/_astro/seo-banner.BZD7kegZ.webp"
-/>
-
-<meta property="og:image:alt" content="" />
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={ogUrl} />
+    <meta property="og:locale" content={currentLang} />
+    {
+        otherLangs.map((lang) => (
+            <meta property="og:locale:alternate" content={lang} />
+        ))
+    }
+    {description && <meta property="og:description" content={description} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
+</head>

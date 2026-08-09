@@ -1,13 +1,16 @@
 ---
 import Head from './Head.astro'
 import '@styles/styles.css'
+
+import type { LayoutProps } from '@typez/types'
+
+type Props = LayoutProps
+
+const props = Astro.props
 ---
 
 <html lang={Astro.currentLocale}>
-    <head>
-        <meta charset="utf-8" />
-        <Head />
-    </head>
+    <Head {...props} />
 
     <body>
         <slot />

@@ -4,16 +4,23 @@ import { client } from '@lib/prismic'
 import Layout from '@layouts/Layout.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 
+import type { Lang } from '@lib/constants'
+
 interface Props {
-    lang?: 'en-us' | 'fr-fr'
+    lang?: Lang
 }
 
 const { lang = 'en-us' } = Astro.props
 
 const page = await client.getSingle('temp_homepage', { lang })
+console.log('page', page)
 ---
 
-<Layout lang={lang}>
+<Layout
+    description={page.data.meta_description}
+    lang={lang}
+    title={page.data.meta_title}
+>
     <div class="container">
         <header>
             <h1 class="title">{page.data.title}</h1>
