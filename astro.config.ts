@@ -32,6 +32,24 @@ export default defineConfig({
             },
             provider: fontProviders.local(),
         },
+        {
+            cssVariable: '--font-prociono',
+            fallbacks: ['serif'],
+            name: 'Prociono',
+            options: {
+                variants: [
+                    {
+                        display: 'swap',
+                        src: [
+                            './src/assets/fonts/Prociono-Regular-webfont.woff',
+                        ],
+                        style: 'normal',
+                        weight: '400',
+                    },
+                ],
+            },
+            provider: fontProviders.local(),
+        },
     ],
     i18n: {
         locales: ['en', 'fr'],
