@@ -13,7 +13,6 @@ interface Props {
 const { lang = 'en-us' } = Astro.props
 
 const page = await client.getSingle('temp_homepage', { lang })
-console.log('page', page)
 ---
 
 <Layout
