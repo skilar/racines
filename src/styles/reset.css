@@ -82,6 +82,7 @@ audio,
 video {
     border: 0;
     box-sizing: border-box;
+    font-feature-settings: 'liga', 'ss01';
     font-size: 100%;
     margin: 0;
     padding: 0;

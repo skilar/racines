@@ -19,6 +19,7 @@
     /* Fonts */
     --font-headline: var(--font-le-grand);
     --font-serif: var(--font-romain-du-roi);
+    --font-ornaments: var(--font-fern-ornaments);
 
     --font-weight-normal: 400;
     --font-weight-medium: 500;

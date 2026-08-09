@@ -18,14 +18,16 @@ export default defineConfig({
                     {
                         display: 'swap',
                         src: [
-                            './src/assets/fonts/Le Grand Trial Italic VAR-VF.woff2',
+                            './src/assets/fonts/Le Grand Trial Italic VAR-VF-full.woff2',
                         ],
                         style: 'italic',
                         weight: '100 900',
                     },
                     {
                         display: 'swap',
-                        src: ['./src/assets/fonts/Le Grand Trial VAR-VF.woff2'],
+                        src: [
+                            './src/assets/fonts/Le Grand Trial VAR-VF-full.woff2',
+                        ],
                         style: 'normal',
                         weight: '100 900',
                     },
@@ -35,13 +37,14 @@ export default defineConfig({
         },
         {
             cssVariable: '--font-romain-du-roi',
+            fallbacks: ['serif'],
             name: 'Romain du Roi',
             options: {
                 variants: [
                     {
                         display: 'swap',
                         src: [
-                            './src/assets/fonts/Romain du Roi Trial Italic VAR-VF.woff2',
+                            './src/assets/fonts/Romain du Roi Trial Italic VAR-VF-full.woff2',
                         ],
                         stretch: '50% 100%',
                         style: 'italic',
@@ -51,12 +54,30 @@ export default defineConfig({
                     {
                         display: 'swap',
                         src: [
-                            './src/assets/fonts/Romain du Roi Trial VAR-VF.woff2',
+                            './src/assets/fonts/Romain du Roi Trial VAR-VF-full.woff2',
                         ],
                         stretch: '50% 100%',
                         style: 'normal',
                         variationSettings: "'CNTR' 0 100",
                         weight: '100 900',
+                    },
+                ],
+            },
+            provider: fontProviders.local(),
+        },
+        {
+            cssVariable: '--font-fern-ornaments',
+            fallbacks: ['serif'],
+            name: 'Fern Ornaments',
+            options: {
+                variants: [
+                    {
+                        display: 'swap',
+                        src: [
+                            './src/assets/fonts/FernOrnaments-Regular-Testing.woff2',
+                        ],
+                        style: 'normal',
+                        weight: '400',
                     },
                 ],
             },
