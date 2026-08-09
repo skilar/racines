@@ -1,0 +1,69 @@
+---
+import { client } from '@lib/prismic'
+
+import Layout from '@layouts/Layout.astro'
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+
+interface Props {
+    lang?: 'en-us' | 'fr-fr'
+}
+
+const { lang = 'en-us' } = Astro.props
+
+const page = await client.getSingle('temp_homepage', { lang })
+---
+
+<Layout lang={lang}>
+    <div class="container">
+        <header>
+            <h1 class="title">{page.data.title}</h1>
+            <PrismicRichText
+                class="description"
+                richText={page.data.subtitle}
+            />
+        </header>
+
+        <main>
+            <div class="description">
+                <PrismicRichText richText={page.data.description} />
+            </div>
+        </main>
+    </div>
+</Layout>
+
+<style>
+    .container {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-inline: auto;
+        max-width: var(--text-max-width);
+        padding-block: var(--space-9);
+        text-align: center;
+        width: 100%;
+    }
+
+    .title {
+        color: var(--color-blue-10);
+        font-family: var(--font-headline);
+        font-size: var(--font-size-7);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-medium);
+        font-variation-settings: 'opsz' 10;
+        letter-spacing: 2px;
+        margin-bottom: var(--space-1);
+    }
+
+    .description {
+        font-size: var(--font-size-4);
+        font-variation-settings: 'opsz' 6;
+
+        p {
+            margin-bottom: var(--space-5);
+        }
+    }
+
+    main {
+        margin-top: var(--space-9);
+    }
+</style>

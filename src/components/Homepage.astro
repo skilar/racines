@@ -1,8 +1,9 @@
 ---
 import { client } from '@lib/prismic'
 
-import Layout from '@layouts/Layout.astro'
+import LayoutWithMenu from '@layouts/LayoutWithMenu.astro'
 import Button from '@components/common/Button.astro'
+import Hero from './slices/Hero/Hero.astro'
 
 interface Props {
     lang?: 'en-us' | 'fr-fr'
@@ -11,11 +12,55 @@ interface Props {
 const { lang = 'en-us' } = Astro.props
 
 const page = await client.getSingle('homepage', { lang })
-console.log(page)
 ---
 
-<Layout lang={lang}>
-    <h2>{page.data.title}</h2>
-    <p>{page.data.meta_description}</p>
-</Layout>
+<LayoutWithMenu lang={lang}>
     <!-- <Button as="link" caption="Book Now" href="#" /> -->
+
+    <!-- <div class="outline">
+        qadadadadade<br />
+        wSSSSSSSSSSx<br />
+        xSSSSSSSSSSw<br />
+        wSSSSSSSSSSx<br />
+        xSSSSSSSSSSw<br />
+        wSSSSSSSSSSx<br />
+        wSS<span class="title">Racines</span>SSx<br />
+        xSSSSSSSSSSw<br />
+        wSSSSSSSSSSx<br />
+        xSSSSSSSSSSw<br />
+        wSSSSSSSSSSx<br />
+        xSSSSSSSSSSw<br />
+        zadadadadadc<br />
+    </div> -->
+
+    {
+        page.data.slices.map((slice) => {
+            switch (slice.slice_type) {
+                case 'hero':
+                    return <Hero slice={slice} />
+                default:
+                    return null
+            }
+        })
+    }
+</LayoutWithMenu>
+
+<style>
+    .outline {
+        color: var(--color-blue-10);
+        font-family: var(--font-ornaments);
+        font-size: var(--font-size-6);
+    }
+
+    .title {
+        font-family: var(--font-headline);
+        font-size: var(--font-size-7);
+        font-weight: var(--font-weight-black);
+        line-height: 0;
+
+        font-size: var(--font-size-7);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-medium);
+        letter-spacing: 1px;
+    }
+</style>

@@ -1,18 +1,6 @@
 ---
-import { client } from '@lib/prismic'
-
 import Head from './Head.astro'
-import LangSelector from './LangSelector.astro'
 import '@styles/styles.css'
-
-interface Props {
-    lang: 'en-us' | 'fr-fr'
-}
-
-const { lang } = Astro.props
-
-const page = await client.getSingle('layout', { lang })
-console.log(page.data.menu)
 ---
 
 <html lang={Astro.currentLocale}>
@@ -22,28 +10,6 @@ console.log(page.data.menu)
     </head>
 
     <body>
-        <header>
-            <div class="header">
-                {page.data.title && <h1 class="title">{page.data.title}</h1>}
-
-                <LangSelector />
-            </div>
-
-            {
-                page.data.menu && (
-                    <nav>
-                        <ul class="nav">
-                            {page.data.menu.map((item) => (
-                                <li>
-                                    <a href={item.url}>{item.text}</a>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
-                )
-            }
-        </header>
-
         <slot />
     </body>
 </html>
@@ -51,41 +17,5 @@ console.log(page.data.menu)
 <style>
     body {
         background-color: var(--color-ivory);
-        padding-inline: var(--space-5);
-    }
-
-    header {
-        margin-block: var(--space-4) var(--space-9);
-    }
-
-    .header {
-        align-items: center;
-        color: var(--color-royal-blue);
-        display: flex;
-        justify-content: space-between;
-        padding-block: var(--space-4);
-    }
-
-    .title {
-        font-weight: var(--font-weight-black);
-        font-size: var(--font-size-6);
-        font-variant-caps: all-small-caps;
-        letter-spacing: 4px;
-    }
-
-    .nav {
-        display: flex;
-        gap: var(--space-5);
-        /* justify-content: center; */
-
-        a {
-            text-decoration: none;
-
-            &:hover {
-                text-decoration: underline;
-                text-decoration-thickness: 1px;
-                text-underline-offset: 3px;
-            }
-        }
     }
 </style>

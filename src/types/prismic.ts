@@ -146,7 +146,100 @@ interface LayoutDocumentData {
  */
 export type LayoutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<LayoutDocumentData>, "layout", Lang>;
 
-export type AllDocumentTypes = HomepageDocument | LayoutDocument;
+type TempHomepageDocumentDataSlicesSlice = never
+
+/**
+ * Content for Temp Homepage documents
+ */
+interface TempHomepageDocumentData {
+	/**
+	 * Title field in *Temp Homepage*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: temp_homepage.title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Subtitle field in *Temp Homepage*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: temp_homepage.subtitle
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	subtitle: prismic.RichTextField;
+	
+	/**
+	 * Description field in *Temp Homepage*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: temp_homepage.description
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Slice Zone field in *Temp Homepage*
+	 *
+	 * - **Field Type**: Slice Zone
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: temp_homepage.slices[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/slices
+	 */
+	slices: prismic.SliceZone<TempHomepageDocumentDataSlicesSlice>;/**
+	 * Meta Title field in *Temp Homepage*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A title of the page used for social media and search engines
+	 * - **API ID Path**: temp_homepage.meta_title
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+	
+	/**
+	 * Meta Description field in *Temp Homepage*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A brief summary of the page
+	 * - **API ID Path**: temp_homepage.meta_description
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+	
+	/**
+	 * Meta Image field in *Temp Homepage*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: temp_homepage.meta_image
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Temp Homepage document from Prismic
+ *
+ * - **API ID**: `temp_homepage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
+
+export type AllDocumentTypes = HomepageDocument | LayoutDocument | TempHomepageDocument;
 
 /**
  * Primary content in *Hero → Default → Primary*
@@ -270,6 +363,9 @@ declare module "@prismicio/client" {
 			HomepageDocumentDataSlicesSlice,
 			LayoutDocument,
 			LayoutDocumentData,
+			TempHomepageDocument,
+			TempHomepageDocumentData,
+			TempHomepageDocumentDataSlicesSlice,
 			AllDocumentTypes,
 			HeroSlice,
 			HeroSliceDefaultPrimary,

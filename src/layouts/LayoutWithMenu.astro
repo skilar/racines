@@ -1,0 +1,112 @@
+---
+import { client } from '@lib/prismic'
+
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+import Layout from './Layout.astro'
+import LangSelector from './LangSelector.astro'
+import '@styles/styles.css'
+
+interface Props {
+    lang: 'en-us' | 'fr-fr'
+}
+
+const { lang } = Astro.props
+
+const page = await client.getSingle('layout', { lang })
+---
+
+<Layout>
+    <div class="container">
+        <header>
+            <div class="header">
+                <div>
+                    {
+                        page.data.title && (
+                            <h1 class="title">
+                                <span class="ornament">A</span>
+                                {page.data.title}
+                                <span class="ornament">D</span>
+                                <span class="ornament">W</span>
+                            </h1>
+                        )
+                    }
+
+                    <PrismicRichText richText={page.data.subtitle} />
+                </div>
+
+                <LangSelector />
+            </div>
+
+            {
+                page.data.menu && (
+                    <nav>
+                        <ul class="nav">
+                            {page.data.menu.map((item) => (
+                                <li>
+                                    <a href={item.url}>{item.text}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                )
+            }
+        </header>
+
+        <slot />
+    </div>
+</Layout>
+
+<style>
+    .container {
+        padding-inline: var(--space-5);
+    }
+
+    header {
+        margin-block: var(--space-4) var(--space-9);
+    }
+
+    .header {
+        align-items: center;
+        color: var(--color-blue-10);
+        display: flex;
+        justify-content: space-between;
+        padding-block: var(--space-4);
+    }
+
+    .title {
+        align-items: center;
+        display: flex;
+        font-size: var(--font-size-6);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-medium);
+        gap: var(--space-2);
+        letter-spacing: 1px;
+        margin-bottom: var(--space-1);
+    }
+
+    .ornament {
+        display: none;
+        font-family: var(--font-ornaments);
+        font-size: var(--font-size-5);
+        margin-top: var(--space-2);
+
+        &.visible {
+            display: inline;
+        }
+    }
+
+    .nav {
+        display: flex;
+        gap: var(--space-5);
+
+        a {
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+            }
+        }
+    }
+</style>
