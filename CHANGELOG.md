@@ -1,6 +1,11 @@
 # Changelog
 
-## 0.1.0
+## [v0.1.1](https://github.com/skilar/racines/compare/v0.1.0...v0.1.1)
+
+-   Add slices to temp homepage [`f8e3d37`](https://github.com/skilar/racines/commit/f8e3d37a8060c92dfcab525c20337a99ff4062bf)
+-   Fix mobile padding [`882a21c`](https://github.com/skilar/racines/commit/882a21cb4e0770ad8f1ba9cfa00bb58a8b1f9547)
+
+## v0.1.0 (9 August 2026)
 
 -   Initial commit [`a6a6b59`](https://github.com/skilar/racines/commit/a6a6b598ffb818175cfff0e1b117ea34b348f115)
 -   Add Netlify adapter [`3a5b954`](https://github.com/skilar/racines/commit/3a5b95410634f25179160110c3eed42e20b583a2)
