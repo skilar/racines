@@ -19,24 +19,24 @@
         "@astrojs/netlify": "^8.2.0",
         "@astrojs/sitemap": "^3.7.3",
         "@prismicio/client": "^7.21.8",
-        "astro": "^7.1.6"
+        "astro": "^7.2.0"
     },
     "devDependencies": {
-        "@astrojs/check": "^0.9.9",
+        "@astrojs/check": "^0.9.10",
         "@astrojs/ts-plugin": "^1.10.10",
         "@eslint/js": "^10.0.1",
         "@prismicio/types": "^0.2.9",
-        "@types/node": "^26.1.1",
+        "@types/node": "^26.2.0",
         "dotenv": "^17.4.2",
         "dotenv-cli": "^11.0.0",
-        "eslint": "^10.8.0",
+        "eslint": "^10.8.1",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-astro": "^1.7.0",
         "prettier": "^3.9.6",
         "prettier-plugin-astro": "^0.14.1",
         "prismic-ts-codegen": "^0.1.30",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.65.0"
+        "typescript-eslint": "^8.66.0"
     },
     "prettier": {
         "tabWidth": 4,
