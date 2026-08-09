@@ -3,28 +3,24 @@ type ButtonProps = {
     as?: 'button'
     caption: string
     href?: never
-    onClick?: () => void
 }
 
 type LinkProps = {
     as: 'link'
     caption: string
     href: string
-    onClick?: never
 }
 
 type Props = (ButtonProps | LinkProps) & {
     style?: 'primary' | 'secondary' | 'subtle'
 }
 
-const { as = 'button', caption, href, onClick } = Astro.props
+const { as = 'button', caption, href } = Astro.props
 ---
 
 {
     as === 'button' ? (
-        <button class="button" onClick={onClick}>
-            {caption}
-        </button>
+        <button class="button">{caption}</button>
     ) : (
         <a href={href} class="button">
             {caption}
