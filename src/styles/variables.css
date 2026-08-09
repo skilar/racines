@@ -3,12 +3,12 @@
     --color-white: oklch(1 0 0);
     --color-black: oklch(0 0 0);
 
-    --color-royal-blue: oklch(0.3629 0.1167 261);
-    --color-midnight-blue: oklch(0.2759 0.0874 261);
-    --color-ivory: oklch(0.9593 0.0143 84.58);
     --color-ivory: oklch(0.9899 0.0093 99.98);
     --color-chocolate: oklch(0.3336 0.043 32.66);
     --color-mid-grey: oklch(0.7512 0.0151 254.63);
+
+    --color-blue-10: oklch(0.3629 0.1167 261);
+    --color-blue-11: oklch(0.2759 0.1167 261);
 
     /* --color-lightest-grey: oklch(0.9314 0.0035 174.48);
     --color-light-grey: oklch(0.8858 0.0035 174.47);
@@ -20,6 +20,9 @@
     --font-headline: var(--font-le-grand);
     --font-serif: var(--font-romain-du-roi);
     --font-ornaments: var(--font-fern-ornaments);
+
+    --font-headline: var(--font-bodoni);
+    --font-serif: var(--font-bodoni);
 
     --font-weight-normal: 400;
     --font-weight-medium: 500;
