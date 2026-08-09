@@ -1,4 +1,5 @@
 ---
+import { asLinkAttrs, isFilled } from '@prismicio/client'
 import { client } from '@lib/prismic'
 
 import PrismicRichText from '@components/common/PrismicRichText.astro'
@@ -40,11 +41,15 @@ const page = await client.getSingle('layout', { lang })
                 page.data.menu && (
                     <nav>
                         <ul class="nav">
-                            {page.data.menu.map((item) => (
-                                <li>
-                                    <a href={item.url}>{item.text}</a>
-                                </li>
-                            ))}
+                            {page.data.menu
+                                .filter(isFilled.link)
+                                .map((item) => (
+                                    <li>
+                                        <a {...asLinkAttrs(item)}>
+                                            {item.text}
+                                        </a>
+                                    </li>
+                                ))}
                         </ul>
                     </nav>
                 )
