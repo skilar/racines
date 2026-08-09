@@ -59,14 +59,15 @@ const page = await client.getSingle('temp_homepage', { lang })
         flex-direction: column;
         justify-content: center;
         margin-inline: auto;
-        max-width: var(--text-max-width);
         min-height: 100dvh;
         padding-block: var(--padding-block);
+        padding-inline: var(--space-5);
         width: 100%;
     }
 
     header {
         --header-spacing: var(--space-8);
+        max-width: var(--text-max-width);
         padding-bottom: var(--padding-block);
         text-align: center;
     }
@@ -121,5 +122,9 @@ const page = await client.getSingle('temp_homepage', { lang })
         p:has(+ p) {
             margin-bottom: var(--space-5);
         }
+    }
+
+    main {
+        max-width: var(--text-max-width);
     }
 </style>
