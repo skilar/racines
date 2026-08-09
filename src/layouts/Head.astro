@@ -1,7 +1,7 @@
 ---
 import { Font } from 'astro:assets'
 
-const { description, title = 'Racines', ...props } = Astro.props
+const { description, title = 'Racines' } = Astro.props
 ---
 
 <title>{title}</title>
@@ -15,6 +15,7 @@ const { description, title = 'Racines', ...props } = Astro.props
 <Font cssVariable="--font-le-grand" preload />
 <Font cssVariable="--font-romain-du-roi" preload />
 <Font cssVariable="--font-fern-ornaments" preload />
+<Font cssVariable="--font-bodoni" preload />
 
 <!-- Open Graph tags -->
 <meta property="og:title" content={title} />
