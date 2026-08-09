@@ -7,24 +7,6 @@ export default defineConfig({
     base: '/',
     fonts: [
         {
-            cssVariable: '--font-fern-ornaments',
-            fallbacks: ['serif'],
-            name: 'Fern Ornaments',
-            options: {
-                variants: [
-                    {
-                        display: 'swap',
-                        src: [
-                            './src/assets/fonts/FernOrnaments-Regular-Testing.woff2',
-                        ],
-                        style: 'normal',
-                        weight: '400',
-                    },
-                ],
-            },
-            provider: fontProviders.local(),
-        },
-        {
             cssVariable: '--font-bodoni',
             fallbacks: ['serif'],
             name: 'Bodoni',
