@@ -6,12 +6,14 @@
         "node": ">=22.12.0"
     },
     "scripts": {
-        "dev": "astro dev",
-        "build": "astro build",
+        "astro": "astro",
+        "build": "eslint src && astro check && astro build",
         "check": "astro check",
+        "dev": "astro dev --host",
         "lint": "eslint src",
         "preview": "astro preview",
-        "astro": "astro"
+        "release": "dotenv release-it",
+        "typegen": "npx prismic-ts-codegen"
     },
     "dependencies": {
         "@astrojs/sitemap": "^3.7.3",
