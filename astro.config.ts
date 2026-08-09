@@ -5,7 +5,7 @@ export default defineConfig({
     base: '/',
     trailingSlash: 'always',
     i18n: {
-        locales: ['es', 'en', 'fr'],
+        locales: ['en', 'fr'],
         defaultLocale: 'en',
     },
     fonts: [
