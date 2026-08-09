@@ -1,0 +1,62 @@
+---
+type ButtonProps = {
+    as?: 'button'
+    caption: string
+    href?: never
+    onClick?: () => void
+}
+
+type LinkProps = {
+    as: 'link'
+    caption: string
+    href: string
+    onClick?: never
+}
+
+type Props = (ButtonProps | LinkProps) & {
+    style?: 'primary' | 'secondary' | 'subtle'
+}
+
+const { as = 'button', caption, href, onClick } = Astro.props
+---
+
+{
+    as === 'button' ? (
+        <button class="button" onClick={onClick}>
+            {caption}
+        </button>
+    ) : (
+        <a href={href} class="button">
+            {caption}
+        </a>
+    )
+}
+
+<style>
+    .button {
+        background-color: var(--color-blue-10);
+        color: var(--color-ivory);
+        display: inline-block;
+        font-weight: var(--font-weight-heavy);
+        margin-top: var(--space-5);
+        padding: var(--space-3) var(--space-4);
+        text-decoration: none;
+        transition:
+            background-color 100ms ease,
+            scale 100ms ease;
+
+        /* font-size: var(--font-size-4);
+        font-variant-caps: all-small-caps;
+        padding: var(--space-5);
+        text-box-edge: ex alphabetic;
+        text-box-trim: trim-both; */
+
+        &:active {
+            scale: 0.95;
+        }
+
+        &:hover {
+            background-color: var(--color-blue-11);
+        }
+    }
+</style>

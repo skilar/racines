@@ -2,6 +2,7 @@
 import { client } from '@lib/prismic'
 
 import Layout from '@layouts/Layout.astro'
+import Button from '@components/common/Button.astro'
 
 interface Props {
     lang?: 'en-us' | 'fr-fr'
@@ -17,3 +18,4 @@ console.log(page)
     <h2>{page.data.title}</h2>
     <p>{page.data.meta_description}</p>
 </Layout>
+    <!-- <Button as="link" caption="Book Now" href="#" /> -->
