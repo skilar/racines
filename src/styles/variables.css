@@ -17,12 +17,9 @@
     --color-pale-green: oklch(0.5299 0.0275 162.4); */
 
     /* Fonts */
-    --font-headline: var(--font-le-grand);
-    --font-serif: var(--font-romain-du-roi);
-    --font-ornaments: var(--font-fern-ornaments);
-
     --font-headline: var(--font-bodoni);
     --font-serif: var(--font-bodoni);
+    --font-ornaments: var(--font-fern-ornaments);
 
     --font-weight-normal: 400;
     --font-weight-medium: 500;
