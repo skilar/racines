@@ -1,5 +1,7 @@
 import { defineConfig, fontProviders } from 'astro/config'
 
+import sitemap from '@astrojs/sitemap'
+
 export default defineConfig({
     site: 'https://www.agathegiraud.com',
     base: '/',
@@ -54,4 +56,5 @@ export default defineConfig({
             provider: fontProviders.local(),
         },
     ],
+    integrations: [sitemap()],
 })

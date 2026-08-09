@@ -12,6 +12,7 @@
         "astro": "astro"
     },
     "dependencies": {
+        "@astrojs/sitemap": "^3.7.3",
         "@prismicio/client": "^7.21.8",
         "astro": "^7.1.6"
     },
