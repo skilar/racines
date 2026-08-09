@@ -135,7 +135,7 @@ ul {
 
 a {
     color: var(--color-black);
-    text-decoration-thickness: 2px;
+    text-decoration-thickness: 1px;
     transition:
         color 0.0875s,
         text-decoration-color 0.0875s;
