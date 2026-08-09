@@ -2,6 +2,7 @@
 import { client } from '@lib/prismic'
 
 import Layout from '@layouts/Layout.astro'
+import LangSelector from '@layouts/LangSelector.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 
 import type { Lang } from '@lib/constants'
@@ -23,16 +24,15 @@ const page = await client.getSingle('temp_homepage', { lang })
     <div class="container">
         <header>
             <h1 class="title">{page.data.title}</h1>
-            <PrismicRichText
-                class="description"
-                richText={page.data.subtitle}
-            />
+            <PrismicRichText class="subtitle" richText={page.data.subtitle} />
         </header>
 
         <main>
             <div class="description">
                 <PrismicRichText richText={page.data.description} />
             </div>
+
+            <LangSelector />
         </main>
     </div>
 </Layout>
@@ -42,6 +42,8 @@ const page = await client.getSingle('temp_homepage', { lang })
         align-items: center;
         display: flex;
         flex-direction: column;
+        height: 100dvh;
+        justify-content: center;
         margin-inline: auto;
         max-width: var(--text-max-width);
         padding-block: var(--space-9);
@@ -50,26 +52,57 @@ const page = await client.getSingle('temp_homepage', { lang })
     }
 
     .title {
+        border-bottom: 4px double var(--color-blue-10);
         color: var(--color-blue-10);
+        display: inline-block;
         font-family: var(--font-headline);
         font-size: var(--font-size-7);
-        font-variant-caps: all-small-caps;
-        font-weight: var(--font-weight-medium);
+        font-weight: var(--font-weight-bold);
         font-variation-settings: 'opsz' 10;
         letter-spacing: 2px;
-        margin-bottom: var(--space-1);
+        margin-bottom: var(--space-8);
+        padding-bottom: var(--space-3);
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
     }
 
-    .description {
-        font-size: var(--font-size-4);
+    .description,
+    .subtitle {
         font-variation-settings: 'opsz' 6;
+    }
 
-        p {
-            margin-bottom: var(--space-5);
+    .subtitle {
+        font-size: var(--font-size-4);
+        font-variant-caps: all-small-caps;
+        letter-spacing: 2px;
+        line-height: 1.2;
+
+        p:has(+ p) {
+            margin-bottom: var(--space-8);
+        }
+
+        strong {
+            color: var(--color-blue-10);
+            display: inline-block;
+            font-family: var(--font-headline);
+            font-size: var(--font-size-5);
+            font-variant-caps: normal;
+            font-weight: var(--font-weight-heavy);
+            letter-spacing: 1px;
+            margin-top: var(--space-1);
         }
     }
 
     main {
         margin-top: var(--space-9);
+    }
+
+    .description {
+        font-size: var(--font-size-3);
+        margin-bottom: var(--space-5);
+
+        p:has(+ p) {
+            margin-bottom: var(--space-5);
+        }
     }
 </style>

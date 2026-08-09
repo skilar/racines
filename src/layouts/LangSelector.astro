@@ -6,6 +6,7 @@
     <li>
         {Astro.currentLocale !== 'fr' ? <a href="/fr/">Fr</a> : 'Fr'}
     </li>
+    <li>/</li>
     <li>
         {Astro.currentLocale !== 'en' ? <a href="/">En</a> : 'En'}
     </li>
@@ -13,7 +14,7 @@
 
 <style>
     .langs {
-        display: flex;
+        display: inline-flex;
         gap: var(--space-3);
 
         a {
