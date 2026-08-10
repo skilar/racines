@@ -1,4 +1,5 @@
 ---
+import Divider from '@components/common/Divider.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 
 import type { HeroSlice } from '@typez/prismic'
@@ -11,7 +12,7 @@ const { slice } = Astro.props
 ---
 
 <div class="hero">
-    <div class="divider"></div>
+    <Divider />
 
     <div class="content">
         {
@@ -36,14 +37,7 @@ const { slice } = Astro.props
 </div>
 
 <style>
-    .divider {
-        border-top: 4px double var(--color-blue-10);
-        padding-top: var(--padding-top);
-    }
-
     .hero {
-        --padding-top: var(--space-5);
-
         &:has(+ .hero) {
             margin-bottom: var(--space-9);
         }
