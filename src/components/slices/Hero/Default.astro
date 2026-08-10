@@ -11,42 +11,66 @@ const { slice } = Astro.props
 ---
 
 <div class="hero">
-    {
-        slice.primary.image.url && (
-            <img src={slice.primary.image.url} alt={slice.primary.image.alt} />
-        )
-    }
+    <div class="divider"></div>
 
-    <div>
-        {slice.primary.title && <h2>{slice.primary.title}</h2>}
-        <PrismicRichText
-            class="description"
-            richText={slice.primary.description}
-        />
+    <div class="content">
+        {
+            slice.primary.image.url && (
+                <div class="image">
+                    <img
+                        src={slice.primary.image.url}
+                        alt={slice.primary.image.alt}
+                    />
+                </div>
+            )
+        }
+
+        <div>
+            {slice.primary.title && <h2>{slice.primary.title}</h2>}
+            <PrismicRichText
+                class="description"
+                richText={slice.primary.description}
+            />
+        </div>
     </div>
 </div>
 
 <style>
-    .hero {
+    .divider {
         border-top: 4px double var(--color-blue-10);
-        display: grid;
-        gap: var(--space-5);
-        padding-top: var(--space-4);
+        padding-top: var(--padding-top);
+    }
 
-        &:has(> div:has(+ div)) {
-            grid-template-columns: 20vw 50ch;
-        }
+    .hero {
+        --padding-top: var(--space-5);
 
         &:has(+ .hero) {
             margin-bottom: var(--space-9);
         }
     }
 
+    .content {
+        &:has(> div + div) {
+            display: grid;
+            gap: var(--space-5);
+            grid-template-columns: 20vw 65ch;
+            margin-left: -13.333vw;
+            margin-left: -10vw;
+        }
+    }
+
+    .image {
+        max-width: 20vw;
+        width: 100%;
+    }
+
     h2 {
         color: var(--color-blue-10);
         font-size: var(--font-size-5);
         font-variation-settings: 'opsz' 6;
-        margin-bottom: var(--space-3);
+        margin-bottom: var(--space-5);
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
     }
 
     .description {
