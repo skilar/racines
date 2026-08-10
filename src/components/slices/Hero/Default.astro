@@ -1,5 +1,8 @@
 ---
+import { isFilled } from '@prismicio/client'
+
 import Divider from '@components/common/Divider.astro'
+import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 
 import type { HeroSlice } from '@typez/prismic'
@@ -11,17 +14,14 @@ interface Props {
 const { slice } = Astro.props
 ---
 
-<div class="hero">
+<div data-slice-type={slice.slice_type}>
     <Divider />
 
     <div class="content">
         {
-            slice.primary.image.url && (
+            isFilled.image(slice.primary.image) && (
                 <div class="image">
-                    <img
-                        src={slice.primary.image.url}
-                        alt={slice.primary.image.alt}
-                    />
+                    <Image image={slice.primary.image} quality={75} />
                 </div>
             )
         }
@@ -37,12 +37,6 @@ const { slice } = Astro.props
 </div>
 
 <style>
-    .hero {
-        &:has(+ .hero) {
-            margin-bottom: var(--space-9);
-        }
-    }
-
     .content {
         &:has(> div + div) {
             display: grid;

@@ -4,7 +4,7 @@ import { client } from '@lib/prismic'
 import Layout from '@layouts/Layout.astro'
 import LangSelector from '@layouts/LangSelector.astro'
 import PrismicRichText from './common/PrismicRichText.astro'
-import Hero from './slices/Hero/Hero.astro'
+import SliceZone from './common/SliceZone.astro'
 
 import type { Lang } from '@lib/constants'
 
@@ -41,16 +41,7 @@ const page = await client.getSingle('temp_homepage', { lang })
             </header>
 
             <main id="main">
-                {
-                    page.data.slices.map((slice) => {
-                        switch (slice.slice_type) {
-                            case 'hero':
-                                return <Hero slice={slice} />
-                            default:
-                                return null
-                        }
-                    })
-                }
+                <SliceZone slices={page.data.slices} />
             </main>
         </div>
     </div>
@@ -145,5 +136,11 @@ const page = await client.getSingle('temp_homepage', { lang })
 
     main {
         max-width: var(--text-max-width);
+
+        :is([data-slice-type='image_list'], [data-slice-type='hero']):has(
+            + :is([data-slice-type='image_list'], [data-slice-type='hero'])
+        ) {
+            margin-bottom: var(--space-9);
+        }
     }
 </style>

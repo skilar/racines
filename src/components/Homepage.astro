@@ -3,7 +3,7 @@ import { client } from '@lib/prismic'
 
 import LayoutWithMenu from '@layouts/LayoutWithMenu.astro'
 // import Button from '@components/common/Button.astro'
-import Hero from './slices/Hero/Hero.astro'
+import SliceZone from './common/SliceZone.astro'
 
 import type { Lang } from '@lib/constants'
 
@@ -35,16 +35,7 @@ const page = await client.getSingle('homepage', { lang })
         zadadadadadc<br />
     </div> -->
 
-    {
-        page.data.slices.map((slice) => {
-            switch (slice.slice_type) {
-                case 'hero':
-                    return <Hero slice={slice} />
-                default:
-                    return null
-            }
-        })
-    }
+    <SliceZone slices={page.data.slices} />
 </LayoutWithMenu>
 
 <style>

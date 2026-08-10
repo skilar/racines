@@ -1,0 +1,78 @@
+---
+import { isFilled } from '@prismicio/client'
+
+import Divider from '@components/common/Divider.astro'
+import Image from '@components/common/Image.astro'
+
+import type { ImageListSlice } from '@typez/prismic'
+
+interface Props {
+    slice: ImageListSlice
+}
+
+const { slice } = Astro.props
+const { images } = slice.primary
+
+const isVertical = slice.variation === 'vertical'
+const count = Math.max(
+    images.filter(({ image }) => isFilled.image(image)).length,
+    1,
+)
+const sizes = isVertical ? 'auto, 100vw' : `auto, calc(100vw / ${count})`
+---
+
+<div class="container" data-slice-type={slice.slice_type}>
+    <Divider />
+    {
+        images.length > 0 && (
+            <ul class:list={['imageList', { vertical: isVertical }]}>
+                {images.map(({ image }) => {
+                    if (isFilled.image(image)) {
+                        return (
+                            <li>
+                                <Image
+                                    class="listImage"
+                                    image={image}
+                                    quality={75}
+                                    sizes={sizes}
+                                />
+                            </li>
+                        )
+                    }
+
+                    return null
+                })}
+            </ul>
+        )
+    }
+</div>
+
+<style>
+    .container {
+        container: imageList / inline-size;
+    }
+
+    .imageList {
+        display: flex;
+        gap: var(--space-5);
+        overflow: auto;
+
+        &.vertical {
+            flex-direction: column;
+        }
+    }
+
+    li {
+        border: 1px solid var(--color-blue-10);
+        border-bottom-width: 2px;
+        padding: calc(var(--space-1) / 2);
+    }
+
+    .listImage {
+        width: 50vw;
+
+        @container imageList (width > 450px) {
+            width: 100%;
+        }
+    }
+</style>

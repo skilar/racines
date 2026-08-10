@@ -1,4 +1,7 @@
 ---
+import { isFilled } from '@prismicio/client'
+
+import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 
 import type { HeroSlice } from '@typez/prismic'
@@ -10,10 +13,12 @@ interface Props {
 const { slice } = Astro.props
 ---
 
-<div class="hero">
+<div class="hero" data-slice-type={slice.slice_type}>
     {
-        slice.primary.image.url && (
-            <img src={slice.primary.image.url} alt={slice.primary.image.alt} />
+        isFilled.image(slice.primary.image) && (
+            <div class="image">
+                <Image image={slice.primary.image} quality={75} />
+            </div>
         )
     }
 

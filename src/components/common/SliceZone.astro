@@ -1,0 +1,31 @@
+---
+import Hero from '@components/slices/Hero/Hero.astro'
+import ImageList from '@components/slices/ImageList/ImageList.astro'
+
+import type { SliceZone } from '@prismicio/client'
+import type { AllDocumentTypes } from '@typez/prismic'
+
+type AnySlice = Extract<
+    AllDocumentTypes,
+    { data: { slices: unknown } }
+>['data']['slices'][number]
+
+interface Props {
+    slices: SliceZone<AnySlice>
+}
+
+const { slices } = Astro.props
+---
+
+{
+    slices.map((slice) => {
+        switch (slice.slice_type) {
+            case 'hero':
+                return <Hero slice={slice} />
+            case 'image_list':
+                return <ImageList slice={slice} />
+            default:
+                return null
+        }
+    })
+}

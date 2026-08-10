@@ -1,0 +1,59 @@
+---
+import getImageDetails from '@lib/get-image-details'
+
+import type { HTMLAttributes } from 'astro/types'
+import type { ImageFieldImage } from '@prismicio/client'
+
+interface Props extends Omit<
+    HTMLAttributes<'img'>,
+    'height' | 'sizes' | 'src' | 'srcset' | 'style' | 'width'
+> {
+    image: ImageFieldImage
+    priority?: boolean
+    quality?: number
+    sizes?: string
+}
+
+const {
+    class: className,
+    image,
+    priority = false,
+    quality = 65,
+    sizes = 'auto, 100vw',
+    ...rest
+} = Astro.props
+
+// `auto` is only valid alongside loading="lazy", so drop it when loading eagerly.
+// Matched as a leading token rather than split on commas, which a fallback like
+// clamp(200px, 50vw, 400px) would break.
+const imageSizes = priority
+    ? sizes.replace(/^\s*auto\s*(,\s*)?/, '') || '100vw'
+    : sizes
+
+const details = await getImageDetails({ image, quality })
+---
+
+{
+    details && (
+        <img
+            alt={details.alt}
+            class:list={['image', className]}
+            decoding="async"
+            fetchpriority={priority ? 'high' : 'auto'}
+            height={details.height}
+            loading={priority ? 'eager' : 'lazy'}
+            sizes={imageSizes}
+            src={details.src}
+            srcset={details.srcset}
+            style={`aspect-ratio: ${details.width} / ${details.height}; --img-ratio: ${(details.width / details.height).toFixed(5)}; --natural-width: ${details.width}px; background-image: url(${details.lqip}); background-size: cover; background-position: center;`}
+            width={details.width}
+            {...rest}
+        />
+    )
+}
+
+<style>
+    .image {
+        display: block;
+    }
+</style>

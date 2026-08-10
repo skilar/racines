@@ -146,7 +146,7 @@ interface LayoutDocumentData {
  */
 export type LayoutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<LayoutDocumentData>, "layout", Lang>;
 
-type TempHomepageDocumentDataSlicesSlice = HeroSlice
+type TempHomepageDocumentDataSlicesSlice = HeroSlice | ImageListSlice
 
 /**
  * Content for Temp Homepage documents
@@ -343,6 +343,98 @@ type HeroSliceVariation = HeroSliceDefault | HeroSliceFullBleed
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
+/**
+ * Item in *ImageList → Horizontal → Primary → Images*
+ */
+export interface ImageListSliceDefaultPrimaryImagesItem {
+	/**
+	 * Image field in *ImageList → Horizontal → Primary → Images*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.default.primary.images[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
+ * Item in *ImageList → Vertical → Primary → Images*
+ */
+export interface ImageListSliceVerticalPrimaryImagesItem {
+	/**
+	 * Image field in *ImageList → Vertical → Primary → Images*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.vertical.primary.images[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
+ * Primary content in *ImageList → Horizontal → Primary*
+ */
+export interface ImageListSliceDefaultPrimary {
+	/**
+	 * Images field in *ImageList → Horizontal → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.default.primary.images[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	images: prismic.GroupField<Simplify<ImageListSliceDefaultPrimaryImagesItem>>;
+}
+
+/**
+ * Horizontal variation for ImageList Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageListSliceDefault = prismic.SharedSliceVariation<"default", Simplify<ImageListSliceDefaultPrimary>, never>;
+
+/**
+ * Primary content in *ImageList → Vertical → Primary*
+ */
+export interface ImageListSliceVerticalPrimary {
+	/**
+	 * Images field in *ImageList → Vertical → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.vertical.primary.images[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	images: prismic.GroupField<Simplify<ImageListSliceVerticalPrimaryImagesItem>>;
+}
+
+/**
+ * Vertical variation for ImageList Slice
+ *
+ * - **API ID**: `vertical`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageListSliceVertical = prismic.SharedSliceVariation<"vertical", Simplify<ImageListSliceVerticalPrimary>, never>;
+
+/**
+ * Slice variation for *ImageList*
+ */
+type ImageListSliceVariation = ImageListSliceDefault | ImageListSliceVertical
+
+/**
+ * ImageList Shared Slice
+ *
+ * - **API ID**: `image_list`
+ * - **Description**: ImageList
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageListSlice = prismic.SharedSlice<"image_list", ImageListSliceVariation>;
+
 declare module "@prismicio/client" {
 	interface CreateClient {
 		(repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
@@ -372,7 +464,15 @@ declare module "@prismicio/client" {
 			HeroSliceFullBleedPrimary,
 			HeroSliceVariation,
 			HeroSliceDefault,
-			HeroSliceFullBleed
+			HeroSliceFullBleed,
+			ImageListSlice,
+			ImageListSliceDefaultPrimaryImagesItem,
+			ImageListSliceDefaultPrimary,
+			ImageListSliceVerticalPrimaryImagesItem,
+			ImageListSliceVerticalPrimary,
+			ImageListSliceVariation,
+			ImageListSliceDefault,
+			ImageListSliceVertical
 		}
 	}
 }
