@@ -1,6 +1,28 @@
 # Changelog
 
-## [v0.1.1](https://github.com/skilar/racines/compare/v0.1.0...v0.1.1)
+## [v0.2.0](https://github.com/skilar/racines/compare/v0.1.1...v0.2.0)
+
+-   Add Prismic custom type pull/push [`4c6214b`](https://github.com/skilar/racines/commit/4c6214bcbd723931427ab6e45d786f748e70be43)
+-   Add ImageList slice [`3eba46d`](https://github.com/skilar/racines/commit/3eba46d12776972ca65dd9bc485589e10d79b634)
+-   Bump dependencies [`6b1dff4`](https://github.com/skilar/racines/commit/6b1dff4a83d5f31b02f3caf2f6f82afbbfa39057)
+-   Update mobile padding [`2b2f628`](https://github.com/skilar/racines/commit/2b2f628dc03b5b4775285fa3d0fe13298ec3625f)
+-   Add images to Default Hero component [`d32414e`](https://github.com/skilar/racines/commit/d32414eca8eb5c6f7d0810b56bcf5f210959bebb)
+-   Remove Prociono [`575b4f7`](https://github.com/skilar/racines/commit/575b4f727ab51ea66e640a89a928d447af435884)
+-   Add EB Garamond [`9f80c93`](https://github.com/skilar/racines/commit/9f80c930dde03a040306be04fa7c12facbdbee94)
+-   Update LangSelector position [`ce4a8e6`](https://github.com/skilar/racines/commit/ce4a8e60355435b255da96dbd71f70a92e12077b)
+-   Add Divider component [`ab04c26`](https://github.com/skilar/racines/commit/ab04c261be68bae132fa9b0c895e3c3726f8831d)
+-   Disable Crimson Text [`aa80bf0`](https://github.com/skilar/racines/commit/aa80bf0f5e40e88cea22d9a0958d43a3b2ff220d)
+-   Revert auto-redirection for preferred locale [`5b04c45`](https://github.com/skilar/racines/commit/5b04c45ed870007456fd985ec80b7ee5cb243f8b)
+-   Automatically redirect to preferred locale [`ce98b4e`](https://github.com/skilar/racines/commit/ce98b4e46f71309cd83575156f40cf17e18455f2)
+-   Add favicon [`13af9f1`](https://github.com/skilar/racines/commit/13af9f115bbfb0df68d9fae5b27de68e3e3f62de)
+-   Update Hero slice type definition [`48d4f63`](https://github.com/skilar/racines/commit/48d4f63130f08814d5ce81f04561c0cbb428acb1)
+-   Add Crimson Text [`ef473b8`](https://github.com/skilar/racines/commit/ef473b8ea5ba969fa7ba44f3d674c287909b9c03)
+-   Add ordinal nums utility class [`8c1b4a0`](https://github.com/skilar/racines/commit/8c1b4a05855d2f9127435e876d0ec2c8e1ab5daa)
+-   Set French to default language [`2505b37`](https://github.com/skilar/racines/commit/2505b378cf7efd96831d92835308dcf95a31942a)
+-   Update Hero paragraph bottom padding [`2e5de78`](https://github.com/skilar/racines/commit/2e5de78a293d816cc2c7b84b38d6f90ec20fb98d)
+-   Update base image styles [`d41ed15`](https://github.com/skilar/racines/commit/d41ed15a1148d0bd903d227abe410f7178afda63)
+
+## [v0.1.1](https://github.com/skilar/racines/compare/v0.1.0...v0.1.1) (9 August 2026)
 
 -   Add slices to temp homepage [`f8e3d37`](https://github.com/skilar/racines/commit/f8e3d37a8060c92dfcab525c20337a99ff4062bf)
 -   Fix mobile padding [`882a21c`](https://github.com/skilar/racines/commit/882a21cb4e0770ad8f1ba9cfa00bb58a8b1f9547)
