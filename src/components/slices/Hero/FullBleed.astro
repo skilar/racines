@@ -1,10 +1,10 @@
 ---
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 
-import type { HomepageDocument } from '@typez/prismic'
+import type { HeroSlice } from '@typez/prismic'
 
 interface Props {
-    slice: HomepageDocument['data']['slices'][number]
+    slice: HeroSlice
 }
 
 const { slice } = Astro.props
