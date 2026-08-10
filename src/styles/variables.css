@@ -12,7 +12,7 @@
 
     /* Fonts */
     --font-headline: var(--font-bodoni);
-    --font-serif: var(--font-prociono);
+    --font-serif: var(--font-bodoni);
 
     --font-weight-normal: 400;
     --font-weight-medium: 500;
