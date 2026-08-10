@@ -52,14 +52,10 @@ export default defineConfig({
         },
     ],
     i18n: {
-        locales: [
-            { path: 'en', codes: ['en', 'en-us', 'en-US'] },
-            { path: 'fr', codes: ['fr', 'fr-fr', 'fr-FR'] },
-        ],
+        locales: ['en', 'fr'],
         defaultLocale: 'fr',
     },
     integrations: [sitemap()],
-    output: 'server',
     site: 'https://www.agathegiraud.com',
     trailingSlash: 'always',
 })
