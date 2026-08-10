@@ -22,45 +22,62 @@ const page = await client.getSingle('temp_homepage', { lang })
     lang={lang}
     title={page.data.meta_title}
 >
-    <div class="lang">
-        <LangSelector />
-    </div>
-
     <div class="container">
-        <header>
-            <h1 class="title">{page.data.title}</h1>
-            <PrismicRichText class="subtitle" richText={page.data.subtitle} />
+        <div class="lang">
+            <LangSelector />
+        </div>
 
-            <div class="description">
-                <PrismicRichText richText={page.data.description} />
-            </div>
-        </header>
+        <div class="wrapper">
+            <header>
+                <h1 class="title">{page.data.title}</h1>
+                <PrismicRichText
+                    class="subtitle"
+                    richText={page.data.subtitle}
+                />
 
-        <main id="main">
-            {
-                page.data.slices.map((slice) => {
-                    switch (slice.slice_type) {
-                        case 'hero':
-                            return <Hero slice={slice} />
-                        default:
-                            return null
-                    }
-                })
-            }
-        </main>
+                <div class="description">
+                    <PrismicRichText richText={page.data.description} />
+                </div>
+            </header>
+
+            <main id="main">
+                {
+                    page.data.slices.map((slice) => {
+                        switch (slice.slice_type) {
+                            case 'hero':
+                                return <Hero slice={slice} />
+                            default:
+                                return null
+                        }
+                    })
+                }
+            </main>
+        </div>
     </div>
 </Layout>
 
 <style>
-    .lang {
-        margin-inline: var(--space-5);
-        margin-top: var(--space-5);
-        position: absolute;
-        right: 0;
+    .container {
+        --padding-block: calc(var(--space-8) * 2);
+        --padding-inline: var(--space-5);
+
+        @media (width > 650px) {
+            --padding-block: calc(var(--space-9) * 2);
+        }
     }
 
-    .container {
-        --padding-block: calc(var(--space-9) * 2);
+    .lang {
+        margin-inline: var(--padding-inline);
+        margin-top: var(--space-2);
+        position: absolute;
+        right: 0;
+
+        @media (width > 650px) {
+            margin-top: var(--space-5);
+        }
+    }
+
+    .wrapper {
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -68,7 +85,7 @@ const page = await client.getSingle('temp_homepage', { lang })
         margin-inline: auto;
         min-height: 100dvh;
         padding-block: var(--padding-block);
-        padding-inline: var(--space-5);
+        padding-inline: var(--padding-inline);
         width: 100%;
     }
 
