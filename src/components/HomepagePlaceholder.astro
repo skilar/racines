@@ -22,12 +22,12 @@ const page = await client.getSingle('temp_homepage', { lang })
     lang={lang}
     title={page.data.meta_title}
 >
+    <div class="lang">
+        <LangSelector />
+    </div>
+
     <div class="container">
         <header>
-            <div class="lang">
-                <LangSelector />
-            </div>
-
             <h1 class="title">{page.data.title}</h1>
             <PrismicRichText class="subtitle" richText={page.data.subtitle} />
 
@@ -52,6 +52,13 @@ const page = await client.getSingle('temp_homepage', { lang })
 </Layout>
 
 <style>
+    .lang {
+        margin-inline: var(--space-5);
+        margin-top: var(--space-5);
+        position: absolute;
+        right: 0;
+    }
+
     .container {
         --padding-block: calc(var(--space-9) * 2);
         align-items: center;
@@ -69,11 +76,6 @@ const page = await client.getSingle('temp_homepage', { lang })
         --header-spacing: var(--space-8);
         max-width: var(--text-max-width);
         padding-bottom: var(--padding-block);
-        text-align: center;
-    }
-
-    .lang {
-        margin-bottom: var(--space-5);
         text-align: center;
     }
 
