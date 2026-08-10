@@ -1,6 +1,11 @@
 # Changelog
 
-## [v0.2.0](https://github.com/skilar/racines/compare/v0.1.1...v0.2.0)
+## [v0.2.1](https://github.com/skilar/racines/compare/v0.2.0...v0.2.1)
+
+-   Widen ImageList on desktop [`94903f5`](https://github.com/skilar/racines/commit/94903f57bdbcc0f9c43e3ef34eac264104577d4b)
+-   Remove title for the time being [`75523b6`](https://github.com/skilar/racines/commit/75523b67d51a85b8140c16b022b9cc4694440c61)
+
+## [v0.2.0](https://github.com/skilar/racines/compare/v0.1.1...v0.2.0) (10 August 2026)
 
 -   Add Prismic custom type pull/push [`4c6214b`](https://github.com/skilar/racines/commit/4c6214bcbd723931427ab6e45d786f748e70be43)
 -   Add ImageList slice [`3eba46d`](https://github.com/skilar/racines/commit/3eba46d12776972ca65dd9bc485589e10d79b634)
