@@ -1,0 +1,44 @@
+{
+  "id": "layout",
+  "label": "Layout",
+  "repeatable": false,
+  "json": {
+    "Header": {
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": ""
+        }
+      },
+      "subtitle": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Subtitle",
+          "placeholder": "",
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "allowTargetBlank": true
+        }
+      },
+      "menu": {
+        "type": "Link",
+        "config": {
+          "label": "Menu",
+          "placeholder": "",
+          "select": null,
+          "allowTargetBlank": true,
+          "allowText": true,
+          "repeat": true,
+          "variants": [
+            "Primary",
+            "Secondary"
+          ]
+        }
+      }
+    },
+    "Footer": {},
+    "Banner": {}
+  },
+  "status": true,
+  "format": "custom"
+}

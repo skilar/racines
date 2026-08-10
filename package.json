@@ -3,7 +3,7 @@
     "type": "module",
     "version": "0.1.1",
     "engines": {
-        "node": ">=22.12.0"
+        "node": ">=22.18.0"
     },
     "scripts": {
         "astro": "astro",
@@ -12,6 +12,9 @@
         "dev": "astro dev --host",
         "lint": "eslint src",
         "preview": "astro preview",
+        "prismic:pull": "node --env-file-if-exists=.env scripts/prismic-models.ts pull",
+        "prismic:push": "node --env-file-if-exists=.env scripts/prismic-models.ts push",
+        "prismic:status": "node --env-file-if-exists=.env scripts/prismic-models.ts status",
         "release": "dotenv release-it",
         "typegen": "npx prismic-ts-codegen"
     },
@@ -25,6 +28,7 @@
         "@astrojs/check": "^0.9.10",
         "@astrojs/ts-plugin": "^1.10.10",
         "@eslint/js": "^10.0.1",
+        "@prismicio/custom-types-client": "^2.1.0",
         "@prismicio/types": "^0.2.9",
         "@types/node": "^26.2.0",
         "dotenv": "^17.4.2",

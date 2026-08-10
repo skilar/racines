@@ -1,1 +1,6 @@
 changelog-template.hbs
+
+# Prismic model files are written by scripts/prismic-models.ts.
+# Reformatting them makes every `npm run prismic:pull` show a spurious diff.
+./customtypes/*
+./slices/*
