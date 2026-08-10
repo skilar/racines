@@ -1,5 +1,6 @@
 @charset 'UTF-8';
-@layer reset, defaults;
+@layer reset, defaults, utilities;
 
 @import url('reset.css') layer(reset);
 @import url('variables.css') layer(defaults);
+@import url('utilities.css') layer(utilities);
