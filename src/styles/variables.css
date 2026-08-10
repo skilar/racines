@@ -12,7 +12,9 @@
 
     /* Fonts */
     --font-headline: var(--font-bodoni);
+    --font-headline: var(--font-garamond);
     --font-serif: var(--font-garamond);
+    --font-serif: var(--font-crimson-text);
 
     --font-weight-normal: 400;
     --font-weight-medium: 500;
