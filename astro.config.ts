@@ -52,11 +52,11 @@ export default defineConfig({
         },
     ],
     i18n: {
-        defaultLocale: 'en',
         locales: [
             { path: 'en', codes: ['en', 'en-us', 'en-US'] },
             { path: 'fr', codes: ['fr', 'fr-fr', 'fr-FR'] },
         ],
+        defaultLocale: 'fr',
     },
     integrations: [sitemap()],
     output: 'server',
