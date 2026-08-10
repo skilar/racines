@@ -23,6 +23,22 @@ export default defineConfig({
             },
             provider: fontProviders.local(),
         },
+        {
+            cssVariable: '--font-garamond',
+            fallbacks: ['serif'],
+            name: 'EB Garamond',
+            options: {
+                variants: [
+                    {
+                        display: 'swap',
+                        src: ['./src/assets/fonts/EBGaramond[wdth,wght].woff2'],
+                        style: 'normal',
+                        weight: '400 800',
+                    },
+                ],
+            },
+            provider: fontProviders.local(),
+        },
     ],
     i18n: {
         locales: ['en', 'fr'],

@@ -82,7 +82,7 @@ audio,
 video {
     border: 0;
     box-sizing: border-box;
-    font-feature-settings: 'liga', 'ss01';
+    font-feature-settings: 'liga';
     font-size: 100%;
     margin: 0;
     padding: 0;
@@ -127,6 +127,10 @@ h6 {
     font-family: var(--font-headline);
     font-variation-settings: 'opsz' 10;
     letter-spacing: 0.25px;
+}
+
+p {
+    font-variant-numeric: oldstyle-nums;
 }
 
 ol,
