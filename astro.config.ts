@@ -23,14 +23,14 @@ export default defineConfig({
             },
             provider: fontProviders.local(),
         },
-        {
-            cssVariable: '--font-crimson-text',
-            fallbacks: ['serif'],
-            name: 'Crimson Text',
-            provider: fontProviders.fontsource(),
-            styles: ['normal'],
-            weights: ['400 800'],
-        },
+        // {
+        //     cssVariable: '--font-crimson-text',
+        //     fallbacks: ['serif'],
+        //     name: 'Crimson Text',
+        //     provider: fontProviders.fontsource(),
+        //     styles: ['normal'],
+        //     weights: ['400 800'],
+        // },
         {
             cssVariable: '--font-garamond',
             fallbacks: ['serif'],
