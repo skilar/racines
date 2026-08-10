@@ -18,7 +18,9 @@ const count = Math.max(
     images.filter(({ image }) => isFilled.image(image)).length,
     1,
 )
-const sizes = isVertical ? 'auto, 100vw' : `auto, calc(100vw / ${count})`
+const sizes = isVertical
+    ? 'auto, 100vw'
+    : `auto, (min-width: 650px) calc(min(100vw, 65rem) / ${count}), 50vw`
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
@@ -50,6 +52,8 @@ const sizes = isVertical ? 'auto, 100vw' : `auto, calc(100vw / ${count})`
 <style>
     .container {
         container: imageList / inline-size;
+        max-width: 65rem;
+        width: 100%;
     }
 
     .imageList {
@@ -59,6 +63,7 @@ const sizes = isVertical ? 'auto, 100vw' : `auto, calc(100vw / ${count})`
 
         &.vertical {
             flex-direction: column;
+            overflow: visible;
         }
     }
 
@@ -68,11 +73,12 @@ const sizes = isVertical ? 'auto, 100vw' : `auto, calc(100vw / ${count})`
         padding: calc(var(--space-1) / 2);
     }
 
-    .listImage {
-        width: 50vw;
+    .imageList:not(.vertical) li {
+        flex: 0 0 50vw;
+        min-width: 0;
 
-        @container imageList (width > 450px) {
-            width: 100%;
+        @container imageList (width >= 650px) {
+            flex: 1 1 0;
         }
     }
 </style>

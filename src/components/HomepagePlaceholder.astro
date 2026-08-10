@@ -135,7 +135,10 @@ const page = await client.getSingle('temp_homepage', { lang })
     }
 
     main {
-        max-width: var(--text-max-width);
+        align-items: center;
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
 
         :is([data-slice-type='image_list'], [data-slice-type='hero']):has(
             + :is([data-slice-type='image_list'], [data-slice-type='hero'])

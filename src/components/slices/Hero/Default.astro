@@ -14,7 +14,7 @@ interface Props {
 const { slice } = Astro.props
 ---
 
-<div data-slice-type={slice.slice_type}>
+<div class="container" data-slice-type={slice.slice_type}>
     <Divider />
 
     <div class="content">
@@ -37,6 +37,10 @@ const { slice } = Astro.props
 </div>
 
 <style>
+    .container {
+        max-width: var(--text-max-width);
+    }
+
     .content {
         &:has(> div + div) {
             display: grid;
