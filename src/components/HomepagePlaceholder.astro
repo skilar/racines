@@ -29,7 +29,6 @@ const page = await client.getSingle('temp_homepage', { lang })
 
         <div class="wrapper">
             <header>
-                <h1 class="title">{page.data.title}</h1>
                 <PrismicRichText
                     class="subtitle"
                     richText={page.data.subtitle}
@@ -87,21 +86,6 @@ const page = await client.getSingle('temp_homepage', { lang })
         text-align: center;
     }
 
-    .title {
-        border-bottom: 4px double var(--color-blue-10);
-        color: var(--color-blue-10);
-        display: inline-block;
-        font-family: var(--font-headline);
-        font-size: var(--font-size-7);
-        font-weight: var(--font-weight-bold);
-        font-variation-settings: 'opsz' 10;
-        letter-spacing: 2px;
-        margin-bottom: var(--header-spacing);
-        padding-bottom: var(--space-3);
-        text-box-trim: trim-both;
-        text-box-edge: cap alphabetic;
-    }
-
     .subtitle {
         font-size: var(--font-size-4);
         font-variant-caps: all-small-caps;
@@ -116,12 +100,14 @@ const page = await client.getSingle('temp_homepage', { lang })
             color: var(--color-blue-10);
             display: inline-block;
             font-family: var(--font-headline);
-            font-size: var(--font-size-5);
+            font-size: var(--font-size-6);
             font-variant-caps: normal;
             font-variation-settings: 'opsz' 6;
             font-weight: var(--font-weight-heavy);
             letter-spacing: 1px;
-            margin-top: var(--space-1);
+            margin-top: var(--space-4);
+            text-box-edge: cap alphabetic;
+            text-box-trim: trim-both;
         }
     }
 
