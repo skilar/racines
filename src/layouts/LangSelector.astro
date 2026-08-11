@@ -4,21 +4,47 @@
 
 <ul class="langs">
     <li>
-        {Astro.currentLocale !== 'fr' ? <a href="/">Fr</a> : 'Fr'}
+        <a class:list={[{ selected: Astro.currentLocale === 'fr' }]} href="/">
+            Fr
+        </a>
     </li>
     <li>/</li>
     <li>
-        {Astro.currentLocale !== 'en' ? <a href="/en/">En</a> : 'En'}
+        <a
+            class:list={[{ selected: Astro.currentLocale === 'en' }]}
+            href="/en/"
+        >
+            En
+        </a>
     </li>
 </ul>
 
 <style>
     .langs {
+        --text-color: var(--color-blue-10);
+        color: var(--text-color);
         display: inline-flex;
+        font-size: 1.125rem;
+        font-weight: var(--font-weight-medium);
         gap: var(--space-3);
+        padding-block: var(--space-2);
+        padding-inline: var(--space-3);
 
         a {
-            color: var(--color-blue-10);
+            color: var(--text-color);
+            text-decoration: none;
+
+            &.selected,
+            &:hover {
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+            }
+        }
+
+        @media (width > 650px) {
+            --text-color: var(--color-ivory);
+            background-color: var(--color-blue-10);
         }
     }
 </style>

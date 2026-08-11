@@ -57,14 +57,8 @@ const page = await client.getSingle('temp_homepage', { lang })
     }
 
     .lang {
-        margin-inline: var(--padding-inline);
-        margin-top: var(--space-2);
         position: absolute;
-        right: 0;
-
-        @media (width > 650px) {
-            margin-top: var(--space-5);
-        }
+        right: var(--padding-inline);
     }
 
     .wrapper {
