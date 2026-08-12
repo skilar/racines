@@ -1,7 +1,6 @@
 ---
 import { isFilled } from '@prismicio/client'
 
-import Divider from '@components/common/Divider.astro'
 import Image from '@components/common/Image.astro'
 
 import type { ImageListSlice } from '@typez/prismic'
@@ -24,7 +23,6 @@ const sizes = isVertical
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
-    <Divider />
     {
         images.length > 0 && (
             <ul class:list={['imageList', { vertical: isVertical }]}>

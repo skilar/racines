@@ -22,13 +22,11 @@ const page = await client.getSingle('temp_homepage', { lang })
     lang={lang}
     title={page.data.meta_title}
 >
-    <div class="container">
-        <div class="lang">
-            <LangSelector />
-        </div>
-
-        <div class="wrapper">
+    <div class="wrapper">
+        <div class="headerContainer">
             <header>
+                <LangSelector />
+
                 <PrismicRichText
                     class="subtitle"
                     richText={page.data.subtitle}
@@ -38,46 +36,50 @@ const page = await client.getSingle('temp_homepage', { lang })
                     <PrismicRichText richText={page.data.description} />
                 </div>
             </header>
-
-            <main id="main">
-                <SliceZone slices={page.data.slices} />
-            </main>
         </div>
+
+        <main id="main">
+            <SliceZone slices={page.data.slices} />
+        </main>
     </div>
 </Layout>
 
 <style>
-    .container {
-        --padding-block: calc(var(--space-8) * 2);
+    .wrapper {
+        --padding-block: calc(var(--space-7) * 2);
         --padding-inline: var(--space-5);
+
+        min-height: 100dvh;
+        padding-bottom: var(--padding-block);
+        padding-inline: var(--padding-inline);
 
         @media (width > 650px) {
             --padding-block: calc(var(--space-9) * 2);
         }
     }
 
-    .lang {
-        position: absolute;
-        right: var(--padding-inline);
-    }
-
-    .wrapper {
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-inline: auto;
-        min-height: 100dvh;
-        padding-block: var(--padding-block);
-        padding-inline: var(--padding-inline);
+    .headerContainer {
+        container: header / inline-size;
         width: 100%;
     }
 
     header {
         --header-spacing: var(--space-8);
+        border-block: var(--double-border);
+        display: flex;
+        flex-direction: column;
+        gap: var(--header-spacing);
+        justify-content: center;
+        margin-bottom: var(--space-5);
+        margin-inline: auto;
+        margin-top: calc(var(--space-7) + var(--space-1));
         max-width: var(--text-max-width);
-        padding-bottom: var(--padding-block);
+        padding-block: var(--padding-block);
         text-align: center;
+
+        @container header (width > 850px) {
+            margin-block: var(--space-9);
+        }
     }
 
     .subtitle {
@@ -107,7 +109,6 @@ const page = await client.getSingle('temp_homepage', { lang })
 
     .description {
         font-size: var(--font-size-4);
-        margin-top: var(--header-spacing);
 
         p:has(+ p) {
             margin-bottom: var(--space-5);
@@ -116,7 +117,6 @@ const page = await client.getSingle('temp_homepage', { lang })
 
     main {
         align-items: center;
-        align-self: stretch;
         display: flex;
         flex-direction: column;
 

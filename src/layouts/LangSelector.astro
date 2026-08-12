@@ -28,7 +28,9 @@
         font-weight: var(--font-weight-medium);
         gap: var(--space-3);
         padding-block: var(--space-2);
-        padding-inline: var(--space-3);
+        position: absolute;
+        right: var(--padding-inline);
+        top: 0;
 
         a {
             color: var(--text-color);
@@ -42,9 +44,10 @@
             }
         }
 
-        @media (width > 650px) {
+        @container header (width > 850px) {
             --text-color: var(--color-ivory);
             background-color: var(--color-blue-10);
+            padding-inline: var(--space-3);
         }
     }
 </style>

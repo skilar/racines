@@ -51,4 +51,5 @@
     --space-9: calc(var(--baseSize) * pow(var(--scaleInt), 5));
 
     --text-max-width: 75ch;
+    --double-border: 4px double var(--color-blue-10);
 }
