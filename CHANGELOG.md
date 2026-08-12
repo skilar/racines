@@ -1,6 +1,14 @@
 # Changelog
 
-## [v0.2.1](https://github.com/skilar/racines/compare/v0.2.0...v0.2.1)
+## [v0.2.2](https://github.com/skilar/racines/compare/v0.2.1...v0.2.2)
+
+-   Update homepage header [`8512098`](https://github.com/skilar/racines/commit/85120983f573ac72231f8ec404203b34f57dff97)
+-   Add background color to LangSelector [`9db943d`](https://github.com/skilar/racines/commit/9db943d720c77ccdb9cc96794ad2fcbebd40a9a5)
+-   Update base font size [`1362263`](https://github.com/skilar/racines/commit/1362263ae5642a6a78a07d6d061e2e92c003429c)
+-   Add class prop to Divider [`93edd9f`](https://github.com/skilar/racines/commit/93edd9f6b5389852d6adabd3ce2ef966f9cf345d)
+-   Increase homepage font size [`c9f0ed1`](https://github.com/skilar/racines/commit/c9f0ed17043a5cab8084d2ab42a572ae825d3e39)
+
+## [v0.2.1](https://github.com/skilar/racines/compare/v0.2.0...v0.2.1) (10 August 2026)
 
 -   Widen ImageList on desktop [`94903f5`](https://github.com/skilar/racines/commit/94903f57bdbcc0f9c43e3ef34eac264104577d4b)
 -   Remove title for the time being [`75523b6`](https://github.com/skilar/racines/commit/75523b67d51a85b8140c16b022b9cc4694440c61)
