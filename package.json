@@ -19,10 +19,10 @@
         "typegen": "npx prismic-ts-codegen"
     },
     "dependencies": {
-        "@astrojs/netlify": "^8.2.0",
+        "@astrojs/netlify": "^8.2.1",
         "@astrojs/sitemap": "^3.7.3",
-        "@prismicio/client": "^7.21.8",
-        "astro": "^7.2.0"
+        "@prismicio/client": "^7.22.0",
+        "astro": "^7.2.1"
     },
     "devDependencies": {
         "@astrojs/check": "^0.9.10",
