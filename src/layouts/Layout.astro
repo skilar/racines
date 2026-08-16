@@ -13,12 +13,27 @@ const props = Astro.props
     <Head {...props} />
 
     <body>
-        <slot />
+        <div class="wrapper">
+            <slot />
+        </div>
     </body>
 </html>
 
 <style>
     body {
         background-color: var(--color-ivory);
+    }
+
+    .wrapper {
+        --padding-block: calc(var(--space-7) * 2);
+        --padding-inline: var(--space-5);
+
+        min-height: 100dvh;
+        padding-bottom: var(--padding-block);
+        padding-inline: var(--padding-inline);
+
+        @media (width > 650px) {
+            --padding-block: calc(var(--space-9) * 2);
+        }
     }
 </style>

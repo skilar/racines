@@ -22,45 +22,29 @@ const page = await client.getSingle('temp_homepage', { lang })
     lang={lang}
     title={page.data.meta_title}
 >
-    <div class="wrapper">
-        <div class="headerContainer">
-            <header>
-                <LangSelector />
+    <div class="headerContainer">
+        <header>
+            <LangSelector />
 
-                <PrismicRichText
-                    class="subtitle"
-                    richText={page.data.subtitle}
-                />
+            <PrismicRichText class="subtitle" richText={page.data.subtitle} />
 
-                <div class="description">
-                    <PrismicRichText richText={page.data.description} />
-                </div>
-            </header>
-        </div>
-
-        <main id="main">
-            <SliceZone slices={page.data.slices} />
-        </main>
+            <div class="description">
+                <PrismicRichText richText={page.data.description} />
+            </div>
+        </header>
     </div>
+
+    <main id="main">
+        <SliceZone slices={page.data.slices} />
+    </main>
 </Layout>
 
 <style>
-    .wrapper {
-        --padding-block: calc(var(--space-7) * 2);
-        --padding-inline: var(--space-5);
-
-        min-height: 100dvh;
-        padding-bottom: var(--padding-block);
-        padding-inline: var(--padding-inline);
-
-        @media (width > 650px) {
-            --padding-block: calc(var(--space-9) * 2);
-        }
-    }
-
     .headerContainer {
+        display: grid;
         container: header / inline-size;
-        width: 100%;
+        grid-template-columns: var(--text-max-width);
+        justify-content: center;
     }
 
     header {
