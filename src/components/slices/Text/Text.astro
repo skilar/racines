@@ -1,0 +1,82 @@
+---
+import PrismicRichText from '../../common/PrismicRichText.astro'
+
+import type { TextSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: TextSlice
+}
+
+const { slice } = Astro.props
+---
+
+<div class="container" data-slice-type={slice.slice_type}>
+    <PrismicRichText richText={slice.primary.text} />
+</div>
+
+<style>
+    .container {
+        --post-line-height: var(--line-height-default);
+        --post-text-size: var(--font-size-4);
+        --post-line: calc(
+            (var(--post-line-height) * var(--post-text-size)) / 2
+        );
+        font-size: var(--font-size-4);
+        hyphens: auto;
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+
+        :is(h1, h2, h3, h4, h5, h6):has(
+            + h1,
+            + h2,
+            + h3,
+            + h4,
+            + h5,
+            + h6,
+            + p
+        ) {
+            margin-bottom: var(--post-line);
+        }
+
+        :is(p, ol, ul) {
+            &:has(+ h2) {
+                margin-bottom: calc(var(--post-line) * 3);
+            }
+
+            &:has(+ h3) {
+                margin-bottom: calc(var(--post-line) * 2);
+            }
+
+            &:has(+ p, + ol, + ul) {
+                margin-bottom: var(--post-line);
+            }
+        }
+
+        h2 {
+            font-size: var(--font-size-5);
+        }
+
+        p {
+            &:first-of-type::first-letter {
+                font-size: var(--font-size-8);
+                float: left;
+                margin-bottom: calc(var(--space-3) * -1.5);
+                margin-right: var(--space-1);
+                margin-top: var(--space-2);
+            }
+        }
+
+        ol,
+        ul {
+            margin-left: calc(var(--post-line) * 3);
+        }
+
+        ol {
+            list-style-type: decimal;
+        }
+
+        ul {
+            list-style-type: disc;
+        }
+    }
+</style>

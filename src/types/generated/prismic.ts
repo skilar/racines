@@ -467,6 +467,21 @@ export interface ImageListSliceVerticalPrimaryImagesItem {
 }
 
 /**
+ * Item in *ImageList → Horizonal with single caption → Primary → Images*
+ */
+export interface ImageListSliceHorizonalWithSingleCaptionPrimaryImagesItem {
+	/**
+	 * Image field in *ImageList → Horizonal with single caption → Primary → Images*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.horizonalWithSingleCaption.primary.images[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
  * Primary content in *ImageList → Horizontal → Primary*
  */
 export interface ImageListSliceDefaultPrimary {
@@ -515,9 +530,43 @@ export interface ImageListSliceVerticalPrimary {
 export type ImageListSliceVertical = prismic.SharedSliceVariation<"vertical", Simplify<ImageListSliceVerticalPrimary>, never>;
 
 /**
+ * Primary content in *ImageList → Horizonal with single caption → Primary*
+ */
+export interface ImageListSliceHorizonalWithSingleCaptionPrimary {
+	/**
+	 * Caption field in *ImageList → Horizonal with single caption → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.horizonalWithSingleCaption.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	caption: prismic.RichTextField;
+	
+	/**
+	 * Images field in *ImageList → Horizonal with single caption → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.horizonalWithSingleCaption.primary.images[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	images: prismic.GroupField<Simplify<ImageListSliceHorizonalWithSingleCaptionPrimaryImagesItem>>;
+}
+
+/**
+ * Horizonal with single caption variation for ImageList Slice
+ *
+ * - **API ID**: `horizonalWithSingleCaption`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageListSliceHorizonalWithSingleCaption = prismic.SharedSliceVariation<"horizonalWithSingleCaption", Simplify<ImageListSliceHorizonalWithSingleCaptionPrimary>, never>;
+
+/**
  * Slice variation for *ImageList*
  */
-type ImageListSliceVariation = ImageListSliceDefault | ImageListSliceVertical
+type ImageListSliceVariation = ImageListSliceDefault | ImageListSliceVertical | ImageListSliceHorizonalWithSingleCaption
 
 /**
  * ImageList Shared Slice
@@ -604,9 +653,12 @@ declare module "@prismicio/client" {
 			ImageListSliceDefaultPrimary,
 			ImageListSliceVerticalPrimaryImagesItem,
 			ImageListSliceVerticalPrimary,
+			ImageListSliceHorizonalWithSingleCaptionPrimaryImagesItem,
+			ImageListSliceHorizonalWithSingleCaptionPrimary,
 			ImageListSliceVariation,
 			ImageListSliceDefault,
 			ImageListSliceVertical,
+			ImageListSliceHorizonalWithSingleCaption,
 			TextSlice,
 			TextSliceDefaultPrimary,
 			TextSliceVariation,

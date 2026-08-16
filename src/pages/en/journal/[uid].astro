@@ -1,0 +1,13 @@
+---
+import getStaticPrismicPaths from '@lib/get-static-prismic-paths'
+
+import JournalEntry from '@components/Journal/JournalEntry.astro'
+
+export async function getStaticPaths() {
+    return await getStaticPrismicPaths({ type: 'blog_post' })
+}
+
+const { uid } = Astro.params
+---
+
+<JournalEntry uid={uid} />

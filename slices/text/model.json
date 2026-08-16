@@ -1,0 +1,28 @@
+{
+    "id": "text",
+    "type": "SharedSlice",
+    "name": "Text",
+    "variations": [
+        {
+            "id": "default",
+            "name": "Default",
+            "description": "Default",
+            "imageUrl": "",
+            "docURL": "...",
+            "version": "initial",
+            "primary": {
+                "text": {
+                    "type": "StructuredText",
+                    "config": {
+                        "label": "Text",
+                        "placeholder": "",
+                        "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                        "allowTargetBlank": true,
+                        "labels": ["ordinal-nums", "footnote"]
+                    }
+                }
+            }
+        }
+    ],
+    "description": "Text"
+}

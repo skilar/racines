@@ -1,6 +1,7 @@
 ---
 import Hero from '@components/slices/Hero/Hero.astro'
 import ImageList from '@components/slices/ImageList/ImageList.astro'
+import Text from '@components/slices/Text/Text.astro'
 
 import type { SliceZone } from '@prismicio/client'
 import type { AnySlice } from '@typez/prismic'
@@ -19,6 +20,8 @@ const { slices } = Astro.props
                 return <Hero slice={slice} />
             case 'image_list':
                 return <ImageList slice={slice} />
+            case 'text':
+                return <Text slice={slice} />
             default:
                 return null
         }

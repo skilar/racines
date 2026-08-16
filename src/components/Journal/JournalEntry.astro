@@ -1,0 +1,112 @@
+---
+import { asDate } from '@prismicio/client'
+import { client } from '@lib/prismic'
+
+import Layout from '@layouts/Layout.astro'
+
+import PrismicRichText from '../common/PrismicRichText.astro'
+import SliceZone from '../common/SliceZone.astro'
+
+import type { Lang } from '@lib/constants'
+
+interface Props {
+    lang?: Lang
+    uid: string
+}
+
+const { lang = 'en-us', uid } = Astro.props
+
+const page = await client.getByUID('blog_post', uid, { lang })
+const date = asDate(page.first_publication_date)
+const dateString = date.toLocaleDateString(lang, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+})
+---
+
+<Layout
+    description={page.data.meta_description}
+    lang={lang}
+    title={page.data.meta_title}
+>
+    <main id="main">
+        <div class="postMeta">
+            <h1>{page.data.title}</h1>
+            <PrismicRichText class="subtitle" richText={page.data.subtitle} />
+            <PrismicRichText
+                class="description"
+                richText={page.data.short_description}
+            />
+            <p class="date" set:html={dateString} />
+        </div>
+
+        <div class="post">
+            <SliceZone slices={page.data.slices} />
+        </div>
+    </main>
+</Layout>
+
+<style>
+    main {
+        margin-block: var(--space-9);
+        margin-inline: auto;
+        max-width: 100ch;
+    }
+
+    h1 {
+        font-size: var(--font-size-5);
+    }
+
+    .subtitle {
+        font-size: var(--font-size-4);
+        font-style: italic;
+    }
+
+    .date,
+    .description {
+        font-size: var(--font-size-4);
+        margin-top: var(--space-4);
+    }
+
+    .date {
+        color: var(--color-blue-11);
+        font-weight: var(--font-weight-medium);
+    }
+
+    .post {
+        border-top: 6px double var(--color-blue-10);
+        counter-reset: footnote;
+        margin-top: var(--space-5);
+        padding-top: var(--space-9);
+
+        div:has(+ div) {
+            margin-bottom: var(--space-8);
+        }
+
+        .sidenote-ref::after {
+            counter-increment: footnote;
+            content: counter(footnote);
+            display: inline-block;
+            vertical-align: super;
+            font-size: 0.7em;
+            cursor: pointer;
+        }
+
+        .sidenote {
+            clear: right;
+            float: right;
+            font-size: var(--font-size-3);
+            margin-bottom: 1rem;
+            margin-right: -19rem;
+            width: 16rem;
+
+            &::before {
+                content: counter(footnote);
+                font-size: var(--font-size-2);
+                margin-right: var(--space-1);
+                vertical-align: super;
+            }
+        }
+    }
+</style>

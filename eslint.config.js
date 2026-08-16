@@ -34,6 +34,6 @@ export default defineConfig({
                 project: './tsconfig.eslint.json',
             },
         },
-        { ignores: ['src/types/prismic.ts'] },
+        { ignores: ['src/types/generated/*'] },
     ],
 })

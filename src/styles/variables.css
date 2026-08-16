@@ -3,9 +3,11 @@
     --color-white: oklch(1 0 0);
     --color-black: oklch(0 0 0);
 
-    --color-ivory: oklch(0.9899 0.0093 99.98);
+    --color-ivory-channels: 0.9899 0.0093 99.98;
+    --color-ivory: oklch(var(--color-ivory-channels));
     --color-chocolate: oklch(0.3336 0.043 32.66);
-    --color-mid-grey: oklch(0.7512 0.0151 254.63);
+    --color-grey-5: oklch(0.7512 0.0151 254.63);
+    --color-grey-11: oklch(0.2512 0.0151 254.63);
 
     --color-blue-10: oklch(0.3629 0.1167 261);
     --color-blue-11: oklch(0.2759 0.1167 261);

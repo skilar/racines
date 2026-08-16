@@ -43,6 +43,14 @@ export default defineConfig({
                         style: 'normal',
                         weight: '400 800',
                     },
+                    {
+                        display: 'swap',
+                        src: [
+                            './src/assets/fonts/EBGaramond-Italic[wdth,wght].woff2',
+                        ],
+                        style: 'italic',
+                        weight: '400 800',
+                    },
                 ],
             },
             provider: fontProviders.local(),

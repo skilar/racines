@@ -2,6 +2,7 @@
 import { isFilled } from '@prismicio/client'
 
 import Image from '@components/common/Image.astro'
+import PrismicRichText from '@components/common/PrismicRichText.astro'
 
 import type { ImageListSlice } from '@typez/generated/prismic'
 
@@ -45,6 +46,15 @@ const sizes = isVertical
             </ul>
         )
     }
+    {
+        'caption' in slice.primary &&
+            isFilled.richText(slice.primary.caption) && (
+                <PrismicRichText
+                    class="caption"
+                    richText={slice.primary.caption}
+                />
+            )
+    }
 </div>
 
 <style>
@@ -78,5 +88,11 @@ const sizes = isVertical
         @container imageList (width >= 650px) {
             flex: 1 1 0;
         }
+    }
+
+    .caption {
+        color: var(--color-grey-11);
+        font-size: var(--font-size-3);
+        margin-top: var(--space-4);
     }
 </style>
