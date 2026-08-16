@@ -3,12 +3,7 @@ import Hero from '@components/slices/Hero/Hero.astro'
 import ImageList from '@components/slices/ImageList/ImageList.astro'
 
 import type { SliceZone } from '@prismicio/client'
-import type { AllDocumentTypes } from '@typez/prismic'
-
-type AnySlice = Extract<
-    AllDocumentTypes,
-    { data: { slices: unknown } }
->['data']['slices'][number]
+import type { AnySlice } from '@typez/prismic'
 
 interface Props {
     slices: SliceZone<AnySlice>
