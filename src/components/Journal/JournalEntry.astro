@@ -2,7 +2,7 @@
 import { asDate } from '@prismicio/client'
 import { client } from '@lib/prismic'
 
-import Layout from '@layouts/Layout.astro'
+import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 
 import PrismicRichText from '../common/PrismicRichText.astro'
 import SliceZone from '../common/SliceZone.astro'
@@ -25,7 +25,7 @@ const dateString = date.toLocaleDateString(lang, {
 })
 ---
 
-<Layout
+<LayoutWithHeader
     description={page.data.meta_description}
     lang={lang}
     title={page.data.meta_title}
@@ -45,13 +45,20 @@ const dateString = date.toLocaleDateString(lang, {
             <SliceZone slices={page.data.slices} />
         </div>
     </main>
-</Layout>
+</LayoutWithHeader>
 
 <style>
     main {
-        margin-block: var(--space-9);
+        margin-block: var(--space-5) var(--space-9);
         margin-inline: auto;
-        max-width: 100ch;
+        max-width: var(--text-max-width);
+    }
+
+    .postMeta {
+        border-block: 6px double var(--color-blue-10);
+        border-block: var(--double-border);
+        margin-bottom: var(--space-9);
+        padding-block: var(--space-5);
     }
 
     h1 {
@@ -75,10 +82,7 @@ const dateString = date.toLocaleDateString(lang, {
     }
 
     .post {
-        border-top: 6px double var(--color-blue-10);
         counter-reset: footnote;
-        margin-top: var(--space-5);
-        padding-top: var(--space-9);
 
         div:has(+ div) {
             margin-bottom: var(--space-8);
@@ -88,9 +92,8 @@ const dateString = date.toLocaleDateString(lang, {
             counter-increment: footnote;
             content: counter(footnote);
             display: inline-block;
-            vertical-align: super;
-            font-size: 0.7em;
-            cursor: pointer;
+            font-variant-numeric: ordinal;
+            margin-left: -0.125rem;
         }
 
         .sidenote {
@@ -103,9 +106,8 @@ const dateString = date.toLocaleDateString(lang, {
 
             &::before {
                 content: counter(footnote);
-                font-size: var(--font-size-2);
+                font-variant-numeric: ordinal;
                 margin-right: var(--space-1);
-                vertical-align: super;
             }
         }
     }
