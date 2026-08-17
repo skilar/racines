@@ -43,7 +43,7 @@ const page = await client.getSingle('temp_homepage', { lang })
     .headerContainer {
         display: grid;
         container: header / inline-size;
-        grid-template-columns: var(--text-max-width);
+        grid-template-columns: var(--width-text);
         justify-content: center;
     }
 
@@ -57,7 +57,7 @@ const page = await client.getSingle('temp_homepage', { lang })
         margin-bottom: var(--space-5);
         margin-inline: auto;
         margin-top: calc(var(--space-7) + var(--space-1));
-        max-width: var(--text-max-width);
+        max-width: var(--width-text);
         padding-block: var(--padding-block);
         text-align: center;
 

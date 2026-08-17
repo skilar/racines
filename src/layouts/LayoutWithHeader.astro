@@ -16,7 +16,7 @@ const page = await client.getSingle('layout', { lang })
 ---
 
 <Layout lang={lang} {...props}>
-    <header>
+    <header class="contained">
         <div class="header">
             {
                 isFilled.keyText(page.data.title) && (
@@ -41,8 +41,6 @@ const page = await client.getSingle('layout', { lang })
         display: flex;
         justify-content: space-between;
         margin-block: var(--space-4) var(--space-5);
-        margin-inline: auto;
-        max-width: var(--text-max-width);
         padding-block: var(--space-4);
     }
 

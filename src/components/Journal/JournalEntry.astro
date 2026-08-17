@@ -31,8 +31,8 @@ const dateString = date.toLocaleDateString(lang, {
     lang={lang}
     title={page.data.meta_title}
 >
-    <main id="main">
-        <div class="postMeta">
+    <main id="main" class="contained">
+        <div class="postMeta contained">
             <h1>{page.data.title}</h1>
             <PrismicRichText class="subtitle" richText={page.data.subtitle} />
             <PrismicRichText
@@ -51,8 +51,7 @@ const dateString = date.toLocaleDateString(lang, {
 <style>
     main {
         margin-block: var(--space-5) var(--space-9);
-        margin-inline: auto;
-        max-width: var(--text-max-width);
+        max-width: var(--width-wide);
     }
 
     .postMeta {
@@ -102,8 +101,10 @@ const dateString = date.toLocaleDateString(lang, {
             float: right;
             font-size: var(--font-size-3);
             margin-bottom: 1rem;
-            margin-right: -19rem;
-            width: 16rem;
+            margin-right: calc(
+                (var(--width-sidenote) + var(--width-sidenote-gap)) * -1
+            );
+            width: var(--width-sidenote);
 
             &::before {
                 content: counter(footnote);

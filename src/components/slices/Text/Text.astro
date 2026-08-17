@@ -10,7 +10,7 @@ interface Props {
 const { slice } = Astro.props
 ---
 
-<div class="container" data-slice-type={slice.slice_type}>
+<div class="container contained" data-slice-type={slice.slice_type}>
     <PrismicRichText richText={slice.primary.text} />
 </div>
 

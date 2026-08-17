@@ -1,3 +1,9 @@
+.contained {
+    margin-inline: auto;
+    max-width: var(--width-text);
+    width: 100%;
+}
+
 .ordinal-nums {
     font-variant-numeric: ordinal;
 }

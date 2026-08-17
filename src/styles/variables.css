@@ -52,6 +52,11 @@
     --space-8: calc(var(--baseSize) * pow(var(--scaleInt), 4));
     --space-9: calc(var(--baseSize) * pow(var(--scaleInt), 5));
 
-    --text-max-width: 85ch;
+    /* Widths */
+    --width-text: 40rem;
+    --width-wide: 60rem;
+    --width-sidenote: 16rem;
+    --width-sidenote-gap: 3rem;
+
     --double-border: 4px double var(--color-blue-10);
 }
