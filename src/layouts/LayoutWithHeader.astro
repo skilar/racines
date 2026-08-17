@@ -10,7 +10,7 @@ import type { LayoutProps } from '@typez/types'
 
 type Props = LayoutProps
 
-const { lang, ...props } = Astro.props
+const { alternateLanguages, lang, ...props } = Astro.props
 
 const page = await client.getSingle('layout', { lang })
 ---
@@ -20,7 +20,7 @@ const page = await client.getSingle('layout', { lang })
         <div class="header">
             {
                 isFilled.keyText(page.data.title) && (
-                    <a class="title" href="#">
+                    <a class="title" href="/">
                         {page.data.title}
                     </a>
                 )
@@ -29,7 +29,7 @@ const page = await client.getSingle('layout', { lang })
             <PrismicRichText class="subtitle" richText={page.data.subtitle} />
         </div>
 
-        <LangSelector />
+        <LangSelector alternateLanguages={alternateLanguages} lang={lang} />
     </header>
 
     <slot />

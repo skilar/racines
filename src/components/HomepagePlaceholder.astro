@@ -24,7 +24,7 @@ const page = await client.getSingle('temp_homepage', { lang })
 >
     <div class="headerContainer">
         <header>
-            <LangSelector />
+            <LangSelector lang={lang} />
 
             <PrismicRichText class="subtitle" richText={page.data.subtitle} />
 

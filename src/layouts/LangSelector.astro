@@ -1,22 +1,39 @@
 ---
+import { getLangLinks } from '@lib/get-lang-links'
 
+import type { AlternateLanguage } from '@prismicio/client'
+import type { Lang } from '@lib/constants'
+
+interface Props {
+    alternateLanguages?: AlternateLanguage[] | undefined
+    lang: Lang
+}
+
+const { alternateLanguages, lang } = Astro.props
+
+const links = getLangLinks({
+    alternateLanguages,
+    currentPath: Astro.url.pathname,
+    lang,
+})
 ---
 
 <ul class="langs">
-    <li>
-        <a class:list={[{ selected: Astro.currentLocale === 'fr' }]} href="/">
-            Fr
-        </a>
-    </li>
-    <li>/</li>
-    <li>
-        <a
-            class:list={[{ selected: Astro.currentLocale === 'en' }]}
-            href="/en/"
-        >
-            En
-        </a>
-    </li>
+    {
+        links.map((link, index) => (
+            <Fragment>
+                {index > 0 && <li>/</li>}
+                <li>
+                    <a
+                        class:list={[{ selected: link.selected }]}
+                        href={link.href}
+                    >
+                        {link.label}
+                    </a>
+                </li>
+            </Fragment>
+        ))
+    }
 </ul>
 
 <style>
