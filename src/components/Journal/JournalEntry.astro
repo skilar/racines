@@ -4,6 +4,7 @@ import { client } from '@lib/prismic'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 
+import Image from '../common/Image.astro'
 import PrismicRichText from '../common/PrismicRichText.astro'
 import SliceZone from '../common/SliceZone.astro'
 
@@ -43,6 +44,8 @@ const dateString = date.toLocaleDateString(lang, {
         </div>
 
         <div class="post">
+            <Image class="coverImage" image={page.data.cover_image} priority />
+
             <SliceZone slices={page.data.slices} />
         </div>
     </main>
@@ -116,5 +119,9 @@ const dateString = date.toLocaleDateString(lang, {
                 margin-right: var(--space-1);
             }
         }
+    }
+
+    .coverImage {
+        margin-bottom: var(--space-9);
     }
 </style>

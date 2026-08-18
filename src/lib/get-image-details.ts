@@ -36,7 +36,7 @@ export default async function getImageDetails({
     image,
     quality = 65,
 }: GetImageDetailsProps): Promise<ImageDetails | null> {
-    if (!isFilled.imageThumbnail(image)) {
+    if (!isFilled.image(image)) {
         return null
     }
 
