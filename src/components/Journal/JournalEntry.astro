@@ -33,24 +33,33 @@ const dateString = date.toLocaleDateString(lang, {
     title={page.data.meta_title}
 >
     <main id="main" class="contained">
-        <div class="postMeta contained">
-            <h1>{page.data.title}</h1>
-            <PrismicRichText class="subtitle" richText={page.data.subtitle} />
+        <article>
+            <div class="postMeta contained">
+                <h1>{page.data.title}</h1>
+                <PrismicRichText
+                    class="subtitle"
+                    richText={page.data.subtitle}
+                />
 
-            <div class="dingbat">()()()</div>
+                <div class="dingbat">()()()</div>
 
-            <PrismicRichText
-                class="description contained"
-                richText={page.data.short_description}
-            />
-            <p class="date" set:html={dateString} />
-        </div>
+                <PrismicRichText
+                    class="description contained"
+                    richText={page.data.short_description}
+                />
+                <p class="date" set:html={dateString} />
+            </div>
 
-        <div class="post">
-            <Image class="coverImage" image={page.data.cover_image} priority />
+            <div class="post">
+                <Image
+                    class="coverImage"
+                    image={page.data.cover_image}
+                    priority
+                />
 
-            <SliceZone slices={page.data.slices} />
-        </div>
+                <SliceZone slices={page.data.slices} />
+            </div>
+        </article>
     </main>
 </LayoutWithHeader>
 
