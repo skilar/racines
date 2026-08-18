@@ -36,7 +36,7 @@ const dateString = date.toLocaleDateString(lang, {
             <h1>{page.data.title}</h1>
             <PrismicRichText class="subtitle" richText={page.data.subtitle} />
             <PrismicRichText
-                class="description"
+                class="description contained"
                 richText={page.data.short_description}
             />
             <p class="date" set:html={dateString} />
@@ -55,14 +55,14 @@ const dateString = date.toLocaleDateString(lang, {
     }
 
     .postMeta {
-        border-block: 6px double var(--color-blue-10);
-        border-block: var(--double-border);
-        margin-bottom: var(--space-9);
-        padding-block: var(--space-5);
+        margin-block: var(--space-9);
+        max-width: var(--width-wide);
+        text-align: center;
     }
 
     h1 {
-        font-size: var(--font-size-5);
+        font-size: var(--font-size-6);
+        margin-bottom: var(--space-3);
     }
 
     .subtitle {
@@ -79,6 +79,10 @@ const dateString = date.toLocaleDateString(lang, {
     .date {
         color: var(--color-blue-11);
         font-weight: var(--font-weight-medium);
+    }
+
+    .description {
+        margin-block: var(--space-8);
     }
 
     .post {

@@ -37,11 +37,12 @@ const page = await client.getSingle('layout', { lang })
 
 <style>
     header {
-        align-items: center;
+        align-items: baseline;
+        border-bottom: 1px solid var(--color-blue-10);
         display: flex;
         justify-content: space-between;
-        margin-block: var(--space-4) var(--space-5);
-        padding-block: var(--space-4);
+        max-width: var(--width-wide);
+        padding-bottom: var(--space-1);
     }
 
     .header {
@@ -57,6 +58,7 @@ const page = await client.getSingle('layout', { lang })
         display: flex;
         font-family: var(--font-headline);
         font-size: var(--font-size-6);
+        font-size: var(--font-size-5);
         font-variant-caps: all-small-caps;
         font-variation-settings: 'opsz' 10;
         font-weight: var(--font-weight-medium);
@@ -75,5 +77,6 @@ const page = await client.getSingle('layout', { lang })
     .subtitle {
         color: var(--color-grey-11);
         font-size: var(--font-size-4);
+        font-size: var(--font-size-3);
     }
 </style>
