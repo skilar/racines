@@ -11,8 +11,10 @@ export const LANG_LABELS: Record<Lang, string> = {
 export const ROUTES: Route[] = [
     { type: 'blog_post', lang: 'en-us', path: '/en/journal/:uid/' },
     { type: 'blog_post', lang: 'fr-fr', path: '/journal/:uid/' },
-    { type: 'homepage', lang: 'en-us', path: '/en/home/' },
-    { type: 'homepage', lang: 'fr-fr', path: '/home/' },
-    { type: 'temp_homepage', lang: 'en-us', path: '/en/' },
-    { type: 'temp_homepage', lang: 'fr-fr', path: '/' },
+    { type: 'homepage', lang: 'en-us', path: '/en/' },
+    { type: 'homepage', lang: 'fr-fr', path: '/' },
+    { type: 'page', lang: 'en-us', path: '/en/:uid/' },
+    { type: 'page', lang: 'fr-fr', path: '/:uid/' },
+    { type: 'temp_homepage', lang: 'en-us', path: '/en/home' },
+    { type: 'temp_homepage', lang: 'fr-fr', path: '/home' },
 ]

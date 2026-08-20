@@ -23,7 +23,7 @@ const sizes = isVertical
     : `auto, (min-width: 650px) calc(min(100vw, 65rem) / ${count}), 50vw`
 ---
 
-<div class="container contained" data-slice-type={slice.slice_type}>
+<div class="container" data-slice-type={slice.slice_type}>
     {
         images.length > 0 && (
             <ul class:list={['imageList', { vertical: isVertical }]}>
@@ -60,7 +60,7 @@ const sizes = isVertical
 <style>
     .container {
         container: imageList / inline-size;
-        max-width: var(--width-wide);
+        max-width: var(--width-image);
     }
 
     .imageList {

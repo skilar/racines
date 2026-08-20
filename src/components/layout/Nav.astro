@@ -1,0 +1,44 @@
+---
+import { asLinkAttrs, isFilled } from '@prismicio/client'
+
+import type { LayoutDocument } from '@typez/generated/prismic'
+
+interface Props {
+    menu: LayoutDocument['data']['menu']
+}
+
+const { menu } = Astro.props
+---
+
+{
+    menu && (
+        <nav>
+            <ul class="nav">
+                {menu.filter(isFilled.link).map((item) => (
+                    <li>
+                        <a {...asLinkAttrs(item)}>{item.text}</a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    )
+}
+
+<style>
+    .nav {
+        display: flex;
+        gap: var(--space-5);
+
+        a {
+            font-size: var(--font-size-3);
+            font-weight: var(--font-weight-medium);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+            }
+        }
+    }
+</style>

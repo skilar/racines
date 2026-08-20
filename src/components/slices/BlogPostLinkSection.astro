@@ -1,0 +1,189 @@
+---
+import { isFilled } from '@prismicio/client'
+import getJournalEntryDate from '@lib/get-journal-entry-date'
+
+import Image from '@components/common/Image.astro'
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+
+import type { BlogPostLinkSectionSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: BlogPostLinkSectionSlice
+}
+
+const { slice } = Astro.props
+---
+
+<div class="container" data-slice-type={slice.slice_type}>
+    <div>
+        {slice.primary.title && <h2>{slice.primary.title}</h2>}
+
+        <PrismicRichText class="description" richText={slice.primary.caption} />
+
+        {
+            isFilled.link(slice.primary.link) && (
+                <a class="journalLink" href={slice.primary.link.url}>
+                    {slice.primary.link.text} →
+                </a>
+            )
+        }
+    </div>
+
+    <ul class="blogPosts">
+        {
+            slice.primary.blog_posts.map((post) => {
+                if (
+                    isFilled.contentRelationship(post.blog_post) &&
+                    post.blog_post.data
+                ) {
+                    const dateString = getJournalEntryDate(
+                        post.blog_post.first_publication_date,
+                        Astro.currentLocale,
+                    )
+
+                    return (
+                        <li class="post">
+                            {isFilled.image(
+                                post.blog_post.data.cover_image,
+                            ) && (
+                                <div class="image">
+                                    <Image
+                                        image={post.blog_post.data.cover_image}
+                                        quality={75}
+                                    />
+                                </div>
+                            )}
+
+                            <div class="postText">
+                                <time
+                                    class="postDate"
+                                    datetime={
+                                        post.blog_post.first_publication_date
+                                    }
+                                >
+                                    {dateString}
+                                </time>
+
+                                <a class="postTitle" href={post.blog_post.url}>
+                                    {post.blog_post.data.title}
+                                </a>
+
+                                <PrismicRichText
+                                    class="postDescription"
+                                    richText={post.blog_post.data.subtitle}
+                                />
+                            </div>
+                        </li>
+                    )
+                }
+
+                return null
+            })
+        }
+    </ul>
+</div>
+
+<style>
+    .container {
+        border-top: var(--double-border);
+        display: grid;
+        margin-top: var(--space-8);
+        padding-top: var(--space-6);
+    }
+
+    h2 {
+        color: var(--color-blue-10);
+        font-size: var(--font-size-5);
+        font-variation-settings: 'opsz' 6;
+        margin-bottom: var(--space-3);
+        text-box-edge: cap alphabetic;
+        text-box-trim: trim-both;
+    }
+
+    .description {
+        font-size: var(--font-size-4);
+        margin-bottom: var(--space-1);
+    }
+
+    .journalLink {
+        color: var(--color-red-8);
+        font-size: var(--font-size-4);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-medium);
+        letter-spacing: 0.25px;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+        }
+    }
+
+    .blogPosts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-5);
+        padding-top: var(--space-6);
+    }
+
+    .post {
+        display: grid;
+        gap: 0;
+        grid-row: auto / span 2;
+        grid-template-rows: subgrid;
+
+        /* &:hover {
+            .postText {
+                background-color: var(--color-ivory-1);
+                border-color: var(--color-ivory-5);
+                box-shadow: 0 0 15px 0px oklch(0 0 0 / 10%);
+            }
+        } */
+    }
+
+    .postText {
+        background-color: var(--color-ivory-2);
+        border-inline: 1px solid var(--color-ivory-4);
+        border-bottom: 4px double var(--color-ivory-4);
+        padding-block: var(--space-4) var(--space-5);
+        padding-inline: var(--space-3);
+        /* transition: all 200ms ease-in-out; */
+    }
+
+    .postDate {
+        color: var(--color-ivory-9);
+        display: block;
+        font-size: var(--font-size-4);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-medium);
+        line-height: 1;
+        margin-bottom: var(--space-4);
+    }
+
+    .postTitle {
+        color: var(--color-red-8);
+        display: inline-block;
+        font-family: var(--font-headline);
+        font-size: var(--font-size-4);
+        font-variation-settings: 'opsz' 6;
+        font-weight: var(--font-weight-bold);
+        line-height: 1.2;
+        text-box-edge: cap alphabetic;
+        text-box-trim: trim-both;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+        }
+
+        &:has(+ .postDescription) {
+            margin-bottom: var(--space-4);
+        }
+    }
+
+    .postDescription {
+        color: var(--color-grey-11);
+        font-size: var(--font-size-3);
+    }
+</style>

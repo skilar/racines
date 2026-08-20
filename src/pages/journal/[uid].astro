@@ -1,7 +1,7 @@
 ---
 import getStaticPrismicPaths from '@lib/get-static-prismic-paths'
 
-import JournalEntry from '@components/Journal/JournalEntry.astro'
+import JournalEntry from '@components/pages/Journal/JournalEntry.astro'
 
 export async function getStaticPaths() {
     return await getStaticPrismicPaths({ lang: 'fr-fr', type: 'blog_post' })

@@ -1,12 +1,12 @@
 ---
-import { asDate } from '@prismicio/client'
 import { client } from '@lib/prismic'
+import getJournalEntryDate from '@lib/get-journal-entry-date'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 
-import Image from '../common/Image.astro'
-import PrismicRichText from '../common/PrismicRichText.astro'
-import SliceZone from '../common/SliceZone.astro'
+import Image from '../../common/Image.astro'
+import PrismicRichText from '../../common/PrismicRichText.astro'
+import SliceZone from '../../common/SliceZone.astro'
 
 import type { Lang } from '@lib/constants'
 
@@ -18,12 +18,7 @@ interface Props {
 const { lang = 'en-us', uid } = Astro.props
 
 const page = await client.getByUID('blog_post', uid, { lang })
-const date = asDate(page.first_publication_date)
-const dateString = date.toLocaleDateString(lang, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-})
+const dateString = getJournalEntryDate(page.first_publication_date, lang)
 ---
 
 <LayoutWithHeader
@@ -133,12 +128,6 @@ const dateString = date.toLocaleDateString(lang, {
 
     .coverImage {
         margin-bottom: var(--space-9);
-    }
-
-    .dingbat {
-        color: var(--color-red-8);
-        font-feature-settings: 'ss04';
-        font-size: var(--font-size-4);
-        margin-block: var(--space-8);
+        max-width: var(--width-image);
     }
 </style>

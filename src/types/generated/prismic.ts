@@ -152,7 +152,7 @@ interface BlogPostDocumentData {
  */
 export type BlogPostDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<BlogPostDocumentData>, "blog_post", Lang>;
 
-type HomepageDocumentDataSlicesSlice = HeroSlice
+type HomepageDocumentDataSlicesSlice = HeroSlice | TextSlice | ImageListSlice | BlogPostLinkSectionSlice
 
 /**
  * Content for Homepage documents
@@ -236,7 +236,16 @@ interface LayoutDocumentData {
 	 * - **Tab**: Header
 	 * - **Documentation**: https://prismic.io/docs/fields/link
 	 */
-	menu: prismic.Repeatable<prismic.LinkField<string, string, unknown, prismic.FieldState, "Primary" | "Secondary">>;
+	menu: prismic.Repeatable<prismic.LinkField<string, string, unknown, prismic.FieldState, "Primary" | "Secondary">>;/**
+	 * Text field in *Layout*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: layout.text
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	text: prismic.RichTextField;
 }
 
 /**
@@ -249,6 +258,77 @@ interface LayoutDocumentData {
  * @typeParam Lang - Language API ID of the document.
  */
 export type LayoutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<LayoutDocumentData>, "layout", Lang>;
+
+type PageDocumentDataSlicesSlice = TextSlice | ImageListSlice
+
+/**
+ * Content for Page documents
+ */
+interface PageDocumentData {
+	/**
+	 * Title field in *Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: page.title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Slice Zone field in *Page*
+	 *
+	 * - **Field Type**: Slice Zone
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: page.slices[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/slices
+	 */
+	slices: prismic.SliceZone<PageDocumentDataSlicesSlice>;/**
+	 * Meta Title field in *Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A title of the page used for social media and search engines
+	 * - **API ID Path**: page.meta_title
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+	
+	/**
+	 * Meta Description field in *Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A brief summary of the page
+	 * - **API ID Path**: page.meta_description
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+	
+	/**
+	 * Meta Image field in *Page*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: page.meta_image
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Page document from Prismic
+ *
+ * - **API ID**: `page`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
 type TempHomepageDocumentDataSlicesSlice = HeroSlice | ImageListSlice
 
@@ -343,7 +423,90 @@ interface TempHomepageDocumentData {
  */
 export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
 
-export type AllDocumentTypes = BlogPostDocument | HomepageDocument | LayoutDocument | TempHomepageDocument;
+export type AllDocumentTypes = BlogPostDocument | HomepageDocument | LayoutDocument | PageDocument | TempHomepageDocument;
+
+/**
+ * Item in *BlogPostLinkSection → Default → Primary → Blog Posts*
+ */
+export interface BlogPostLinkSectionSliceDefaultPrimaryBlogPostsItem {
+	/**
+	 * Blog Post field in *BlogPostLinkSection → Default → Primary → Blog Posts*
+	 *
+	 * - **Field Type**: Content Relationship
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_post_link_section.default.primary.blog_posts[].blog_post
+	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 */
+	blog_post: ContentRelationshipFieldWithData<[{"id":"blog_post","fields":["title","subtitle","short_description","cover_image"]}]>;
+}
+
+/**
+ * Primary content in *BlogPostLinkSection → Default → Primary*
+ */
+export interface BlogPostLinkSectionSliceDefaultPrimary {
+	/**
+	 * Title field in *BlogPostLinkSection → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_post_link_section.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Caption field in *BlogPostLinkSection → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_post_link_section.default.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	caption: prismic.RichTextField;
+	
+	/**
+	 * Link field in *BlogPostLinkSection → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_post_link_section.default.primary.link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	
+	/**
+	 * Blog Posts field in *BlogPostLinkSection → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_post_link_section.default.primary.blog_posts[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	blog_posts: prismic.GroupField<Simplify<BlogPostLinkSectionSliceDefaultPrimaryBlogPostsItem>>;
+}
+
+/**
+ * Default variation for BlogPostLinkSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BlogPostLinkSectionSliceDefault = prismic.SharedSliceVariation<"default", Simplify<BlogPostLinkSectionSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *BlogPostLinkSection*
+ */
+type BlogPostLinkSectionSliceVariation = BlogPostLinkSectionSliceDefault
+
+/**
+ * BlogPostLinkSection Shared Slice
+ *
+ * - **API ID**: `blog_post_link_section`
+ * - **Description**: BlogPostLinkSection
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BlogPostLinkSectionSlice = prismic.SharedSlice<"blog_post_link_section", BlogPostLinkSectionSliceVariation>;
 
 /**
  * Primary content in *Hero → Default → Primary*
@@ -378,6 +541,16 @@ export interface HeroSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	image: prismic.ImageField<never>;
+	
+	/**
+	 * Link field in *Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.default.primary.link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
@@ -422,6 +595,16 @@ export interface HeroSliceFullBleedPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	image: prismic.ImageField<never>;
+	
+	/**
+	 * Link field in *Hero → Full Bleed → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.fullBleed.primary.link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
@@ -649,10 +832,18 @@ declare module "@prismicio/client" {
 			HomepageDocumentDataSlicesSlice,
 			LayoutDocument,
 			LayoutDocumentData,
+			PageDocument,
+			PageDocumentData,
+			PageDocumentDataSlicesSlice,
 			TempHomepageDocument,
 			TempHomepageDocumentData,
 			TempHomepageDocumentDataSlicesSlice,
 			AllDocumentTypes,
+			BlogPostLinkSectionSlice,
+			BlogPostLinkSectionSliceDefaultPrimaryBlogPostsItem,
+			BlogPostLinkSectionSliceDefaultPrimary,
+			BlogPostLinkSectionSliceVariation,
+			BlogPostLinkSectionSliceDefault,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
 			HeroSliceFullBleedPrimary,

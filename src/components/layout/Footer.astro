@@ -1,0 +1,30 @@
+---
+import PrismicRichText from '../common/PrismicRichText.astro'
+
+import type { LayoutDocument } from '@typez/generated/prismic'
+
+interface Props {
+    text: LayoutDocument['data']['text']
+}
+
+const { text } = Astro.props
+---
+
+<footer>
+    <div class="footer contained">
+        <PrismicRichText richText={text} />
+    </div>
+</footer>
+
+<style>
+    footer {
+        background-color: var(--color-ivory-3);
+    }
+
+    .footer {
+        max-width: var(--width-wide);
+        padding-block: var(--space-5);
+        padding-inline: var(--padding-inline);
+        text-align: center;
+    }
+</style>

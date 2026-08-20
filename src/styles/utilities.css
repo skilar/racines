@@ -7,3 +7,9 @@
 .ordinal-nums {
     font-variant-numeric: ordinal;
 }
+
+.dingbat {
+    color: var(--color-red-8);
+    font-feature-settings: 'ss04';
+    font-size: var(--font-size-4);
+}

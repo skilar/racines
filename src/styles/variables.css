@@ -9,38 +9,18 @@
     --color-grey-5: oklch(0.7512 0.0151 254.63);
     --color-grey-11: oklch(0.2512 0.0151 254.63);
 
-    --color-blue-10: oklch(0.3629 0.1167 261);
-    --color-blue-11: oklch(0.2759 0.1167 261);
-
-    --color-red-8: oklch(0.4473 0.0937 7.49);
-
-    /* Made by https://hihayk.github.io/scale/#4/6/50/80/-51/-30/20/14/7f3c4b/127/60/75/white */
-    --color-red-1: oklch(0.9309 0.0937 7.49);
-    --color-red-2: oklch(0.8999 0.0937 7.49);
-    --color-red-3: oklch(0.8271 0.0937 7.49);
-    --color-red-4: oklch(0.7515 0.0937 7.49);
-    --color-red-5: oklch(0.6709 0.0937 7.49);
-    --color-red-6: oklch(0.5943 0.0937 7.49);
-    --color-red-7: oklch(0.5208 0.0937 7.49);
-    --color-red-8: oklch(0.4473 0.0937 7.49);
-    --color-red-9: oklch(0.4049 0.0937 7.49);
-    --color-red-10: oklch(0.3837 0.0937 7.49);
-    --color-red-11: oklch(0.3609 0.0937 7.49);
-    --color-red-12: oklch(0.3342 0.0937 7.49);
-
-    /* Made by https://www.toolsjam.co/tools/colors/color-scale-generator, vary lightness */
-    --color-red-1: oklch(0.9567 0.01 1.99);
-    --color-red-2: oklch(0.8822 0.0278 0.74);
-    --color-red-3: oklch(0.81 0.0465 2.68);
-    --color-red-4: oklch(0.7376 0.0664 4.11);
-    --color-red-5: oklch(0.6626 0.0879 4.65);
-    --color-red-6: oklch(0.592 0.11 6.58);
-    --color-red-7: oklch(0.5237 0.1129 7.54);
-    --color-red-8: oklch(0.4571 0.0959 7.92);
-    --color-red-9: oklch(0.3848 0.0785 7.41);
-    --color-red-10: oklch(0.3127 0.0599 6.46);
-    --color-red-11: oklch(0.2361 0.0395 7.16);
-    --color-red-12: oklch(0.1487 0.0169 4);
+    --color-ivory-1: oklch(0.97 0.0093 99.98);
+    --color-ivory-2: oklch(0.9435 0.0094 99.98);
+    --color-ivory-3: oklch(0.9006 0.0095 99.98);
+    --color-ivory-4: oklch(0.8418 0.0097 99.98);
+    --color-ivory-5: oklch(0.7576 0.01 99.98);
+    --color-ivory-6: oklch(0.6641 0.0103 99.98);
+    --color-ivory-7: oklch(0.5823 0.0106 99.98);
+    --color-ivory-8: oklch(0.5109 0.0109 99.98);
+    --color-ivory-9: oklch(0.4382 0.0112 99.98);
+    --color-ivory-10: oklch(0.3657 0.0114 99.98);
+    --color-ivory-11: oklch(0.2917 0.0116 99.98);
+    --color-ivory-12: oklch(0.2 0.0116 99.98);
 
     /* Made by https://www.toolsjam.co/tools/colors/color-scale-generator, vary both */
     --color-red-1: oklch(0.9607 0.0035 354.69);
@@ -112,7 +92,8 @@
 
     /* Widths */
     --width-text: 40rem;
-    --width-wide: 60rem;
+    --width-image: 60rem;
+    --width-wide: 80rem;
     --width-sidenote: 16rem;
     --width-sidenote-gap: 3rem;
 

@@ -14,6 +14,10 @@ const { slice } = Astro.props
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
+    {slice.primary.title && <h2>{slice.primary.title}</h2>}
+
+    <PrismicRichText class="description" richText={slice.primary.description} />
+
     {
         isFilled.image(slice.primary.image) && (
             <div class="image">
@@ -21,48 +25,39 @@ const { slice } = Astro.props
             </div>
         )
     }
-
-    <div>
-        {slice.primary.title && <h2>{slice.primary.title}</h2>}
-        <PrismicRichText
-            class="description"
-            richText={slice.primary.description}
-        />
-    </div>
 </div>
 
 <style>
     .container {
-        border-top: var(--double-border);
-        padding-top: var(--space-5);
-        max-width: var(--width-text);
+        padding-top: var(--space-8);
 
         &:has(> div + div) {
             display: grid;
-            gap: var(--space-5);
-            grid-template-columns: 20vw 65ch;
-            margin-left: -13.333vw;
-            margin-left: -10vw;
+            gap: var(--space-6);
+            grid-template-columns: 1fr 20vw;
+            grid-template-columns: 55ch 1fr;
+            grid-template-columns: min-content 1fr 20vw;
         }
-    }
-
-    .image {
-        max-width: 20vw;
-        width: 100%;
     }
 
     h2 {
         color: var(--color-blue-10);
-        font-size: var(--font-size-5);
+        font-size: var(--font-size-6);
         font-variation-settings: 'opsz' 6;
+        line-height: 1.2;
         margin-bottom: var(--space-5);
         text-box-trim: trim-both;
         text-box-edge: cap alphabetic;
     }
 
+    .dingbat {
+        margin-block: var(--space-6) var(--space-5);
+    }
+
     .description {
         font-size: var(--font-size-4);
         line-height: 1.4;
+        max-width: var(--width-text);
 
         h3 {
             font-variation-settings: 'opsz' 6;
@@ -80,8 +75,12 @@ const { slice } = Astro.props
         }
     }
 
-    img {
-        display: block;
-        max-width: 100%;
+    .image {
+        width: 100%;
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
     }
 </style>

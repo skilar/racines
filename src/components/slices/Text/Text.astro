@@ -10,7 +10,7 @@ interface Props {
 const { slice } = Astro.props
 ---
 
-<div class="container contained" data-slice-type={slice.slice_type}>
+<div class="container" data-slice-type={slice.slice_type}>
     <PrismicRichText richText={slice.primary.text} />
 </div>
 
@@ -23,8 +23,10 @@ const { slice } = Astro.props
         );
         font-size: var(--font-size-4);
         hyphens: auto;
+        max-width: var(--width-text);
         text-box-trim: trim-both;
         text-box-edge: cap alphabetic;
+        width: 100%;
 
         :is(h1, h2, h3, h4, h5, h6):has(
             + h1,
