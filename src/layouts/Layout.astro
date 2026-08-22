@@ -26,6 +26,9 @@ const { lang } = Astro.locals
         --padding-inline: var(--space-5);
 
         background-color: var(--color-white);
+        display: grid;
+        grid-template-rows: min-content 1fr min-content;
+        height: 100svh;
 
         @media (width > 650px) {
             --padding-block: calc(var(--space-9) * 2);
