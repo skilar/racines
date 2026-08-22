@@ -76,6 +76,14 @@
     --font-size-11: calc(var(--baseSize) * pow(var(--scaleInt), 8));
     --font-size-12: calc(var(--baseSize) * pow(var(--scaleInt), 9));
 
+    /* For small caps */
+    --font-size-1-sc: calc(var(--baseSize) * pow(var(--scaleInt), -1.5));
+    --font-size-2-sc: calc(var(--baseSize) * pow(var(--scaleInt), -0.5));
+    --font-size-3-sc: calc(var(--baseSize) * pow(var(--scaleInt), 0.5));
+    --font-size-4-sc: calc(var(--baseSize) * pow(var(--scaleInt), 1.5));
+    --font-size-5-sc: calc(var(--baseSize) * pow(var(--scaleInt), 2.5));
+    --font-size-6-sc: calc(var(--baseSize) * pow(var(--scaleInt), 3.5));
+
     /* Line Height */
     --line-height-default: 1.35;
 
