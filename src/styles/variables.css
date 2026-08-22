@@ -99,7 +99,7 @@
     --space-9: calc(var(--baseSize) * pow(var(--scaleInt), 5));
 
     /* Widths */
-    --width-text: 40rem;
+    --width-text: 43rem;
     --width-image: 60rem;
     --width-wide: 80rem;
     --width-sidenote: 16rem;
