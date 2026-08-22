@@ -15,80 +15,106 @@ const { slice } = Astro.props
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
-    <div>
-        {slice.primary.title && <h2>{slice.primary.title}</h2>}
+    <div class="wrapper">
+        <div>
+            {slice.primary.title && <h2>{slice.primary.title}</h2>}
 
-        <PrismicRichText class="description" richText={slice.primary.caption} />
+            <PrismicRichText
+                class="description"
+                richText={slice.primary.caption}
+            />
 
-        {
-            isFilled.link(slice.primary.link) && (
-                <a class="journalLink" href={slice.primary.link.url}>
-                    {slice.primary.link.text} →
-                </a>
-            )
-        }
-    </div>
+            {
+                isFilled.link(slice.primary.link) && (
+                    <a class="journalLink" href={slice.primary.link.url}>
+                        {slice.primary.link.text} →
+                    </a>
+                )
+            }
+        </div>
 
-    <ul class="blogPosts">
-        {
-            slice.primary.blog_posts.map((post) => {
-                if (
-                    isFilled.contentRelationship(post.blog_post) &&
-                    post.blog_post.data
-                ) {
-                    const dateString = getJournalEntryDate(
-                        post.blog_post.first_publication_date,
-                        Astro.currentLocale,
-                    )
+        <div class="blogPostsContainer">
+            <ul class="blogPosts">
+                {
+                    slice.primary.blog_posts.map((post) => {
+                        if (
+                            isFilled.contentRelationship(post.blog_post) &&
+                            post.blog_post.data
+                        ) {
+                            const dateString = getJournalEntryDate(
+                                post.blog_post.first_publication_date,
+                                Astro.currentLocale,
+                            )
 
-                    return (
-                        <li class="post">
-                            {isFilled.image(
-                                post.blog_post.data.cover_image,
-                            ) && (
-                                <div class="image">
-                                    <Image
-                                        image={post.blog_post.data.cover_image}
-                                        quality={75}
-                                    />
-                                </div>
-                            )}
+                            return (
+                                <li class="post">
+                                    {isFilled.image(
+                                        post.blog_post.data.cover_image,
+                                    ) && (
+                                        <div>
+                                            <Image
+                                                class="postImage"
+                                                image={
+                                                    post.blog_post.data
+                                                        .cover_image
+                                                }
+                                                quality={75}
+                                            />
+                                        </div>
+                                    )}
 
-                            <div class="postText">
-                                <time
-                                    class="postDate"
-                                    datetime={
-                                        post.blog_post.first_publication_date
-                                    }
-                                >
-                                    {dateString}
-                                </time>
+                                    <div class="postText">
+                                        <time
+                                            class="postDate"
+                                            datetime={
+                                                post.blog_post
+                                                    .first_publication_date
+                                            }
+                                        >
+                                            {dateString}
+                                        </time>
 
-                                <a class="postTitle" href={post.blog_post.url}>
-                                    {post.blog_post.data.title}
-                                </a>
+                                        <a
+                                            class="postTitle"
+                                            href={post.blog_post.url}
+                                        >
+                                            {post.blog_post.data.title}
+                                        </a>
 
-                                <PrismicRichText
-                                    class="postDescription"
-                                    richText={post.blog_post.data.subtitle}
-                                />
-                            </div>
-                        </li>
-                    )
+                                        <PrismicRichText
+                                            class="postDescription"
+                                            richText={
+                                                post.blog_post.data.subtitle
+                                            }
+                                        />
+                                    </div>
+                                </li>
+                            )
+                        }
+
+                        return null
+                    })
                 }
-
-                return null
-            })
-        }
-    </ul>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <style>
     .container {
+        container: featuredBlogPosts / inline-size;
+    }
+
+    .wrapper {
         border-top: var(--double-border);
         display: grid;
+        gap: var(--space-5);
         margin-top: var(--space-8);
         padding-top: var(--space-6);
+
+        @container featuredBlogPosts (width > 40rem) {
+            grid-template-columns: 18rem 1fr;
+        }
     }
 
     h2 {
@@ -119,11 +145,21 @@ const { slice } = Astro.props
         }
     }
 
+    .blogPostsContainer {
+        container: featuredBlogPostsList / inline-size;
+    }
+
     .blogPosts {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
         gap: var(--space-5);
-        padding-top: var(--space-6);
+
+        @container featuredBlogPostsList (width > 40rem) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @container featuredBlogPostsList (width > 50rem) {
+            grid-template-columns: repeat(3, 1fr);
+        }
     }
 
     .post {
@@ -131,14 +167,11 @@ const { slice } = Astro.props
         gap: 0;
         grid-row: auto / span 2;
         grid-template-rows: subgrid;
+    }
 
-        /* &:hover {
-            .postText {
-                background-color: var(--color-ivory-1);
-                border-color: var(--color-ivory-5);
-                box-shadow: 0 0 15px 0px oklch(0 0 0 / 10%);
-            }
-        } */
+    .postImage {
+        height: 15rem;
+        object-fit: cover;
     }
 
     .postText {
@@ -147,13 +180,12 @@ const { slice } = Astro.props
         border-bottom: 4px double var(--color-ivory-4);
         padding-block: var(--space-4) var(--space-5);
         padding-inline: var(--space-3);
-        /* transition: all 200ms ease-in-out; */
     }
 
     .postDate {
         color: var(--color-ivory-9);
         display: block;
-        font-size: var(--font-size-4);
+        font-size: var(--font-size-3-sc);
         font-variant-caps: all-small-caps;
         font-weight: var(--font-weight-medium);
         line-height: 1;
