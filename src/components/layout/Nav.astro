@@ -15,22 +15,79 @@ const { lang } = Astro.locals
 {
     menu && (
         <nav>
-            <ul class="nav">
-                {menu.filter(isFilled.link).map((item) => (
-                    <li>
-                        <a {...asLinkAttrs(item)}>{fixText(item.text, lang)}</a>
-                    </li>
-                ))}
-            </ul>
+            <button class="menuToggle" id="menuButton">
+                <span class="visuallyHidden">Menu</span>
+            </button>
+
+            <div class="navContainer" id="topNav">
+                <ul class="nav">
+                    {menu.filter(isFilled.link).map((item) => (
+                        <li>
+                            <a {...asLinkAttrs(item)}>
+                                {fixText(item.text, lang)}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </nav>
     )
 }
 
-<style>
-    .nav {
-        display: flex;
-        gap: var(--space-5);
+<style is:global>
+    .menuToggle {
+        height: 2rem;
+        position: relative;
+        z-index: 1000;
 
+        &::after,
+        &::before {
+            background-color: var(--color-blue-10);
+            content: '';
+            display: block;
+            height: 0.125rem;
+            transition: rotate 100ms ease;
+            width: 2rem;
+        }
+
+        &::before {
+            margin-bottom: 0.35rem;
+        }
+
+        .navIsOpen & {
+            &::after {
+                rotate: -45deg;
+            }
+
+            &::before {
+                margin-bottom: -0.125rem;
+                rotate: 45deg;
+            }
+        }
+
+        @container header (width > 55rem) {
+            display: none;
+        }
+    }
+
+    .navContainer {
+        display: none;
+
+        .navIsOpen & {
+            background-color: var(--color-ivory-3);
+            display: flex;
+            inset: 0;
+            overscroll-behavior: contain;
+            position: fixed;
+            z-index: 900;
+        }
+
+        @container header (width > 55rem) {
+            display: block;
+        }
+    }
+
+    .nav {
         a {
             font-size: var(--font-size-3);
             font-weight: var(--font-weight-medium);
@@ -42,5 +99,59 @@ const { lang } = Astro.locals
                 text-underline-offset: 3px;
             }
         }
+
+        .navIsOpen & {
+            border-top: 2px solid var(--color-ivory-2);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+            margin-top: 6.678rem;
+            padding: var(--space-6);
+            padding-top: 2rem;
+            width: 100%;
+
+            a {
+                font-size: var(--font-size-6);
+
+                &:hover {
+                    text-decoration-thickness: 2px;
+                    text-underline-offset: 4px;
+                }
+            }
+        }
+
+        @container header (width > 55rem) {
+            display: flex;
+            gap: var(--space-5);
+        }
     }
 </style>
+
+<script>
+    const button = document.querySelector('#menuButton')
+    const doc = document.documentElement
+    const nav = document.querySelector('#topNav')
+    const className = 'navIsOpen'
+
+    button?.addEventListener('click', () => {
+        let startOpacity = 0
+        let endOpacity = 1
+
+        if (doc.classList.contains(className)) {
+            startOpacity = 1
+            endOpacity = 0
+        }
+
+        nav?.animate([{ opacity: startOpacity }, { opacity: endOpacity }], {
+            duration: 100,
+        })
+
+        doc.classList.toggle(className)
+    })
+
+    doc.addEventListener('keyup', (el) => {
+        if (el.key === 'Escape') {
+            doc.classList.remove(className)
+        }
+    })
+</script>
