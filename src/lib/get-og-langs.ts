@@ -1,7 +1,7 @@
 import { LANGS } from '@lib/constants'
 import type { Lang } from '@lib/constants'
 
-const getOgLang = (lang: Lang) => {
+export const getOgLang = (lang: Lang) => {
     switch (lang) {
         case 'fr-fr':
             return 'fr_FR'

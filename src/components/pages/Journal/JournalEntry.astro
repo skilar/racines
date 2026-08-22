@@ -1,6 +1,8 @@
 ---
+import { createFixer } from '@skilar/jolitypo-ts'
 import { client } from '@lib/prismic'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
+import { getOgLang } from '@lib/get-og-langs'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 
@@ -19,6 +21,9 @@ const { lang = 'en-us', uid } = Astro.props
 
 const page = await client.getByUID('blog_post', uid, { lang })
 const dateString = getJournalEntryDate(page.first_publication_date, lang)
+
+const fixer = createFixer({ locale: getOgLang(lang) })
+const title = fixer.fixText(page.data.title || '')
 ---
 
 <LayoutWithHeader
@@ -30,18 +35,18 @@ const dateString = getJournalEntryDate(page.first_publication_date, lang)
     <main id="main" class="contained">
         <article>
             <div class="postMeta">
-                <h1>{page.data.title}</h1>
+                <h1>{title}</h1>
+
                 <PrismicRichText
                     class="subtitle"
                     richText={page.data.subtitle}
                 />
 
-                <!-- <div class="dingbat">()()()</div> -->
-
                 <PrismicRichText
                     class="description"
                     richText={page.data.short_description}
                 />
+
                 <p class="date" set:html={dateString} />
             </div>
 

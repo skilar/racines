@@ -22,6 +22,7 @@
         "@astrojs/netlify": "^8.2.1",
         "@astrojs/sitemap": "^3.7.3",
         "@prismicio/client": "^7.22.0",
+        "@skilar/jolitypo-ts": "^0.1.0",
         "astro": "^7.2.1"
     },
     "devDependencies": {
