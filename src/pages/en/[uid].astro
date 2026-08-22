@@ -1,0 +1,13 @@
+---
+import getStaticPrismicPaths from '@lib/get-static-prismic-paths'
+
+import Page from '@components/pages/Page.astro'
+
+export async function getStaticPaths() {
+    return await getStaticPrismicPaths({ lang: 'en-us', type: 'page' })
+}
+
+const { uid } = Astro.params
+---
+
+<Page uid={uid} />

@@ -4,7 +4,7 @@ import type { Lang } from '@lib/i18n'
 
 interface GetStaticPrismicPathsParams {
     lang: Lang
-    type: 'blog_post' // TODO: set this up properly to allow all post types
+    type: 'blog_post' | 'page' // TODO: set this up properly to allow all post types
 }
 
 interface GetStaticPrismicPathsReturn {
