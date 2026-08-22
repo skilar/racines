@@ -9,15 +9,15 @@ import type { LayoutProps } from '@typez/types'
 
 type Props = LayoutProps
 
-const { alternateLanguages, lang, ...props } = Astro.props
+const { alternateLanguages, ...props } = Astro.props
+const { lang } = Astro.locals
 
 const page = await client.getSingle('layout', { lang })
 ---
 
-<Layout lang={lang} {...props}>
+<Layout {...props}>
     <Header
         alternateLanguages={alternateLanguages}
-        lang={lang}
         menu={page.data.menu}
         subtitle={page.data.subtitle}
         title={page.data.title}

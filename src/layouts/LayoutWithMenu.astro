@@ -10,12 +10,13 @@ import type { LayoutProps } from '@typez/types'
 
 type Props = LayoutProps
 
-const { alternateLanguages, lang, ...props } = Astro.props
+const { alternateLanguages, ...props } = Astro.props
+const { lang } = Astro.locals
 
 const page = await client.getSingle('layout', { lang })
 ---
 
-<Layout lang={lang} {...props}>
+<Layout {...props}>
     <div class="container">
         <header>
             <div class="header">
@@ -34,10 +35,7 @@ const page = await client.getSingle('layout', { lang })
                     <PrismicRichText richText={page.data.subtitle} />
                 </div>
 
-                <LangSelector
-                    alternateLanguages={alternateLanguages}
-                    lang={lang}
-                />
+                <LangSelector alternateLanguages={alternateLanguages} />
             </div>
 
             {

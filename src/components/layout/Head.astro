@@ -1,22 +1,17 @@
 ---
 import { Font } from 'astro:assets'
-import { getOgLangs } from '@lib/get-og-langs'
+import { getOgLocales } from '@lib/i18n'
 
 import type { LayoutProps } from '@typez/types'
 
 type Props = LayoutProps
 
-const {
-    description,
-    lang,
-    ogImage,
-    ogImageAlt,
-    title = 'Racines',
-} = Astro.props
+const { description, ogImage, ogImageAlt, title = 'Racines' } = Astro.props
+const { lang } = Astro.locals
 
 const BASE_URL = Astro.site?.toString() || 'http://www.agathegiraud.com/'
 const ogUrl = new URL(Astro.url.pathname, BASE_URL).toString()
-const { currentLang, otherLangs } = getOgLangs(lang)
+const { current, alternates } = getOgLocales(lang)
 ---
 
 <head>
@@ -36,10 +31,10 @@ const { currentLang, otherLangs } = getOgLangs(lang)
     <meta property="og:title" content={title} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={ogUrl} />
-    <meta property="og:locale" content={currentLang} />
+    <meta property="og:locale" content={current} />
     {
-        otherLangs.map((lang) => (
-            <meta property="og:locale:alternate" content={lang} />
+        alternates.map((locale) => (
+            <meta property="og:locale:alternate" content={locale} />
         ))
     }
     {description && <meta property="og:description" content={description} />}

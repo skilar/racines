@@ -1,5 +1,6 @@
 ---
 import { isFilled } from '@prismicio/client'
+import { resolveRoute } from '@lib/prismic-link-resolver'
 
 import PrismicRichText from '../common/PrismicRichText.astro'
 import LangSelector from './LangSelector.astro'
@@ -10,13 +11,15 @@ import type { LayoutProps } from '@typez/types'
 
 interface Props {
     alternateLanguages: LayoutProps['alternateLanguages']
-    lang: LayoutProps['lang']
     menu: LayoutDocument['data']['menu']
     subtitle: LayoutDocument['data']['subtitle']
     title: LayoutDocument['data']['title']
 }
 
-const { alternateLanguages, lang, menu, subtitle, title } = Astro.props
+const { alternateLanguages, menu, subtitle, title } = Astro.props
+const { lang } = Astro.locals
+
+const homeHref = resolveRoute({ lang, type: 'homepage' })
 ---
 
 <header class="contained">
@@ -25,7 +28,7 @@ const { alternateLanguages, lang, menu, subtitle, title } = Astro.props
     <div class="logo">
         {
             isFilled.keyText(title) && (
-                <a class="title" href="/">
+                <a class="title" href={homeHref}>
                     {title}
                 </a>
             )
@@ -34,7 +37,7 @@ const { alternateLanguages, lang, menu, subtitle, title } = Astro.props
         <PrismicRichText class="subtitle" richText={subtitle} />
     </div>
 
-    <LangSelector alternateLanguages={alternateLanguages} lang={lang} />
+    <LangSelector alternateLanguages={alternateLanguages} />
 </header>
 
 <style>

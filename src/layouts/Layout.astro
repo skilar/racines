@@ -1,4 +1,6 @@
 ---
+import { LOCALES } from '@lib/i18n'
+
 import Head from '@components/layout/Head.astro'
 import '@styles/styles.css'
 
@@ -7,9 +9,10 @@ import type { LayoutProps } from '@typez/types'
 type Props = LayoutProps
 
 const props = Astro.props
+const { lang } = Astro.locals
 ---
 
-<html lang={Astro.currentLocale}>
+<html lang={LOCALES[lang].bcp47}>
     <Head {...props} />
 
     <body>

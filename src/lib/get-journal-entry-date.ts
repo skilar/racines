@@ -1,6 +1,6 @@
 import { asDate } from '@prismicio/client'
 
-import type { Lang } from '@lib/constants'
+import type { Lang } from '@lib/i18n'
 
 export default function getJournalEntryDate(rawDate: string, lang: Lang) {
     const date = asDate(rawDate)

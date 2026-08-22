@@ -3,18 +3,12 @@ import { client } from '@lib/prismic'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 
-import type { Lang } from '@lib/constants'
-
-interface Props {
-    lang?: Lang
-}
-
-const { lang = 'en-us' } = Astro.props
+const { lang } = Astro.locals
 
 const page = await client.getByType('blog_post', { lang })
 ---
 
-<LayoutWithHeader lang={lang} title="Journal">
+<LayoutWithHeader title="Journal">
     <main id="main" class="contained">
         <div class="postMeta">
             <h1>Journal</h1>

@@ -1,10 +1,10 @@
-import { LANG_LABELS, LANGS } from '@lib/constants'
+import { LANGS, LOCALES, swapLocalePath } from '@lib/i18n'
 import { resolveRoute } from '@lib/prismic-link-resolver'
 
 import type { AlternateLanguage } from '@prismicio/client'
-import type { Lang } from '@lib/constants'
+import type { Lang } from '@lib/i18n'
 
-const HOME_TYPE = 'temp_homepage'
+const HOME_TYPE = 'homepage'
 
 interface GetLangLinksArgs {
     alternateLanguages?: AlternateLanguage[] | undefined
@@ -15,29 +15,35 @@ interface GetLangLinksArgs {
 interface LangLink {
     href: string
     label: string
-    lang: Lang
     selected: boolean
 }
 
+const getHref = (
+    lang: Lang,
+    currentPath: string,
+    alternateLanguages: AlternateLanguage[] | undefined,
+) => {
+    if (!alternateLanguages) {
+        return swapLocalePath(currentPath, lang)
+    }
+
+    const alternate = alternateLanguages.find((alt) => alt.lang === lang)
+
+    return alternate
+        ? resolveRoute(alternate)
+        : resolveRoute({ lang, type: HOME_TYPE })
+}
+
 export const getLangLinks = ({
-    alternateLanguages = [],
+    alternateLanguages,
     currentPath,
     lang,
 }: GetLangLinksArgs): LangLink[] =>
-    LANGS.map((l) => {
-        const alternate = alternateLanguages.find((alt) => alt.lang === l)
-
-        const href =
+    LANGS.map((l) => ({
+        href:
             l === lang
                 ? currentPath
-                : ((alternate && resolveRoute(alternate)) ??
-                  resolveRoute({ lang: l, type: HOME_TYPE }) ??
-                  '/')
-
-        return {
-            href,
-            label: LANG_LABELS[l],
-            lang: l,
-            selected: l === lang,
-        }
-    })
+                : getHref(l, currentPath, alternateLanguages),
+        label: LOCALES[l].label,
+        selected: l === lang,
+    }))

@@ -7,3 +7,9 @@ interface ImportMetaEnv {
 interface ImportMeta {
     readonly env: ImportMetaEnv
 }
+
+declare namespace App {
+    interface Locals {
+        lang: import('@lib/i18n').Lang
+    }
+}

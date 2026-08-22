@@ -2,14 +2,13 @@
 import { getLangLinks } from '@lib/get-lang-links'
 
 import type { AlternateLanguage } from '@prismicio/client'
-import type { Lang } from '@lib/constants'
 
 interface Props {
     alternateLanguages?: AlternateLanguage[] | undefined
-    lang: Lang
 }
 
-const { alternateLanguages, lang } = Astro.props
+const { alternateLanguages } = Astro.props
+const { lang } = Astro.locals
 
 const links = getLangLinks({
     alternateLanguages,

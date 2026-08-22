@@ -1,9 +1,9 @@
 import { client } from '@lib/prismic'
 
-import type { Lang } from '@lib/constants'
+import type { Lang } from '@lib/i18n'
 
 interface GetStaticPrismicPathsParams {
-    lang?: Lang
+    lang: Lang
     type: 'blog_post' // TODO: set this up properly to allow all post types
 }
 
@@ -17,10 +17,7 @@ type GetStaticPrismicPaths = (
     params: GetStaticPrismicPathsParams,
 ) => Promise<GetStaticPrismicPathsReturn[]>
 
-const getStaticPrismicPaths: GetStaticPrismicPaths = async ({
-    lang = 'en-us',
-    type,
-}) => {
+const getStaticPrismicPaths: GetStaticPrismicPaths = async ({ lang, type }) => {
     const posts = await client.getAllByType(type, { lang })
     const paths = posts.map((post) => {
         return { params: { uid: post.uid } }
