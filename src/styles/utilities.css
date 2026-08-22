@@ -1,6 +1,6 @@
 .contained {
     margin-inline: auto;
-    max-width: var(--width-text);
+    max-width: var(--width-wide);
     width: 100%;
 }
 
