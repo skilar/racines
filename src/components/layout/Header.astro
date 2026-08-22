@@ -1,5 +1,6 @@
 ---
 import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
 import { resolveRoute } from '@lib/prismic-link-resolver'
 
 import PrismicRichText from '../common/PrismicRichText.astro'
@@ -29,7 +30,7 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
         {
             isFilled.keyText(title) && (
                 <a class="title" href={homeHref}>
-                    {title}
+                    {fixText(title, lang)}
                 </a>
             )
         }

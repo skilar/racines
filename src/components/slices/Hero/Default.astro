@@ -1,5 +1,6 @@
 ---
 import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
 
 import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
@@ -11,10 +12,11 @@ interface Props {
 }
 
 const { slice } = Astro.props
+const { lang } = Astro.locals
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
-    {slice.primary.title && <h2>{slice.primary.title}</h2>}
+    {slice.primary.title && <h2>{fixText(slice.primary.title, lang)}</h2>}
 
     <PrismicRichText class="description" richText={slice.primary.description} />
 

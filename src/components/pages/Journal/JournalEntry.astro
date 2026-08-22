@@ -1,6 +1,6 @@
 ---
 import { client } from '@lib/prismic'
-import getFixer from '@lib/get-fixer'
+import { fixText } from '@lib/get-fixer'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
@@ -19,7 +19,7 @@ const { lang } = Astro.locals
 const page = await client.getByUID('blog_post', uid, { lang })
 const dateString = getJournalEntryDate(page.first_publication_date, lang)
 
-const title = getFixer(lang).fixText(page.data.title || '')
+const title = fixText(page.data.title, lang)
 ---
 
 <LayoutWithHeader

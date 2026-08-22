@@ -18,3 +18,8 @@ export default function getFixer(lang: Lang): JoliTypo {
 
     return fixer
 }
+
+// Most call sites pass a nullable Prismic key text field.
+export function fixText(text: string | null | undefined, lang: Lang): string {
+    return text ? getFixer(lang).fixText(text) : ''
+}

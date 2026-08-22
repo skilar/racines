@@ -1,5 +1,6 @@
 ---
 import { asHTML } from '@prismicio/client'
+import getFixer from '@lib/get-fixer'
 
 import type { RichTextField } from '@prismicio/types'
 
@@ -9,17 +10,19 @@ interface Props {
 }
 
 const { class: className, richText, ...rest } = Astro.props
+const { lang } = Astro.locals
 const htmlRichText = richText
-    ? asHTML(richText, {
-          serializer: {
-              label: ({ node, children }) =>
-                  node.data.label === 'footnote'
-                      ? `<span class="sidenote-ref"></span>
-                          <span class="sidenote">${children}</span>
-                      </>`
-                      : `<span class="${node.data.label}">${children}</span>`,
-          },
-      })
+    ? getFixer(lang).fixHtml(
+          asHTML(richText, {
+              serializer: {
+                  label: ({ node, children }) =>
+                      node.data.label === 'footnote'
+                          ? `<span class="sidenote-ref"></span>
+                              <span class="sidenote">${children}</span>`
+                          : `<span class="${node.data.label}">${children}</span>`,
+              },
+          }),
+      )
     : null
 ---
 

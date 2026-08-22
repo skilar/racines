@@ -1,5 +1,6 @@
 ---
 import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
 import getRelationshipDate from '@lib/get-relationship-date'
 
@@ -19,7 +20,11 @@ const { lang } = Astro.locals
 <div class="container" data-slice-type={slice.slice_type}>
     <div class="wrapper">
         <div>
-            {slice.primary.title && <h2>{slice.primary.title}</h2>}
+            {
+                slice.primary.title && (
+                    <h2>{fixText(slice.primary.title, lang)}</h2>
+                )
+            }
 
             <PrismicRichText
                 class="description"
@@ -29,7 +34,7 @@ const { lang } = Astro.locals
             {
                 isFilled.link(slice.primary.link) && (
                     <a class="journalLink" href={slice.primary.link.url}>
-                        {slice.primary.link.text} →
+                        {fixText(slice.primary.link.text, lang)} →
                     </a>
                 )
             }
@@ -80,7 +85,10 @@ const { lang } = Astro.locals
                                             class="postTitle"
                                             href={post.blog_post.url}
                                         >
-                                            {post.blog_post.data.title}
+                                            {fixText(
+                                                post.blog_post.data.title,
+                                                lang,
+                                            )}
                                         </a>
 
                                         <PrismicRichText
