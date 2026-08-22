@@ -1,6 +1,7 @@
 ---
 import { isFilled } from '@prismicio/client'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
+import getRelationshipDate from '@lib/get-relationship-date'
 
 import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const { slice } = Astro.props
+const { lang } = Astro.locals
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
@@ -41,9 +43,12 @@ const { slice } = Astro.props
                             isFilled.contentRelationship(post.blog_post) &&
                             post.blog_post.data
                         ) {
+                            const publishedAt = getRelationshipDate(
+                                post.blog_post,
+                            )
                             const dateString = getJournalEntryDate(
-                                post.blog_post.first_publication_date,
-                                Astro.currentLocale,
+                                publishedAt,
+                                lang,
                             )
 
                             return (
@@ -66,10 +71,7 @@ const { slice } = Astro.props
                                     <div class="postText">
                                         <time
                                             class="postDate"
-                                            datetime={
-                                                post.blog_post
-                                                    .first_publication_date
-                                            }
+                                            datetime={publishedAt}
                                         >
                                             {dateString}
                                         </time>
