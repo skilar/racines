@@ -12,7 +12,9 @@ const { text } = Astro.props
 
 <footer>
     <div class="footer contained">
+        <span class="dingbat">()</span>
         <PrismicRichText richText={text} />
+        <span class="dingbat">()</span>
     </div>
 </footer>
 
@@ -22,6 +24,10 @@ const { text } = Astro.props
     }
 
     .footer {
+        align-items: center;
+        display: flex;
+        gap: var(--space-3);
+        justify-content: center;
         max-width: var(--width-wide);
         padding-block: var(--space-5);
         padding-inline: var(--padding-inline);
