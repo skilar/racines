@@ -140,13 +140,12 @@ ul {
 
 a {
     color: var(--color-black);
-    text-decoration-thickness: 1px;
-    transition:
-        color 0.0875s,
-        text-decoration-color 0.0875s;
+    text-decoration: underline;
+    text-decoration-thickness: var(--underline-thickness-1);
+    text-underline-offset: var(--underline-offset-1);
 
     &:hover {
-        text-decoration-color: transparent;
+        text-decoration: none;
     }
 }
 

@@ -87,6 +87,13 @@
     /* Line Height */
     --line-height-default: 1.35;
 
+    /* For underlines */
+    --underline-thickness-1: 1px;
+    --underline-thickness-2: 2px;
+
+    --underline-offset-1: 3px;
+    --underline-offset-2: 4px;
+
     /* Spacing */
     --space-1: calc(var(--baseSize) * pow(var(--scaleInt), -4));
     --space-2: calc(var(--baseSize) * pow(var(--scaleInt), -2));

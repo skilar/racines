@@ -95,8 +95,7 @@ const { lang } = Astro.locals
 
             &:hover {
                 text-decoration: underline;
-                text-decoration-thickness: 1px;
-                text-underline-offset: 3px;
+                text-decoration-thickness: var(--underline-thickness-1);
             }
         }
 
@@ -114,8 +113,8 @@ const { lang } = Astro.locals
                 font-size: var(--font-size-6);
 
                 &:hover {
-                    text-decoration-thickness: 2px;
-                    text-underline-offset: 4px;
+                    text-decoration-thickness: var(--underline-thickness-2);
+                    text-underline-offset: var(--underline-thickness-2);
                 }
             }
         }
