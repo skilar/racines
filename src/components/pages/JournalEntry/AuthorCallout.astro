@@ -1,4 +1,6 @@
 ---
+import { UI } from '@lib/i18n'
+
 import Image from '../../common/Image.astro'
 import PrismicRichText from '../../common/PrismicRichText.astro'
 
@@ -10,6 +12,7 @@ interface Props {
 }
 
 const { bio, photo } = Astro.props
+const { lang } = Astro.locals
 ---
 
 <div class="authorCallout">
@@ -22,7 +25,7 @@ const { bio, photo } = Astro.props
     }
 
     <div class="about">
-        <h2>About the Author</h2>
+        <h2>{UI[lang].aboutTheAuthor}</h2>
         <PrismicRichText richText={bio} />
     </div>
 </div>

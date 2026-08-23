@@ -9,12 +9,16 @@ export type Lang = keyof typeof LOCALES
 // Interface copy that has no home in Prismic.
 export const UI = {
     'fr-fr': {
-        notes: 'Notes',
+        aboutTheAuthor: 'À propos de l’autrice',
         backToRef: (number: number) => `Retour à l’appel de note ${number}`,
+        menu: 'Menu',
+        notes: 'Notes',
     },
     'en-us': {
-        notes: 'Notes',
+        aboutTheAuthor: 'About the Author',
         backToRef: (number: number) => `Back to note ${number}`,
+        menu: 'Menu',
+        notes: 'Notes',
     },
 } as const
 

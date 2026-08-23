@@ -1,6 +1,7 @@
 ---
 import { asLinkAttrs, isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
+import { UI } from '@lib/i18n'
 
 import type { LayoutDocument } from '@typez/generated/prismic'
 
@@ -16,7 +17,7 @@ const { lang } = Astro.locals
     menu && (
         <nav>
             <button class="menuToggle" id="menuButton">
-                <span class="visuallyHidden">Menu</span>
+                <span class="visuallyHidden">{UI[lang].menu}</span>
             </button>
 
             <div class="navContainer" id="topNav">
