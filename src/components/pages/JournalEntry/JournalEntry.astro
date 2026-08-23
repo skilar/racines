@@ -33,11 +33,13 @@ const page = await client.getByUID('blog_post', uid, { lang })
             />
 
             <div class="post">
-                <Image
-                    class="coverImage"
-                    image={page.data.cover_image}
-                    priority
-                />
+                <div class="coverImageWrapper">
+                    <Image
+                        class="coverImage"
+                        image={page.data.cover_image}
+                        priority
+                    />
+                </div>
 
                 <SliceZone
                     hasBigCap
@@ -59,10 +61,13 @@ const page = await client.getByUID('blog_post', uid, { lang })
 <style>
     main {
         margin-block: var(--space-5) var(--space-9);
-        max-width: var(--width-text);
     }
 
     .post {
+        > :global(div) {
+            margin-inline: auto;
+        }
+
         div:has(+ div) {
             margin-bottom: var(--space-8);
         }
@@ -96,6 +101,11 @@ const page = await client.getByUID('blog_post', uid, { lang })
             font-variant-numeric: ordinal;
             margin-right: calc(var(--space-1) / 2);
         }
+    }
+
+    .coverImageWrapper {
+        margin-inline: auto;
+        max-width: var(--width-image);
     }
 
     .coverImage {
