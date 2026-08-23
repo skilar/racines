@@ -1,0 +1,98 @@
+---
+import { client } from '@lib/prismic'
+
+import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
+import Image from '../../common/Image.astro'
+import SliceZone from '../../common/SliceZone.astro'
+import AuthorCallout from './AuthorCallout.astro'
+import Endnotes from './Endnotes.astro'
+import EntryHeader from './EntryHeader.astro'
+
+interface Props {
+    uid: string
+}
+
+const { uid } = Astro.props
+const { lang } = Astro.locals
+
+const page = await client.getByUID('blog_post', uid, { lang })
+---
+
+<LayoutWithHeader
+    alternateLanguages={page.alternate_languages}
+    description={page.data.meta_description}
+    title={page.data.meta_title}
+>
+    <main id="main" class="contained">
+        <article>
+            <EntryHeader
+                description={page.data.short_description}
+                publicationDate={page.first_publication_date}
+                subtitle={page.data.subtitle}
+                title={page.data.title}
+            />
+
+            <div class="post">
+                <Image
+                    class="coverImage"
+                    image={page.data.cover_image}
+                    priority
+                />
+
+                <SliceZone slices={page.data.slices} numberSidenotes />
+
+                <Endnotes slices={page.data.slices} />
+            </div>
+
+            <AuthorCallout bio={page.data.author.data.biography} />
+        </article>
+    </main>
+</LayoutWithHeader>
+
+<style>
+    main {
+        margin-block: var(--space-5) var(--space-9);
+        max-width: var(--width-text);
+    }
+
+    .post {
+        div:has(+ div) {
+            margin-bottom: var(--space-8);
+        }
+
+        .sidenote-ref {
+            font-variant-numeric: ordinal;
+            margin-left: -0.125rem;
+            scroll-margin-block: var(--space-6);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--color-red-8);
+                text-decoration: underline;
+                text-decoration-thickness: var(--underline-thickness-1);
+            }
+        }
+
+        .sidenote {
+            clear: right;
+            float: right;
+            font-size: var(--font-size-3);
+            margin-bottom: 1rem;
+            margin-right: calc(
+                (var(--width-sidenote) + var(--width-sidenote-gap)) * -1
+            );
+            margin-top: 0.25rem;
+            width: var(--width-sidenote);
+        }
+
+        .sidenoteNumber {
+            font-variant-numeric: ordinal;
+            margin-right: calc(var(--space-1) / 2);
+        }
+    }
+
+    .coverImage {
+        margin-bottom: var(--space-9);
+        max-width: var(--width-image);
+    }
+</style>

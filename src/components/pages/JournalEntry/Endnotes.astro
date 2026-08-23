@@ -1,0 +1,79 @@
+---
+import { UI } from '@lib/i18n'
+import { collectSidenotes } from '@lib/sidenotes'
+
+import type { BlogPostDocument } from '@typez/generated/prismic'
+
+interface Props {
+    slices: BlogPostDocument['data']['slices']
+}
+
+const { slices } = Astro.props
+const { lang } = Astro.locals
+
+const sidenotes = collectSidenotes(slices, lang)
+---
+
+{
+    sidenotes.length > 0 && (
+        <section class="endnotes" aria-labelledby="endnotesHeading">
+            <h2 id="endnotesHeading">{UI[lang].notes}</h2>
+
+            <ol>
+                {sidenotes.map((note) => (
+                    <li id={note.id}>
+                        <Fragment set:html={note.html} />{' '}
+                        <a
+                            class="backlink"
+                            href={`#${note.refId}`}
+                            aria-label={UI[lang].backToRef(note.number)}
+                        >
+                            ↩
+                        </a>
+                    </li>
+                ))}
+            </ol>
+        </section>
+    )
+}
+
+<style>
+    .endnotes {
+        border-top: 1px solid var(--color-ivory-4);
+        font-size: var(--font-size-3);
+        margin-top: var(--space-9);
+        padding-top: var(--space-4);
+
+        h2 {
+            font-family: var(--font-serif);
+            font-size: var(--font-size-3-sc);
+            font-variant-caps: all-small-caps;
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--space-4);
+        }
+
+        ol {
+            list-style-type: decimal;
+            margin-left: var(--space-4);
+        }
+
+        li {
+            scroll-margin-block: var(--space-6);
+
+            &:not(:last-child) {
+                margin-bottom: var(--space-2);
+            }
+        }
+
+        .backlink {
+            font-size: var(--font-size-2);
+            text-decoration: none;
+            white-space: nowrap;
+
+            &:hover {
+                text-decoration: underline;
+                text-decoration-thickness: var(--underline-thickness-1);
+            }
+        }
+    }
+</style>

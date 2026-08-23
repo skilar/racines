@@ -1,0 +1,68 @@
+---
+import { fixText } from '@lib/get-fixer'
+import getJournalEntryDate from '@lib/get-journal-entry-date'
+
+import PrismicRichText from '../../common/PrismicRichText.astro'
+
+import type { BlogPostDocument } from '@typez/generated/prismic'
+
+interface Props {
+    description: BlogPostDocument['data']['short_description']
+    publicationDate: BlogPostDocument['first_publication_date']
+    subtitle: BlogPostDocument['data']['subtitle']
+    title: BlogPostDocument['data']['title']
+}
+
+const {
+    description,
+    publicationDate,
+    subtitle,
+    title: titleString,
+} = Astro.props
+const { lang } = Astro.locals
+
+const dateString = getJournalEntryDate(publicationDate, lang)
+const title = fixText(titleString, lang)
+---
+
+<div class="postMeta">
+    <h1>{title}</h1>
+
+    <PrismicRichText class="subtitle" richText={subtitle} />
+
+    <PrismicRichText class="description" richText={description} />
+
+    <p class="date" set:html={dateString} />
+</div>
+
+<style>
+    .postMeta {
+        hyphens: auto;
+        margin-block: var(--space-8);
+        padding-bottom: var(--space-5);
+        text-align: center;
+    }
+
+    h1 {
+        font-size: var(--font-size-6);
+        margin-bottom: var(--space-3);
+    }
+
+    .subtitle {
+        color: var(--color-red-8);
+        font-size: var(--font-size-4);
+        font-style: italic;
+        font-weight: var(--font-weight-medium);
+    }
+
+    .date,
+    .description {
+        font-size: var(--font-size-4);
+        margin-top: var(--space-4);
+    }
+
+    .date {
+        color: var(--color-blue-11);
+        font-weight: var(--font-weight-medium);
+    }
+</style>
