@@ -6,19 +6,25 @@ import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 
 const { lang } = Astro.locals
 
-const page = await client.getByType('blog_post', { lang })
+const page = await client.getByUID('page', 'journal', { lang })
+const blogPosts = await client.getByType('blog_post', { lang })
+const title = fixText(page.data.title, lang)
 ---
 
-<LayoutWithHeader title="Journal">
+<LayoutWithHeader
+    alternateLanguages={page.alternate_languages}
+    description={page.data.meta_description}
+    title={page.data.meta_title}
+>
     <main id="main" class="contained">
         <div class="postMeta">
-            <h1>Journal</h1>
+            <h1>{title}</h1>
         </div>
 
         <div class="post">
             <ul>
                 {
-                    page.results.map((post) => {
+                    blogPosts.results.map((post) => {
                         return (
                             <li>
                                 <a href={post.url}>
