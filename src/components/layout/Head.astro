@@ -6,7 +6,12 @@ import type { LayoutProps } from '@typez/types'
 
 type Props = LayoutProps
 
-const { description, ogImage, ogImageAlt, title = 'Racines' } = Astro.props
+const {
+    description,
+    ogImage,
+    ogImageAlt,
+    title = 'Agathe Giraud',
+} = Astro.props
 const { lang } = Astro.locals
 
 const BASE_URL = Astro.site?.toString() || 'http://www.agathegiraud.com/'
