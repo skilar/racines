@@ -2,9 +2,9 @@
 import { client } from '@lib/prismic'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
-import Image from '../../common/Image.astro'
 import SliceZone from '../../common/SliceZone.astro'
 import AuthorCallout from './AuthorCallout.astro'
+import CoverImage from './CoverImage.astro'
 import Endnotes from './Endnotes.astro'
 import EntryHeader from './EntryHeader.astro'
 
@@ -33,13 +33,7 @@ const page = await client.getByUID('blog_post', uid, { lang })
             />
 
             <div class="post">
-                <div class="coverImageWrapper">
-                    <Image
-                        class="coverImage"
-                        image={page.data.cover_image}
-                        priority
-                    />
-                </div>
+                <CoverImage image={page.data.cover_image} />
 
                 <SliceZone
                     hasBigCap
@@ -101,15 +95,5 @@ const page = await client.getByUID('blog_post', uid, { lang })
             font-variant-numeric: ordinal;
             margin-right: calc(var(--space-1) / 2);
         }
-    }
-
-    .coverImageWrapper {
-        margin-inline: auto;
-        max-width: var(--width-image);
-    }
-
-    .coverImage {
-        margin-bottom: var(--space-9);
-        max-width: var(--width-image);
     }
 </style>

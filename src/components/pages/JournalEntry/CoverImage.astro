@@ -1,0 +1,27 @@
+---
+import Image from '../../common/Image.astro'
+
+import type { BlogPostDocument } from '@typez/generated/prismic'
+
+interface Props {
+    image: BlogPostDocument['data']['cover_image']
+}
+
+const { image } = Astro.props
+---
+
+<div class="coverImageWrapper">
+    <Image class="coverImage" image={image} priority />
+</div>
+
+<style>
+    .coverImageWrapper {
+        margin-inline: auto;
+        max-width: var(--width-image);
+    }
+
+    .coverImage {
+        margin-bottom: var(--space-9);
+        max-width: var(--width-image);
+    }
+</style>
