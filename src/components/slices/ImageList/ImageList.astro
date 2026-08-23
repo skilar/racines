@@ -7,10 +7,11 @@ import PrismicRichText from '@components/common/PrismicRichText.astro'
 import type { ImageListSlice } from '@typez/generated/prismic'
 
 interface Props {
+    noteOffset?: number | undefined
     slice: ImageListSlice
 }
 
-const { slice } = Astro.props
+const { noteOffset, slice } = Astro.props
 const { images } = slice.primary
 
 const isVertical = slice.variation === 'vertical'
@@ -51,6 +52,7 @@ const sizes = isVertical
             isFilled.richText(slice.primary.caption) && (
                 <PrismicRichText
                     class="caption"
+                    noteOffset={noteOffset}
                     richText={slice.primary.caption}
                 />
             )

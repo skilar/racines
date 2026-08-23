@@ -2,6 +2,8 @@
 import { client } from '@lib/prismic'
 import { fixText } from '@lib/get-fixer'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
+import { UI } from '@lib/i18n'
+import { collectSidenotes } from '@lib/sidenotes'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 
@@ -18,8 +20,8 @@ const { lang } = Astro.locals
 
 const page = await client.getByUID('blog_post', uid, { lang })
 const dateString = getJournalEntryDate(page.first_publication_date, lang)
-
 const title = fixText(page.data.title, lang)
+const sidenotes = collectSidenotes(page.data.slices, lang)
 ---
 
 <LayoutWithHeader
@@ -52,7 +54,36 @@ const title = fixText(page.data.title, lang)
                     priority
                 />
 
-                <SliceZone slices={page.data.slices} />
+                <SliceZone slices={page.data.slices} numberSidenotes />
+
+                {
+                    sidenotes.length > 0 && (
+                        <section
+                            class="endnotes"
+                            aria-labelledby="endnotesHeading"
+                        >
+                            <h2 id="endnotesHeading">{UI[lang].notes}</h2>
+
+                            <ol>
+                                {sidenotes.map((note) => (
+                                    <li id={note.id}>
+                                        <Fragment set:html={note.html} />{' '}
+                                        <a
+                                            class="backlink"
+                                            href={`#${note.refId}`}
+                                            aria-label={UI[lang].backToRef(
+                                                note.number,
+                                            )}
+                                        >
+                                            ↩
+                                        </a>
+                                    </li>
+                                ))}
+                            </ol>
+                        </section>
+                    )
+                }
+            </div>
 
             <div class="authorCallout">
                 <h2>{page.data.author.data.name}</h2>
@@ -99,17 +130,21 @@ const title = fixText(page.data.title, lang)
     }
 
     .post {
-        counter-reset: footnote;
-
         div:has(+ div) {
             margin-bottom: var(--space-8);
         }
 
-        .sidenote-ref::after {
-            counter-increment: footnote;
-            content: counter(footnote);
+        .sidenote-ref {
             font-variant-numeric: ordinal;
             margin-left: -0.125rem;
+            scroll-margin-block: var(--space-6);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--color-red-8);
+                text-decoration: underline;
+                text-decoration-thickness: var(--underline-thickness-1);
+            }
         }
 
         .sidenote {
@@ -122,18 +157,56 @@ const title = fixText(page.data.title, lang)
             );
             margin-top: 0.25rem;
             width: var(--width-sidenote);
+        }
 
-            &::before {
-                content: counter(footnote);
-                font-variant-numeric: ordinal;
-                margin-right: calc(var(--space-1) / 2);
-            }
+        .sidenoteNumber {
+            font-variant-numeric: ordinal;
+            margin-right: calc(var(--space-1) / 2);
         }
     }
 
     .coverImage {
         margin-bottom: var(--space-9);
         max-width: var(--width-image);
+    }
+
+    .endnotes {
+        border-top: 1px solid var(--color-ivory-4);
+        font-size: var(--font-size-3);
+        margin-top: var(--space-9);
+        padding-top: var(--space-4);
+
+        h2 {
+            font-family: var(--font-text);
+            font-size: var(--font-size-4-sc);
+            font-variant-caps: all-small-caps;
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--space-4);
+        }
+
+        ol {
+            list-style-type: decimal;
+            margin-left: var(--space-4);
+        }
+
+        li {
+            scroll-margin-block: var(--space-6);
+
+            &:not(:last-child) {
+                margin-bottom: var(--space-2);
+            }
+        }
+
+        .backlink {
+            font-size: var(--font-size-2);
+            text-decoration: none;
+            white-space: nowrap;
+
+            &:hover {
+                text-decoration: underline;
+                text-decoration-thickness: var(--underline-thickness-1);
+            }
+        }
     }
 
     .authorCallout {

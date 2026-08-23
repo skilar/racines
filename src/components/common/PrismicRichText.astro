@@ -1,17 +1,43 @@
 ---
 import { asHTML } from '@prismicio/client'
 import getFixer from '@lib/get-fixer'
+import { noteId, noteRefId } from '@lib/sidenotes'
 import tightenSidenoteRefs from '@lib/tighten-sidenote-refs'
 
 import type { RichTextField } from '@prismicio/types'
 
 interface Props {
     class?: string
+    /**
+     * Footnotes are numbered across a whole slice zone, so a field cannot know
+     * where its own numbering starts. `SliceZone` counts what came before and
+     * passes it in. Left out, the markers render unnumbered and unlinked, which
+     * is what every use outside an article body wants.
+     */
+    noteOffset?: number | undefined
     richText: RichTextField
 }
 
-const { class: className, richText, ...rest } = Astro.props
+const { class: className, noteOffset, richText, ...rest } = Astro.props
 const { lang } = Astro.locals
+
+// `asHTML` walks the tree in document order, so a running count here follows the
+// order the markers appear in on the page.
+let noteNumber = noteOffset ?? 0
+
+function serializeFootnote(children: string): string {
+    if (noteOffset === undefined) {
+        return `<span class="sidenote-ref"></span><span class="sidenote">${children}</span>`
+    }
+
+    noteNumber += 1
+
+    const ref = noteRefId(noteNumber)
+    const note = noteId(noteNumber)
+
+    return `<a class="sidenote-ref" id="${ref}" href="#${note}">${noteNumber}</a><span class="sidenote"><span class="sidenoteNumber">${noteNumber}</span>${children}</span>`
+}
+
 const htmlRichText = richText
     ? tightenSidenoteRefs(
           getFixer(lang).fixHtml(
@@ -19,8 +45,7 @@ const htmlRichText = richText
                   serializer: {
                       label: ({ node, children }) =>
                           node.data.label === 'footnote'
-                              ? `<span class="sidenote-ref"></span>
-                              <span class="sidenote">${children}</span>`
+                              ? serializeFootnote(children)
                               : `<span class="${node.data.label}">${children}</span>`,
                   },
               }),

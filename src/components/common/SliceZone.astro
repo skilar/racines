@@ -1,4 +1,6 @@
 ---
+import { countSidenotes } from '@lib/sidenotes'
+
 import BlogPostLinkSection from '@components/slices/BlogPostLinkSection.astro'
 import Hero from '@components/slices/Hero/Hero.astro'
 import ImageList from '@components/slices/ImageList/ImageList.astro'
@@ -8,23 +10,38 @@ import type { SliceZone } from '@prismicio/client'
 import type { AnySlice } from '@typez/prismic'
 
 interface Props {
+    // Article bodies number their footnotes across the whole zone.
+    // Nothing else does.
+    numberSidenotes?: boolean
     slices: SliceZone<AnySlice>
 }
 
-const { slices } = Astro.props
+const { numberSidenotes = false, slices } = Astro.props
+
+// How many footnotes come before each slice, so that markers spread across
+// several slices still read as one sequence.
+let counted = 0
+const noteOffsets = slices.map((slice) => {
+    const offset = counted
+    counted += countSidenotes(slice)
+
+    return numberSidenotes ? offset : undefined
+})
 ---
 
 {
-    slices.map((slice) => {
+    slices.map((slice, index) => {
+        const noteOffset = noteOffsets[index]
+
         switch (slice.slice_type) {
             case 'blog_post_link_section':
                 return <BlogPostLinkSection slice={slice} />
             case 'hero':
                 return <Hero slice={slice} />
             case 'image_list':
-                return <ImageList slice={slice} />
+                return <ImageList noteOffset={noteOffset} slice={slice} />
             case 'text':
-                return <Text slice={slice} />
+                return <Text noteOffset={noteOffset} slice={slice} />
             default:
                 return null
         }

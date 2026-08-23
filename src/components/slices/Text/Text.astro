@@ -4,14 +4,15 @@ import PrismicRichText from '../../common/PrismicRichText.astro'
 import type { TextSlice } from '@typez/generated/prismic'
 
 interface Props {
+    noteOffset?: number | undefined
     slice: TextSlice
 }
 
-const { slice } = Astro.props
+const { noteOffset, slice } = Astro.props
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
-    <PrismicRichText richText={slice.primary.text} />
+    <PrismicRichText noteOffset={noteOffset} richText={slice.primary.text} />
 </div>
 
 <style>

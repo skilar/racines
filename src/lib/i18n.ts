@@ -6,6 +6,18 @@ export const LOCALES = {
 
 export type Lang = keyof typeof LOCALES
 
+// Interface copy that has no home in Prismic.
+export const UI = {
+    'fr-fr': {
+        notes: 'Notes',
+        backToRef: (number: number) => `Retour à l’appel de note ${number}`,
+    },
+    'en-us': {
+        notes: 'Notes',
+        backToRef: (number: number) => `Back to note ${number}`,
+    },
+} as const
+
 export const LANGS = Object.keys(LOCALES) as Lang[]
 
 // Matches `i18n.defaultLocale` in astro.config.ts.
