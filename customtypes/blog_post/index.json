@@ -10,6 +10,24 @@
           "label": "UID"
         }
       },
+      "author": {
+        "type": "Link",
+        "config": {
+          "label": "Author",
+          "select": "document",
+          "customtypes": [
+            {
+              "id": "author",
+              "fields": [
+                "name",
+                "biography",
+                "photo"
+              ]
+            }
+          ],
+          "repeat": false
+        }
+      },
       "title": {
         "type": "Text",
         "config": {

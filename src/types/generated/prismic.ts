@@ -48,12 +48,72 @@ type ContentRelationshipFieldWithData<
 		>
 }[Exclude<TCustomType[number], string>["id"]];
 
+/**
+ * Content for Author documents
+ */
+interface AuthorDocumentData {
+	/**
+	 * Name field in *Author*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: author.name
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	name: prismic.KeyTextField;
+	
+	/**
+	 * Biography field in *Author*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: author.biography
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	biography: prismic.RichTextField;
+	
+	/**
+	 * Photo field in *Author*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: author.photo
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	photo: prismic.ImageField<never>;
+}
+
+/**
+ * Author document from Prismic
+ *
+ * - **API ID**: `author`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type AuthorDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<AuthorDocumentData>, "author", Lang>;
+
 type BlogPostDocumentDataSlicesSlice = TextSlice | ImageListSlice
 
 /**
  * Content for Blog Post documents
  */
 interface BlogPostDocumentData {
+	/**
+	 * Author field in *Blog Post*
+	 *
+	 * - **Field Type**: Content Relationship
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_post.author
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 */
+	author: ContentRelationshipFieldWithData<[{"id":"author","fields":["name","biography","photo"]}]>;
+	
 	/**
 	 * Title field in *Blog Post*
 	 *
@@ -423,7 +483,7 @@ interface TempHomepageDocumentData {
  */
 export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
 
-export type AllDocumentTypes = BlogPostDocument | HomepageDocument | LayoutDocument | PageDocument | TempHomepageDocument;
+export type AllDocumentTypes = AuthorDocument | BlogPostDocument | HomepageDocument | LayoutDocument | PageDocument | TempHomepageDocument;
 
 /**
  * Item in *BlogPostLinkSection → Default → Primary → Blog Posts*
@@ -824,6 +884,8 @@ declare module "@prismicio/client" {
 	
 	namespace Content {
 		export type {
+			AuthorDocument,
+			AuthorDocumentData,
 			BlogPostDocument,
 			BlogPostDocumentData,
 			BlogPostDocumentDataSlicesSlice,

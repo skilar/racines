@@ -53,6 +53,10 @@ const title = fixText(page.data.title, lang)
                 />
 
                 <SliceZone slices={page.data.slices} />
+
+            <div class="authorCallout">
+                <h2>{page.data.author.data.name}</h2>
+                <PrismicRichText richText={page.data.author.data.biography} />
             </div>
         </article>
     </main>
@@ -130,5 +134,13 @@ const title = fixText(page.data.title, lang)
     .coverImage {
         margin-bottom: var(--space-9);
         max-width: var(--width-image);
+    }
+
+    .authorCallout {
+        background-color: var(--color-ivory-2);
+        border: 1px solid var(--color-ivory-4);
+        font-size: var(--font-size-4);
+        margin-top: var(--space-9);
+        padding: var(--space-3);
     }
 </style>
