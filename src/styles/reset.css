@@ -139,7 +139,8 @@ ul {
 }
 
 a {
-    color: var(--color-black);
+    color: var(--color-red-8);
+    font-weight: var(--font-weight-medium);
     text-decoration: underline;
     text-decoration-thickness: var(--underline-thickness-1);
     text-underline-offset: var(--underline-offset-1);
