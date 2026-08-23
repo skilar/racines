@@ -116,12 +116,13 @@ const title = fixText(page.data.title, lang)
             margin-right: calc(
                 (var(--width-sidenote) + var(--width-sidenote-gap)) * -1
             );
+            margin-top: 0.25rem;
             width: var(--width-sidenote);
 
             &::before {
                 content: counter(footnote);
                 font-variant-numeric: ordinal;
-                margin-right: var(--space-1);
+                margin-right: calc(var(--space-1) / 2);
             }
         }
     }
