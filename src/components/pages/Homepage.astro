@@ -1,4 +1,5 @@
 ---
+import { isFilled } from '@prismicio/client'
 import { client } from '@lib/prismic'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
@@ -15,7 +16,11 @@ const page = await client.getSingle('homepage', { lang })
     title={page.data.meta_title}
 >
     <main id="main" class="contained">
-        <SliceZone slices={page.data.slices} />
+        {
+            isFilled.sliceZone(page.data.slices) && (
+                <SliceZone slices={page.data.slices} />
+            )
+        }
     </main>
 </LayoutWithHeader>
 

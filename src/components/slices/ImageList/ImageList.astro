@@ -26,7 +26,7 @@ const sizes = isVertical
 
 <div class="container" data-slice-type={slice.slice_type}>
     {
-        images.length > 0 && (
+        isFilled.group(images) && (
             <ul class:list={['imageList', { vertical: isVertical }]}>
                 {images.map(({ image }) => {
                     if (isFilled.image(image)) {

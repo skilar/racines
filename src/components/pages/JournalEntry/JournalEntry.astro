@@ -1,4 +1,5 @@
 ---
+import { isFilled } from '@prismicio/client'
 import { client } from '@lib/prismic'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
@@ -35,11 +36,15 @@ const page = await client.getByUID('blog_post', uid, { lang })
             <div class="post">
                 <CoverImage image={page.data.cover_image} />
 
-                <SliceZone
-                    hasBigCap
-                    numberSidenotes
-                    slices={page.data.slices}
-                />
+                {
+                    isFilled.sliceZone(page.data.slices) && (
+                        <SliceZone
+                            hasBigCap
+                            numberSidenotes
+                            slices={page.data.slices}
+                        />
+                    )
+                }
 
                 <Endnotes slices={page.data.slices} />
             </div>

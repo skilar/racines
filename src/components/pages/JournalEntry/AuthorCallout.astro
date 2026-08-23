@@ -1,13 +1,14 @@
 ---
+import { isFilled } from '@prismicio/client'
 import { UI } from '@lib/i18n'
 
 import Image from '../../common/Image.astro'
 import PrismicRichText from '../../common/PrismicRichText.astro'
 
-import type { AuthorDocument } from '@typez/generated/prismic'
+import type { BlogPostDocument } from '@typez/generated/prismic'
 
 interface Props {
-    author: AuthorDocument
+    author: BlogPostDocument['data']['author']
 }
 
 const { author } = Astro.props
@@ -15,20 +16,22 @@ const { lang } = Astro.locals
 ---
 
 {
-    author.data.biography && (
-        <div class="authorCallout">
-            {author.data.photo && (
-                <div>
-                    <Image image={author.data.photo} />
-                </div>
-            )}
+    isFilled.contentRelationship(author) &&
+        author.data &&
+        isFilled.richText(author.data.biography) && (
+            <div class="authorCallout">
+                {isFilled.image(author.data.photo) && (
+                    <div>
+                        <Image image={author.data.photo} />
+                    </div>
+                )}
 
-            <div class="about">
-                <h2>{UI[lang].aboutTheAuthor}</h2>
-                <PrismicRichText richText={author.data.biography} />
+                <div class="about">
+                    <h2>{UI[lang].aboutTheAuthor}</h2>
+                    <PrismicRichText richText={author.data.biography} />
+                </div>
             </div>
-        </div>
-    )
+        )
 }
 
 <style>

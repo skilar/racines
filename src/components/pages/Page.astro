@@ -1,4 +1,5 @@
 ---
+import { isFilled } from '@prismicio/client'
 import { client } from '@lib/prismic'
 import { fixText } from '@lib/get-fixer'
 
@@ -13,7 +14,6 @@ const { uid } = Astro.props
 const { lang } = Astro.locals
 
 const page = await client.getByUID('page', uid, { lang })
-const title = fixText(page.data.title, lang)
 ---
 
 <LayoutWithHeader
@@ -22,13 +22,21 @@ const title = fixText(page.data.title, lang)
     title={page.data.meta_title}
 >
     <main id="main" class="contained">
-        <div class="pageHeader">
-            <h1>{title}</h1>
-        </div>
+        {
+            isFilled.keyText(page.data.title) && (
+                <div class="pageHeader">
+                    <h1>{fixText(page.data.title, lang)}</h1>
+                </div>
+            )
+        }
 
-        <div class="slices">
-            <SliceZone slices={page.data.slices} />
-        </div>
+        {
+            isFilled.sliceZone(page.data.slices) && (
+                <div class="slices">
+                    <SliceZone slices={page.data.slices} />
+                </div>
+            )
+        }
     </main>
 </LayoutWithHeader>
 

@@ -1,4 +1,6 @@
 ---
+import { isFilled } from '@prismicio/client'
+
 import PrismicRichText from '../../common/PrismicRichText.astro'
 
 import type { TextSlice } from '@typez/generated/prismic'
@@ -12,12 +14,19 @@ interface Props {
 const { hasBigCap = false, noteOffset, slice } = Astro.props
 ---
 
-<div
-    class:list={['container', { hasBigCap }]}
-    data-slice-type={slice.slice_type}
->
-    <PrismicRichText noteOffset={noteOffset} richText={slice.primary.text} />
-</div>
+{
+    isFilled.richText(slice.primary.text) && (
+        <div
+            class:list={['container', { hasBigCap }]}
+            data-slice-type={slice.slice_type}
+        >
+            <PrismicRichText
+                noteOffset={noteOffset}
+                richText={slice.primary.text}
+            />
+        </div>
+    )
+}
 
 <style>
     .container {

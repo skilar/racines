@@ -1,6 +1,8 @@
 ---
+import { isFilled } from '@prismicio/client'
 import { client } from '@lib/prismic'
 import { fixText } from '@lib/get-fixer'
+import { UI } from '@lib/i18n'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 
@@ -8,7 +10,13 @@ const { lang } = Astro.locals
 
 const page = await client.getByUID('page', 'journal', { lang })
 const blogPosts = await client.getByType('blog_post', { lang })
-const title = fixText(page.data.title, lang)
+
+const posts = blogPosts.results.map((post) => ({
+    href: post.url,
+    label: isFilled.keyText(post.data.title)
+        ? fixText(post.data.title, lang)
+        : UI[lang].untitledEntry,
+}))
 ---
 
 <LayoutWithHeader
@@ -17,25 +25,25 @@ const title = fixText(page.data.title, lang)
     title={page.data.meta_title}
 >
     <main id="main" class="contained">
-        <div class="postMeta">
-            <h1>{title}</h1>
-        </div>
+        {
+            isFilled.keyText(page.data.title) && (
+                <div class="postMeta">
+                    <h1>{fixText(page.data.title, lang)}</h1>
+                </div>
+            )
+        }
 
-        <div class="post">
-            <ul>
-                {
-                    blogPosts.results.map((post) => {
-                        return (
-                            <li>
-                                <a href={post.url}>
-                                    {fixText(post.data.title, lang)}
-                                </a>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
-        </div>
+        {
+            posts.length > 0 && (
+                <div class="post">
+                    <ul>
+                        {posts.map(({ href, label }) => (
+                            <li>{href ? <a href={href}>{label}</a> : label}</li>
+                        ))}
+                    </ul>
+                </div>
+            )
+        }
     </main>
 </LayoutWithHeader>
 

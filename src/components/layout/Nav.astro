@@ -11,10 +11,14 @@ interface Props {
 
 const { menu } = Astro.props
 const { lang } = Astro.locals
+
+const links = menu.filter(
+    (item) => isFilled.link(item) && isFilled.keyText(item.text),
+)
 ---
 
 {
-    menu && (
+    links.length > 0 && (
         <nav>
             <button class="menuToggle" id="menuButton">
                 <span class="visuallyHidden">{UI[lang].menu}</span>
@@ -22,7 +26,7 @@ const { lang } = Astro.locals
 
             <div class="navContainer" id="topNav">
                 <ul class="nav">
-                    {menu.filter(isFilled.link).map((item) => (
+                    {links.map((item) => (
                         <li>
                             <a {...asLinkAttrs(item)}>
                                 {fixText(item.text, lang)}

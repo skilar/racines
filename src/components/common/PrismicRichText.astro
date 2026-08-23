@@ -1,10 +1,10 @@
 ---
-import { asHTML } from '@prismicio/client'
+import { asHTML, isFilled } from '@prismicio/client'
 import getFixer from '@lib/get-fixer'
 import { noteId, noteRefId } from '@lib/sidenotes'
 import tightenSidenoteRefs from '@lib/tighten-sidenote-refs'
 
-import type { RichTextField } from '@prismicio/types'
+import type { RichTextField } from '@prismicio/client'
 
 interface Props {
     class?: string
@@ -38,7 +38,7 @@ function serializeFootnote(children: string): string {
     return `<a class="sidenote-ref" id="${ref}" href="#${note}">${noteNumber}</a><span class="sidenote"><span class="sidenoteNumber">${noteNumber}</span>${children}</span>`
 }
 
-const htmlRichText = richText
+const htmlRichText = isFilled.richText(richText)
     ? tightenSidenoteRefs(
           getFixer(lang).fixHtml(
               asHTML(richText, {

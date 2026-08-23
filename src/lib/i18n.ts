@@ -13,12 +13,14 @@ export const UI = {
         backToRef: (number: number) => `Retour à l’appel de note ${number}`,
         menu: 'Menu',
         notes: 'Notes',
+        untitledEntry: 'Article sans titre',
     },
     'en-us': {
         aboutTheAuthor: 'About the Author',
         backToRef: (number: number) => `Back to note ${number}`,
         menu: 'Menu',
         notes: 'Notes',
+        untitledEntry: 'Untitled entry',
     },
 } as const
 

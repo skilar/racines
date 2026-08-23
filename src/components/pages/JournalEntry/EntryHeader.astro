@@ -1,4 +1,5 @@
 ---
+import { isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
 
@@ -13,20 +14,14 @@ interface Props {
     title: BlogPostDocument['data']['title']
 }
 
-const {
-    description,
-    publicationDate,
-    subtitle,
-    title: titleString,
-} = Astro.props
+const { description, publicationDate, subtitle, title } = Astro.props
 const { lang } = Astro.locals
 
 const dateString = getJournalEntryDate(publicationDate, lang)
-const title = fixText(titleString, lang)
 ---
 
 <div class="postMeta">
-    <h1>{title}</h1>
+    {isFilled.keyText(title) && <h1>{fixText(title, lang)}</h1>}
 
     <PrismicRichText class="subtitle" richText={subtitle} />
 

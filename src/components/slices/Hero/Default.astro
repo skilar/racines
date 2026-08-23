@@ -16,7 +16,11 @@ const { lang } = Astro.locals
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
-    {slice.primary.title && <h2>{fixText(slice.primary.title, lang)}</h2>}
+    {
+        isFilled.keyText(slice.primary.title) && (
+            <h2>{fixText(slice.primary.title, lang)}</h2>
+        )
+    }
 
     <PrismicRichText class="description" richText={slice.primary.description} />
 

@@ -1,12 +1,14 @@
 ---
 import { isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
+import { UI } from '@lib/i18n'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
 import getRelationshipDate from '@lib/get-relationship-date'
 
 import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 
+import type { KeyTextField } from '@prismicio/client'
 import type { BlogPostLinkSectionSlice } from '@typez/generated/prismic'
 
 interface Props {
@@ -15,13 +17,16 @@ interface Props {
 
 const { slice } = Astro.props
 const { lang } = Astro.locals
+
+const postTitle = (title: KeyTextField) =>
+    isFilled.keyText(title) ? fixText(title, lang) : UI[lang].untitledEntry
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
     <div class="wrapper">
         <div>
             {
-                slice.primary.title && (
+                isFilled.keyText(slice.primary.title) && (
                     <h2>{fixText(slice.primary.title, lang)}</h2>
                 )
             }
@@ -32,81 +37,93 @@ const { lang } = Astro.locals
             />
 
             {
-                isFilled.link(slice.primary.link) && (
-                    <a class="journalLink" href={slice.primary.link.url}>
-                        {fixText(slice.primary.link.text, lang)} →
-                    </a>
-                )
+                isFilled.link(slice.primary.link) &&
+                    isFilled.keyText(slice.primary.link.text) && (
+                        <a class="journalLink" href={slice.primary.link.url}>
+                            {fixText(slice.primary.link.text, lang)} →
+                        </a>
+                    )
             }
         </div>
 
-        <div class="blogPostsContainer">
-            <ul class="blogPosts">
-                {
-                    slice.primary.blog_posts.map((post) => {
-                        if (
-                            isFilled.contentRelationship(post.blog_post) &&
-                            post.blog_post.data
-                        ) {
-                            const publishedAt = getRelationshipDate(
-                                post.blog_post,
-                            )
-                            const dateString = getJournalEntryDate(
-                                publishedAt,
-                                lang,
-                            )
+        {
+            isFilled.group(slice.primary.blog_posts) && (
+                <div class="blogPostsContainer">
+                    <ul class="blogPosts">
+                        {slice.primary.blog_posts.map((post) => {
+                            if (
+                                isFilled.contentRelationship(post.blog_post) &&
+                                post.blog_post.data
+                            ) {
+                                const publishedAt = getRelationshipDate(
+                                    post.blog_post,
+                                )
+                                const dateString = getJournalEntryDate(
+                                    publishedAt,
+                                    lang,
+                                )
 
-                            return (
-                                <li class="post">
-                                    {isFilled.image(
-                                        post.blog_post.data.cover_image,
-                                    ) && (
-                                        <div>
-                                            <Image
-                                                class="postImage"
-                                                image={
-                                                    post.blog_post.data
-                                                        .cover_image
+                                return (
+                                    <li class="post">
+                                        {isFilled.image(
+                                            post.blog_post.data.cover_image,
+                                        ) && (
+                                            <div>
+                                                <Image
+                                                    class="postImage"
+                                                    image={
+                                                        post.blog_post.data
+                                                            .cover_image
+                                                    }
+                                                    quality={75}
+                                                />
+                                            </div>
+                                        )}
+
+                                        <div class="postText">
+                                            <time
+                                                class="postDate"
+                                                datetime={publishedAt}
+                                            >
+                                                {dateString}
+                                            </time>
+
+                                            {post.blog_post.url ? (
+                                                <a
+                                                    class="postTitle"
+                                                    href={post.blog_post.url}
+                                                >
+                                                    {postTitle(
+                                                        post.blog_post.data
+                                                            .title,
+                                                    )}
+                                                </a>
+                                            ) : (
+                                                <span class="postTitle">
+                                                    {postTitle(
+                                                        post.blog_post.data
+                                                            .title,
+                                                    )}
+                                                </span>
+                                            )}
+
+                                            <PrismicRichText
+                                                class="postDescription"
+                                                richText={
+                                                    post.blog_post.data.subtitle
                                                 }
-                                                quality={75}
                                             />
                                         </div>
-                                    )}
+                                    </li>
+                                )
+                            }
 
-                                    <div class="postText">
-                                        <time
-                                            class="postDate"
-                                            datetime={publishedAt}
-                                        >
-                                            {dateString}
-                                        </time>
-
-                                        <a
-                                            class="postTitle"
-                                            href={post.blog_post.url}
-                                        >
-                                            {fixText(
-                                                post.blog_post.data.title,
-                                                lang,
-                                            )}
-                                        </a>
-
-                                        <PrismicRichText
-                                            class="postDescription"
-                                            richText={
-                                                post.blog_post.data.subtitle
-                                            }
-                                        />
-                                    </div>
-                                </li>
-                            )
-                        }
-
-                        return null
-                    })
-                }
-            </ul>
-        </div>
+                            return null
+                        })}
+                    </ul>
+                </div>
+            )
+        }
     </div>
 </div>
 
@@ -214,7 +231,7 @@ const { lang } = Astro.locals
         text-box-trim: trim-both;
         text-decoration: none;
 
-        &:hover {
+        &:is(a):hover {
             text-decoration: underline;
             text-decoration-thickness: 1px;
         }
