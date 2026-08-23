@@ -10,13 +10,15 @@ import type { SliceZone } from '@prismicio/client'
 import type { AnySlice } from '@typez/prismic'
 
 interface Props {
+    // Controls large capital letter at beginning of text slice.
+    hasBigCap?: boolean
     // Article bodies number their footnotes across the whole zone.
     // Nothing else does.
     numberSidenotes?: boolean
     slices: SliceZone<AnySlice>
 }
 
-const { numberSidenotes = false, slices } = Astro.props
+const { hasBigCap = false, numberSidenotes = false, slices } = Astro.props
 
 // How many footnotes come before each slice, so that markers spread across
 // several slices still read as one sequence.
@@ -27,6 +29,11 @@ const noteOffsets = slices.map((slice) => {
 
     return numberSidenotes ? offset : undefined
 })
+
+// Find first text slice so, if hasBigCap is true, the first letter can be a big cap
+const firstTextSliceIndex = slices.findIndex(
+    (slice) => slice.slice_type === 'text',
+)
 ---
 
 {
@@ -41,7 +48,13 @@ const noteOffsets = slices.map((slice) => {
             case 'image_list':
                 return <ImageList noteOffset={noteOffset} slice={slice} />
             case 'text':
-                return <Text noteOffset={noteOffset} slice={slice} />
+                return (
+                    <Text
+                        hasBigCap={hasBigCap && index === firstTextSliceIndex}
+                        noteOffset={noteOffset}
+                        slice={slice}
+                    />
+                )
             default:
                 return null
         }

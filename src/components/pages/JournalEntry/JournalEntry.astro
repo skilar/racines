@@ -39,7 +39,11 @@ const page = await client.getByUID('blog_post', uid, { lang })
                     priority
                 />
 
-                <SliceZone slices={page.data.slices} numberSidenotes />
+                <SliceZone
+                    hasBigCap
+                    numberSidenotes
+                    slices={page.data.slices}
+                />
 
                 <Endnotes slices={page.data.slices} />
             </div>
