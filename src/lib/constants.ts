@@ -8,3 +8,5 @@ export const ROUTES: Route[] = [
     { type: 'page', lang: 'en-us', path: '/en/:uid/' },
     { type: 'page', lang: 'fr-fr', path: '/:uid/' },
 ]
+
+export const SITE_NAME = 'Agathe Giraud'
