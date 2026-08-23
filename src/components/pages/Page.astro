@@ -1,5 +1,6 @@
 ---
 import { client } from '@lib/prismic'
+import { fixText } from '@lib/get-fixer'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 import SliceZone from '../common/SliceZone.astro'
@@ -12,6 +13,7 @@ const { uid } = Astro.props
 const { lang } = Astro.locals
 
 const page = await client.getByUID('page', uid, { lang })
+const title = fixText(page.data.title, lang)
 ---
 
 <LayoutWithHeader
@@ -20,12 +22,38 @@ const page = await client.getByUID('page', uid, { lang })
     title={page.data.meta_title}
 >
     <main id="main" class="contained">
-        <SliceZone slices={page.data.slices} />
+        <div class="pageHeader">
+            <h1>{title}</h1>
+        </div>
+
+        <div class="slices">
+            <SliceZone slices={page.data.slices} />
+        </div>
     </main>
 </LayoutWithHeader>
 
 <style>
     main {
-        padding-bottom: var(--space-7);
+        padding-block: var(--space-8) var(--space-9);
+    }
+
+    .pageHeader {
+        margin-bottom: var(--space-5);
+        margin-inline: auto;
+        max-width: var(--width-text);
+    }
+
+    h1 {
+        font-size: var(--font-size-6);
+    }
+
+    .slices {
+        > :global(div) {
+            margin-inline: auto;
+        }
+
+        div:has(+ div) {
+            margin-bottom: var(--space-8);
+        }
     }
 </style>
