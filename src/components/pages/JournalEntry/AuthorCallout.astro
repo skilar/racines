@@ -7,28 +7,29 @@ import PrismicRichText from '../../common/PrismicRichText.astro'
 import type { AuthorDocument } from '@typez/generated/prismic'
 
 interface Props {
-    bio: AuthorDocument['data']['biography']
-    photo: AuthorDocument['data']['photo']
+    author: AuthorDocument
 }
 
-const { bio, photo } = Astro.props
+const { author } = Astro.props
 const { lang } = Astro.locals
 ---
 
-<div class="authorCallout">
-    {
-        photo && (
-            <div>
-                <Image image={photo} />
-            </div>
-        )
-    }
+{
+    author.data.biography && (
+        <div class="authorCallout">
+            {author.data.photo && (
+                <div>
+                    <Image image={author.data.photo} />
+                </div>
+            )}
 
-    <div class="about">
-        <h2>{UI[lang].aboutTheAuthor}</h2>
-        <PrismicRichText richText={bio} />
-    </div>
-</div>
+            <div class="about">
+                <h2>{UI[lang].aboutTheAuthor}</h2>
+                <PrismicRichText richText={author.data.biography} />
+            </div>
+        </div>
+    )
+}
 
 <style>
     .authorCallout {

@@ -44,10 +44,7 @@ const page = await client.getByUID('blog_post', uid, { lang })
                 <Endnotes slices={page.data.slices} />
             </div>
 
-            <AuthorCallout
-                bio={page.data.author.data.biography}
-                photo={page.data.author.data.photo}
-            />
+            <AuthorCallout author={page.data.author} />
         </article>
     </main>
 </LayoutWithHeader>
