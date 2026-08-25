@@ -1,0 +1,20 @@
+---
+import ImageWithGradient from './ImageWithGradient.astro'
+import InsetTextBoxWithImage from './InsetTextBoxWithImage.astro'
+
+import type { HeroSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: HeroSlice
+}
+
+const { slice } = Astro.props
+---
+
+{
+    slice.variation === 'imageWithGradient' ? (
+        <ImageWithGradient slice={slice} />
+    ) : (
+        <InsetTextBoxWithImage slice={slice} />
+    )
+}

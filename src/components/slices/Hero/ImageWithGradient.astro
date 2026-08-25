@@ -1,0 +1,146 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+
+import Image from '../../common/Image.astro'
+import PrismicRichText from '../../common/PrismicRichText.astro'
+
+import type { HeroSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: HeroSlice
+}
+
+const { slice } = Astro.props
+const { lang } = Astro.locals
+---
+
+<div
+    class="container"
+    data-slice-type={slice.slice_type}
+    data-slice-variation={slice.variation}
+>
+    <div class="heroGrid">
+        <div class="overlay">
+            {
+                isFilled.keyText(slice.primary.title) && (
+                    <h2>{fixText(slice.primary.title, lang)}</h2>
+                )
+            }
+
+            <PrismicRichText
+                class="description"
+                richText={slice.primary.description}
+            />
+        </div>
+
+        {
+            isFilled.image(slice.primary.image) && (
+                <div class="backgroundImage">
+                    <div class="backgroundImageGradient" />
+                    <Image image={slice.primary.image} quality={75} />
+                </div>
+            )
+        }
+    </div>
+</div>
+
+<style>
+    .container {
+        container: hero / inline-size;
+    }
+
+    .heroGrid {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: var(--space-6);
+        margin-bottom: var(--space-8);
+
+        @container hero (width > 45rem) {
+            display: grid;
+            margin: 0;
+            max-height: 100svh;
+            overflow: hidden;
+            position: relative;
+        }
+    }
+
+    .overlay {
+        padding-inline: var(--padding-inline);
+
+        @container hero (width > 45rem) {
+            --header-height: 7rem;
+            left: 3rem;
+            max-width: 23rem;
+            padding: 0;
+            position: absolute;
+            top: calc((100svh - var(--header-height)) / 8);
+            z-index: 5;
+        }
+
+        @container hero (width > 65rem) {
+            top: calc((100svh - var(--header-height)) / 4);
+        }
+    }
+
+    h2 {
+        color: var(--color-blue-10);
+        font-size: var(--font-size-6);
+        font-variation-settings: 'opsz' 10;
+        line-height: 1.2;
+        margin-bottom: var(--space-5);
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+
+        @container hero (width > 45rem) {
+            font-size: var(--font-size-7);
+            margin-bottom: var(--space-8);
+        }
+    }
+
+    .description {
+        font-size: var(--font-size-4);
+        line-height: 1.4;
+        max-width: var(--width-text);
+
+        h3 {
+            font-variation-settings: 'opsz' 6;
+            margin-bottom: var(--space-3);
+        }
+
+        p {
+            &:has(+ h3) {
+                margin-bottom: var(--space-6);
+            }
+
+            &:has(+ p) {
+                margin-bottom: var(--space-5);
+            }
+        }
+    }
+
+    .backgroundImage {
+        position: relative;
+        width: 100%;
+        z-index: 1;
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+    }
+
+    .backgroundImageGradient {
+        @container hero (width > 45rem) {
+            background: linear-gradient(
+                90deg,
+                oklch(1 0 0 / 100%) 0,
+                oklch(1 0 0 / 95%) 15rem,
+                oklch(1 0 0 / 0%) 70%
+            );
+            height: 100%;
+            position: absolute;
+            width: 60rem;
+        }
+    }
+</style>

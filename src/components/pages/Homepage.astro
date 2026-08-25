@@ -42,7 +42,11 @@ const page = await client.getSingle('homepage', { lang })
         grid-column: content;
     }
 
-    .bleedGrid > :global([data-slice-type='quote']) {
+    .bleedGrid
+        > :global(
+            [data-slice-type='quote'],
+            [data-slice-type='hero'][data-slice-variation='imageWithGradient']
+        ) {
         grid-column: full;
     }
 </style>

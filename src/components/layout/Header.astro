@@ -23,28 +23,33 @@ const { lang } = Astro.locals
 const homeHref = resolveRoute({ lang, type: 'homepage' })
 ---
 
-<header class="contained">
-    <Nav menu={menu} />
+<header>
+    <div class="header contained">
+        <Nav menu={menu} />
 
-    <div class="logo">
-        {
-            isFilled.keyText(title) && (
-                <a class="title" href={homeHref}>
-                    {fixText(title, lang)}
-                </a>
-            )
-        }
+        <div class="logo">
+            {
+                isFilled.keyText(title) && (
+                    <a class="title" href={homeHref}>
+                        {fixText(title, lang)}
+                    </a>
+                )
+            }
 
-        <PrismicRichText class="subtitle" richText={subtitle} />
+            <PrismicRichText class="subtitle" richText={subtitle} />
+        </div>
+
+        <LangSelector alternateLanguages={alternateLanguages} />
     </div>
-
-    <LangSelector alternateLanguages={alternateLanguages} />
 </header>
 
 <style>
     header {
-        align-items: center;
         border-bottom: 2px solid var(--color-ivory-4);
+    }
+
+    .header {
+        align-items: center;
         container: header / inline-size;
         display: grid;
         grid-template-columns: repeat(3, 1fr);

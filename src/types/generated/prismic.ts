@@ -623,9 +623,63 @@ export interface HeroSliceDefaultPrimary {
 export type HeroSliceDefault = prismic.SharedSliceVariation<"default", Simplify<HeroSliceDefaultPrimary>, never>;
 
 /**
+ * Primary content in *Hero → Image with Gradient → Primary*
+ */
+export interface HeroSliceImageWithGradientPrimary {
+	/**
+	 * Title field in *Hero → Image with Gradient → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.imageWithGradient.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Description field in *Hero → Image with Gradient → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.imageWithGradient.primary.description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Image field in *Hero → Image with Gradient → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.imageWithGradient.primary.image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * Link field in *Hero → Image with Gradient → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: hero.imageWithGradient.primary.link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Image with Gradient variation for Hero Slice
+ *
+ * - **API ID**: `imageWithGradient`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HeroSliceImageWithGradient = prismic.SharedSliceVariation<"imageWithGradient", Simplify<HeroSliceImageWithGradientPrimary>, never>;
+
+/**
  * Slice variation for *Hero*
  */
-type HeroSliceVariation = HeroSliceDefault
+type HeroSliceVariation = HeroSliceDefault | HeroSliceImageWithGradient
 
 /**
  * Hero Shared Slice
@@ -902,8 +956,10 @@ declare module "@prismicio/client" {
 			BlogPostLinkSectionSliceDefault,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
+			HeroSliceImageWithGradientPrimary,
 			HeroSliceVariation,
 			HeroSliceDefault,
+			HeroSliceImageWithGradient,
 			ImageListSlice,
 			ImageListSliceDefaultPrimaryImagesItem,
 			ImageListSliceDefaultPrimary,
