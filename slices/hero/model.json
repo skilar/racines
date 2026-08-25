@@ -5,55 +5,7 @@
   "variations": [
     {
       "id": "default",
-      "name": "Default",
-      "description": "Default",
-      "imageUrl": "",
-      "docURL": "...",
-      "version": "initial",
-      "primary": {
-        "title": {
-          "type": "Text",
-          "config": {
-            "label": "Title",
-            "placeholder": ""
-          }
-        },
-        "description": {
-          "type": "StructuredText",
-          "config": {
-            "label": "Description",
-            "placeholder": "",
-            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-            "labels": [
-              "ordinal-nums"
-            ],
-            "allowTargetBlank": true
-          }
-        },
-        "image": {
-          "type": "Image",
-          "config": {
-            "label": "Image",
-            "constraint": {},
-            "thumbnails": []
-          }
-        },
-        "link": {
-          "type": "Link",
-          "config": {
-            "label": "Link",
-            "placeholder": "",
-            "select": null,
-            "allowTargetBlank": true,
-            "allowText": true,
-            "repeat": false
-          }
-        }
-      }
-    },
-    {
-      "id": "fullBleed",
-      "name": "Full Bleed",
+      "name": "Inset text box with image",
       "description": "Default",
       "imageUrl": "",
       "docURL": "...",

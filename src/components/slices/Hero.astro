@@ -1,0 +1,121 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+
+import Image from '../common/Image.astro'
+import PrismicRichText from '../common/PrismicRichText.astro'
+
+import type { HeroSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: HeroSlice
+}
+
+const { slice } = Astro.props
+const { lang } = Astro.locals
+---
+
+<div class="container" data-slice-type={slice.slice_type}>
+    <div class="heroGrid">
+        <div class="overlay">
+            {
+                isFilled.keyText(slice.primary.title) && (
+                    <h2>{fixText(slice.primary.title, lang)}</h2>
+                )
+            }
+
+            <PrismicRichText
+                class="description"
+                richText={slice.primary.description}
+            />
+        </div>
+
+        <div class="leftPadding"></div>
+
+        {
+            isFilled.image(slice.primary.image) && (
+                <div class="imageWrapper">
+                    <Image image={slice.primary.image} quality={75} />
+                </div>
+            )
+        }
+    </div>
+</div>
+
+<style>
+    .container {
+        container: hero / inline-size;
+    }
+
+    .heroGrid {
+        display: grid;
+        gap: var(--space-6);
+        padding-top: var(--space-7);
+        position: relative;
+
+        @container hero (width >= 70rem) {
+            gap: 0;
+            grid-template-columns: 1fr 60rem;
+            padding-top: var(--space-8);
+        }
+    }
+
+    .overlay {
+        @container hero (width >= 70rem) {
+            background-color: var(--color-blue-2);
+            bottom: 2rem;
+            box-shadow: 0 0 10px 0px oklch(0 0 0 / 13%);
+            max-width: 27rem;
+            padding: var(--space-7);
+            position: absolute;
+        }
+    }
+
+    h2 {
+        color: var(--color-blue-10);
+        font-size: var(--font-size-6);
+        font-variation-settings: 'opsz' 6;
+        line-height: 1.2;
+        margin-bottom: var(--space-5);
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+    }
+
+    .description {
+        font-size: var(--font-size-4);
+        line-height: 1.4;
+        max-width: var(--width-text);
+
+        h3 {
+            font-variation-settings: 'opsz' 6;
+            margin-bottom: var(--space-3);
+        }
+
+        p {
+            &:has(+ h3) {
+                margin-bottom: var(--space-6);
+            }
+
+            &:has(+ p) {
+                margin-bottom: var(--space-5);
+            }
+        }
+    }
+
+    .leftPadding {
+        display: none;
+
+        @container hero (width >= 70rem) {
+            display: block;
+        }
+    }
+
+    .imageWrapper {
+        width: 100%;
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+    }
+</style>
