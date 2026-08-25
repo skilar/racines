@@ -23,15 +23,7 @@ const page = await client.getSingle('layout', { lang })
         title={page.data.title}
     />
 
-    <div class="wrapper">
-        <slot />
-    </div>
+    <slot />
 
     <Footer text={page.data.text} />
 </Layout>
-
-<style>
-    .wrapper {
-        padding-inline: var(--padding-inline);
-    }
-</style>

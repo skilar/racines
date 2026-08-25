@@ -37,7 +37,7 @@ const page = await client.getByUID('page', uid, { lang })
 
 <style>
     main {
-        max-width: var(--width-text);
+        max-width: calc(var(--width-text) + var(--padding-inline) * 2);
         padding-block: var(--space-7);
     }
 
