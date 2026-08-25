@@ -1,0 +1,99 @@
+---
+import { isFilled } from '@prismicio/client'
+
+import PrismicRichText from '../common/PrismicRichText.astro'
+
+import type { QuoteSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: QuoteSlice
+}
+
+const { slice } = Astro.props
+---
+
+<div class="container" data-slice-type={slice.slice_type}>
+    <div class="quoteSlice">
+        {
+            isFilled.keyText(slice.primary.title) && (
+                <h2>{slice.primary.title}</h2>
+            )
+        }
+
+        {
+            isFilled.richText(slice.primary.caption) && (
+                <PrismicRichText richText={slice.primary.caption} />
+            )
+        }
+    </div>
+</div>
+
+<style>
+    .container {
+        --post-line-height: var(--line-height-default);
+        --post-text-size: var(--font-size-4);
+        --post-line: calc(
+            (var(--post-line-height) * var(--post-text-size)) / 2
+        );
+
+        background-color: var(--color-ivory-2);
+        margin-top: var(--space-8);
+        padding-block: var(--space-8);
+        padding-inline: var(--space-7);
+        width: 100%;
+    }
+
+    .quoteSlice {
+        font-size: var(--font-size-4);
+        hyphens: auto;
+        margin-inline: auto;
+        max-width: var(--width-text);
+        text-align: center;
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+
+        :is(h1, h2, h3, h4, h5, h6):has(
+            + h1,
+            + h2,
+            + h3,
+            + h4,
+            + h5,
+            + h6,
+            + p,
+            + div > p
+        ) {
+            margin-bottom: var(--post-line);
+        }
+
+        :is(p, ol, ul) {
+            &:has(+ h2) {
+                margin-bottom: calc(var(--post-line) * 3);
+            }
+
+            &:has(+ h3) {
+                margin-bottom: calc(var(--post-line) * 2);
+            }
+
+            &:has(+ p, + ol, + ul) {
+                margin-bottom: var(--post-line);
+            }
+        }
+
+        h2 {
+            font-size: var(--font-size-5);
+        }
+
+        ol,
+        ul {
+            margin-left: calc(var(--post-line) * 3);
+        }
+
+        ol {
+            list-style-type: decimal;
+        }
+
+        ul {
+            list-style-type: disc;
+        }
+    }
+</style>

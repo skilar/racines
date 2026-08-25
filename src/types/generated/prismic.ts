@@ -212,7 +212,7 @@ interface BlogPostDocumentData {
  */
 export type BlogPostDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<BlogPostDocumentData>, "blog_post", Lang>;
 
-type HomepageDocumentDataSlicesSlice = HeroSlice | TextSlice | ImageListSlice | BlogPostLinkSectionSlice
+type HomepageDocumentDataSlicesSlice = HeroSlice | ImageListSlice | BlogPostLinkSectionSlice | QuoteSlice
 
 /**
  * Content for Homepage documents
@@ -569,11 +569,11 @@ type BlogPostLinkSectionSliceVariation = BlogPostLinkSectionSliceDefault
 export type BlogPostLinkSectionSlice = prismic.SharedSlice<"blog_post_link_section", BlogPostLinkSectionSliceVariation>;
 
 /**
- * Primary content in *Hero → Default → Primary*
+ * Primary content in *Hero → Inset text box with image → Primary*
  */
 export interface HeroSliceDefaultPrimary {
 	/**
-	 * Title field in *Hero → Default → Primary*
+	 * Title field in *Hero → Inset text box with image → Primary*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: *None*
@@ -583,7 +583,7 @@ export interface HeroSliceDefaultPrimary {
 	title: prismic.KeyTextField;
 	
 	/**
-	 * Description field in *Hero → Default → Primary*
+	 * Description field in *Hero → Inset text box with image → Primary*
 	 *
 	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: *None*
@@ -593,7 +593,7 @@ export interface HeroSliceDefaultPrimary {
 	description: prismic.RichTextField;
 	
 	/**
-	 * Image field in *Hero → Default → Primary*
+	 * Image field in *Hero → Inset text box with image → Primary*
 	 *
 	 * - **Field Type**: Image
 	 * - **Placeholder**: *None*
@@ -603,7 +603,7 @@ export interface HeroSliceDefaultPrimary {
 	image: prismic.ImageField<never>;
 	
 	/**
-	 * Link field in *Hero → Default → Primary*
+	 * Link field in *Hero → Inset text box with image → Primary*
 	 *
 	 * - **Field Type**: Link
 	 * - **Placeholder**: *None*
@@ -614,7 +614,7 @@ export interface HeroSliceDefaultPrimary {
 }
 
 /**
- * Default variation for Hero Slice
+ * Inset text box with image variation for Hero Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default
@@ -623,63 +623,9 @@ export interface HeroSliceDefaultPrimary {
 export type HeroSliceDefault = prismic.SharedSliceVariation<"default", Simplify<HeroSliceDefaultPrimary>, never>;
 
 /**
- * Primary content in *Hero → Full Bleed → Primary*
- */
-export interface HeroSliceFullBleedPrimary {
-	/**
-	 * Title field in *Hero → Full Bleed → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: hero.fullBleed.primary.title
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	title: prismic.KeyTextField;
-	
-	/**
-	 * Description field in *Hero → Full Bleed → Primary*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: hero.fullBleed.primary.description
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	description: prismic.RichTextField;
-	
-	/**
-	 * Image field in *Hero → Full Bleed → Primary*
-	 *
-	 * - **Field Type**: Image
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: hero.fullBleed.primary.image
-	 * - **Documentation**: https://prismic.io/docs/fields/image
-	 */
-	image: prismic.ImageField<never>;
-	
-	/**
-	 * Link field in *Hero → Full Bleed → Primary*
-	 *
-	 * - **Field Type**: Link
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: hero.fullBleed.primary.link
-	 * - **Documentation**: https://prismic.io/docs/fields/link
-	 */
-	link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-}
-
-/**
- * Full Bleed variation for Hero Slice
- *
- * - **API ID**: `fullBleed`
- * - **Description**: Default
- * - **Documentation**: https://prismic.io/docs/slices
- */
-export type HeroSliceFullBleed = prismic.SharedSliceVariation<"fullBleed", Simplify<HeroSliceFullBleedPrimary>, never>;
-
-/**
  * Slice variation for *Hero*
  */
-type HeroSliceVariation = HeroSliceDefault | HeroSliceFullBleed
+type HeroSliceVariation = HeroSliceDefault
 
 /**
  * Hero Shared Slice
@@ -832,6 +778,54 @@ type ImageListSliceVariation = ImageListSliceDefault | ImageListSliceVertical | 
 export type ImageListSlice = prismic.SharedSlice<"image_list", ImageListSliceVariation>;
 
 /**
+ * Primary content in *Quote → Default → Primary*
+ */
+export interface QuoteSliceDefaultPrimary {
+	/**
+	 * Title field in *Quote → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: quote.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Caption field in *Quote → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: quote.default.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	caption: prismic.RichTextField;
+}
+
+/**
+ * Default variation for Quote Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type QuoteSliceDefault = prismic.SharedSliceVariation<"default", Simplify<QuoteSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *Quote*
+ */
+type QuoteSliceVariation = QuoteSliceDefault
+
+/**
+ * Quote Shared Slice
+ *
+ * - **API ID**: `quote`
+ * - **Description**: Quote
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type QuoteSlice = prismic.SharedSlice<"quote", QuoteSliceVariation>;
+
+/**
  * Primary content in *Text → Default → Primary*
  */
 export interface TextSliceDefaultPrimary {
@@ -908,10 +902,8 @@ declare module "@prismicio/client" {
 			BlogPostLinkSectionSliceDefault,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
-			HeroSliceFullBleedPrimary,
 			HeroSliceVariation,
 			HeroSliceDefault,
-			HeroSliceFullBleed,
 			ImageListSlice,
 			ImageListSliceDefaultPrimaryImagesItem,
 			ImageListSliceDefaultPrimary,
@@ -923,6 +915,10 @@ declare module "@prismicio/client" {
 			ImageListSliceDefault,
 			ImageListSliceVertical,
 			ImageListSliceHorizonalWithSingleCaption,
+			QuoteSlice,
+			QuoteSliceDefaultPrimary,
+			QuoteSliceVariation,
+			QuoteSliceDefault,
 			TextSlice,
 			TextSliceDefaultPrimary,
 			TextSliceVariation,

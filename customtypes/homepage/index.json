@@ -12,13 +12,13 @@
             "hero": {
               "type": "SharedSlice"
             },
-            "text": {
-              "type": "SharedSlice"
-            },
             "image_list": {
               "type": "SharedSlice"
             },
             "blog_post_link_section": {
+              "type": "SharedSlice"
+            },
+            "quote": {
               "type": "SharedSlice"
             }
           }
