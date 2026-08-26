@@ -2,7 +2,7 @@
 import { isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
-import { getLinkAttrs } from '@lib/prismic-link-resolver'
+import { getAriaCurrent, getLinkAttrs } from '@lib/prismic-link-resolver'
 
 import type { LayoutDocument } from '@typez/generated/prismic'
 
@@ -13,11 +13,19 @@ interface Props {
 const { menu } = Astro.props
 const { lang } = Astro.locals
 
+const currentPath = Astro.url.pathname
+
 const links = menu.flatMap((item) => {
     const attrs = getLinkAttrs(item)
 
     return attrs && isFilled.keyText(item.text)
-        ? [{ attrs, label: fixText(item.text, lang) }]
+        ? [
+              {
+                  ariaCurrent: getAriaCurrent(attrs.href, currentPath),
+                  attrs,
+                  label: fixText(item.text, lang),
+              },
+          ]
         : []
 })
 ---
@@ -31,9 +39,17 @@ const links = menu.flatMap((item) => {
 
             <div class="navContainer" id="topNav">
                 <ul class="nav">
-                    {links.map(({ attrs, label }) => (
+                    {links.map(({ ariaCurrent, attrs, label }) => (
                         <li>
-                            <a {...attrs}>{label}</a>
+                            <a
+                                {...attrs}
+                                aria-current={ariaCurrent}
+                                class:list={[
+                                    { selected: ariaCurrent !== undefined },
+                                ]}
+                            >
+                                {label}
+                            </a>
                         </li>
                     ))}
                 </ul>
@@ -102,6 +118,7 @@ const links = menu.flatMap((item) => {
             font-weight: var(--font-weight-medium);
             text-decoration: none;
 
+            &.selected,
             &:hover {
                 text-decoration: underline;
                 text-decoration-thickness: var(--underline-thickness-1);
@@ -121,6 +138,7 @@ const links = menu.flatMap((item) => {
             a {
                 font-size: var(--font-size-6);
 
+                &.selected,
                 &:hover {
                     text-decoration-thickness: var(--underline-thickness-2);
                     text-underline-offset: var(--underline-thickness-2);

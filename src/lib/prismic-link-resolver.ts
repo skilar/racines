@@ -9,6 +9,8 @@ interface RouteTarget {
     uid?: string | null
 }
 
+export type AriaCurrent = 'page' | 'true' | undefined
+
 export interface LinkAttrs {
     href: string
     rel?: string | undefined
@@ -20,6 +22,14 @@ const withTrailingSlash = (path: string) =>
 
 // Mirrors @prismicio/client's isInternalURL, which is not exported.
 const isExternal = (url: string) => !/^(\/(?!\/)|#)/.test(url)
+
+const HOME_TYPE = 'homepage'
+
+const ROOT_PATHS = new Set(
+    ROUTES.filter((r) => r.type === HOME_TYPE).map((r) =>
+        withTrailingSlash(r.path),
+    ),
+)
 
 export function resolveRoute({ lang, type, uid }: RouteTarget) {
     const route =
@@ -65,4 +75,21 @@ export function getLinkAttrs(link: LinkField): LinkAttrs | null {
         ...(target ? { target } : {}),
         ...(isExternal(href) ? { rel: 'noopener noreferrer' } : {}),
     }
+}
+
+export function getAriaCurrent(href: string, currentPath: string): AriaCurrent {
+    if (isExternal(href) || href.startsWith('#')) {
+        return undefined
+    }
+
+    const link = withTrailingSlash(href)
+    const current = withTrailingSlash(currentPath)
+
+    if (link === current) {
+        return 'page'
+    }
+
+    return !ROOT_PATHS.has(link) && current.startsWith(link)
+        ? 'true'
+        : undefined
 }
