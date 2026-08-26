@@ -105,8 +105,8 @@ const linkAttrs = getLinkAttrs(slice.primary.link)
         text-box-trim: trim-both;
         text-box-edge: cap alphabetic;
 
-        :has(+ div) {
-            margin-bottom: var(--space-5);
+        &:has(+ div) {
+            margin-bottom: var(--space-6);
         }
 
         @container hero (width > 45rem) {
