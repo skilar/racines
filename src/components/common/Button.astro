@@ -5,6 +5,7 @@ type ButtonProps = {
     href?: never
     rel?: never
     target?: never
+    type?: 'button' | 'submit'
 }
 
 type LinkProps = {
@@ -13,20 +14,39 @@ type LinkProps = {
     href: string
     rel?: string | undefined
     target?: string | undefined
+    type?: never
 }
 
 type Props = (ButtonProps | LinkProps) & {
+    class?: string
     style?: 'primary' | 'secondary' | 'subtle'
 }
 
-const { as = 'button', caption, href, rel, target } = Astro.props
+const {
+    as = 'button',
+    caption,
+    class: className,
+    href,
+    rel,
+    target,
+    type,
+    ...rest
+} = Astro.props
 ---
 
 {
     as === 'button' ? (
-        <button class="button">{caption}</button>
+        <button class:list={['button', className]} type={type} {...rest}>
+            {caption}
+        </button>
     ) : (
-        <a href={href} rel={rel} target={target} class="button">
+        <a
+            href={href}
+            rel={rel}
+            target={target}
+            class:list={['button', className]}
+            {...rest}
+        >
             {caption}
         </a>
     )

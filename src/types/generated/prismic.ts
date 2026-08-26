@@ -319,7 +319,7 @@ interface LayoutDocumentData {
  */
 export type LayoutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<LayoutDocumentData>, "layout", Lang>;
 
-type PageDocumentDataSlicesSlice = TextSlice | ImageListSlice
+type PageDocumentDataSlicesSlice = TextSlice | ImageListSlice | NewsletterSignupFormSlice
 
 /**
  * Content for Page documents
@@ -832,6 +832,54 @@ type ImageListSliceVariation = ImageListSliceDefault | ImageListSliceVertical | 
 export type ImageListSlice = prismic.SharedSlice<"image_list", ImageListSliceVariation>;
 
 /**
+ * Primary content in *NewsletterSignupForm → Default → Primary*
+ */
+export interface NewsletterSignupFormSliceDefaultPrimary {
+	/**
+	 * Title field in *NewsletterSignupForm → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: newsletter_signup_form.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Caption field in *NewsletterSignupForm → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: newsletter_signup_form.default.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	caption: prismic.RichTextField;
+}
+
+/**
+ * Default variation for NewsletterSignupForm Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type NewsletterSignupFormSliceDefault = prismic.SharedSliceVariation<"default", Simplify<NewsletterSignupFormSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *NewsletterSignupForm*
+ */
+type NewsletterSignupFormSliceVariation = NewsletterSignupFormSliceDefault
+
+/**
+ * NewsletterSignupForm Shared Slice
+ *
+ * - **API ID**: `newsletter_signup_form`
+ * - **Description**: NewsletterSignupForm
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type NewsletterSignupFormSlice = prismic.SharedSlice<"newsletter_signup_form", NewsletterSignupFormSliceVariation>;
+
+/**
  * Primary content in *Quote → Default → Primary*
  */
 export interface QuoteSliceDefaultPrimary {
@@ -971,6 +1019,10 @@ declare module "@prismicio/client" {
 			ImageListSliceDefault,
 			ImageListSliceVertical,
 			ImageListSliceHorizonalWithSingleCaption,
+			NewsletterSignupFormSlice,
+			NewsletterSignupFormSliceDefaultPrimary,
+			NewsletterSignupFormSliceVariation,
+			NewsletterSignupFormSliceDefault,
 			QuoteSlice,
 			QuoteSliceDefaultPrimary,
 			QuoteSliceVariation,

@@ -179,8 +179,7 @@ img {
 }
 
 a,
-button,
-input {
+button {
     &:focus-visible {
         outline: var(--outline-focus-visible);
         outline-offset: var(--outline-offset-focus-visible);
