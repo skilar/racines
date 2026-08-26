@@ -177,3 +177,12 @@ img {
     vertical-align: middle;
     width: 100%;
 }
+
+a,
+button,
+input {
+    &:focus-visible {
+        outline: var(--outline-focus-visible);
+        outline-offset: var(--outline-offset-focus-visible);
+    }
+}
