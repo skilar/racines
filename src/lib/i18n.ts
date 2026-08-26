@@ -13,6 +13,7 @@ export const UI = {
         backToRef: (number: number) => `Retour à l’appel de note ${number}`,
         menu: 'Menu',
         notes: 'Notes',
+        skipToContent: 'Skip to content',
         untitledEntry: 'Article sans titre',
     },
     'en-us': {
@@ -20,6 +21,7 @@ export const UI = {
         backToRef: (number: number) => `Back to note ${number}`,
         menu: 'Menu',
         notes: 'Notes',
+        skipToContent: 'Skip to content',
         untitledEntry: 'Untitled entry',
     },
 } as const

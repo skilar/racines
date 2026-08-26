@@ -2,6 +2,7 @@
 import { LOCALES } from '@lib/i18n'
 
 import Head from '@components/layout/Head.astro'
+import SkipToContentLink from '@components/layout/SkipToContentLink.astro'
 import '@styles/styles.css'
 
 import type { LayoutProps } from '@typez/types'
@@ -16,6 +17,7 @@ const { lang } = Astro.locals
     <Head {...props} />
 
     <body>
+        <SkipToContentLink />
         <slot />
     </body>
 </html>

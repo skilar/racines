@@ -1,0 +1,46 @@
+---
+import { UI } from '@lib/i18n'
+
+const { lang } = Astro.locals
+---
+
+<a class="skip-to-content-link" href="#main">{UI[lang].skipToContent}</a>
+
+<style>
+    .skip-to-content-link {
+        border: 0;
+        clip: rect(1px, 1px, 1px, 1px);
+        clip-path: inset(50%);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+        z-index: 1000;
+
+        &:active,
+        &:focus {
+            appearance: none;
+            background-color: var(--color-blue-10);
+            border: 0.25rem solid var(--color-blue-3);
+            clip: auto !important;
+            clip-path: inherit;
+            color: var(--color-white);
+            cursor: pointer;
+            display: inline-block;
+            font-size: var(--font-size-4);
+            height: auto;
+            left: var(--space-6);
+            margin: auto;
+            overflow: auto;
+            padding-block: var(--space-2);
+            padding-inline: var(--space-4);
+            text-decoration: none;
+            top: 0;
+            transition: 0ms;
+            user-select: none;
+            width: auto;
+        }
+    }
+</style>
