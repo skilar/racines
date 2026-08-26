@@ -64,7 +64,7 @@ const page = await client.getByUID('blog_post', uid, { lang })
             margin-inline: auto;
         }
 
-        div:has(+ div) {
+        :global(> div:has(+ div)) {
             margin-bottom: var(--space-8);
         }
 
