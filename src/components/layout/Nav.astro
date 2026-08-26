@@ -1,7 +1,8 @@
 ---
-import { asLinkAttrs, isFilled } from '@prismicio/client'
+import { isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
 
 import type { LayoutDocument } from '@typez/generated/prismic'
 
@@ -12,9 +13,13 @@ interface Props {
 const { menu } = Astro.props
 const { lang } = Astro.locals
 
-const links = menu.filter(
-    (item) => isFilled.link(item) && isFilled.keyText(item.text),
-)
+const links = menu.flatMap((item) => {
+    const attrs = getLinkAttrs(item)
+
+    return attrs && isFilled.keyText(item.text)
+        ? [{ attrs, label: fixText(item.text, lang) }]
+        : []
+})
 ---
 
 {
@@ -26,11 +31,9 @@ const links = menu.filter(
 
             <div class="navContainer" id="topNav">
                 <ul class="nav">
-                    {links.map((item) => (
+                    {links.map(({ attrs, label }) => (
                         <li>
-                            <a {...asLinkAttrs(item)}>
-                                {fixText(item.text, lang)}
-                            </a>
+                            <a {...attrs}>{label}</a>
                         </li>
                     ))}
                 </ul>

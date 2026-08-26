@@ -3,26 +3,30 @@ type ButtonProps = {
     as?: 'button'
     caption: string
     href?: never
+    rel?: never
+    target?: never
 }
 
 type LinkProps = {
     as: 'link'
     caption: string
     href: string
+    rel?: string | undefined
+    target?: string | undefined
 }
 
 type Props = (ButtonProps | LinkProps) & {
     style?: 'primary' | 'secondary' | 'subtle'
 }
 
-const { as = 'button', caption, href } = Astro.props
+const { as = 'button', caption, href, rel, target } = Astro.props
 ---
 
 {
     as === 'button' ? (
         <button class="button">{caption}</button>
     ) : (
-        <a href={href} class="button">
+        <a href={href} rel={rel} target={target} class="button">
             {caption}
         </a>
     )
@@ -30,29 +34,23 @@ const { as = 'button', caption, href } = Astro.props
 
 <style>
     .button {
-        background-color: var(--color-blue-10);
+        background-color: var(--color-red-8);
         color: var(--color-ivory-1);
         display: inline-block;
-        font-weight: var(--font-weight-heavy);
-        margin-top: var(--space-5);
+        font-size: var(--font-size-4);
+        font-weight: var(--font-weight-bold);
         padding: var(--space-3) var(--space-4);
         text-decoration: none;
         transition:
             background-color 100ms ease,
             scale 100ms ease;
 
-        /* font-size: var(--font-size-4);
-        font-variant-caps: all-small-caps;
-        padding: var(--space-5);
-        text-box-edge: ex alphabetic;
-        text-box-trim: trim-both; */
-
         &:active {
             scale: 0.95;
         }
 
         &:hover {
-            background-color: var(--color-blue-11);
+            background-color: var(--color-red-9);
         }
     }
 </style>

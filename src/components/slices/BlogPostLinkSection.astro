@@ -2,6 +2,7 @@
 import { isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
 import getRelationshipDate from '@lib/get-relationship-date'
 
@@ -17,6 +18,8 @@ interface Props {
 
 const { slice } = Astro.props
 const { lang } = Astro.locals
+
+const linkAttrs = getLinkAttrs(slice.primary.link)
 
 const postTitle = (title: KeyTextField) =>
     isFilled.keyText(title) ? fixText(title, lang) : UI[lang].untitledEntry
@@ -37,12 +40,11 @@ const postTitle = (title: KeyTextField) =>
             />
 
             {
-                isFilled.link(slice.primary.link) &&
-                    isFilled.keyText(slice.primary.link.text) && (
-                        <a class="journalLink" href={slice.primary.link.url}>
-                            {fixText(slice.primary.link.text, lang)} →
-                        </a>
-                    )
+                linkAttrs && isFilled.keyText(slice.primary.link.text) && (
+                    <a class="journalLink" {...linkAttrs}>
+                        {fixText(slice.primary.link.text, lang)} →
+                    </a>
+                )
             }
         </div>
 

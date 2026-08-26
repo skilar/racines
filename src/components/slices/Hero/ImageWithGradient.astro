@@ -1,7 +1,9 @@
 ---
 import { isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
 
+import Button from '../../common/Button.astro'
 import Image from '../../common/Image.astro'
 import PrismicRichText from '../../common/PrismicRichText.astro'
 
@@ -13,6 +15,8 @@ interface Props {
 
 const { slice } = Astro.props
 const { lang } = Astro.locals
+
+const linkAttrs = getLinkAttrs(slice.primary.link)
 ---
 
 <div
@@ -32,6 +36,16 @@ const { lang } = Astro.locals
                 class="description"
                 richText={slice.primary.description}
             />
+
+            {
+                linkAttrs && isFilled.keyText(slice.primary.link.text) && (
+                    <Button
+                        as="link"
+                        caption={`${fixText(slice.primary.link.text, lang)} →`}
+                        {...linkAttrs}
+                    />
+                )
+            }
         </div>
 
         {
@@ -88,9 +102,12 @@ const { lang } = Astro.locals
         font-size: var(--font-size-6);
         font-variation-settings: 'opsz' 10;
         line-height: 1.2;
-        margin-bottom: var(--space-5);
         text-box-trim: trim-both;
         text-box-edge: cap alphabetic;
+
+        :has(+ div) {
+            margin-bottom: var(--space-5);
+        }
 
         @container hero (width > 45rem) {
             font-size: var(--font-size-7);
@@ -102,6 +119,10 @@ const { lang } = Astro.locals
         font-size: var(--font-size-4);
         line-height: 1.4;
         max-width: var(--width-text);
+
+        &:has(+ a, + button) {
+            margin-bottom: var(--space-7);
+        }
 
         h3 {
             font-variation-settings: 'opsz' 6;
