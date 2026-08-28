@@ -1,5 +1,6 @@
 ---
 import { getLangLinks } from '@lib/get-lang-links'
+import { LOCALES, UI } from '@lib/i18n'
 
 import type { AlternateLanguage } from '@prismicio/client'
 
@@ -17,37 +18,104 @@ const links = getLangLinks({
 })
 ---
 
-<ul class="langs">
-    {
-        links.map((link, index) => (
-            <Fragment>
-                {index > 0 && <li>/</li>}
-                <li>
-                    <a
-                        class:list={[{ selected: link.selected }]}
-                        href={link.href}
-                    >
-                        {link.label}
-                    </a>
-                </li>
-            </Fragment>
-        ))
-    }
-</ul>
+<div class="langSelector">
+    <button
+        aria-controls="langList"
+        aria-expanded="false"
+        class="langToggle"
+        id="langButton"
+        type="button"
+    >
+        <span class="visuallyHidden">{UI[lang].language}</span>
+        {LOCALES[lang].label}
+    </button>
+
+    <ul class="langs" id="langList">
+        {
+            links.map((link, index) => (
+                <Fragment>
+                    {index > 0 && <li class="divider">/</li>}
+                    <li>
+                        <a
+                            class:list={[{ selected: link.selected }]}
+                            href={link.href}
+                        >
+                            {link.label}
+                        </a>
+                    </li>
+                </Fragment>
+            ))
+        }
+    </ul>
+</div>
 
 <style>
+    .langSelector {
+        display: flex;
+        justify-content: end;
+        position: relative;
+        z-index: 1100;
+    }
+
+    .langToggle {
+        appearance: none;
+        align-items: center;
+        color: var(--color-blue-10);
+        display: flex;
+        font-size: var(--font-size-3);
+        font-weight: var(--font-weight-medium);
+        gap: var(--space-2);
+        padding: 0;
+
+        &::after {
+            --chevron-height-width: 0.5rem;
+            border-bottom: 0.1rem solid var(--color-blue-10);
+            border-right: 0.1rem solid var(--color-blue-10);
+            content: '';
+            display: block;
+            height: var(--chevron-height-width);
+            margin-top: -0.125rem;
+            rotate: 45deg;
+            transition: rotate 100ms ease;
+            width: var(--chevron-height-width);
+        }
+
+        &[aria-expanded='true']::after {
+            margin-top: 0.35rem;
+            rotate: -135deg;
+        }
+
+        @container header (width > 30rem) {
+            display: none;
+        }
+    }
+
     .langs {
         --text-color: var(--color-blue-10);
         color: var(--text-color);
-        display: inline-flex;
+        display: none;
         font-size: var(--font-size-3);
         font-weight: var(--font-weight-medium);
         gap: var(--space-3);
-        justify-content: end;
-        z-index: 1000;
+
+        .langSelector:has(> button[aria-expanded='true']) & {
+            background-color: var(--color-ivory-1);
+            border: 1px solid var(--color-ivory-2);
+            display: flex;
+            flex-direction: column;
+            inset-block-start: calc(100% + var(--space-3));
+            inset-inline-end: calc(var(--space-1) * -1);
+            padding-block: var(--space-3);
+            position: absolute;
+        }
+
+        @container header (width > 30rem) {
+            display: flex;
+        }
 
         a {
             color: var(--text-color);
+            padding-inline: var(--space-4);
             text-decoration: none;
 
             &.selected,
@@ -56,6 +124,46 @@ const links = getLangLinks({
                 text-decoration-color: var(--color-red-8);
                 text-decoration-thickness: var(--underline-thickness-2);
             }
+
+            @container header (width > 30rem) {
+                padding-inline: 0;
+            }
+        }
+    }
+
+    .divider {
+        display: none;
+
+        @container header (width > 30rem) {
+            display: block;
         }
     }
 </style>
+
+<script>
+    const button = document.querySelector('#langButton')
+    const doc = document.documentElement
+
+    const close = () => button?.setAttribute('aria-expanded', 'false')
+
+    button?.addEventListener('click', () => {
+        const isOpen = button.getAttribute('aria-expanded') === 'true'
+
+        button.setAttribute('aria-expanded', String(!isOpen))
+    })
+
+    doc.addEventListener('keyup', (el) => {
+        if (el.key === 'Escape') {
+            close()
+        }
+    })
+
+    doc.addEventListener('click', (el) => {
+        if (
+            el.target instanceof Node &&
+            !button?.parentElement?.contains(el.target)
+        ) {
+            close()
+        }
+    })
+</script>

@@ -11,6 +11,7 @@ export const UI = {
     'fr-fr': {
         aboutTheAuthor: 'À propos de l’autrice',
         backToRef: (number: number) => `Retour à l’appel de note ${number}`,
+        language: 'Langue',
         menu: 'Menu',
         notes: 'Notes',
         skipToContent: 'Skip to content',
@@ -19,6 +20,7 @@ export const UI = {
     'en-us': {
         aboutTheAuthor: 'About the Author',
         backToRef: (number: number) => `Back to note ${number}`,
+        language: 'Language',
         menu: 'Menu',
         notes: 'Notes',
         skipToContent: 'Skip to content',
