@@ -4,12 +4,31 @@ import type { HTMLAttributes } from 'astro/types'
 interface Props extends HTMLAttributes<'label'> {
     caption: string
     for: string
+    isVisuallyHidden?: boolean
+    size?: '3' | '4'
 }
 
-const { caption, for: htmlFor, ...rest } = Astro.props
+const {
+    caption,
+    for: htmlFor,
+    isVisuallyHidden = false,
+    size = '4',
+    ...rest
+} = Astro.props
 ---
 
-<label for={htmlFor} {...rest}>{caption}</label>
+<label
+    class:list={[
+        {
+            small: size === '3',
+            visuallyHidden: isVisuallyHidden,
+        },
+    ]}
+    for={htmlFor}
+    {...rest}
+>
+    {caption}
+</label>
 
 <style>
     label {
@@ -18,7 +37,11 @@ const { caption, for: htmlFor, ...rest } = Astro.props
         font-size: var(--font-size-3-sc);
         font-variant-caps: all-small-caps;
         font-weight: var(--font-weight-medium);
-        letter-spacing: 0.5px;
+        letter-spacing: 0.25px;
         margin-bottom: var(--space-1);
+
+        &.small {
+            font-size: var(--font-size-3);
+        }
     }
 </style>
