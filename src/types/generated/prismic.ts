@@ -261,6 +261,8 @@ interface HomepageDocumentData {
  */
 export type HomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<HomepageDocumentData>, "homepage", Lang>;
 
+type LayoutDocumentDataSlices1Slice = NewsletterSignupFormSlice
+
 /**
  * Content for Layout documents
  */
@@ -306,6 +308,17 @@ interface LayoutDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
 	text: prismic.RichTextField;
+	
+	/**
+	 * `slices1` field in *Layout*
+	 *
+	 * - **Field Type**: Slice Zone
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: layout.slices1[]
+	 * - **Tab**: Footer
+	 * - **Documentation**: https://prismic.io/docs/slices
+	 */
+	slices1: prismic.SliceZone<LayoutDocumentDataSlices1Slice>;
 }
 
 /**
@@ -866,9 +879,43 @@ export interface NewsletterSignupFormSliceDefaultPrimary {
 export type NewsletterSignupFormSliceDefault = prismic.SharedSliceVariation<"default", Simplify<NewsletterSignupFormSliceDefaultPrimary>, never>;
 
 /**
+ * Primary content in *NewsletterSignupForm → Inline Signup Form → Primary*
+ */
+export interface NewsletterSignupFormSliceInlineSignupFormPrimary {
+	/**
+	 * Title field in *NewsletterSignupForm → Inline Signup Form → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: newsletter_signup_form.inlineSignupForm.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Caption field in *NewsletterSignupForm → Inline Signup Form → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: newsletter_signup_form.inlineSignupForm.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	caption: prismic.RichTextField;
+}
+
+/**
+ * Inline Signup Form variation for NewsletterSignupForm Slice
+ *
+ * - **API ID**: `inlineSignupForm`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type NewsletterSignupFormSliceInlineSignupForm = prismic.SharedSliceVariation<"inlineSignupForm", Simplify<NewsletterSignupFormSliceInlineSignupFormPrimary>, never>;
+
+/**
  * Slice variation for *NewsletterSignupForm*
  */
-type NewsletterSignupFormSliceVariation = NewsletterSignupFormSliceDefault
+type NewsletterSignupFormSliceVariation = NewsletterSignupFormSliceDefault | NewsletterSignupFormSliceInlineSignupForm
 
 /**
  * NewsletterSignupForm Shared Slice
@@ -990,6 +1037,7 @@ declare module "@prismicio/client" {
 			HomepageDocumentDataSlicesSlice,
 			LayoutDocument,
 			LayoutDocumentData,
+			LayoutDocumentDataSlices1Slice,
 			PageDocument,
 			PageDocumentData,
 			PageDocumentDataSlicesSlice,
@@ -1021,8 +1069,10 @@ declare module "@prismicio/client" {
 			ImageListSliceHorizonalWithSingleCaption,
 			NewsletterSignupFormSlice,
 			NewsletterSignupFormSliceDefaultPrimary,
+			NewsletterSignupFormSliceInlineSignupFormPrimary,
 			NewsletterSignupFormSliceVariation,
 			NewsletterSignupFormSliceDefault,
+			NewsletterSignupFormSliceInlineSignupForm,
 			QuoteSlice,
 			QuoteSliceDefaultPrimary,
 			QuoteSliceVariation,

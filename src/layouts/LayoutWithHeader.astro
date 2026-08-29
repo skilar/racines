@@ -25,5 +25,5 @@ const page = await client.getSingle('layout', { lang })
 
     <slot />
 
-    <Footer text={page.data.text} />
+    <Footer slices={page.data.slices1} text={page.data.text} />
 </Layout>

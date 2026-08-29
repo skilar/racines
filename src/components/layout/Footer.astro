@@ -2,14 +2,16 @@
 import { isFilled } from '@prismicio/client'
 
 import PrismicRichText from '../common/PrismicRichText.astro'
+import SliceZone from '../common/SliceZone.astro'
 
 import type { LayoutDocument } from '@typez/generated/prismic'
 
 interface Props {
+    slices: LayoutDocument['data']['slices1']
     text: LayoutDocument['data']['text']
 }
 
-const { text } = Astro.props
+const { slices, text } = Astro.props
 ---
 
 {
@@ -17,6 +19,8 @@ const { text } = Astro.props
         <footer>
             <div class="footer contained">
                 <PrismicRichText richText={text} />
+
+                <SliceZone slices={slices} />
             </div>
         </footer>
     )
@@ -33,6 +37,5 @@ const { text } = Astro.props
         gap: var(--space-3);
         justify-content: center;
         padding-block: var(--space-5);
-        text-align: center;
     }
 </style>

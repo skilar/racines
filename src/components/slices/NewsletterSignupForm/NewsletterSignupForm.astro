@@ -1,0 +1,167 @@
+---
+import { isFilled } from '@prismicio/client'
+import { UI } from '@lib/i18n'
+
+import Input from '../../common/forms/Input.astro'
+import Button from '../../common/Button.astro'
+import PrismicRichText from '../../common/PrismicRichText.astro'
+
+import type { NewsletterSignupFormSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: NewsletterSignupFormSlice
+}
+
+const { slice } = Astro.props
+const { lang } = Astro.locals
+
+const isInline = slice.variation === 'inlineSignupForm'
+
+// Creates a unique form ID based on the Prismic slice ID, to keep multiple
+// signup forms on one page unique. Clean up the Prismic ID by replacing
+// any character that's not a-Z, A-Z, or 0-9 with a dash.
+const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
+const errorId = `${formId}-error`
+---
+
+<div
+    class:list={['container', { inlineForm: isInline }]}
+    data-slice-type={slice.slice_type}
+>
+    {isFilled.keyText(slice.primary.title) && <h2>{slice.primary.title}</h2>}
+
+    {
+        isFilled.richText(slice.primary.caption) && (
+            <PrismicRichText class="caption" richText={slice.primary.caption} />
+        )
+    }
+
+    <form data-newsletter-form>
+        <div class="newsletterFormFields">
+            {
+                !isInline && (
+                    <div class="names">
+                        <Input
+                            id={`${formId}-first-name`}
+                            label={UI[lang].firstName}
+                            name="first_name"
+                            type="text"
+                        />
+                        <Input
+                            id={`${formId}-last-name`}
+                            label={UI[lang].lastName}
+                            name="last_name"
+                            type="text"
+                        />
+                    </div>
+                )
+            }
+
+            <Input
+                aria-describedby={errorId}
+                hideLabel={isInline}
+                id={`${formId}-email`}
+                label={UI[lang].emailAddress}
+                name="email_address"
+                placeholder="example@example.com"
+                required
+                size={isInline ? '3' : '4'}
+                type="email"
+            />
+        </div>
+
+        <Button
+            caption={UI[lang].signUp}
+            class="newsletterButton"
+            inlineWithFormField={isInline}
+            size={isInline ? '3' : '4'}
+            type="submit"
+        />
+
+        <p class="error" id={errorId} hidden></p>
+    </form>
+
+    <script>
+        import newsletterFormListener from './newsletter-form-listener'
+
+        newsletterFormListener()
+    </script>
+</div>
+
+<style>
+    .container {
+        border-block: var(--double-border);
+        font-size: var(--font-size-4);
+        max-width: var(--width-text);
+        padding-block: var(--space-6) var(--space-7);
+    }
+
+    h2 {
+        font-size: var(--font-size-5);
+        margin-bottom: var(--space-4);
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+    }
+
+    .caption {
+        margin-bottom: var(--space-5);
+
+        p:has(+ p) {
+            margin-bottom: var(--space-5);
+        }
+    }
+
+    .newsletterFormFields {
+        display: grid;
+        gap: var(--space-4);
+        padding-bottom: var(--space-7);
+    }
+
+    .names {
+        display: flex;
+        gap: var(--space-5);
+    }
+
+    .error {
+        color: var(--color-red-9);
+        font-size: var(--font-size-3);
+        margin-bottom: var(--space-3);
+    }
+
+    .newsletterButton {
+        width: 100%;
+    }
+
+    .inlineForm {
+        border-block: none;
+        font-size: var(--font-size-3);
+        max-width: none;
+        padding-block: 0;
+
+        h2 {
+            font-family: var(--font-serif);
+            font-size: var(--font-size-4);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-2);
+        }
+
+        .caption {
+            margin-bottom: var(--space-2);
+        }
+
+        form {
+            align-items: end;
+            display: flex;
+            gap: var(--space-3);
+        }
+
+        .newsletterFormFields {
+            padding-bottom: 0;
+        }
+
+        .newsletterButton {
+            padding-inline: var(--space-4);
+            width: auto;
+        }
+    }
+</style>
