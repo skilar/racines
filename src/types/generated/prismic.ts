@@ -261,7 +261,7 @@ interface HomepageDocumentData {
  */
 export type HomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<HomepageDocumentData>, "homepage", Lang>;
 
-type LayoutDocumentDataSlices1Slice = NewsletterSignupFormSlice
+type LayoutDocumentDataSlices1Slice = NewsletterSignupFormSlice | FooterLinkSectionSlice
 
 /**
  * Content for Layout documents
@@ -299,15 +299,15 @@ interface LayoutDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/link
 	 */
 	menu: prismic.Repeatable<prismic.LinkField<string, string, unknown, prismic.FieldState, "Primary" | "Secondary">>;/**
-	 * Text field in *Layout*
+	 * Legal field in *Layout*
 	 *
 	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: *None*
-	 * - **API ID Path**: layout.text
+	 * - **API ID Path**: layout.legal
 	 * - **Tab**: Footer
 	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
-	text: prismic.RichTextField;
+	legal: prismic.RichTextField;
 	
 	/**
 	 * `slices1` field in *Layout*
@@ -580,6 +580,113 @@ type BlogPostLinkSectionSliceVariation = BlogPostLinkSectionSliceDefault
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type BlogPostLinkSectionSlice = prismic.SharedSlice<"blog_post_link_section", BlogPostLinkSectionSliceVariation>;
+
+/**
+ * Item in *FooterLinkSection → Link List → Primary → Link Section*
+ */
+export interface FooterLinkSectionSliceLinkListPrimaryLinkSectionItem {
+	/**
+	 * Main Link field in *FooterLinkSection → Link List → Primary → Link Section*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: footer_link_section.linkList.primary.link_section[].main_link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	main_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	
+	/**
+	 * Sublinks field in *FooterLinkSection → Link List → Primary → Link Section*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: footer_link_section.linkList.primary.link_section[].sublinks
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	sublinks: prismic.Repeatable<prismic.LinkField<string, string, unknown, prismic.FieldState, never>>;
+}
+
+/**
+ * Primary content in *FooterLinkSection → Main Title → Primary*
+ */
+export interface FooterLinkSectionSliceDefaultPrimary {
+	/**
+	 * Title field in *FooterLinkSection → Main Title → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: footer_link_section.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Subtitle field in *FooterLinkSection → Main Title → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: footer_link_section.default.primary.subtitle
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	subtitle: prismic.RichTextField;
+	
+	/**
+	 * Caption field in *FooterLinkSection → Main Title → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: footer_link_section.default.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	caption: prismic.RichTextField;
+}
+
+/**
+ * Main Title variation for FooterLinkSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FooterLinkSectionSliceDefault = prismic.SharedSliceVariation<"default", Simplify<FooterLinkSectionSliceDefaultPrimary>, never>;
+
+/**
+ * Primary content in *FooterLinkSection → Link List → Primary*
+ */
+export interface FooterLinkSectionSliceLinkListPrimary {
+	/**
+	 * Link Section field in *FooterLinkSection → Link List → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: footer_link_section.linkList.primary.link_section[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	link_section: prismic.GroupField<Simplify<FooterLinkSectionSliceLinkListPrimaryLinkSectionItem>>;
+}
+
+/**
+ * Link List variation for FooterLinkSection Slice
+ *
+ * - **API ID**: `linkList`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FooterLinkSectionSliceLinkList = prismic.SharedSliceVariation<"linkList", Simplify<FooterLinkSectionSliceLinkListPrimary>, never>;
+
+/**
+ * Slice variation for *FooterLinkSection*
+ */
+type FooterLinkSectionSliceVariation = FooterLinkSectionSliceDefault | FooterLinkSectionSliceLinkList
+
+/**
+ * FooterLinkSection Shared Slice
+ *
+ * - **API ID**: `footer_link_section`
+ * - **Description**: FooterLinkSection
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FooterLinkSectionSlice = prismic.SharedSlice<"footer_link_section", FooterLinkSectionSliceVariation>;
 
 /**
  * Primary content in *Hero → Inset text box with image → Primary*
@@ -1050,6 +1157,13 @@ declare module "@prismicio/client" {
 			BlogPostLinkSectionSliceDefaultPrimary,
 			BlogPostLinkSectionSliceVariation,
 			BlogPostLinkSectionSliceDefault,
+			FooterLinkSectionSlice,
+			FooterLinkSectionSliceDefaultPrimary,
+			FooterLinkSectionSliceLinkListPrimaryLinkSectionItem,
+			FooterLinkSectionSliceLinkListPrimary,
+			FooterLinkSectionSliceVariation,
+			FooterLinkSectionSliceDefault,
+			FooterLinkSectionSliceLinkList,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
 			HeroSliceImageWithGradientPrimary,

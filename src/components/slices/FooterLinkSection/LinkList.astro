@@ -1,0 +1,104 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
+
+import type {
+    FooterLinkSectionSliceLinkList,
+    FooterLinkSectionSliceLinkListPrimaryLinkSectionItem,
+} from '@typez/generated/prismic'
+
+interface Props {
+    slice: FooterLinkSectionSliceLinkList
+}
+
+const { slice } = Astro.props
+const { lang } = Astro.locals
+
+const toLink = (
+    link: FooterLinkSectionSliceLinkListPrimaryLinkSectionItem['main_link'],
+) => ({
+    attrs: getLinkAttrs(link),
+    label: fixText(link.text, lang),
+})
+
+const sections = slice.primary.link_section.flatMap((section) => {
+    const main = toLink(section.main_link)
+
+    const sublinks = isFilled.repeatable(section.sublinks)
+        ? section.sublinks.flatMap((sublink) => {
+              const { attrs, label } = toLink(sublink)
+
+              // If there's no destination or label then render nothing
+              return attrs && label ? [{ attrs, label }] : []
+          })
+        : []
+
+    // A main link with text but no URL still heads its sublinks as plain text.
+    // With neither a label nor a sublink there is nothing left to show.
+    return main.label || sublinks.length > 0 ? [{ main, sublinks }] : []
+})
+---
+
+{
+    sections.length > 0 && (
+        <ul class="linkList">
+            {sections.map(({ main, sublinks }) => (
+                <li>
+                    {main.label &&
+                        (main.attrs ? (
+                            <a class="mainLink" {...main.attrs}>
+                                {main.label}
+                            </a>
+                        ) : (
+                            <span class="mainLink">{main.label}</span>
+                        ))}
+
+                    {sublinks.length > 0 && (
+                        <ul class="linkList">
+                            {sublinks.map(({ attrs, label }) => (
+                                <li>
+                                    <a class="sublink" {...attrs}>
+                                        {label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </li>
+            ))}
+        </ul>
+    )
+}
+
+<style>
+    .linkList {
+        display: grid;
+        font-size: var(--font-size-3-sc);
+        gap: var(--space-1);
+    }
+
+    a.mainLink,
+    a.sublink {
+        color: var(--color-black);
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+        }
+    }
+
+    .mainLink {
+        display: inline-block;
+        font-weight: var(--font-weight-bold);
+
+        &:has(+ ul) {
+            padding-bottom: var(--space-1);
+        }
+    }
+
+    .sublink {
+        font-weight: var(--font-weight-normal);
+    }
+</style>

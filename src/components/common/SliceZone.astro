@@ -2,6 +2,7 @@
 import { countSidenotes } from '@lib/sidenotes'
 
 import BlogPostLinkSection from '@components/slices/BlogPostLinkSection.astro'
+import FooterLinkSection from '@components/slices/FooterLinkSection/FooterLinkSection.astro'
 import Hero from '@components/slices/Hero/Hero.astro'
 import ImageList from '@components/slices/ImageList.astro'
 import NewsletterSignupForm from '@components/slices/NewsletterSignupForm/NewsletterSignupForm.astro'
@@ -45,6 +46,8 @@ const firstTextSliceIndex = slices.findIndex(
         switch (slice.slice_type) {
             case 'blog_post_link_section':
                 return <BlogPostLinkSection slice={slice} />
+            case 'footer_link_section':
+                return <FooterLinkSection slice={slice} />
             case 'hero':
                 return <Hero slice={slice} />
             case 'image_list':

@@ -1,0 +1,84 @@
+{
+  "id": "footer_link_section",
+  "type": "SharedSlice",
+  "name": "FooterLinkSection",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Main Title",
+      "description": "Default",
+      "imageUrl": "",
+      "docURL": "...",
+      "version": "initial",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": ""
+          }
+        },
+        "subtitle": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Subtitle",
+            "placeholder": "",
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "allowTargetBlank": true
+          }
+        },
+        "caption": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Caption",
+            "placeholder": "",
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "allowTargetBlank": true
+          }
+        }
+      }
+    },
+    {
+      "id": "linkList",
+      "name": "Link List",
+      "description": "Default",
+      "imageUrl": "",
+      "docURL": "...",
+      "version": "initial",
+      "primary": {
+        "link_section": {
+          "type": "Group",
+          "config": {
+            "label": "Link Section",
+            "repeat": true,
+            "fields": {
+              "main_link": {
+                "type": "Link",
+                "config": {
+                  "label": "Main Link",
+                  "placeholder": "",
+                  "select": null,
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "repeat": false
+                }
+              },
+              "sublinks": {
+                "type": "Link",
+                "config": {
+                  "label": "Sublinks",
+                  "placeholder": "",
+                  "select": null,
+                  "allowTargetBlank": true,
+                  "allowText": true,
+                  "repeat": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "description": "FooterLinkSection"
+}

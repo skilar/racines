@@ -7,20 +7,24 @@ import SliceZone from '../common/SliceZone.astro'
 import type { LayoutDocument } from '@typez/generated/prismic'
 
 interface Props {
+    legal: LayoutDocument['data']['legal']
     slices: LayoutDocument['data']['slices1']
-    text: LayoutDocument['data']['text']
 }
 
-const { slices, text } = Astro.props
+const { slices, legal } = Astro.props
 ---
 
 {
-    isFilled.richText(text) && (
+    isFilled.richText(legal) && (
         <footer>
             <div class="footer contained">
-                <PrismicRichText richText={text} />
+                <div class="footerSlices">
+                    <SliceZone slices={slices} />
+                </div>
 
-                <SliceZone slices={slices} />
+                <div class="legal">
+                    <PrismicRichText richText={legal} />
+                </div>
             </div>
         </footer>
     )
@@ -28,14 +32,25 @@ const { slices, text } = Astro.props
 
 <style>
     footer {
-        background-color: var(--color-ivory-3);
+        background-color: var(--color-ivory-2);
     }
 
     .footer {
-        align-items: center;
-        display: flex;
-        gap: var(--space-3);
-        justify-content: center;
-        padding-block: var(--space-5);
+        padding-block: var(--space-7);
+    }
+
+    .footerSlices {
+        display: grid;
+        gap: var(--space-5);
+        grid-template-columns: 1fr 1fr 3fr 2fr;
+    }
+
+    .legal {
+        margin-top: var(--space-7);
+
+        ul {
+            display: flex;
+            gap: var(--space-5);
+        }
     }
 </style>

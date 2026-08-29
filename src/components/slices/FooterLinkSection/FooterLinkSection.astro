@@ -1,0 +1,22 @@
+---
+import LinkList from './LinkList.astro'
+import MainTitle from './MainTitle.astro'
+
+import type { FooterLinkSectionSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: FooterLinkSectionSlice
+}
+
+const { slice } = Astro.props
+---
+
+<div class="container" data-slice-type={slice.slice_type}>
+    {
+        slice.variation === 'linkList' ? (
+            <LinkList slice={slice} />
+        ) : (
+            <MainTitle slice={slice} />
+        )
+    }
+</div>

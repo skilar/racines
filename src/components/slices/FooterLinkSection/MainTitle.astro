@@ -1,0 +1,55 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+
+import PrismicRichText from '../../common/PrismicRichText.astro'
+
+import type { FooterLinkSectionSliceDefault } from '@typez/generated/prismic'
+
+interface Props {
+    slice: FooterLinkSectionSliceDefault
+}
+
+const { slice } = Astro.props
+const { lang } = Astro.locals
+---
+
+<div class="container">
+    {
+        isFilled.keyText(slice.primary.title) && (
+            <h2>{fixText(slice.primary.title, lang)}</h2>
+        )
+    }
+
+    <PrismicRichText class="subtitle" richText={slice.primary.subtitle} />
+    <PrismicRichText class="caption" richText={slice.primary.caption} />
+</div>
+
+<style>
+    .container {
+        text-align: center;
+    }
+
+    h2 {
+        color: var(--color-blue-10);
+        font-family: var(--font-headline);
+        font-size: var(--font-size-4-sc);
+        font-variant-caps: all-small-caps;
+        font-variation-settings: 'opsz' 8;
+        font-weight: var(--font-weight-medium);
+        letter-spacing: 0.5px;
+        line-height: 1;
+        margin-bottom: 0;
+    }
+
+    .subtitle {
+        color: var(--color-red-8);
+        font-size: var(--font-size-3-sc);
+        font-variant-caps: all-small-caps;
+        letter-spacing: 0.5px;
+    }
+
+    .caption {
+        margin-top: var(--space-3);
+    }
+</style>
