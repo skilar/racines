@@ -106,6 +106,9 @@
     --space-8: calc(var(--baseSize) * pow(var(--scaleInt), 4));
     --space-9: calc(var(--baseSize) * pow(var(--scaleInt), 5));
 
+    /* Forms */
+    --input-padding-block: var(--space-1);
+
     /* Widths */
     --width-text: 43rem;
     --width-image: 60rem;
