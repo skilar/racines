@@ -124,8 +124,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-headline);
-    font-variation-settings: 'opsz' 10;
+    font-family: var(--font-serif);
+    font-weight: var(--font-weight-bold);
     letter-spacing: 0.25px;
 }
 
