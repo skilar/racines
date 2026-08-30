@@ -1,5 +1,5 @@
 ---
-import { countSidenotes } from '@lib/sidenotes'
+import { countNotes } from '@lib/notes'
 
 import BlogPostLinkSection from '@components/slices/BlogPostLinkSection.astro'
 import FooterLinkSection from '@components/slices/FooterLinkSection/FooterLinkSection.astro'
@@ -17,20 +17,20 @@ interface Props {
     hasBigCap?: boolean
     // Article bodies number their footnotes across the whole zone.
     // Nothing else does.
-    numberSidenotes?: boolean
+    numberNotes?: boolean
     slices: SliceZone<AnySlice>
 }
 
-const { hasBigCap = false, numberSidenotes = false, slices } = Astro.props
+const { hasBigCap = false, numberNotes = false, slices } = Astro.props
 
 // How many footnotes come before each slice, so that markers spread across
 // several slices still read as one sequence.
 let counted = 0
 const noteOffsets = slices.map((slice) => {
     const offset = counted
-    counted += countSidenotes(slice)
+    counted += countNotes(slice)
 
-    return numberSidenotes ? offset : undefined
+    return numberNotes ? offset : undefined
 })
 
 // Find first text slice so, if hasBigCap is true, the first letter can be a big cap

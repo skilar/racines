@@ -1,8 +1,8 @@
 ---
 import { asHTML, isFilled } from '@prismicio/client'
 import getFixer from '@lib/get-fixer'
-import { noteId, noteRefId } from '@lib/sidenotes'
-import tightenSidenoteRefs from '@lib/tighten-sidenote-refs'
+import { noteId, noteRefId } from '@lib/notes'
+import tightenNoteRefs from '@lib/tighten-note-refs'
 
 import type { RichTextField } from '@prismicio/client'
 
@@ -11,8 +11,8 @@ interface Props {
     /**
      * Footnotes are numbered across a whole slice zone, so a field cannot know
      * where its own numbering starts. `SliceZone` counts what came before and
-     * passes it in. Left out, the markers render unnumbered and unlinked, which
-     * is what every use outside an article body wants.
+     * passes it in. Left out, there is no endnote list to point at, so the note
+     * falls through to the default label span like any other label.
      */
     noteOffset?: number | undefined
     richText: RichTextField
@@ -25,28 +25,28 @@ const { lang } = Astro.locals
 // order the markers appear in on the page.
 let noteNumber = noteOffset ?? 0
 
-function serializeFootnote(children: string): string {
-    if (noteOffset === undefined) {
-        return `<span class="sidenote-ref"></span><span class="sidenote">${children}</span>`
-    }
-
-    noteNumber += 1
-
-    const ref = noteRefId(noteNumber)
-    const note = noteId(noteNumber)
-
-    return `<a class="sidenote-ref" id="${ref}" href="#${note}">${noteNumber}</a><span class="sidenote"><span class="sidenoteNumber">${noteNumber}</span>${children}</span>`
-}
-
 const htmlRichText = isFilled.richText(richText)
-    ? tightenSidenoteRefs(
+    ? tightenNoteRefs(
           getFixer(lang).fixHtml(
               asHTML(richText, {
                   serializer: {
-                      label: ({ node, children }) =>
-                          node.data.label === 'footnote'
-                              ? serializeFootnote(children)
-                              : `<span class="${node.data.label}">${children}</span>`,
+                      // Returning nothing falls through to Prismic's default,
+                      // `<span class="{label}">`.
+                      label: ({ node }) => {
+                          if (
+                              node.data.label !== 'footnote' ||
+                              noteOffset === undefined
+                          ) {
+                              return
+                          }
+
+                          noteNumber += 1
+
+                          const ref = noteRefId(noteNumber)
+                          const note = noteId(noteNumber)
+
+                          return `<a class="note-ref" id="${ref}" href="#${note}">${noteNumber}</a>`
+                      },
                   },
               }),
           ),

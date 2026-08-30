@@ -14,7 +14,7 @@ import type { AnySlice } from '@typez/prismic'
 
 const FOOTNOTE = 'footnote'
 
-export interface Sidenote {
+export interface Note {
     number: number // 1-based, in document order across the whole slice zone.
     id: string // Anchor on the endnote at the foot of the article.
     refId: string // Anchor on the marker in the running text.
@@ -26,10 +26,10 @@ export const noteId = (number: number) => `note-${number}`
 export const noteRefId = (number: number) => `ref-${number}`
 
 /**
- * We pull sidenotes only from these fields within these slices. Only
- * articles (blog posts) have sidenotes/footnotes. So other slices are ignored.
+ * We pull notes only from these fields within these slices. Only articles
+ * (blog posts) have footnotes. So other slices are ignored.
  */
-export function getSidenoteFields(slice: AnySlice): RichTextField[] {
+export function getNoteFields(slice: AnySlice): RichTextField[] {
     switch (slice.slice_type) {
         case 'image_list':
             // Not all variations have a caption
@@ -64,8 +64,8 @@ function getFootnotes(field: RichTextField) {
     )
 }
 
-export function countSidenotes(slice: AnySlice): number {
-    return getSidenoteFields(slice).reduce(
+export function countNotes(slice: AnySlice): number {
+    return getNoteFields(slice).reduce(
         (total, field) => total + getFootnotes(field).length,
         0,
     )
@@ -100,14 +100,11 @@ function toInlineHtml(node: RTTextNode, footnote: RTLabelNode): string {
     })
 }
 
-export function collectSidenotes(
-    slices: SliceZone<AnySlice>,
-    lang: Lang,
-): Sidenote[] {
+export function collectNotes(slices: SliceZone<AnySlice>, lang: Lang): Note[] {
     const fixer = getFixer(lang)
 
     return slices
-        .flatMap(getSidenoteFields)
+        .flatMap(getNoteFields)
         .flatMap(getFootnotes)
         .map(({ node, span }, index) => {
             const number = index + 1
