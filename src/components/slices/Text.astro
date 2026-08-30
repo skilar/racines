@@ -17,7 +17,13 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
 {
     isFilled.richText(slice.primary.text) && (
         <div
-            class:list={['container', { hasBigCap }]}
+            class:list={[
+                'container',
+                {
+                    hasBigCap,
+                    isPullQuote: slice.variation === 'pullQuote',
+                },
+            ]}
             data-slice-type={slice.slice_type}
         >
             <PrismicRichText
@@ -97,5 +103,14 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
             margin-right: var(--space-1);
             margin-top: var(--space-2);
         }
+    }
+
+    .isPullQuote {
+        border-block: var(--double-border);
+        font-size: var(--font-size-5);
+        font-style: italic;
+        font-weight: var(--font-weight-medium);
+        padding: calc(var(--space-8) * 2);
+        text-align: center;
     }
 </style>
