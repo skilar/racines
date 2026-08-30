@@ -43,16 +43,12 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
         text-box-edge: cap alphabetic;
         width: 100%;
 
-        :is(h1, h2, h3, h4, h5, h6):has(
-            + h1,
-            + h2,
-            + h3,
-            + h4,
-            + h5,
-            + h6,
-            + p
-        ) {
-            margin-bottom: var(--post-line);
+        :is(h1, h2, h3, h4, h5, h6) {
+            hyphens: none;
+
+            &:has(+ h1, + h2, + h3, + h4, + h5, + h6, + p) {
+                margin-bottom: var(--post-line);
+            }
         }
 
         :is(p, ol, ul) {
