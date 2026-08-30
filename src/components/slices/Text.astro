@@ -46,17 +46,13 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
         :is(h1, h2, h3, h4, h5, h6) {
             hyphens: none;
 
-            &:has(+ h1, + h2, + h3, + h4, + h5, + h6, + p) {
+            &:has(+ h1, + h2, + h3, + h4, + h5, + h6, + p, + ol, + ul) {
                 margin-bottom: var(--post-line);
             }
         }
 
         :is(p, ol, ul) {
-            &:has(+ h2) {
-                margin-bottom: calc(var(--post-line) * 3);
-            }
-
-            &:has(+ h3) {
+            &:has(+ h2, + h3) {
                 margin-bottom: calc(var(--post-line) * 2);
             }
 
@@ -65,8 +61,18 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
             }
         }
 
+        :is(li):has(+ li) {
+            margin-bottom: calc(var(--post-line) / 2);
+        }
+
         h2 {
-            font-size: var(--font-size-5);
+            font-size: var(--font-size-4-sc);
+        }
+
+        h3 {
+            font-variant-caps: all-small-caps;
+            font-weight: 450;
+            line-height: 1;
         }
 
         ol,
@@ -79,7 +85,7 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
         }
 
         ul {
-            list-style-type: disc;
+            list-style-type: circle;
         }
     }
 
