@@ -1,6 +1,7 @@
 ---
 import { countNotes } from '@lib/notes'
 
+import BigTextWithImage from '@components/slices/BigTextWithImage.astro'
 import BlogPostLinkSection from '@components/slices/BlogPostLinkSection.astro'
 import FooterLinkSection from '@components/slices/FooterLinkSection/FooterLinkSection.astro'
 import Hero from '@components/slices/Hero/Hero.astro'
@@ -44,6 +45,8 @@ const firstTextSliceIndex = slices.findIndex(
         const noteOffset = noteOffsets[index]
 
         switch (slice.slice_type) {
+            case 'big_text_with_image':
+                return <BigTextWithImage slice={slice} />
             case 'blog_post_link_section':
                 return <BlogPostLinkSection slice={slice} />
             case 'footer_link_section':

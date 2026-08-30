@@ -30,6 +30,9 @@
             },
             "newsletter_signup_form": {
               "type": "SharedSlice"
+            },
+            "big_text_with_image": {
+              "type": "SharedSlice"
             }
           }
         }

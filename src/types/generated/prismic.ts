@@ -332,7 +332,7 @@ interface LayoutDocumentData {
  */
 export type LayoutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<LayoutDocumentData>, "layout", Lang>;
 
-type PageDocumentDataSlicesSlice = TextSlice | ImageListSlice | NewsletterSignupFormSlice
+type PageDocumentDataSlicesSlice = TextSlice | ImageListSlice | NewsletterSignupFormSlice | BigTextWithImageSlice
 
 /**
  * Content for Page documents
@@ -497,6 +497,75 @@ interface TempHomepageDocumentData {
 export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
 
 export type AllDocumentTypes = AuthorDocument | BlogPostDocument | HomepageDocument | LayoutDocument | PageDocument | TempHomepageDocument;
+
+/**
+ * Primary content in *BigTextWithImage → Default → Primary*
+ */
+export interface BigTextWithImageSliceDefaultPrimary {
+	/**
+	 * Title field in *BigTextWithImage → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: big_text_with_image.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Caption field in *BigTextWithImage → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: big_text_with_image.default.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	caption: prismic.RichTextField;
+	
+	/**
+	 * Image field in *BigTextWithImage → Default → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: big_text_with_image.default.primary.image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * Image Position field in *BigTextWithImage → Default → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Left
+	 * - **API ID Path**: big_text_with_image.default.primary.image_position
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	image_position: prismic.SelectField<"Left" | "Right", "filled">;
+}
+
+/**
+ * Default variation for BigTextWithImage Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BigTextWithImageSliceDefault = prismic.SharedSliceVariation<"default", Simplify<BigTextWithImageSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *BigTextWithImage*
+ */
+type BigTextWithImageSliceVariation = BigTextWithImageSliceDefault
+
+/**
+ * BigTextWithImage Shared Slice
+ *
+ * - **API ID**: `big_text_with_image`
+ * - **Description**: BigTextWithImage
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BigTextWithImageSlice = prismic.SharedSlice<"big_text_with_image", BigTextWithImageSliceVariation>;
 
 /**
  * Item in *BlogPostLinkSection → Default → Primary → Blog Posts*
@@ -1176,6 +1245,10 @@ declare module "@prismicio/client" {
 			TempHomepageDocumentData,
 			TempHomepageDocumentDataSlicesSlice,
 			AllDocumentTypes,
+			BigTextWithImageSlice,
+			BigTextWithImageSliceDefaultPrimary,
+			BigTextWithImageSliceVariation,
+			BigTextWithImageSliceDefault,
 			BlogPostLinkSectionSlice,
 			BlogPostLinkSectionSliceDefaultPrimaryBlogPostsItem,
 			BlogPostLinkSectionSliceDefaultPrimary,

@@ -1,0 +1,56 @@
+---
+import Image from '../common/Image.astro'
+import PrismicRichText from '../common/PrismicRichText.astro'
+
+import type { BigTextWithImageSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: BigTextWithImageSlice
+}
+
+const { slice } = Astro.props
+---
+
+<div class="container" data-slice-type={slice.slice_type}>
+    <div class="content">
+        <div>
+            <Image image={slice.primary.image} />
+        </div>
+
+        <div>
+            <PrismicRichText class="title" richText={slice.primary.title} />
+            <PrismicRichText class="caption" richText={slice.primary.caption} />
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        background-color: var(--color-ivory-1);
+    }
+
+    .content {
+        --image-width: 20rem;
+
+        display: grid;
+        gap: var(--space-6);
+        grid-template-columns: var(--image-width) var(--width-text);
+        margin-inline: auto;
+        max-width: min-content;
+        padding-block: var(--space-7);
+        padding-inline: var(--space-5);
+    }
+
+    .title {
+        font-size: var(--font-size-5);
+        font-weight: var(--font-weight-medium);
+
+        &:has(+ .caption) {
+            margin-bottom: var(--space-3);
+        }
+    }
+
+    .caption {
+        font-size: var(--font-size-4-sc);
+    }
+</style>
