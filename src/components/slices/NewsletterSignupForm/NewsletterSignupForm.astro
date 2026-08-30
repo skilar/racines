@@ -21,7 +21,6 @@ const isInline = slice.variation === 'inlineSignupForm'
 // signup forms on one page unique. Clean up the Prismic ID by replacing
 // any character that's not a-Z, A-Z, or 0-9 with a dash.
 const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
-const errorId = `${formId}-error`
 ---
 
 <div
@@ -36,7 +35,11 @@ const errorId = `${formId}-error`
         )
     }
 
-    <form data-newsletter-form>
+    <form
+        action="https://buttondown.com/api/emails/embed-subscribe/agathegiraud"
+        method="post"
+        target="_blank"
+    >
         <div class="newsletterFormFields">
             {
                 !isInline && (
@@ -44,13 +47,13 @@ const errorId = `${formId}-error`
                         <Input
                             id={`${formId}-first-name`}
                             label={UI[lang].firstName}
-                            name="first_name"
+                            name="metadata__first_name"
                             type="text"
                         />
                         <Input
                             id={`${formId}-last-name`}
                             label={UI[lang].lastName}
-                            name="last_name"
+                            name="metadata__last_name"
                             type="text"
                         />
                     </div>
@@ -58,15 +61,22 @@ const errorId = `${formId}-error`
             }
 
             <Input
-                aria-describedby={errorId}
                 hideLabel={isInline}
                 id={`${formId}-email`}
                 label={UI[lang].emailAddress}
-                name="email_address"
+                name="email"
                 placeholder="example@example.com"
                 required
                 size={isInline ? '3' : '4'}
                 type="email"
+            />
+
+            <Input
+                hideLabel
+                label="Embed"
+                name="embed"
+                type="hidden"
+                value="1"
             />
         </div>
 
@@ -77,15 +87,7 @@ const errorId = `${formId}-error`
             size={isInline ? '3' : '4'}
             type="submit"
         />
-
-        <p class="error" id={errorId} hidden></p>
     </form>
-
-    <script>
-        import newsletterFormListener from './newsletter-form-listener'
-
-        newsletterFormListener()
-    </script>
 </div>
 
 <style>
@@ -120,12 +122,6 @@ const errorId = `${formId}-error`
     .names {
         display: flex;
         gap: var(--space-5);
-    }
-
-    .error {
-        color: var(--color-red-9);
-        font-size: var(--font-size-3);
-        margin-bottom: var(--space-3);
     }
 
     .newsletterButton {

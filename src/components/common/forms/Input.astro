@@ -4,30 +4,50 @@ import type { HTMLAttributes } from 'astro/types'
 import Label from './Label.astro'
 
 interface Props extends HTMLAttributes<'input'> {
+    class?: string
     hideLabel?: boolean
     label: string
     name: string
     size?: '3' | '4'
 }
 
-const { hideLabel = false, id, label, name, size = '4', ...rest } = Astro.props
+const {
+    class: className,
+    hideLabel = false,
+    id,
+    label,
+    name,
+    size = '4',
+    type,
+    ...rest
+} = Astro.props
 
 const inputId = id ?? name
 ---
 
-<div class:list={['inputWrapper', { small: size === '3' }]}>
+<div
+    class:list={[
+        'inputWrapper',
+        { small: size === '3', visuallyHidden: type === 'hidden' },
+        className,
+    ]}
+>
     <Label
         caption={label}
         for={inputId}
         isVisuallyHidden={hideLabel}
         size={size}
     />
-    <input id={inputId} name={name} {...rest} />
+    <input id={inputId} name={name} type={type} {...rest} />
 </div>
 
 <style>
     .inputWrapper {
         width: 100%;
+
+        &.visuallyHidden {
+            width: 1px;
+        }
     }
 
     input {
