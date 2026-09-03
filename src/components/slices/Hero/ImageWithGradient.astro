@@ -7,10 +7,10 @@ import Button from '../../common/Button.astro'
 import Image from '../../common/Image.astro'
 import PrismicRichText from '../../common/PrismicRichText.astro'
 
-import type { HeroSlice } from '@typez/generated/prismic'
+import type { HeroSliceImageWithGradient } from '@typez/generated/prismic'
 
 interface Props {
-    slice: HeroSlice
+    slice: HeroSliceImageWithGradient
 }
 
 const { slice } = Astro.props
@@ -19,11 +19,7 @@ const { lang } = Astro.locals
 const linkAttrs = getLinkAttrs(slice.primary.link)
 ---
 
-<div
-    class="container"
-    data-slice-type={slice.slice_type}
-    data-slice-variation={slice.variation}
->
+<div class="container" data-slice-variation={slice.variation}>
     <div class="heroGrid">
         <div class="overlay">
             {
