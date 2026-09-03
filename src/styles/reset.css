@@ -129,7 +129,9 @@ h6 {
     letter-spacing: 0.25px;
 }
 
-p {
+p,
+ol,
+ul {
     font-variant-numeric: oldstyle-nums;
 }
 
