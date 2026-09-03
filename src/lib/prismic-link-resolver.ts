@@ -1,7 +1,9 @@
 import { asLink, isFilled } from '@prismicio/client'
 import { ROUTES } from '@lib/constants'
+import { fixText } from '@lib/get-fixer'
 
 import type { LinkField } from '@prismicio/client'
+import type { Lang } from '@lib/i18n'
 
 interface RouteTarget {
     lang?: string
@@ -10,6 +12,12 @@ interface RouteTarget {
 }
 
 export type AriaCurrent = 'page' | 'true' | undefined
+
+export interface NavLink {
+    ariaCurrent: AriaCurrent
+    attrs: LinkAttrs
+    label: string
+}
 
 export interface LinkAttrs {
     href: string
@@ -92,4 +100,23 @@ export function getAriaCurrent(href: string, currentPath: string): AriaCurrent {
     return !ROOT_PATHS.has(link) && current.startsWith(link)
         ? 'true'
         : undefined
+}
+
+export function getNavLinks(
+    links: readonly LinkField[],
+    { currentPath, lang }: { currentPath: string; lang: Lang },
+): NavLink[] {
+    return links.flatMap((link) => {
+        const attrs = getLinkAttrs(link)
+
+        return attrs && isFilled.keyText(link.text)
+            ? [
+                  {
+                      ariaCurrent: getAriaCurrent(attrs.href, currentPath),
+                      attrs,
+                      label: fixText(link.text, lang),
+                  },
+              ]
+            : []
+    })
 }

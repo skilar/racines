@@ -2,27 +2,19 @@
 import { getLayout } from '@lib/prismic'
 
 import Footer from '@components/layout/Footer.astro'
-import Header from '@components/layout/Header.astro'
 import Layout from './Layout.astro'
 
 import type { LayoutProps } from '@typez/types'
 
 type Props = LayoutProps
 
-const { alternateLanguages, ...props } = Astro.props
+const { ...props } = Astro.props
 const { lang } = Astro.locals
 
 const layout = await getLayout(lang)
 ---
 
 <Layout {...props}>
-    <Header
-        alternateLanguages={alternateLanguages}
-        menu={layout.data.menu}
-        subtitle={layout.data.subtitle}
-        title={layout.data.title}
-    />
-
     <slot />
 
     <Footer legal={layout.data.legal} slices={layout.data.slices1} />

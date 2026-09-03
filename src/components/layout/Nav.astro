@@ -1,8 +1,6 @@
 ---
-import { isFilled } from '@prismicio/client'
-import { fixText } from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
-import { getAriaCurrent, getLinkAttrs } from '@lib/prismic-link-resolver'
+import { getNavLinks } from '@lib/prismic-link-resolver'
 
 import type { LayoutDocument } from '@typez/generated/prismic'
 
@@ -13,21 +11,7 @@ interface Props {
 const { menu } = Astro.props
 const { lang } = Astro.locals
 
-const currentPath = Astro.url.pathname
-
-const links = menu.flatMap((item) => {
-    const attrs = getLinkAttrs(item)
-
-    return attrs && isFilled.keyText(item.text)
-        ? [
-              {
-                  ariaCurrent: getAriaCurrent(attrs.href, currentPath),
-                  attrs,
-                  label: fixText(item.text, lang),
-              },
-          ]
-        : []
-})
+const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
 ---
 
 {

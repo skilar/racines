@@ -219,6 +219,61 @@ type HomepageDocumentDataSlicesSlice = HeroSlice | ImageListSlice | BlogPostLink
  */
 interface HomepageDocumentData {
 	/**
+	 * Title field in *Homepage*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: homepage.title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Subtitle field in *Homepage*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: homepage.subtitle
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	subtitle: prismic.RichTextField;
+	
+	/**
+	 * Description field in *Homepage*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: homepage.description
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Main Image field in *Homepage*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: homepage.main_image
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	main_image: prismic.ImageField<never>;
+	
+	/**
+	 * Floral Image field in *Homepage*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: homepage.floral_image
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	floral_image: prismic.ImageField<never>;
+	
+	/**
 	 * Slice Zone field in *Homepage*
 	 *
 	 * - **Field Type**: Slice Zone

@@ -12,6 +12,7 @@ interface Props extends Omit<
     priority?: boolean
     quality?: number
     sizes?: string
+    withBackgroundImage?: boolean
 }
 
 const {
@@ -20,6 +21,7 @@ const {
     priority = false,
     quality = 65,
     sizes = 'auto, 100vw',
+    withBackgroundImage = true,
     ...rest
 } = Astro.props
 
@@ -45,7 +47,7 @@ const details = await getImageDetails({ image, quality })
             sizes={imageSizes}
             src={details.src}
             srcset={details.srcset}
-            style={`aspect-ratio: ${details.width} / ${details.height}; --img-ratio: ${(details.width / details.height).toFixed(5)}; --natural-width: ${details.width}px; background-image: url(${details.lqip}); background-size: cover; background-position: center;`}
+            style={`aspect-ratio: ${details.width} / ${details.height}; --img-ratio: ${(details.width / details.height).toFixed(5)}; --natural-width: ${details.width}px; ${withBackgroundImage ? `background-image: url(${details.lqip}); background-size: cover; background-position: center;` : ''}`}
             width={details.width}
             {...rest}
         />
