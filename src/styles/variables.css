@@ -51,7 +51,6 @@
     --color-blue-12: oklch(0.1932 0.0627 259.46);
 
     /* Fonts */
-    --font-headline: var(--font-bodoni);
     --font-serif: var(--font-garamond);
 
     --font-weight-normal: 400;

@@ -6,23 +6,6 @@ export default defineConfig({
     adapter: netlify(),
     base: '/',
     fonts: [
-        {
-            cssVariable: '--font-bodoni',
-            fallbacks: ['serif'],
-            name: 'Bodoni',
-            options: {
-                variants: [
-                    {
-                        display: 'swap',
-                        src: ['./src/assets/fonts/BodoniModa[opsz,wght].woff2'],
-                        style: 'normal',
-                        variationSettings: "'opsz' 6 96",
-                        weight: '400 900',
-                    },
-                ],
-            },
-            provider: fontProviders.local(),
-        },
         // {
         //     cssVariable: '--font-crimson-text',
         //     fallbacks: ['serif'],
