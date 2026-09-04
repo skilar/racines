@@ -2,32 +2,45 @@
 import { isFilled } from '@prismicio/client'
 
 import Image from '../../common/Image.astro'
+import PrismicRichText from '../../common/PrismicRichText.astro'
 
 import type { BlogPostDocument } from '@typez/generated/prismic'
 
 interface Props {
+    description: BlogPostDocument['data']['cover_image_description']
     image: BlogPostDocument['data']['cover_image']
 }
 
-const { image } = Astro.props
+const { description, image } = Astro.props
 ---
 
-{
-    isFilled.image(image) && (
-        <div class="coverImageWrapper">
-            <Image class="coverImage" image={image} priority />
-        </div>
-    )
-}
+<div class="wrapper">
+    {
+        isFilled.image(image) && (
+            <div>
+                <Image class="coverImage" image={image} priority />
+            </div>
+        )
+    }
+
+    <PrismicRichText class="description" richText={description} />
+</div>
 
 <style>
-    .coverImageWrapper {
+    .wrapper {
+        margin-bottom: var(--space-9);
         margin-inline: auto;
         max-width: var(--width-image);
     }
 
     .coverImage {
-        margin-bottom: var(--space-9);
         max-width: var(--width-image);
+    }
+
+    .description {
+        color: var(--color-grey-11);
+        font-size: var(--font-size-3);
+        margin-top: var(--space-2);
+        max-width: var(--width-text);
     }
 </style>
