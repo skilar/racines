@@ -59,8 +59,8 @@ const links = getLangLinks({
 
 <style>
     .langSelector {
-        --text-color: var(--color-blue-10);
-        --text-decoration-color: var(--color-red-8);
+        --text-color: var(--header-text-color);
+        --text-decoration-color: var(--header-text-color);
         --text-decoration-thickness: var(--underline-thickness-2);
 
         display: flex;
@@ -73,7 +73,7 @@ const links = getLangLinks({
             --text-decoration-color: var(--color-ivory-1);
             --text-decoration-thickness: var(--underline-thickness-1);
 
-            background-color: var(--color-blue-10);
+            background-color: var(--color-red-10);
             left: var(--space-6);
             padding-block: var(--space-2);
             padding-inline: var(--space-3);
@@ -89,7 +89,7 @@ const links = getLangLinks({
     .langToggle {
         appearance: none;
         align-items: center;
-        color: var(--color-blue-10);
+        color: var(--header-text-color);
         display: flex;
         font-size: var(--font-size-3);
         font-weight: var(--font-weight-medium);
@@ -98,8 +98,8 @@ const links = getLangLinks({
 
         &::after {
             --chevron-height-width: 0.5rem;
-            border-bottom: 0.1rem solid var(--color-blue-10);
-            border-right: 0.1rem solid var(--color-blue-10);
+            border-bottom: 0.1rem solid var(--header-text-color);
+            border-right: 0.1rem solid var(--header-text-color);
             content: '';
             display: block;
             height: var(--chevron-height-width);
@@ -127,14 +127,20 @@ const links = getLangLinks({
         gap: var(--space-3);
 
         .langSelector:has(> button[aria-expanded='true']) & {
-            background-color: var(--color-ivory-1);
-            border: 1px solid var(--color-ivory-2);
+            --selector-bg-color: var(--color-red-11);
+
+            background-color: var(--selector-bg-color);
+            border: 1px solid var(--selector-bg-color);
             display: flex;
             flex-direction: column;
             inset-block-start: calc(100% + var(--space-3));
             inset-inline-end: calc(var(--space-1) * -1);
             padding-block: var(--space-3);
             position: absolute;
+
+            :global(.navIsOpen) & {
+                --selector-bg-color: var(--color-ivory-4);
+            }
         }
 
         @container (width > 30rem) {

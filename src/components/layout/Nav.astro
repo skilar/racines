@@ -52,7 +52,7 @@ const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
 
         &::after,
         &::before {
-            background-color: var(--color-blue-10);
+            background-color: var(--header-text-color);
             content: '';
             display: block;
             height: 0.125rem;
@@ -99,7 +99,7 @@ const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
 
     .nav {
         a {
-            color: var(--color-blue-10);
+            color: var(--header-text-color);
             font-size: var(--font-size-3);
             font-weight: var(--font-weight-medium);
             text-decoration: none;
@@ -107,7 +107,7 @@ const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
             &.selected,
             &:hover {
                 text-decoration: underline;
-                text-decoration-color: var(--color-red-8);
+                text-decoration-color: var(--header-text-color);
                 text-decoration-thickness: var(--underline-thickness-2);
             }
         }

@@ -45,7 +45,12 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
 
 <style>
     header {
-        border-bottom: 2px solid var(--color-ivory-4);
+        --header-text-color: var(--color-ivory-1);
+        background-color: var(--color-red-10);
+
+        :global(.navIsOpen) & {
+            --header-text-color: var(--color-red-10);
+        }
     }
 
     .header {
@@ -53,7 +58,7 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
         container: header / inline-size;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        padding-block: var(--space-3);
+        padding-block: var(--space-5);
     }
 
     .logo {
@@ -63,7 +68,7 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
     }
 
     .title {
-        color: var(--color-blue-10);
+        color: var(--header-text-color);
         font-family: var(--font-serif);
         font-size: var(--font-size-5);
         font-weight: var(--font-weight-bold);
@@ -79,7 +84,7 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
     }
 
     .subtitle {
-        color: var(--color-red-8);
+        color: var(--header-text-color);
         font-size: var(--font-size-3-sc);
         font-variant-caps: all-small-caps;
         letter-spacing: 1px;
