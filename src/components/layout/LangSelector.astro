@@ -6,9 +6,10 @@ import type { AlternateLanguage } from '@prismicio/client'
 
 interface Props {
     alternateLanguages?: AlternateLanguage[] | undefined
+    style?: 'inline' | 'hangtag'
 }
 
-const { alternateLanguages } = Astro.props
+const { alternateLanguages, style = 'inline' } = Astro.props
 const { lang } = Astro.locals
 
 const links = getLangLinks({
@@ -18,7 +19,14 @@ const links = getLangLinks({
 })
 ---
 
-<div class="langSelector">
+<div
+    class:list={[
+        'langSelector',
+        {
+            hangtag: style === 'hangtag',
+        },
+    ]}
+>
     <button
         aria-controls="langList"
         aria-expanded="false"
@@ -51,10 +59,31 @@ const links = getLangLinks({
 
 <style>
     .langSelector {
+        --text-color: var(--color-blue-10);
+        --text-decoration-color: var(--color-red-8);
+        --text-decoration-thickness: var(--underline-thickness-2);
+
         display: flex;
         justify-content: end;
         position: relative;
         z-index: 1100;
+
+        &.hangtag {
+            --text-color: var(--color-ivory-1);
+            --text-decoration-color: var(--color-ivory-1);
+            --text-decoration-thickness: var(--underline-thickness-1);
+
+            background-color: var(--color-blue-10);
+            left: var(--space-6);
+            padding-block: var(--space-2);
+            padding-inline: var(--space-3);
+            position: absolute;
+            top: 0;
+
+            .langs a {
+                font-weight: var(--font-weight-bold);
+            }
+        }
     }
 
     .langToggle {
@@ -85,13 +114,12 @@ const links = getLangLinks({
             rotate: -135deg;
         }
 
-        @container header (width > 30rem) {
+        @container (width > 30rem) {
             display: none;
         }
     }
 
     .langs {
-        --text-color: var(--color-blue-10);
         color: var(--text-color);
         display: none;
         font-size: var(--font-size-3);
@@ -109,7 +137,7 @@ const links = getLangLinks({
             position: absolute;
         }
 
-        @container header (width > 30rem) {
+        @container (width > 30rem) {
             display: flex;
         }
 
@@ -121,11 +149,11 @@ const links = getLangLinks({
             &.selected,
             &:hover {
                 text-decoration: underline;
-                text-decoration-color: var(--color-red-8);
-                text-decoration-thickness: var(--underline-thickness-2);
+                text-decoration-color: var(--text-decoration-color);
+                text-decoration-thickness: var(--text-decoration-thickness);
             }
 
-            @container header (width > 30rem) {
+            @container (width > 30rem) {
                 padding-inline: 0;
             }
         }
@@ -134,7 +162,7 @@ const links = getLangLinks({
     .divider {
         display: none;
 
-        @container header (width > 30rem) {
+        @container (width > 30rem) {
             display: block;
         }
     }
