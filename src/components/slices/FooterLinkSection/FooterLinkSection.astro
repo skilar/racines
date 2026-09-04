@@ -11,12 +11,10 @@ interface Props {
 const { slice } = Astro.props
 ---
 
-<div class="container" data-slice-type={slice.slice_type}>
-    {
-        slice.variation === 'linkList' ? (
-            <LinkList slice={slice} />
-        ) : (
-            <MainTitle slice={slice} />
-        )
-    }
-</div>
+{
+    slice.variation === 'linkList' ? (
+        <LinkList slice={slice} sliceType={slice.slice_type} />
+    ) : (
+        <MainTitle slice={slice} sliceType={slice.slice_type} />
+    )
+}

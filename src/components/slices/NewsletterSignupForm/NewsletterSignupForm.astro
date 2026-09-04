@@ -134,6 +134,15 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
         max-width: none;
         padding-block: 0;
 
+        @container footer (width <= 45rem) {
+            border-top: var(--double-border);
+            padding-top: var(--space-7);
+        }
+
+        @container footer (width <= 60rem) {
+            grid-column: 1 / 3;
+        }
+
         h2 {
             font-family: var(--font-serif);
             font-size: var(--font-size-4);

@@ -4,17 +4,21 @@ import { fixText } from '@lib/get-fixer'
 
 import PrismicRichText from '../../common/PrismicRichText.astro'
 
-import type { FooterLinkSectionSliceDefault } from '@typez/generated/prismic'
+import type {
+    FooterLinkSectionSlice,
+    FooterLinkSectionSliceDefault,
+} from '@typez/generated/prismic'
 
 interface Props {
     slice: FooterLinkSectionSliceDefault
+    sliceType: FooterLinkSectionSlice['slice_type']
 }
 
-const { slice } = Astro.props
+const { slice, sliceType } = Astro.props
 const { lang } = Astro.locals
 ---
 
-<div class="container">
+<div class="container" data-slice-type={sliceType}>
     {
         isFilled.keyText(slice.primary.title) && (
             <h2>{fixText(slice.primary.title, lang)}</h2>
@@ -27,7 +31,22 @@ const { lang } = Astro.locals
 
 <style>
     .container {
-        text-align: center;
+        border-bottom: var(--double-border);
+        grid-column: 1 / 3;
+        grid-row: 1;
+        padding-bottom: var(--space-7);
+        text-align: left;
+
+        @container footer (width > 45rem) {
+            border: none;
+            padding: 0;
+        }
+
+        @container footer (width > 60rem) {
+            grid-column: unset;
+            grid-row: unset;
+            text-align: center;
+        }
     }
 
     h2 {
@@ -41,12 +60,13 @@ const { lang } = Astro.locals
 
     .subtitle {
         color: var(--color-red-8);
-        font-size: var(--font-size-3-sc);
+        font-size: var(--font-size-4);
         font-variant-caps: all-small-caps;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.25px;
     }
 
     .caption {
+        font-size: var(--font-size-3);
         margin-top: var(--space-3);
     }
 </style>

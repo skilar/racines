@@ -33,16 +33,31 @@ const { slices, legal } = Astro.props
 <style>
     footer {
         background-color: var(--color-ivory-2);
+        container: footer / inline-size;
     }
 
     .footer {
-        padding-block: var(--space-7);
+        padding-block: var(--space-6);
+
+        @container footer (width > 60rem) {
+            padding-block: var(--space-7);
+        }
     }
 
     .footerSlices {
         display: grid;
         gap: var(--space-5);
-        grid-template-columns: 1fr 1fr 3fr 2fr;
+        grid-template-columns: 1fr 1fr;
+
+        @container footer (width > 45rem) {
+            gap: var(--space-7);
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @container footer (width > 60rem) {
+            gap: var(--space-5);
+            grid-template-columns: 1fr 1fr 3fr 2fr;
+        }
     }
 
     .legal {
@@ -50,7 +65,13 @@ const { slices, legal } = Astro.props
 
         ul {
             display: flex;
-            gap: var(--space-5);
+            flex-direction: column;
+            gap: var(--space-3);
+
+            @container footer (width > 35rem) {
+                flex-direction: row;
+                gap: var(--space-5);
+            }
         }
     }
 </style>

@@ -4,15 +4,17 @@ import { fixText } from '@lib/get-fixer'
 import { getLinkAttrs } from '@lib/prismic-link-resolver'
 
 import type {
+    FooterLinkSectionSlice,
     FooterLinkSectionSliceLinkList,
     FooterLinkSectionSliceLinkListPrimaryLinkSectionItem,
 } from '@typez/generated/prismic'
 
 interface Props {
     slice: FooterLinkSectionSliceLinkList
+    sliceType: FooterLinkSectionSlice['slice_type']
 }
 
-const { slice } = Astro.props
+const { slice, sliceType } = Astro.props
 const { lang } = Astro.locals
 
 const toLink = (
@@ -40,36 +42,38 @@ const sections = slice.primary.link_section.flatMap((section) => {
 })
 ---
 
-{
-    sections.length > 0 && (
-        <ul class="linkList">
-            {sections.map(({ main, sublinks }) => (
-                <li>
-                    {main.label &&
-                        (main.attrs ? (
-                            <a class="mainLink" {...main.attrs}>
-                                {main.label}
-                            </a>
-                        ) : (
-                            <span class="mainLink">{main.label}</span>
-                        ))}
-
-                    {sublinks.length > 0 && (
-                        <ul class="linkList">
-                            {sublinks.map(({ attrs, label }) => (
-                                <li>
-                                    <a class="sublink" {...attrs}>
-                                        {label}
-                                    </a>
-                                </li>
+<div class="container" data-slice-type={sliceType}>
+    {
+        sections.length > 0 && (
+            <ul class="linkList">
+                {sections.map(({ main, sublinks }) => (
+                    <li>
+                        {main.label &&
+                            (main.attrs ? (
+                                <a class="mainLink" {...main.attrs}>
+                                    {main.label}
+                                </a>
+                            ) : (
+                                <span class="mainLink">{main.label}</span>
                             ))}
-                        </ul>
-                    )}
-                </li>
-            ))}
-        </ul>
-    )
-}
+
+                        {sublinks.length > 0 && (
+                            <ul class="linkList">
+                                {sublinks.map(({ attrs, label }) => (
+                                    <li>
+                                        <a class="sublink" {...attrs}>
+                                            {label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        )
+    }
+</div>
 
 <style>
     .linkList {
