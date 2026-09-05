@@ -3,8 +3,12 @@ import { isFilled } from '@prismicio/client'
 import { client } from '@lib/prismic'
 import { fixText } from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
+import getJournalEntryDate from '@lib/get-journal-entry-date'
+import getPostPreview from '@lib/get-post-preview'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
+import PageWrapper from '@components/layout/PageWrapper.astro'
+import JournalEntryDetails from './JournalEntryDetails.astro'
 
 const { lang } = Astro.locals
 
@@ -12,8 +16,15 @@ const page = await client.getByUID('page', 'journal', { lang })
 const blogPosts = await client.getByType('blog_post', { lang })
 
 const posts = blogPosts.results.map((post) => ({
+    dateString: getJournalEntryDate(post.first_publication_date, lang),
+    coverImage: post.data.cover_image,
+    coverImageDescription: post.data.cover_image_description,
+    description: post.data.short_description,
     href: post.url,
-    label: isFilled.keyText(post.data.title)
+    preview: getPostPreview(post.data.slices),
+    publicationDate: post.first_publication_date,
+    subtitle: post.data.subtitle,
+    title: isFilled.keyText(post.data.title)
         ? fixText(post.data.title, lang)
         : UI[lang].untitledEntry,
 }))
@@ -24,44 +35,45 @@ const posts = blogPosts.results.map((post) => ({
     description={page.data.meta_description}
     title={page.data.meta_title}
 >
-    <main id="main" class="contained">
-        {
-            isFilled.keyText(page.data.title) && (
-                <div class="postMeta">
-                    <h1>{fixText(page.data.title, lang)}</h1>
-                </div>
-            )
-        }
-
+    <PageWrapper pageStyle={page.data.page_style} title={page.data.title}>
         {
             posts.length > 0 && (
-                <div class="post">
-                    <ul>
-                        {posts.map(({ href, label }) => (
-                            <li>{href ? <a href={href}>{label}</a> : label}</li>
-                        ))}
-                    </ul>
+                <div class="posts">
+                    {posts.map((post) => (
+                        <article>
+                            <JournalEntryDetails {...post} />
+                        </article>
+                    ))}
                 </div>
             )
         }
-    </main>
+    </PageWrapper>
 </LayoutWithHeader>
 
 <style>
-    main {
-        margin-top: var(--space-7);
+    .posts {
+        display: grid;
+        max-width: var(--width-text);
     }
 
-    h1 {
-        font-size: var(--font-size-5);
-    }
-
-    ul {
-        list-style-type: disc;
-        margin-left: var(--space-6);
-    }
-
-    li {
+    article {
         font-size: var(--font-size-4);
+        max-width: var(--width-text);
+
+        :global(.withSidebar) & {
+            grid-template-columns: var(--with-sidebar-cols);
+            gap: var(--with-sidebar-gap);
+            max-width: unset;
+        }
+
+        /* :global(.withSidebar) & {
+            grid-column: var(--with-sidebar-second-col);
+        } */
+
+        &:has(+ article) {
+            border-bottom: var(--double-border);
+            margin-bottom: var(--space-8);
+            padding-bottom: var(--space-9);
+        }
     }
 </style>

@@ -1,0 +1,126 @@
+---
+import { isFilled } from '@prismicio/client'
+import { UI } from '@lib/i18n'
+
+import Image from '@components/common/Image.astro'
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+
+import type { RichTextField } from '@prismicio/client'
+import type { BlogPostDocument } from '@typez/generated/prismic'
+
+interface Props {
+    coverImage: BlogPostDocument['data']['cover_image']
+    coverImageDescription: BlogPostDocument['data']['cover_image_description']
+    dateString: string
+    description: BlogPostDocument['data']['short_description']
+    href: string | null
+    preview: RichTextField
+    publicationDate: BlogPostDocument['first_publication_date']
+    subtitle: BlogPostDocument['data']['subtitle']
+    title: string
+}
+
+const {
+    coverImage,
+    coverImageDescription,
+    dateString,
+    description,
+    href,
+    preview,
+    publicationDate,
+    subtitle,
+    title,
+} = Astro.props
+
+const { lang } = Astro.locals
+---
+
+<time class="postDate" datetime={publicationDate}>
+    {dateString}
+</time>
+
+<h2 class="title">
+    {href ? <a href={href}>{title}</a> : title}
+</h2>
+
+<PrismicRichText class="subtitle" richText={subtitle} />
+<PrismicRichText class="description" richText={description} />
+{
+    isFilled.image(coverImage) && (
+        <div class="imageWrapper">
+            <Image image={coverImage} />
+            <PrismicRichText
+                class="description"
+                richText={coverImageDescription}
+            />
+        </div>
+    )
+}
+<PrismicRichText class="preview prose" richText={preview} />
+{
+    href && (
+        <a class="readMore" href={href}>
+            {UI[lang].readMore}
+            <span class="visuallyHidden"> — {title}</span>
+        </a>
+    )
+}
+
+<style>
+    .postDate {
+        color: var(--color-ivory-9);
+        display: block;
+        font-size: var(--font-size-3-sc);
+        font-variant-numeric: oldstyle-nums;
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--space-2);
+    }
+
+    .title {
+        font-size: var(--font-size-5);
+
+        a {
+            color: var(--black);
+            font-weight: var(--font-weight-bold);
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                text-decoration-thickness: var(--underline-thickness-2);
+            }
+        }
+    }
+
+    .subtitle {
+        font-style: italic;
+        font-weight: var(--font-weight-medium);
+    }
+
+    .description {
+        color: var(--color-ivory-11);
+        font-size: var(--font-size-3-sc);
+        margin-top: var(--space-4);
+    }
+
+    .imageWrapper {
+        margin-top: var(--space-6);
+    }
+
+    .preview {
+        margin-top: var(--space-6);
+    }
+
+    .readMore {
+        color: var(--color-red-8);
+        display: inline-block;
+        font-size: var(--font-size-3-sc);
+        font-weight: var(--font-weight-medium);
+        margin-top: var(--space-7);
+        text-decoration: underline;
+        text-decoration-thickness: var(--underline-thickness-1);
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+</style>
