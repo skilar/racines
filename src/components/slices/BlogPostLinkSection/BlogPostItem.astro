@@ -1,0 +1,113 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+import { UI } from '@lib/i18n'
+import getJournalEntryDate from '@lib/get-journal-entry-date'
+
+import Image from '../../common/Image.astro'
+import PrismicRichText from '../../common/PrismicRichText.astro'
+
+import type { BlogPostDocument } from '@typez/generated/prismic'
+
+interface Props {
+    coverImage: BlogPostDocument['data']['cover_image']
+    href: string | undefined
+    publishedAt: BlogPostDocument['first_publication_date']
+    subtitle: BlogPostDocument['data']['subtitle']
+    title: BlogPostDocument['data']['title']
+}
+
+const { coverImage, href, publishedAt, subtitle, title } = Astro.props
+const { lang } = Astro.locals
+
+const postTitle = isFilled.keyText(title)
+    ? fixText(title, lang)
+    : UI[lang].untitledEntry
+
+const dateString = getJournalEntryDate(publishedAt, lang)
+---
+
+<li class="post">
+    {
+        isFilled.image(coverImage) && (
+            <div>
+                <Image class="postImage" image={coverImage} quality={75} />
+            </div>
+        )
+    }
+
+    <div class="postText">
+        <time class="postDate" datetime={publishedAt}>
+            {dateString}
+        </time>
+
+        {
+            href ? (
+                <a class="postTitle" href={href}>
+                    {postTitle}
+                </a>
+            ) : (
+                <span class="postTitle">{postTitle}</span>
+            )
+        }
+
+        <PrismicRichText class="postDescription" richText={subtitle} />
+    </div>
+</li>
+
+<style>
+    .post {
+        display: grid;
+        gap: 0;
+        grid-row: auto / span 2;
+        grid-template-rows: subgrid;
+    }
+
+    .postImage {
+        height: 15rem;
+        object-fit: cover;
+    }
+
+    .postText {
+        background-color: var(--color-ivory-2);
+        border-inline: 1px solid var(--color-ivory-4);
+        border-bottom: var(--double-border);
+        padding-block: var(--space-4) var(--space-5);
+        padding-inline: var(--space-3);
+    }
+
+    .postDate {
+        color: var(--color-ivory-9);
+        display: block;
+        font-size: var(--font-size-3-sc);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-medium);
+        line-height: 1;
+        margin-bottom: var(--space-4);
+    }
+
+    .postTitle {
+        color: var(--color-red-8);
+        display: inline-block;
+        font-size: var(--font-size-4);
+        font-weight: var(--font-weight-bold);
+        line-height: 1.2;
+        text-box-edge: cap alphabetic;
+        text-box-trim: trim-both;
+        text-decoration: none;
+
+        &:is(a):hover {
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+        }
+
+        &:has(+ .postDescription) {
+            margin-bottom: var(--space-4);
+        }
+    }
+
+    .postDescription {
+        color: var(--color-grey-11);
+        font-size: var(--font-size-3);
+    }
+</style>

@@ -1,0 +1,126 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
+import getRelationshipDate from '@lib/get-relationship-date'
+
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+import BlogPostItem from './BlogPostItem.astro'
+
+import type { BlogPostLinkSectionSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: BlogPostLinkSectionSlice
+}
+
+const { slice } = Astro.props
+const { lang } = Astro.locals
+
+const linkAttrs = getLinkAttrs(slice.primary.link)
+---
+
+<div class="container" data-slice-type={slice.slice_type}>
+    <div class="wrapper">
+        <div>
+            {
+                isFilled.keyText(slice.primary.title) && (
+                    <h2>{fixText(slice.primary.title, lang)}</h2>
+                )
+            }
+
+            <PrismicRichText
+                class="description"
+                richText={slice.primary.caption}
+            />
+
+            {
+                linkAttrs && isFilled.keyText(slice.primary.link.text) && (
+                    <a class="journalLink" {...linkAttrs}>
+                        {fixText(slice.primary.link.text, lang)} →
+                    </a>
+                )
+            }
+        </div>
+
+        {
+            isFilled.group(slice.primary.blog_posts) && (
+                <div class="blogPostsContainer">
+                    <ul class="blogPosts">
+                        {slice.primary.blog_posts.map(({ blog_post: post }) =>
+                            isFilled.contentRelationship(post) && post.data ? (
+                                <BlogPostItem
+                                    coverImage={post.data.cover_image}
+                                    href={post.url}
+                                    publishedAt={getRelationshipDate(post)}
+                                    subtitle={post.data.subtitle}
+                                    title={post.data.title}
+                                />
+                            ) : null,
+                        )}
+                    </ul>
+                </div>
+            )
+        }
+    </div>
+</div>
+
+<style>
+    .container {
+        container: featuredBlogPosts / inline-size;
+    }
+
+    .wrapper {
+        border-block: var(--double-border);
+        display: grid;
+        gap: var(--space-5);
+        margin-block: var(--space-8);
+        padding-block: var(--space-7);
+
+        @container featuredBlogPosts (width > 50rem) {
+            grid-template-columns: 18rem 1fr;
+        }
+    }
+
+    h2 {
+        color: var(--color-blue-10);
+        font-size: var(--font-size-5);
+        margin-bottom: var(--space-3);
+        text-box-edge: cap alphabetic;
+        text-box-trim: trim-both;
+    }
+
+    .description {
+        font-size: var(--font-size-4);
+        margin-bottom: var(--space-5);
+    }
+
+    .journalLink {
+        color: var(--color-red-8);
+        font-size: var(--font-size-4);
+        font-weight: var(--font-weight-bold);
+        letter-spacing: 0.25px;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+        }
+    }
+
+    .blogPostsContainer {
+        container: featuredBlogPostsList / inline-size;
+    }
+
+    .blogPosts {
+        display: grid;
+        gap: var(--space-5);
+
+        @container featuredBlogPostsList (width > 40rem) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @container featuredBlogPostsList (width > 50rem) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>
