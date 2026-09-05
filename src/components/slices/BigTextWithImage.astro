@@ -12,38 +12,50 @@ const { slice } = Astro.props
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
-    <div class="content">
-        <div>
-            <Image image={slice.primary.image} />
-        </div>
+    <div class="image">
+        <Image image={slice.primary.image} />
+    </div>
 
-        <div>
-            <PrismicRichText class="title" richText={slice.primary.title} />
-            <PrismicRichText class="caption" richText={slice.primary.caption} />
-        </div>
+    <div class="text">
+        <PrismicRichText class="title" richText={slice.primary.title} />
+        <PrismicRichText class="caption" richText={slice.primary.caption} />
     </div>
 </div>
 
 <style>
     .container {
-        background-color: var(--color-ivory-1);
+        margin-inline: auto;
+        max-width: var(--width-text);
+        width: 100%;
+
+        :global(.withSidebar) & {
+            display: grid;
+            grid-template-columns: var(--with-sidebar-cols);
+            gap: var(--with-sidebar-gap);
+            max-width: unset;
+        }
     }
 
-    .content {
-        --image-width: 20rem;
+    .image {
+        margin-bottom: var(--space-7);
 
-        display: grid;
-        gap: var(--space-6);
-        grid-template-columns: var(--image-width) var(--width-text);
-        margin-inline: auto;
-        max-width: min-content;
-        padding-block: var(--space-7);
-        padding-inline: var(--space-5);
+        :global(.withSidebar) & {
+            grid-column: var(--with-sidebar-first-col);
+            margin: 0;
+        }
+    }
+
+    .text {
+        max-width: var(--width-text);
+
+        :global(.withSidebar) & {
+            grid-column: var(--with-sidebar-second-col);
+        }
     }
 
     .title {
-        font-size: var(--font-size-5);
-        font-weight: var(--font-weight-medium);
+        font-size: var(--font-size-4-sc);
+        font-weight: var(--font-weight-bold);
 
         &:has(+ .caption) {
             margin-bottom: var(--space-3);
@@ -51,6 +63,61 @@ const { slice } = Astro.props
     }
 
     .caption {
-        font-size: var(--font-size-4-sc);
+        --post-line-height: var(--line-height-default);
+        --post-text-size: var(--font-size-4);
+        --post-line: calc(
+            (var(--post-line-height) * var(--post-text-size)) / 2
+        );
+
+        font-size: var(--font-size-4);
+        hyphens: auto;
+        max-width: var(--width-text);
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
+        width: 100%;
+
+        :is(h1, h2, h3, h4, h5, h6) {
+            hyphens: none;
+
+            &:has(+ h1, + h2, + h3, + h4, + h5, + h6, + p, + ol, + ul) {
+                margin-bottom: var(--post-line);
+            }
+        }
+
+        :is(p, ol, ul) {
+            &:has(+ h2, + h3) {
+                margin-bottom: calc(var(--post-line) * 2);
+            }
+
+            &:has(+ p, + ol, + ul) {
+                margin-bottom: var(--post-line);
+            }
+        }
+
+        :is(li):has(+ li) {
+            margin-bottom: calc(var(--post-line) / 2);
+        }
+
+        h2 {
+            font-size: var(--font-size-4-sc);
+        }
+
+        h3 {
+            font-style: italic;
+            font-weight: var(--font-weight-medium);
+        }
+
+        ol,
+        ul {
+            margin-left: calc(var(--post-line) * 3);
+        }
+
+        ol {
+            list-style-type: decimal;
+        }
+
+        ul {
+            list-style-type: circle;
+        }
     }
 </style>

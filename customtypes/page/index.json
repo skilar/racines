@@ -63,6 +63,18 @@
           },
           "thumbnails": []
         }
+      },
+      "page_style": {
+        "type": "Select",
+        "config": {
+          "label": "Page Style",
+          "placeholder": "",
+          "default_value": "Centered",
+          "options": [
+            "Centered",
+            "With Sidebar"
+          ]
+        }
       }
     }
   },

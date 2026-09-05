@@ -27,75 +27,99 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
     class:list={['container', { inlineForm: isInline }]}
     data-slice-type={slice.slice_type}
 >
-    {isFilled.keyText(slice.primary.title) && <h2>{slice.primary.title}</h2>}
+    <div class="wrapper">
+        {
+            isFilled.keyText(slice.primary.title) && (
+                <h2>{slice.primary.title}</h2>
+            )
+        }
 
-    {
-        isFilled.richText(slice.primary.caption) && (
-            <PrismicRichText class="caption" richText={slice.primary.caption} />
-        )
-    }
+        {
+            isFilled.richText(slice.primary.caption) && (
+                <PrismicRichText
+                    class="caption"
+                    richText={slice.primary.caption}
+                />
+            )
+        }
 
-    <form
-        action="https://buttondown.com/api/emails/embed-subscribe/agathegiraud"
-        method="post"
-        target="_blank"
-    >
-        <div class="newsletterFormFields">
-            {
-                !isInline && (
-                    <div class="names">
-                        <Input
-                            id={`${formId}-first-name`}
-                            label={UI[lang].firstName}
-                            name="metadata__first_name"
-                            type="text"
-                        />
-                        <Input
-                            id={`${formId}-last-name`}
-                            label={UI[lang].lastName}
-                            name="metadata__last_name"
-                            type="text"
-                        />
-                    </div>
-                )
-            }
+        <form
+            action="https://buttondown.com/api/emails/embed-subscribe/agathegiraud"
+            method="post"
+            target="_blank"
+        >
+            <div class="newsletterFormFields">
+                {
+                    !isInline && (
+                        <div class="names">
+                            <Input
+                                id={`${formId}-first-name`}
+                                label={UI[lang].firstName}
+                                name="metadata__first_name"
+                                type="text"
+                            />
+                            <Input
+                                id={`${formId}-last-name`}
+                                label={UI[lang].lastName}
+                                name="metadata__last_name"
+                                type="text"
+                            />
+                        </div>
+                    )
+                }
 
-            <Input
-                hideLabel={isInline}
-                id={`${formId}-email`}
-                label={UI[lang].emailAddress}
-                name="email"
-                placeholder="example@example.com"
-                required
+                <Input
+                    hideLabel={isInline}
+                    id={`${formId}-email`}
+                    label={UI[lang].emailAddress}
+                    name="email"
+                    placeholder="example@example.com"
+                    required
+                    size={isInline ? '3' : '4'}
+                    type="email"
+                />
+
+                <Input
+                    hideLabel
+                    label="Embed"
+                    name="embed"
+                    type="hidden"
+                    value="1"
+                />
+            </div>
+
+            <Button
+                caption={UI[lang].signUp}
+                class="newsletterButton"
+                inlineWithFormField={isInline}
                 size={isInline ? '3' : '4'}
-                type="email"
+                type="submit"
             />
-
-            <Input
-                hideLabel
-                label="Embed"
-                name="embed"
-                type="hidden"
-                value="1"
-            />
-        </div>
-
-        <Button
-            caption={UI[lang].signUp}
-            class="newsletterButton"
-            inlineWithFormField={isInline}
-            size={isInline ? '3' : '4'}
-            type="submit"
-        />
-    </form>
+        </form>
+    </div>
 </div>
 
 <style>
     .container {
+        max-width: var(--width-text);
+
+        :global(.withSidebar) & {
+            display: grid;
+            grid-template-columns: var(--with-sidebar-cols);
+            gap: var(--with-sidebar-gap);
+            max-width: unset;
+        }
+    }
+
+    .wrapper {
         border-block: var(--double-border);
         font-size: var(--font-size-4);
         max-width: var(--width-text);
         padding-block: var(--space-6) var(--space-7);
+
+        :global(.withSidebar) & {
+            grid-column: var(--with-sidebar-second-col);
+        }
     }
 
     h2 {
@@ -129,10 +153,12 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
     }
 
     .inlineForm {
-        border-block: none;
-        font-size: var(--font-size-3);
-        max-width: none;
-        padding-block: 0;
+        .wrapper {
+            border-block: none;
+            font-size: var(--font-size-3);
+            max-width: none;
+            padding-block: 0;
+        }
 
         @container footer (width <= 45rem) {
             border-top: var(--double-border);

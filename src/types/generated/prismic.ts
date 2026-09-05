@@ -456,6 +456,18 @@ interface PageDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	meta_image: prismic.ImageField<never>;
+	
+	/**
+	 * Page Style field in *Page*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Centered
+	 * - **API ID Path**: page.page_style
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	page_style: prismic.SelectField<"Centered" | "With Sidebar", "filled">;
 }
 
 /**

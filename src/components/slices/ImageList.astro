@@ -63,6 +63,13 @@ const sizes = isVertical
     .container {
         container: imageList / inline-size;
         max-width: var(--width-image);
+
+        :global(.withSidebar) & {
+            display: grid;
+            grid-template-columns: var(--with-sidebar-cols);
+            gap: var(--with-sidebar-gap);
+            max-width: unset;
+        }
     }
 
     .imageList {
@@ -73,6 +80,10 @@ const sizes = isVertical
         &.vertical {
             flex-direction: column;
             overflow: visible;
+        }
+
+        :global(.withSidebar) & {
+            grid-column: var(--with-sidebar-second-col);
         }
     }
 

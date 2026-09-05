@@ -27,6 +27,7 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
             data-slice-type={slice.slice_type}
         >
             <PrismicRichText
+                class="textContents"
                 noteOffset={noteOffset}
                 richText={slice.primary.text}
             />
@@ -36,6 +37,17 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
 
 <style>
     .container {
+        max-width: var(--width-text);
+
+        :global(.withSidebar) & {
+            display: grid;
+            grid-template-columns: var(--with-sidebar-cols);
+            gap: var(--with-sidebar-gap);
+            max-width: unset;
+        }
+    }
+
+    .textContents {
         --post-line-height: var(--line-height-default);
         --post-text-size: var(--font-size-4);
         --post-line: calc(
@@ -48,6 +60,10 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
         text-box-trim: trim-both;
         text-box-edge: cap alphabetic;
         width: 100%;
+
+        :global(.withSidebar) & {
+            grid-column: var(--with-sidebar-second-col);
+        }
 
         :is(h1, h2, h3, h4, h5, h6) {
             hyphens: none;
