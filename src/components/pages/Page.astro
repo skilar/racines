@@ -1,9 +1,9 @@
 ---
 import { isFilled } from '@prismicio/client'
 import { client } from '@lib/prismic'
-import { fixText } from '@lib/get-fixer'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
+import PageWrapper from '@components/layout/PageWrapper.astro'
 import SliceZone from '../common/SliceZone.astro'
 
 interface Props {
@@ -21,80 +21,11 @@ const page = await client.getByUID('page', uid, { lang })
     description={page.data.meta_description}
     title={page.data.meta_title}
 >
-    <main
-        id="main"
-        class:list={[
-            'contained',
-            {
-                withSidebar: page.data.page_style === 'With Sidebar',
-            },
-        ]}
-    >
-        <div class="container">
-            {
-                isFilled.keyText(page.data.title) && (
-                    <div class="pageHeader">
-                        <h1>{fixText(page.data.title, lang)}</h1>
-                    </div>
-                )
-            }
-
-            {
-                isFilled.sliceZone(page.data.slices) && (
-                    <div class="slices">
-                        <SliceZone slices={page.data.slices} />
-                    </div>
-                )
-            }
-        </div>
-    </main>
+    <PageWrapper pageStyle={page.data.page_style} title={page.data.title}>
+        {
+            isFilled.sliceZone(page.data.slices) && (
+                <SliceZone slices={page.data.slices} />
+            )
+        }
+    </PageWrapper>
 </LayoutWithHeader>
-
-<style>
-    main {
-        container: pageContent / inline-size;
-        padding-block: calc(var(--space-8) * 2);
-    }
-
-    .container {
-        --with-sidebar-cols: 1fr;
-        --with-sidebar-gap: var(--space-7);
-
-        @container pageContent (width > 45rem) {
-            --with-sidebar-cols: 3fr 7fr;
-            --with-sidebar-first-col: 1 / 2;
-            --with-sidebar-second-col: 2 / 3;
-        }
-    }
-
-    .pageHeader {
-        margin-bottom: var(--space-7);
-        margin-inline: auto;
-        max-width: var(--width-text);
-
-        :global(.withSidebar) & {
-            display: grid;
-            grid-template-columns: var(--with-sidebar-cols);
-            gap: var(--with-sidebar-gap);
-            max-width: unset;
-        }
-    }
-
-    h1 {
-        font-size: var(--font-size-6);
-
-        :global(.withSidebar) & {
-            grid-column: var(--with-sidebar-second-col);
-        }
-    }
-
-    .slices {
-        > :global(div) {
-            margin-inline: auto;
-        }
-
-        :global(> div:has(+ div)) {
-            margin-bottom: var(--space-8);
-        }
-    }
-</style>

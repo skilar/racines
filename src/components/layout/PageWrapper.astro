@@ -1,0 +1,87 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+
+import type { PageDocument } from '@typez/generated/prismic'
+
+interface Props {
+    pageStyle: PageDocument['data']['page_style']
+    title: PageDocument['data']['title']
+}
+
+const { pageStyle, title } = Astro.props
+const { lang } = Astro.locals
+---
+
+<main
+    id="main"
+    class:list={[
+        'contained',
+        {
+            withSidebar: pageStyle === 'With Sidebar',
+        },
+    ]}
+>
+    <div class="container">
+        {
+            isFilled.keyText(title) && (
+                <div class="pageHeader">
+                    <h1>{fixText(title, lang)}</h1>
+                </div>
+            )
+        }
+
+        <div class="slices">
+            <slot />
+        </div>
+    </div>
+</main>
+
+<style>
+    main {
+        container: pageContent / inline-size;
+        padding-block: calc(var(--space-8) * 2);
+    }
+
+    .container {
+        --with-sidebar-cols: 1fr;
+        --with-sidebar-gap: var(--space-7);
+
+        @container pageContent (width > 45rem) {
+            --with-sidebar-cols: 3fr 7fr;
+            --with-sidebar-first-col: 1 / 2;
+            --with-sidebar-second-col: 2 / 3;
+        }
+    }
+
+    .pageHeader {
+        margin-bottom: var(--space-7);
+        margin-inline: auto;
+        max-width: var(--width-text);
+
+        :global(.withSidebar) & {
+            display: grid;
+            grid-template-columns: var(--with-sidebar-cols);
+            gap: var(--with-sidebar-gap);
+            max-width: unset;
+        }
+    }
+
+    h1 {
+        font-size: var(--font-size-6);
+
+        :global(.withSidebar) & {
+            grid-column: var(--with-sidebar-second-col);
+        }
+    }
+
+    .slices {
+        > :global(div) {
+            margin-inline: auto;
+        }
+
+        :global(> div:has(+ div)) {
+            margin-bottom: var(--space-8);
+        }
+    }
+</style>
