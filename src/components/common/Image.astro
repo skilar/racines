@@ -12,6 +12,7 @@ interface Props extends Omit<
     priority?: boolean
     quality?: number
     sizes?: string
+    widths?: number[]
     withBackgroundImage?: boolean
 }
 
@@ -21,6 +22,7 @@ const {
     priority = false,
     quality = 65,
     sizes = 'auto, 100vw',
+    widths,
     withBackgroundImage = true,
     ...rest
 } = Astro.props
@@ -32,7 +34,7 @@ const imageSizes = priority
     ? sizes.replace(/^\s*auto\s*(,\s*)?/, '') || '100vw'
     : sizes
 
-const details = await getImageDetails({ image, quality })
+const details = await getImageDetails({ image, quality, widths })
 ---
 
 {

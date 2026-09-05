@@ -1,24 +1,26 @@
 ---
 import { isFilled } from '@prismicio/client'
 
-import Image from '../common/Image.astro'
 import PrismicRichText from '../common/PrismicRichText.astro'
+import ZoomableImage from '../common/ZoomableImage.astro'
 
 import type { ImageListSlice } from '@typez/generated/prismic'
 
 interface Props {
     noteOffset?: number | undefined
     slice: ImageListSlice
+    zoomOffset?: number | undefined
 }
 
-const { noteOffset, slice } = Astro.props
-const { images } = slice.primary
+const { noteOffset, slice, zoomOffset } = Astro.props
+
+// Make sure there are actually images in the slice
+const images = slice.primary.images
+    .map(({ image }) => image)
+    .filter(isFilled.image)
 
 const isVertical = slice.variation === 'vertical'
-const count = Math.max(
-    images.filter(({ image }) => isFilled.image(image)).length,
-    1,
-)
+const count = Math.max(images.length, 1)
 const sizes = isVertical
     ? 'auto, 100vw'
     : `auto, (min-width: 650px) calc(min(100vw, 65rem) / ${count}), 50vw`
@@ -26,24 +28,23 @@ const sizes = isVertical
 
 <div class="container" data-slice-type={slice.slice_type}>
     {
-        isFilled.group(images) && (
+        images.length > 0 && (
             <ul class:list={['imageList', { vertical: isVertical }]}>
-                {images.map(({ image }) => {
-                    if (isFilled.image(image)) {
-                        return (
-                            <li>
-                                <Image
-                                    class="listImage"
-                                    image={image}
-                                    quality={75}
-                                    sizes={sizes}
-                                />
-                            </li>
-                        )
-                    }
-
-                    return null
-                })}
+                {images.map((image, index) => (
+                    <li>
+                        <ZoomableImage
+                            class="listImage"
+                            image={image}
+                            quality={75}
+                            sizes={sizes}
+                            zoomIndex={
+                                zoomOffset === undefined
+                                    ? undefined
+                                    : zoomOffset + index
+                            }
+                        />
+                    </li>
+                ))}
             </ul>
         )
     }

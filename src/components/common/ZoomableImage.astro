@@ -1,0 +1,38 @@
+---
+import { UI } from '@lib/i18n'
+
+import Image from './Image.astro'
+
+import type { ComponentProps } from 'astro/types'
+
+interface Props extends ComponentProps<typeof Image> {
+    zoomIndex: number | undefined
+}
+
+const { zoomIndex, ...imageProps } = Astro.props
+const { lang } = Astro.locals
+---
+
+{
+    zoomIndex === undefined ? (
+        <Image {...imageProps} />
+    ) : (
+        <button
+            aria-label={UI[lang].viewFullScreen}
+            class="zoomTrigger"
+            data-zoom-index={zoomIndex}
+            type="button"
+        >
+            <Image {...imageProps} />
+        </button>
+    )
+}
+
+<style>
+    .zoomTrigger {
+        cursor: zoom-in;
+        display: block;
+        inline-size: 100%;
+        padding: 0;
+    }
+</style>

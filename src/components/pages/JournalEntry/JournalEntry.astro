@@ -1,6 +1,7 @@
 ---
 import { isFilled } from '@prismicio/client'
 import { client } from '@lib/prismic'
+import { collectZoomableImages } from '@lib/zoom'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 import SliceZone from '../../common/SliceZone.astro'
@@ -8,6 +9,7 @@ import AuthorCallout from './AuthorCallout.astro'
 import CoverImage from './CoverImage.astro'
 import Endnotes from './Endnotes.astro'
 import EntryHeader from './EntryHeader.astro'
+import Lightbox from './Lightbox.astro'
 
 interface Props {
     uid: string
@@ -17,6 +19,8 @@ const { uid } = Astro.props
 const { lang } = Astro.locals
 
 const page = await client.getByUID('blog_post', uid, { lang })
+
+const zoomableImages = collectZoomableImages(page.data.slices)
 ---
 
 <LayoutWithHeader
@@ -45,6 +49,7 @@ const page = await client.getByUID('blog_post', uid, { lang })
                             hasBigCap
                             numberNotes
                             slices={page.data.slices}
+                            zoomImages
                         />
                     )
                 }
@@ -54,6 +59,8 @@ const page = await client.getByUID('blog_post', uid, { lang })
 
             <AuthorCallout author={page.data.author} />
         </article>
+
+        <Lightbox images={zoomableImages} />
     </main>
 </LayoutWithHeader>
 

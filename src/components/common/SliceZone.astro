@@ -1,5 +1,6 @@
 ---
 import { countNotes } from '@lib/notes'
+import { countZoomableImages } from '@lib/zoom'
 
 import BigTextWithImage from '@components/slices/BigTextWithImage.astro'
 import BlogPostLinkSection from '@components/slices/BlogPostLinkSection/BlogPostLinkSection.astro'
@@ -17,12 +18,18 @@ interface Props {
     // Controls large capital letter at beginning of text slice.
     hasBigCap?: boolean
     // Article bodies number their footnotes across the whole zone.
-    // Nothing else does.
     numberNotes?: boolean
     slices: SliceZone<AnySlice>
+    // Article bodies open their images in a full-screen viewer.
+    zoomImages?: boolean
 }
 
-const { hasBigCap = false, numberNotes = false, slices } = Astro.props
+const {
+    hasBigCap = false,
+    numberNotes = false,
+    slices,
+    zoomImages = false,
+} = Astro.props
 
 // How many footnotes come before each slice, so that markers spread across
 // several slices still read as one sequence.
@@ -34,6 +41,15 @@ const noteOffsets = slices.map((slice) => {
     return numberNotes ? offset : undefined
 })
 
+// Same kind of counting for the zoom images, so we know which image to open.
+let zoomed = 0
+const zoomOffsets = slices.map((slice) => {
+    const offset = zoomed
+    zoomed += countZoomableImages(slice)
+
+    return zoomImages ? offset : undefined
+})
+
 // Find first text slice so, if hasBigCap is true, the first letter can be a big cap
 const firstTextSliceIndex = slices.findIndex(
     (slice) => slice.slice_type === 'text',
@@ -43,6 +59,7 @@ const firstTextSliceIndex = slices.findIndex(
 {
     slices.map((slice, index) => {
         const noteOffset = noteOffsets[index]
+        const zoomOffset = zoomOffsets[index]
 
         switch (slice.slice_type) {
             case 'big_text_with_image':
@@ -54,7 +71,13 @@ const firstTextSliceIndex = slices.findIndex(
             case 'hero':
                 return <Hero slice={slice} />
             case 'image_list':
-                return <ImageList noteOffset={noteOffset} slice={slice} />
+                return (
+                    <ImageList
+                        noteOffset={noteOffset}
+                        slice={slice}
+                        zoomOffset={zoomOffset}
+                    />
+                )
             case 'newsletter_signup_form':
                 return <NewsletterSignupForm slice={slice} />
             case 'quote':

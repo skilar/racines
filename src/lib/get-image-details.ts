@@ -20,6 +20,7 @@ async function getLqip(url: string): Promise<string> {
 interface GetImageDetailsProps {
     image: ImageFieldImage
     quality?: number | undefined
+    widths?: number[] | undefined // So we can narrow the srcset from the eight widths Prismic offers.
 }
 
 export interface ImageDetails {
@@ -35,6 +36,7 @@ export interface ImageDetails {
 export default async function getImageDetails({
     image,
     quality = 65,
+    widths,
 }: GetImageDetailsProps): Promise<ImageDetails | null> {
     if (!isFilled.image(image)) {
         return null
@@ -42,7 +44,11 @@ export default async function getImageDetails({
 
     const { height, width } = image.dimensions
     const lqipUrl = asImageSrc(image, { fm: 'jpg', q: 20, w: 20 })
-    const { src, srcset } = asImageWidthSrcSet(image, { q: quality })
+
+    const { src, srcset } = asImageWidthSrcSet(image, {
+        q: quality,
+        ...(widths && { widths }),
+    })
 
     return {
         alt: image.alt ?? '',

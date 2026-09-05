@@ -1,0 +1,290 @@
+---
+import { UI } from '@lib/i18n'
+
+import Image from '@components/common/Image.astro'
+
+import type { ImageFieldImage } from '@prismicio/client'
+
+interface Props {
+    images: ImageFieldImage[]
+}
+
+const { images } = Astro.props
+const { lang } = Astro.locals
+
+const WIDTHS = [800, 1200, 1600, 2400]
+---
+
+{
+    images.length > 0 && (
+        <dialog
+            aria-label={UI[lang].imageViewer}
+            class="lightbox"
+            id="lightbox"
+        >
+            <ul class="track" id="lightboxTrack">
+                {images.map((image) => (
+                    <li class="slide">
+                        <Image
+                            class="slideImage"
+                            image={image}
+                            quality={80}
+                            sizes="100vw"
+                            widths={WIDTHS}
+                        />
+                    </li>
+                ))}
+            </ul>
+
+            <button
+                aria-label={UI[lang].closeImageViewer}
+                class="control close"
+                id="lightboxClose"
+                type="button"
+            >
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M5 5 19 19M19 5 5 19" />
+                </svg>
+            </button>
+
+            {images.length > 1 && (
+                <>
+                    <button
+                        aria-label={UI[lang].previousImage}
+                        class="control prev"
+                        id="lightboxPrev"
+                        type="button"
+                    >
+                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M15 4 7 12l8 8" />
+                        </svg>
+                    </button>
+
+                    <button
+                        aria-label={UI[lang].nextImage}
+                        class="control next"
+                        id="lightboxNext"
+                        type="button"
+                    >
+                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M9 4l8 8-8 8" />
+                        </svg>
+                    </button>
+
+                    <p aria-live="polite" class="counter" id="lightboxCounter">
+                        1 / {images.length}
+                    </p>
+                </>
+            )}
+        </dialog>
+    )
+}
+
+<style>
+    .lightbox {
+        background-color: var(--color-white);
+        block-size: 100svh;
+        border: 0;
+        inline-size: 100vw;
+        max-block-size: none;
+        max-inline-size: none;
+        opacity: 0;
+        padding: 0;
+        transition:
+            opacity 150ms ease,
+            display 150ms allow-discrete,
+            overlay 150ms allow-discrete;
+
+        &[open] {
+            opacity: 1;
+
+            @starting-style {
+                opacity: 0;
+            }
+        }
+
+        &::backdrop {
+            background-color: var(--color-white);
+        }
+    }
+
+    :global(html:has(#lightbox[open])) {
+        overflow: hidden;
+    }
+
+    .track {
+        block-size: 100%;
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior: contain;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .slide {
+        align-items: center;
+        display: flex;
+        flex: 0 0 100%;
+        justify-content: center;
+        min-inline-size: 0;
+        padding-block: var(--space-6) var(--space-9);
+        padding-inline: var(--space-5);
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+
+        :global(.slideImage) {
+            block-size: auto;
+            inline-size: auto;
+            max-block-size: 100%;
+            max-inline-size: 100%;
+        }
+    }
+
+    .control {
+        align-items: center;
+        background-color: var(--color-white);
+        border: 1px solid var(--color-ivory-4);
+        border-radius: 50%;
+        color: var(--color-black);
+        display: flex;
+        justify-content: center;
+        padding: var(--space-2);
+        position: absolute;
+        transition: all 200ms ease;
+
+        svg {
+            block-size: var(--font-size-4);
+            fill: none;
+            inline-size: var(--font-size-4);
+            stroke: currentcolor;
+            stroke-width: 1.5;
+        }
+
+        &:hover:not(:disabled) {
+            border-color: var(--color-red-8);
+            color: var(--color-red-8);
+        }
+
+        &:disabled {
+            cursor: default;
+            opacity: 0.3;
+        }
+    }
+
+    .close {
+        inset-block-start: var(--space-3);
+        inset-inline-end: var(--space-3);
+    }
+
+    .prev,
+    .next {
+        inset-block-start: 50%;
+        translate: 0 -50%;
+    }
+
+    .prev {
+        inset-inline-start: var(--space-3);
+    }
+
+    .next {
+        inset-inline-end: var(--space-3);
+    }
+
+    .counter {
+        font-size: var(--font-size-3);
+        font-variant-numeric: tabular-nums;
+        font-weight: var(--font-weight-medium);
+        inset-block-end: var(--space-6);
+        inset-inline: 0;
+        margin-top: var(--space-7);
+        position: absolute;
+        text-align: center;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .lightbox {
+            transition: none;
+        }
+
+        .track {
+            scroll-behavior: auto;
+        }
+    }
+</style>
+
+<script>
+    const dialog = document.querySelector<HTMLDialogElement>('#lightbox')
+    const track = document.querySelector<HTMLElement>('#lightboxTrack')
+
+    if (dialog && track) {
+        const close =
+            document.querySelector<HTMLButtonElement>('#lightboxClose')
+        const counter = document.querySelector<HTMLElement>('#lightboxCounter')
+        const next = document.querySelector<HTMLButtonElement>('#lightboxNext')
+        const prev = document.querySelector<HTMLButtonElement>('#lightboxPrev')
+        const count = track.children.length
+
+        const goTo = (index: number, behavior: ScrollBehavior = 'auto') => {
+            track.scrollTo({ left: index * track.clientWidth, behavior })
+        }
+
+        const currentIndex = () =>
+            track.clientWidth > 0
+                ? Math.round(track.scrollLeft / track.clientWidth)
+                : 0
+
+        const sync = () => {
+            const index = currentIndex()
+
+            if (counter) {
+                counter.textContent = `${index + 1} / ${count}`
+            }
+
+            if (prev) {
+                prev.disabled = index <= 0
+            }
+
+            if (next) {
+                next.disabled = index >= count - 1
+            }
+        }
+
+        document.addEventListener('click', (event) => {
+            const target = event.target
+            if (!(target instanceof Element)) return
+
+            const trigger = target.closest<HTMLElement>('[data-zoom-index]')
+            if (!trigger) return
+
+            dialog.showModal()
+            goTo(Number(trigger.dataset.zoomIndex), 'instant')
+            sync()
+        })
+
+        track.addEventListener('scroll', sync)
+        prev?.addEventListener('click', () => goTo(currentIndex() - 1))
+        next?.addEventListener('click', () => goTo(currentIndex() + 1))
+        close?.addEventListener('click', () => dialog.close())
+
+        dialog.addEventListener('keydown', (event) => {
+            if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
+
+            event.preventDefault()
+            goTo(currentIndex() + (event.key === 'ArrowLeft' ? -1 : 1))
+        })
+
+        track.addEventListener('click', (event) => {
+            const target = event.target
+
+            if (target instanceof Element && !target.closest('img, button')) {
+                dialog.close()
+            }
+        })
+    }
+</script>
