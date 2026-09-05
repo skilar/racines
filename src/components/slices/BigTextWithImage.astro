@@ -18,7 +18,10 @@ const { slice } = Astro.props
 
     <div class="text">
         <PrismicRichText class="title" richText={slice.primary.title} />
-        <PrismicRichText class="caption" richText={slice.primary.caption} />
+        <PrismicRichText
+            class="caption prose"
+            richText={slice.primary.caption}
+        />
     </div>
 </div>
 
@@ -63,61 +66,7 @@ const { slice } = Astro.props
     }
 
     .caption {
-        --post-line-height: var(--line-height-default);
-        --post-text-size: var(--font-size-4);
-        --post-line: calc(
-            (var(--post-line-height) * var(--post-text-size)) / 2
-        );
-
-        font-size: var(--font-size-4);
-        hyphens: auto;
         max-width: var(--width-text);
-        text-box-trim: trim-both;
-        text-box-edge: cap alphabetic;
         width: 100%;
-
-        :is(h1, h2, h3, h4, h5, h6) {
-            hyphens: none;
-
-            &:has(+ h1, + h2, + h3, + h4, + h5, + h6, + p, + ol, + ul) {
-                margin-bottom: var(--post-line);
-            }
-        }
-
-        :is(p, ol, ul) {
-            &:has(+ h2, + h3) {
-                margin-bottom: calc(var(--post-line) * 2);
-            }
-
-            &:has(+ p, + ol, + ul) {
-                margin-bottom: var(--post-line);
-            }
-        }
-
-        :is(li):has(+ li) {
-            margin-bottom: calc(var(--post-line) / 2);
-        }
-
-        h2 {
-            font-size: var(--font-size-4-sc);
-        }
-
-        h3 {
-            font-style: italic;
-            font-weight: var(--font-weight-medium);
-        }
-
-        ol,
-        ul {
-            margin-left: calc(var(--post-line) * 3);
-        }
-
-        ol {
-            list-style-type: decimal;
-        }
-
-        ul {
-            list-style-type: circle;
-        }
     }
 </style>

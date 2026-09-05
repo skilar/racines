@@ -27,7 +27,7 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
             data-slice-type={slice.slice_type}
         >
             <PrismicRichText
-                class="textContents"
+                class="prose textContents"
                 noteOffset={noteOffset}
                 richText={slice.primary.text}
             />
@@ -48,65 +48,11 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
     }
 
     .textContents {
-        --post-line-height: var(--line-height-default);
-        --post-text-size: var(--font-size-4);
-        --post-line: calc(
-            (var(--post-line-height) * var(--post-text-size)) / 2
-        );
-
-        font-size: var(--font-size-4);
-        hyphens: auto;
         max-width: var(--width-text);
-        text-box-trim: trim-both;
-        text-box-edge: cap alphabetic;
         width: 100%;
 
         :global(.withSidebar) & {
             grid-column: var(--with-sidebar-second-col);
-        }
-
-        :is(h1, h2, h3, h4, h5, h6) {
-            hyphens: none;
-
-            &:has(+ h1, + h2, + h3, + h4, + h5, + h6, + p, + ol, + ul) {
-                margin-bottom: var(--post-line);
-            }
-        }
-
-        :is(p, ol, ul) {
-            &:has(+ h2, + h3) {
-                margin-bottom: calc(var(--post-line) * 2);
-            }
-
-            &:has(+ p, + ol, + ul) {
-                margin-bottom: var(--post-line);
-            }
-        }
-
-        :is(li):has(+ li) {
-            margin-bottom: calc(var(--post-line) / 2);
-        }
-
-        h2 {
-            font-size: var(--font-size-4-sc);
-        }
-
-        h3 {
-            font-style: italic;
-            font-weight: var(--font-weight-medium);
-        }
-
-        ol,
-        ul {
-            margin-left: calc(var(--post-line) * 3);
-        }
-
-        ol {
-            list-style-type: decimal;
-        }
-
-        ul {
-            list-style-type: circle;
         }
     }
 
