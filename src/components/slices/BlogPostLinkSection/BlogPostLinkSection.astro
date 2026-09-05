@@ -36,7 +36,10 @@ const linkAttrs = getLinkAttrs(slice.primary.link)
             {
                 linkAttrs && isFilled.keyText(slice.primary.link.text) && (
                     <a class="journalLink" {...linkAttrs}>
-                        {fixText(slice.primary.link.text, lang)} →
+                        <span class="linkTitle">
+                            {fixText(slice.primary.link.text, lang)}
+                        </span>
+                        <span class="arrow">→</span>
                     </a>
                 )
             }
@@ -96,14 +99,25 @@ const linkAttrs = getLinkAttrs(slice.primary.link)
 
     .journalLink {
         color: var(--color-red-8);
+        display: inline-flex;
         font-size: var(--font-size-4);
         font-weight: var(--font-weight-bold);
-        letter-spacing: 0.25px;
+        gap: var(--space-1);
         text-decoration: none;
 
+        .arrow {
+            transition: translate 200ms ease-in-out;
+        }
+
         &:hover {
-            text-decoration: underline;
-            text-decoration-thickness: 1px;
+            .linkTitle {
+                text-decoration: underline;
+                text-decoration-thickness: var(--underline-thickness-1);
+            }
+
+            .arrow {
+                translate: 1rem 0;
+            }
         }
     }
 

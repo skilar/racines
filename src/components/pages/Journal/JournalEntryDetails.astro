@@ -5,7 +5,7 @@ import { UI } from '@lib/i18n'
 import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 
-import type { RichTextField } from '@prismicio/client'
+import type { PostPreview } from '@lib/get-post-preview'
 import type { BlogPostDocument } from '@typez/generated/prismic'
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
     dateString: string
     description: BlogPostDocument['data']['short_description']
     href: string | null
-    preview: RichTextField
+    preview: PostPreview | null
     publicationDate: BlogPostDocument['first_publication_date']
     subtitle: BlogPostDocument['data']['subtitle']
     title: string
@@ -56,12 +56,13 @@ const { lang } = Astro.locals
         </div>
     )
 }
-<PrismicRichText class="preview prose" richText={preview} />
+{preview && <PrismicRichText class="preview prose" richText={preview.text} />}
 {
-    href && (
+    href && preview?.hasMore && (
         <a class="readMore" href={href}>
-            {UI[lang].readMore}
+            <span class="linkTitle">{UI[lang].readMore}</span>
             <span class="visuallyHidden"> — {title}</span>
+            <span class="arrow">→</span>
         </a>
     )
 }
@@ -112,15 +113,25 @@ const { lang } = Astro.locals
 
     .readMore {
         color: var(--color-red-8);
-        display: inline-block;
-        font-size: var(--font-size-3-sc);
-        font-weight: var(--font-weight-medium);
+        display: inline-flex;
+        font-weight: var(--font-weight-bold);
+        gap: var(--space-1);
         margin-top: var(--space-7);
-        text-decoration: underline;
-        text-decoration-thickness: var(--underline-thickness-1);
+        text-decoration: none;
+
+        .arrow {
+            transition: translate 200ms ease-in-out;
+        }
 
         &:hover {
-            text-decoration: none;
+            .linkTitle {
+                text-decoration: underline;
+                text-decoration-thickness: var(--underline-thickness-1);
+            }
+
+            .arrow {
+                translate: 1rem 0;
+            }
         }
     }
 </style>

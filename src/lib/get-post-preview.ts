@@ -4,31 +4,53 @@ import type { AnySlice } from '@typez/prismic'
 
 const PREVIEW_PARAGRAPHS = 3
 
+export interface PostPreview {
+    text: RichTextField
+    hasMore: boolean
+}
+
 const isBodyText = (slice: AnySlice): slice is TextSlice =>
     slice.slice_type === 'text' && slice.variation === 'default'
 
-export default function getPostPreview(
-    slices: SliceZone<AnySlice>,
-): RichTextField {
-    const zone: AnySlice[] = [...slices]
-    const body = zone.find(isBodyText)
+function getOpeningProse(text: RichTextField): RTNode[] {
+    const run: RTNode[] = []
 
-    if (!body) {
-        return []
-    }
+    for (const node of text) {
+        if (node.type === 'paragraph') {
+            run.push(node)
 
-    const preview: RTNode[] = []
-
-    for (const node of body.primary.text) {
-        if (
-            node.type !== 'paragraph' ||
-            preview.length === PREVIEW_PARAGRAPHS
-        ) {
+            if (run.length === PREVIEW_PARAGRAPHS) {
+                break
+            }
+        } else if (run.length > 0) {
             break
         }
-
-        preview.push(node)
     }
 
-    return preview as RichTextField
+    return run
+}
+
+export default function getPostPreview(
+    slices: SliceZone<AnySlice>,
+): PostPreview | null {
+    for (const slice of slices) {
+        if (!isBodyText(slice)) {
+            continue
+        }
+
+        const text = getOpeningProse(slice.primary.text)
+
+        // An image or a heading on its own is not an opening
+        if (text.length === 0) {
+            continue
+        }
+
+        return {
+            text: text as RichTextField,
+            hasMore:
+                slices.length > 1 || text.length !== slice.primary.text.length,
+        }
+    }
+
+    return null
 }
