@@ -21,7 +21,7 @@ const { lang } = Astro.locals
         isFilled.richText(author.data.biography) && (
             <div class="authorCallout">
                 {isFilled.image(author.data.photo) && (
-                    <div>
+                    <div class="authorPortrait">
                         <Image image={author.data.photo} />
                     </div>
                 )}
@@ -46,7 +46,18 @@ const { lang } = Astro.locals
 
         &:has(div + div) {
             display: grid;
-            grid-template-columns: 10rem 1fr;
+
+            @container journalEntry (width > 40rem) {
+                grid-template-columns: 10rem 1fr;
+            }
+        }
+    }
+
+    .authorPortrait {
+        display: none;
+
+        @container journalEntry (width > 40rem) {
+            display: block;
         }
     }
 
