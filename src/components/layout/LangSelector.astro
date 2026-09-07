@@ -1,6 +1,5 @@
 ---
 import { getLangLinks } from '@lib/get-lang-links'
-import { LOCALES, UI } from '@lib/i18n'
 
 import type { AlternateLanguage } from '@prismicio/client'
 
@@ -27,17 +26,6 @@ const links = getLangLinks({
         },
     ]}
 >
-    <button
-        aria-controls="langList"
-        aria-expanded="false"
-        class="langToggle"
-        id="langButton"
-        type="button"
-    >
-        <span class="visuallyHidden">{UI[lang].language}</span>
-        {LOCALES[lang].label}
-    </button>
-
     <ul class="langs" id="langList">
         {
             links.map((link, index) => (
@@ -59,26 +47,40 @@ const links = getLangLinks({
 
 <style>
     .langSelector {
+        --font-size: var(--font-size-3-sc);
+        --justify-content: start;
         --text-color: var(--header-text-color);
         --text-decoration-color: var(--header-text-color);
         --text-decoration-thickness: var(--underline-thickness-2);
 
         display: flex;
-        justify-content: end;
+        justify-content: var(--justify-content);
         position: relative;
         z-index: 1100;
 
+        @container (width > 55rem) {
+            --justify-content: end;
+        }
+
         &.hangtag {
-            --text-color: var(--color-ivory-1);
-            --text-decoration-color: var(--color-ivory-1);
+            --font-size: var(--font-size-3);
+            --hangtag-bg-color: var(--color-ivory-1);
+            --text-color: var(--color-red-10);
+            --text-decoration-color: var(--color-red-10);
             --text-decoration-thickness: var(--underline-thickness-1);
 
-            background-color: var(--color-red-10);
+            background-color: var(--hangtag-bg-color);
             left: var(--space-6);
             padding-block: var(--space-2);
             padding-inline: var(--space-3);
             position: absolute;
             top: 0;
+
+            @container (width > 55rem) {
+                --hangtag-bg-color: var(--color-red-10);
+                --text-color: var(--color-ivory-1);
+                --text-decoration-color: var(--color-ivory-1);
+            }
 
             .langs a {
                 font-weight: var(--font-weight-bold);
@@ -86,70 +88,15 @@ const links = getLangLinks({
         }
     }
 
-    .langToggle {
-        appearance: none;
-        align-items: center;
-        color: var(--header-text-color);
-        display: flex;
-        font-size: var(--font-size-3-sc);
-        font-weight: var(--font-weight-medium);
-        gap: var(--space-2);
-        padding: 0;
-
-        &::after {
-            --chevron-height-width: 0.5rem;
-            border-bottom: 0.1rem solid var(--header-text-color);
-            border-right: 0.1rem solid var(--header-text-color);
-            content: '';
-            display: block;
-            height: var(--chevron-height-width);
-            margin-top: -0.125rem;
-            rotate: 45deg;
-            transition: rotate 100ms ease;
-            width: var(--chevron-height-width);
-        }
-
-        &[aria-expanded='true']::after {
-            margin-top: 0.35rem;
-            rotate: -135deg;
-        }
-
-        @container (width > 30rem) {
-            display: none;
-        }
-    }
-
     .langs {
         color: var(--text-color);
-        display: none;
-        font-size: var(--font-size-3-sc);
+        display: flex;
+        font-size: var(--font-size);
         font-weight: var(--font-weight-medium);
         gap: var(--space-3);
 
-        .langSelector:has(> button[aria-expanded='true']) & {
-            --selector-bg-color: var(--color-red-11);
-
-            background-color: var(--selector-bg-color);
-            border: 1px solid var(--selector-bg-color);
-            display: flex;
-            flex-direction: column;
-            inset-block-start: calc(100% + var(--space-3));
-            inset-inline-end: calc(var(--space-1) * -1);
-            padding-block: var(--space-3);
-            position: absolute;
-
-            :global(.navIsOpen) & {
-                --selector-bg-color: var(--color-ivory-4);
-            }
-        }
-
-        @container (width > 30rem) {
-            display: flex;
-        }
-
         a {
             color: var(--text-color);
-            padding-inline: var(--space-4);
             text-decoration: none;
 
             &.selected,
@@ -158,46 +105,6 @@ const links = getLangLinks({
                 text-decoration-color: var(--text-decoration-color);
                 text-decoration-thickness: var(--text-decoration-thickness);
             }
-
-            @container (width > 30rem) {
-                padding-inline: 0;
-            }
-        }
-    }
-
-    .divider {
-        display: none;
-
-        @container (width > 30rem) {
-            display: block;
         }
     }
 </style>
-
-<script>
-    const button = document.querySelector('#langButton')
-    const doc = document.documentElement
-
-    const close = () => button?.setAttribute('aria-expanded', 'false')
-
-    button?.addEventListener('click', () => {
-        const isOpen = button.getAttribute('aria-expanded') === 'true'
-
-        button.setAttribute('aria-expanded', String(!isOpen))
-    })
-
-    doc.addEventListener('keyup', (el) => {
-        if (el.key === 'Escape') {
-            close()
-        }
-    })
-
-    doc.addEventListener('click', (el) => {
-        if (
-            el.target instanceof Node &&
-            !button?.parentElement?.contains(el.target)
-        ) {
-            close()
-        }
-    })
-</script>

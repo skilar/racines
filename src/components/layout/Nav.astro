@@ -2,13 +2,17 @@
 import { UI } from '@lib/i18n'
 import { getNavLinks } from '@lib/prismic-link-resolver'
 
+import LangSelector from './LangSelector.astro'
+
+import type { AlternateLanguage } from '@prismicio/client'
 import type { LayoutDocument } from '@typez/generated/prismic'
 
 interface Props {
+    alternateLanguages?: AlternateLanguage[] | undefined
     menu: LayoutDocument['data']['menu']
 }
 
-const { menu } = Astro.props
+const { alternateLanguages, menu } = Astro.props
 const { lang } = Astro.locals
 
 const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
@@ -22,21 +26,27 @@ const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
             </button>
 
             <div class="navContainer" id="topNav">
-                <ul class="nav">
-                    {links.map(({ ariaCurrent, attrs, label }) => (
-                        <li>
-                            <a
-                                {...attrs}
-                                aria-current={ariaCurrent}
-                                class:list={[
-                                    { selected: ariaCurrent !== undefined },
-                                ]}
-                            >
-                                {label}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
+                <div class="nav">
+                    <ul class="navList">
+                        {links.map(({ ariaCurrent, attrs, label }) => (
+                            <li>
+                                <a
+                                    {...attrs}
+                                    aria-current={ariaCurrent}
+                                    class:list={[
+                                        { selected: ariaCurrent !== undefined },
+                                    ]}
+                                >
+                                    {label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <div class="navLangSelector">
+                        <LangSelector alternateLanguages={alternateLanguages} />
+                    </div>
+                </div>
             </div>
         </nav>
     )
@@ -98,6 +108,16 @@ const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
     }
 
     .nav {
+        .navIsOpen & {
+            border-top: 2px solid var(--color-ivory-2);
+            margin-top: 6.678rem;
+            padding: var(--space-6);
+            padding-top: 2rem;
+            width: 100%;
+        }
+    }
+
+    .navList {
         a {
             color: var(--header-text-color);
             font-size: var(--font-size-3-sc);
@@ -113,14 +133,9 @@ const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
         }
 
         .navIsOpen & {
-            border-top: 2px solid var(--color-ivory-2);
             display: flex;
             flex-direction: column;
             gap: var(--space-4);
-            margin-top: 6.678rem;
-            padding: var(--space-6);
-            padding-top: 2rem;
-            width: 100%;
 
             a {
                 font-size: var(--font-size-6);
@@ -136,6 +151,15 @@ const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
         @container header (width > 55rem) {
             display: flex;
             gap: var(--space-5);
+        }
+    }
+
+    .navLangSelector {
+        display: none;
+        margin-top: var(--space-7);
+
+        .navIsOpen & {
+            display: block;
         }
     }
 </style>

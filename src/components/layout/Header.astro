@@ -25,7 +25,7 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
 
 <header>
     <div class="header contained">
-        <Nav menu={menu} />
+        <Nav alternateLanguages={alternateLanguages} menu={menu} />
 
         <div class="logo">
             {
@@ -39,7 +39,9 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
             <PrismicRichText class="subtitle" richText={subtitle} />
         </div>
 
-        <LangSelector alternateLanguages={alternateLanguages} />
+        <div class="desktopLangSelector">
+            <LangSelector alternateLanguages={alternateLanguages} />
+        </div>
     </div>
 </header>
 
@@ -88,5 +90,13 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
         font-size: var(--font-size-3-sc);
         font-variant-caps: all-small-caps;
         letter-spacing: 1px;
+    }
+
+    .desktopLangSelector {
+        display: none;
+
+        @container header (width > 55rem) {
+            display: block;
+        }
     }
 </style>
