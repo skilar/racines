@@ -40,17 +40,20 @@ const { lang } = Astro.locals
 <style>
     main {
         container: pageContent / inline-size;
-        padding-block: calc(var(--space-8) * 2);
     }
 
     .container {
         --with-sidebar-cols: 1fr;
         --with-sidebar-gap: var(--space-7);
 
+        padding-block: var(--space-8);
+
         @container pageContent (width > 45rem) {
             --with-sidebar-cols: 3fr 7fr;
             --with-sidebar-first-col: 1 / 2;
             --with-sidebar-second-col: 2 / 3;
+
+            padding-block: calc(var(--space-8) * 2);
         }
     }
 
