@@ -68,10 +68,14 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
 
     .isPullQuote {
         border-block: var(--double-border);
-        font-size: var(--font-size-5);
-        font-style: italic;
-        font-weight: var(--font-weight-medium);
-        padding: calc(var(--space-8) * 2);
+        padding-block: calc(var(--space-8) * 2);
+        padding-inline: var(--space-6);
         text-align: center;
+
+        .textContents {
+            font-size: var(--font-size-5);
+            font-style: italic;
+            font-weight: var(--font-weight-medium);
+        }
     }
 </style>
