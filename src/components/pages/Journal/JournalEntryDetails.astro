@@ -45,6 +45,7 @@ const { lang } = Astro.locals
 
 <PrismicRichText class="subtitle" richText={subtitle} />
 <PrismicRichText class="description" richText={description} />
+
 {
     isFilled.image(coverImage) && (
         <div class="imageWrapper">
@@ -95,6 +96,11 @@ const { lang } = Astro.locals
     .subtitle {
         font-style: italic;
         font-weight: var(--font-weight-medium);
+        margin-top: var(--space-4);
+
+        @container journal (width > 40rem) {
+            margin-top: 0;
+        }
     }
 
     .description {
