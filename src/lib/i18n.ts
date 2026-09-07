@@ -6,7 +6,6 @@ export const LOCALES = {
 
 export type Lang = keyof typeof LOCALES
 
-// Interface copy that has no home in Prismic.
 export const UI = {
     'fr-fr': {
         aboutTheAuthor: 'À propos de l’autrice',
@@ -23,9 +22,11 @@ export const UI = {
         previousImage: 'Image précédente',
         readMore: 'Lire la suite',
         signUp: 'S’abonner',
+        siteDescription: 'Recettes historiques',
         skipToContent: 'Skip to content',
         untitledEntry: 'Article sans titre',
         viewFullScreen: 'Afficher en plein écran',
+        viewNote: 'Voir la note',
     },
     'en-us': {
         aboutTheAuthor: 'About the Author',
@@ -42,9 +43,11 @@ export const UI = {
         previousImage: 'Previous image',
         readMore: 'Continue reading',
         signUp: 'Sign Up',
+        siteDescription: 'Historical recipes',
         skipToContent: 'Skip to content',
         untitledEntry: 'Untitled entry',
         viewFullScreen: 'View full screen',
+        viewNote: 'See footnote',
     },
 } as const
 
