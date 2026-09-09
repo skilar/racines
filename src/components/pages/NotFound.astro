@@ -1,7 +1,8 @@
 ---
 import { isFilled } from '@prismicio/client'
-import { client } from '@lib/prismic'
 import { fixText } from '@lib/get-fixer'
+import getOgImage from '@lib/get-og-image'
+import { client } from '@lib/prismic'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 import SliceZone from '../common/SliceZone.astro'
@@ -14,11 +15,14 @@ const { uid } = Astro.props
 const { lang } = Astro.locals
 
 const page = await client.getByUID('page', uid, { lang })
+const ogImage = getOgImage(page.data.meta_image)
 ---
 
 <LayoutWithHeader
     alternateLanguages={page.alternate_languages}
     description={page.data.meta_description}
+    ogImage={ogImage?.url}
+    ogImageAlt={ogImage?.alt}
     title={page.data.meta_title}
 >
     <main id="main" class="contained">

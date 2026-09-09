@@ -1,5 +1,6 @@
 ---
 import { isFilled } from '@prismicio/client'
+import getOgImage from '@lib/get-og-image'
 import { client } from '@lib/prismic'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
@@ -14,11 +15,14 @@ const { uid } = Astro.props
 const { lang } = Astro.locals
 
 const page = await client.getByUID('page', uid, { lang })
+const ogImage = getOgImage(page.data.meta_image)
 ---
 
 <LayoutWithHeader
     alternateLanguages={page.alternate_languages}
     description={page.data.meta_description}
+    ogImage={ogImage?.url}
+    ogImageAlt={ogImage?.alt}
     title={page.data.meta_title}
 >
     <PageWrapper pageStyle={page.data.page_style} title={page.data.title}>
