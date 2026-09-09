@@ -33,8 +33,11 @@ const links = getLangLinks({
                     {index > 0 && <li class="divider">/</li>}
                     <li>
                         <a
+                            aria-current={link.selected ? 'page' : undefined}
                             class:list={[{ selected: link.selected }]}
                             href={link.href}
+                            hreflang={link.bcp47}
+                            lang={link.bcp47}
                         >
                             {link.label}
                         </a>
