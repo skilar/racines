@@ -201,6 +201,7 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
 
         .newsletterButton {
             padding-inline: var(--space-4);
+            white-space: nowrap;
 
             @container inlineNewsletter (width > 19rem) {
                 width: auto;
