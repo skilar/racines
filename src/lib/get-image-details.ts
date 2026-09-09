@@ -2,7 +2,7 @@ import { asImageSrc, asImageWidthSrcSet, isFilled } from '@prismicio/client'
 
 import type { ImageFieldImage } from '@prismicio/client'
 
-async function getLqip(url: string): Promise<string> {
+async function fetchLqip(url: string): Promise<string> {
     try {
         const res = await fetch(url)
         if (res.ok) {
@@ -15,6 +15,21 @@ async function getLqip(url: string): Promise<string> {
     }
 
     return url
+}
+
+const lqips = new Map<string, Promise<string>>()
+
+function getLqip(url: string): Promise<string> {
+    const cached = lqips.get(url)
+
+    if (cached) {
+        return cached
+    }
+
+    const lqip = fetchLqip(url)
+    lqips.set(url, lqip)
+
+    return lqip
 }
 
 interface GetImageDetailsProps {
