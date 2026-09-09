@@ -36,18 +36,6 @@
             "constraint": {},
             "thumbnails": []
           }
-        },
-        "image_position": {
-          "type": "Select",
-          "config": {
-            "label": "Image Position",
-            "placeholder": "",
-            "default_value": "Left",
-            "options": [
-              "Left",
-              "Right"
-            ]
-          }
         }
       }
     }
