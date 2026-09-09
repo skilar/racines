@@ -15,7 +15,11 @@ const { slice } = Astro.props
 const { lang } = Astro.locals
 ---
 
-<div class="container" data-slice-type={slice.slice_type}>
+<div
+    class="container"
+    data-slice-type={slice.slice_type}
+    data-slice-variation={slice.variation}
+>
     <div class="heroGrid">
         <div class="overlay">
             {
