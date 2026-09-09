@@ -1,5 +1,5 @@
 ---
-import { isFilled } from '@prismicio/client'
+import { asText, isFilled } from '@prismicio/client'
 import getOgImage from '@lib/get-og-image'
 import { client } from '@lib/prismic'
 import { collectZoomableImages } from '@lib/zoom'
@@ -24,13 +24,20 @@ const page = await client.getByUID('blog_post', uid, { lang })
 const zoomableImages = collectZoomableImages(page.data.slices)
 
 const ogImage = getOgImage(page.data.meta_image, page.data.cover_image)
+
+const description = isFilled.keyText(page.data.meta_description)
+    ? page.data.meta_description
+    : asText(page.data.short_description)
 ---
 
 <LayoutWithHeader
     alternateLanguages={page.alternate_languages}
-    description={page.data.meta_description}
+    description={description}
+    modifiedTime={page.last_publication_date}
     ogImage={ogImage?.url}
     ogImageAlt={ogImage?.alt}
+    ogType="article"
+    publishedTime={page.first_publication_date}
     title={page.data.meta_title}
 >
     <main id="main" class="contained">
