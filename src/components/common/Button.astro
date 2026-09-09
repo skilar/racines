@@ -1,5 +1,5 @@
 ---
-type ButtonProps = {
+interface ButtonProps {
     as?: 'button'
     caption: string
     href?: never
@@ -8,7 +8,7 @@ type ButtonProps = {
     type?: 'button' | 'submit'
 }
 
-type LinkProps = {
+interface LinkProps {
     as: 'link'
     caption: string
     href: string
