@@ -314,6 +314,17 @@ interface HomepageDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	meta_description: prismic.KeyTextField;
+	
+	/**
+	 * Meta Image field in *Homepage*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: homepage.meta_image
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	meta_image: prismic.ImageField<never>;
 }
 
 /**
@@ -416,6 +427,18 @@ interface PageDocumentData {
 	title: prismic.KeyTextField;
 	
 	/**
+	 * Page Style field in *Page*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Centered
+	 * - **API ID Path**: page.page_style
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	page_style: prismic.SelectField<"Centered" | "With Sidebar", "filled">;
+	
+	/**
 	 * Slice Zone field in *Page*
 	 *
 	 * - **Field Type**: Slice Zone
@@ -456,18 +479,6 @@ interface PageDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	meta_image: prismic.ImageField<never>;
-	
-	/**
-	 * Page Style field in *Page*
-	 *
-	 * - **Field Type**: Select
-	 * - **Placeholder**: *None*
-	 * - **Default Value**: Centered
-	 * - **API ID Path**: page.page_style
-	 * - **Tab**: SEO & Metadata
-	 * - **Documentation**: https://prismic.io/docs/fields/select
-	 */
-	page_style: prismic.SelectField<"Centered" | "With Sidebar", "filled">;
 }
 
 /**
@@ -609,17 +620,6 @@ export interface BigTextWithImageSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	image: prismic.ImageField<never>;
-	
-	/**
-	 * Image Position field in *BigTextWithImage → Default → Primary*
-	 *
-	 * - **Field Type**: Select
-	 * - **Placeholder**: *None*
-	 * - **Default Value**: Left
-	 * - **API ID Path**: big_text_with_image.default.primary.image_position
-	 * - **Documentation**: https://prismic.io/docs/fields/select
-	 */
-	image_position: prismic.SelectField<"Left" | "Right", "filled">;
 }
 
 /**
