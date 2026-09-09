@@ -1,5 +1,6 @@
 ---
 import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
 
 import Input from '../../common/forms/Input.astro'
@@ -30,7 +31,7 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
     <div class="wrapper">
         {
             isFilled.keyText(slice.primary.title) && (
-                <h2>{slice.primary.title}</h2>
+                <h2>{fixText(slice.primary.title, lang)}</h2>
             )
         }
 
