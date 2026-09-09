@@ -99,3 +99,8 @@ export function getOgLocales(lang: Lang) {
         alternates: LANGS.filter((l) => l !== lang).map((l) => LOCALES[l].og),
     }
 }
+
+export const feedParam = (lang: Lang) => lang.replace('-', '_')
+export const feedPath = (lang: Lang) => `/feed-${feedParam(lang)}.xml`
+export const langFromFeedParam = (param: string): Lang | undefined =>
+    LANGS.find((lang) => feedParam(lang) === param)
