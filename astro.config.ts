@@ -1,6 +1,12 @@
 import { defineConfig, fontProviders } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import netlify from '@astrojs/netlify'
+import { DEFAULT_LANG, LANGS, LOCALES } from './src/lib/i18n'
+
+const locales = LANGS.map((lang) => LOCALES[lang].bcp47)
+const defaultLocale = LOCALES[DEFAULT_LANG].bcp47
+
+const ERROR_PAGE = /\/(404|500)\/$/
 
 export default defineConfig({
     adapter: netlify(),
@@ -40,10 +46,23 @@ export default defineConfig({
         },
     ],
     i18n: {
-        locales: ['en', 'fr'],
-        defaultLocale: 'fr',
+        locales,
+        defaultLocale,
     },
-    integrations: [sitemap()],
+    integrations: [
+        sitemap({
+            filter: (page) => !ERROR_PAGE.test(new URL(page).pathname),
+            i18n: {
+                defaultLocale,
+                locales: Object.fromEntries(
+                    LANGS.map((lang) => [
+                        LOCALES[lang].bcp47,
+                        LOCALES[lang].og.replace('_', '-'),
+                    ]),
+                ),
+            },
+        }),
+    ],
     site: 'https://www.agathegiraud.com',
     trailingSlash: 'always',
 })

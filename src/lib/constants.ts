@@ -1,12 +1,29 @@
+import { LANGS, LOCALES, toPath } from '@lib/i18n'
+
 import type { Route } from '@prismicio/client'
 
-export const ROUTES: Route[] = [
-    { type: 'blog_post', lang: 'en-us', path: '/en/journal/:uid/' },
-    { type: 'blog_post', lang: 'fr-fr', path: '/journal/:uid/' },
-    { type: 'homepage', lang: 'en-us', path: '/en/' },
-    { type: 'homepage', lang: 'fr-fr', path: '/' },
-    { type: 'page', lang: 'en-us', path: '/en/:uid/' },
-    { type: 'page', lang: 'fr-fr', path: '/:uid/' },
-]
+// Path pattern per document type, without the locale prefix.
+const ROUTE_PATTERNS = {
+    blog_post: 'journal/:uid',
+    homepage: '',
+    page: ':uid',
+} as const
+
+export type RoutedType = keyof typeof ROUTE_PATTERNS
+
+export const ROUTES: Route[] = LANGS.flatMap((lang) =>
+    (Object.keys(ROUTE_PATTERNS) as RoutedType[]).map((type) => ({
+        type,
+        lang,
+        path: toPath(
+            [LOCALES[lang].path, ROUTE_PATTERNS[type]].filter(Boolean),
+        ),
+    })),
+)
+
+// Pages with dedicated files are restricted because we don't want
+// `[uid].astro` to generate them a second time, if the UID is also
+// used in Prismic.
+export const RESERVED_UIDS = new Set(['404', '500', 'journal'])
 
 export const SITE_NAME = 'Agathe Giraud'

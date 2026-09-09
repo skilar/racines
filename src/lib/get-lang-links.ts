@@ -1,4 +1,4 @@
-import { LANGS, LOCALES, swapLocalePath } from '@lib/i18n'
+import { LANGS, LOCALES, isLang, swapLocalePath } from '@lib/i18n'
 import { resolveRoute } from '@lib/prismic-link-resolver'
 
 import type { AlternateLanguage } from '@prismicio/client'
@@ -13,10 +13,27 @@ interface GetLangLinksArgs {
 }
 
 interface LangLink {
+    bcp47: string
     href: string
     label: string
     selected: boolean
 }
+
+export interface AlternateHref {
+    href: string
+    lang: Lang
+}
+
+// The translations Prismic knows about for this document, in other locales.
+export const getAlternateHrefs = (
+    alternateLanguages: AlternateLanguage[] | undefined,
+    lang: Lang,
+): AlternateHref[] =>
+    (alternateLanguages ?? []).flatMap((alt) =>
+        isLang(alt.lang) && alt.lang !== lang
+            ? [{ href: resolveRoute(alt), lang: alt.lang }]
+            : [],
+    )
 
 const getHref = (
     lang: Lang,
@@ -40,6 +57,7 @@ export const getLangLinks = ({
     lang,
 }: GetLangLinksArgs): LangLink[] =>
     LANGS.map((l) => ({
+        bcp47: LOCALES[l].bcp47,
         href:
             l === lang
                 ? currentPath

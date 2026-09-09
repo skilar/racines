@@ -53,7 +53,9 @@ export const UI = {
 
 export const LANGS = Object.keys(LOCALES) as Lang[]
 
-// Matches `i18n.defaultLocale` in astro.config.ts.
+export const isLang = (value: string): value is Lang =>
+    Object.hasOwn(LOCALES, value)
+
 export const DEFAULT_LANG: Lang = 'fr-fr'
 
 // Path segments that identify a locale, e.g. `en`. The default locale has none.
@@ -67,7 +69,7 @@ const PREFIXES = new Map(
 const toSegments = (pathname: string) => pathname.split('/').filter(Boolean)
 
 // Rebuilds a path with a leading and trailing slash, per `trailingSlash: 'always'`.
-const toPath = (segments: string[]) =>
+export const toPath = (segments: string[]) =>
     segments.length > 0 ? `/${segments.join('/')}/` : '/'
 
 export function getLangFromPath(pathname: string): Lang {

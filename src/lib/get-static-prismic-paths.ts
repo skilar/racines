@@ -1,10 +1,15 @@
+import { RESERVED_UIDS } from '@lib/constants'
 import { client } from '@lib/prismic'
 
 import type { Lang } from '@lib/i18n'
+import type { AllDocumentTypes } from '@typez/generated/prismic'
+
+// Every document type that has a UID, and therefore a `[uid]` route.
+type UidType = Extract<AllDocumentTypes, { uid: string }>['type']
 
 interface GetStaticPrismicPathsParams {
     lang: Lang
-    type: 'blog_post' | 'page' // TODO: set this up properly to allow all post types
+    type: UidType
 }
 
 interface GetStaticPrismicPathsReturn {
@@ -18,12 +23,11 @@ type GetStaticPrismicPaths = (
 ) => Promise<GetStaticPrismicPathsReturn[]>
 
 const getStaticPrismicPaths: GetStaticPrismicPaths = async ({ lang, type }) => {
-    const posts = await client.getAllByType(type, { lang })
-    const paths = posts.map((post) => {
-        return { params: { uid: post.uid } }
-    })
+    const documents = await client.getAllByType(type, { lang })
 
-    return paths
+    return documents
+        .filter(({ uid }) => !RESERVED_UIDS.has(uid))
+        .map(({ uid }) => ({ params: { uid } }))
 }
 
 export default getStaticPrismicPaths
