@@ -1,90 +1,105 @@
 {
-    "id": "homepage",
-    "label": "Homepage",
-    "repeatable": false,
-    "json": {
-        "Main": {
-            "title": {
-                "type": "Text",
-                "config": {
-                    "label": "Title",
-                    "placeholder": ""
-                }
-            },
-            "subtitle": {
-                "type": "StructuredText",
-                "config": {
-                    "label": "Subtitle",
-                    "placeholder": "",
-                    "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-                    "allowTargetBlank": true,
-                    "labels": ["ordinal-nums"]
-                }
-            },
-            "description": {
-                "type": "StructuredText",
-                "config": {
-                    "label": "Description",
-                    "labels": ["ordinal-nums"],
-                    "placeholder": "",
-                    "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-                    "allowTargetBlank": true
-                }
-            },
-            "main_image": {
-                "type": "Image",
-                "config": {
-                    "label": "Main Image",
-                    "constraint": {},
-                    "thumbnails": []
-                }
-            },
-            "floral_image": {
-                "type": "Image",
-                "config": {
-                    "label": "Floral Image",
-                    "constraint": {},
-                    "thumbnails": []
-                }
-            },
-            "slices": {
-                "type": "Slices",
-                "fieldset": "Slice Zone",
-                "config": {
-                    "choices": {
-                        "hero": {
-                            "type": "SharedSlice"
-                        },
-                        "image_list": {
-                            "type": "SharedSlice"
-                        },
-                        "blog_post_link_section": {
-                            "type": "SharedSlice"
-                        },
-                        "quote": {
-                            "type": "SharedSlice"
-                        }
-                    }
-                }
-            }
-        },
-        "SEO & Metadata": {
-            "meta_title": {
-                "type": "Text",
-                "config": {
-                    "label": "Meta Title",
-                    "placeholder": "A title of the page used for social media and search engines"
-                }
-            },
-            "meta_description": {
-                "type": "Text",
-                "config": {
-                    "label": "Meta Description",
-                    "placeholder": "A brief summary of the page"
-                }
-            }
+  "id": "homepage",
+  "label": "Homepage",
+  "repeatable": false,
+  "json": {
+    "Main": {
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": ""
         }
+      },
+      "subtitle": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Subtitle",
+          "placeholder": "",
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums"
+          ],
+          "allowTargetBlank": true
+        }
+      },
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Description",
+          "placeholder": "",
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums"
+          ],
+          "allowTargetBlank": true
+        }
+      },
+      "main_image": {
+        "type": "Image",
+        "config": {
+          "label": "Main Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "floral_image": {
+        "type": "Image",
+        "config": {
+          "label": "Floral Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "hero": {
+              "type": "SharedSlice"
+            },
+            "image_list": {
+              "type": "SharedSlice"
+            },
+            "blog_post_link_section": {
+              "type": "SharedSlice"
+            },
+            "quote": {
+              "type": "SharedSlice"
+            }
+          }
+        }
+      }
     },
-    "status": true,
-    "format": "page"
+    "SEO & Metadata": {
+      "meta_title": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Title",
+          "placeholder": "A title of the page used for social media and search engines"
+        }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "Meta Description",
+          "placeholder": "A brief summary of the page"
+        }
+      },
+      "meta_image": {
+        "type": "Image",
+        "config": {
+          "label": "Meta Image",
+          "constraint": {
+            "width": 2400,
+            "height": 1260
+          },
+          "thumbnails": []
+        }
+      }
+    }
+  },
+  "status": true,
+  "format": "page"
 }
