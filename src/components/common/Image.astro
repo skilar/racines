@@ -20,7 +20,7 @@ const {
     class: className,
     image,
     priority = false,
-    quality = 65,
+    quality,
     sizes = 'auto, 100vw',
     widths,
     withBackgroundImage = true,
@@ -49,7 +49,7 @@ const details = await getImageDetails({ image, quality, widths })
             sizes={imageSizes}
             src={details.src}
             srcset={details.srcset}
-            style={`aspect-ratio: ${details.width} / ${details.height}; --img-ratio: ${(details.width / details.height).toFixed(5)}; --natural-width: ${details.width}px; ${withBackgroundImage ? `background-image: url(${details.lqip}); background-size: cover; background-position: center;` : ''}`}
+            style={`aspect-ratio: ${details.width} / ${details.height}; ${withBackgroundImage ? `background-image: url(${details.lqip}); background-size: cover; background-position: center;` : ''}`}
             width={details.width}
             {...rest}
         />
