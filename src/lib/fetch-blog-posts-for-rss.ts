@@ -1,7 +1,7 @@
 import { asText, isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
-import { client } from '@lib/prismic'
+import { getBlogPosts } from '@lib/prismic'
 import { resolveRoute } from '@lib/prismic-link-resolver'
 import renderBlogPostHtml from '@lib/render-blog-post-html'
 
@@ -14,12 +14,7 @@ export const fetchBlogPostsForRss: FetchBlogPostsForRss = async (
     lang,
     site,
 ) => {
-    const posts = await client.getAllByType('blog_post', {
-        lang,
-        orderings: [
-            { field: 'document.first_publication_date', direction: 'desc' },
-        ],
-    })
+    const posts = await getBlogPosts(lang)
 
     return posts.map((post) => ({
         content: renderBlogPostHtml(post, lang, site),

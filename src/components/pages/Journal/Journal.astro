@@ -1,6 +1,6 @@
 ---
 import { isFilled } from '@prismicio/client'
-import { client } from '@lib/prismic'
+import { client, getBlogPosts } from '@lib/prismic'
 import { fixText } from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
@@ -13,9 +13,9 @@ import JournalEntryDetails from './JournalEntryDetails.astro'
 const { lang } = Astro.locals
 
 const page = await client.getByUID('page', 'journal', { lang })
-const blogPosts = await client.getByType('blog_post', { lang })
+const blogPosts = await getBlogPosts(lang)
 
-const posts = blogPosts.results.map((post) => ({
+const posts = blogPosts.map((post) => ({
     dateString: getJournalEntryDate(post.first_publication_date, lang),
     coverImage: post.data.cover_image,
     coverImageDescription: post.data.cover_image_description,

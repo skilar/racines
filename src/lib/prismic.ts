@@ -2,11 +2,15 @@ import { createClient } from '@prismicio/client'
 import { ROUTES } from '@lib/constants'
 
 import type { Lang } from '@lib/i18n'
-import type { LayoutDocument } from '@typez/generated/prismic'
+import type { BlogPostDocument, LayoutDocument } from '@typez/generated/prismic'
 
-export const client = createClient(import.meta.env.PRISMIC_REPOSITORY || '', {
-    routes: ROUTES,
-})
+const repository = import.meta.env.PRISMIC_REPOSITORY
+
+if (!repository) {
+    throw new Error('PRISMIC_REPOSITORY is not set. Add it to .env.')
+}
+
+export const client = createClient(repository, { routes: ROUTES })
 
 const layouts = new Map<Lang, Promise<LayoutDocument>>()
 
@@ -21,4 +25,13 @@ export function getLayout(lang: Lang): Promise<LayoutDocument> {
     layouts.set(lang, layout)
 
     return layout
+}
+
+export function getBlogPosts(lang: Lang): Promise<BlogPostDocument[]> {
+    return client.getAllByType('blog_post', {
+        lang,
+        orderings: [
+            { field: 'document.first_publication_date', direction: 'desc' },
+        ],
+    })
 }
