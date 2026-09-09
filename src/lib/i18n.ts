@@ -23,7 +23,7 @@ export const UI = {
         readMore: 'Lire la suite',
         signUp: 'S’abonner',
         siteDescription: 'Recettes historiques',
-        skipToContent: 'Skip to content',
+        skipToContent: 'Aller au contenu',
         untitledEntry: 'Article sans titre',
         viewFullScreen: 'Afficher en plein écran',
         viewNote: 'Voir la note',
