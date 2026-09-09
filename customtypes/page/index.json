@@ -17,6 +17,18 @@
           "placeholder": ""
         }
       },
+      "page_style": {
+        "type": "Select",
+        "config": {
+          "label": "Page Style",
+          "placeholder": "",
+          "default_value": "Centered",
+          "options": [
+            "Centered",
+            "With Sidebar"
+          ]
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
@@ -62,18 +74,6 @@
             "height": 1260
           },
           "thumbnails": []
-        }
-      },
-      "page_style": {
-        "type": "Select",
-        "config": {
-          "label": "Page Style",
-          "placeholder": "",
-          "default_value": "Centered",
-          "options": [
-            "Centered",
-            "With Sidebar"
-          ]
         }
       }
     }
