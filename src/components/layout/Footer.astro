@@ -12,19 +12,26 @@ interface Props {
 }
 
 const { slices, legal } = Astro.props
+
+const hasLegal = isFilled.richText(legal)
+const hasSlices = isFilled.sliceZone(slices)
 ---
 
 {
-    isFilled.richText(legal) && (
+    (hasLegal || hasSlices) && (
         <footer>
             <div class="footer contained">
-                <div class="footerSlices">
-                    <SliceZone slices={slices} />
-                </div>
+                {hasSlices && (
+                    <div class="footerSlices">
+                        <SliceZone slices={slices} />
+                    </div>
+                )}
 
-                <div class="legal">
-                    <PrismicRichText richText={legal} />
-                </div>
+                {hasLegal && (
+                    <div class="legal">
+                        <PrismicRichText richText={legal} />
+                    </div>
+                )}
             </div>
         </footer>
     )
