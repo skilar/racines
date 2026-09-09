@@ -21,7 +21,13 @@ const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
 {
     links.length > 0 && (
         <nav>
-            <button class="menuToggle" id="menuButton">
+            <button
+                aria-controls="topNav"
+                aria-expanded="false"
+                class="menuToggle"
+                id="menuButton"
+                type="button"
+            >
                 <span class="visuallyHidden">{UI[lang].menu}</span>
             </button>
 
@@ -165,30 +171,31 @@ const links = getNavLinks(menu, { currentPath: Astro.url.pathname, lang })
 </style>
 
 <script>
-    const button = document.querySelector('#menuButton')
+    const button = document.querySelector<HTMLButtonElement>('#menuButton')
     const doc = document.documentElement
-    const nav = document.querySelector('#topNav')
+    const nav = document.querySelector<HTMLElement>('#topNav')
     const className = 'navIsOpen'
 
+    const isOpen = () => doc.classList.contains(className)
+
+    const setOpen = (open: boolean) => {
+        doc.classList.toggle(className, open)
+        button?.setAttribute('aria-expanded', String(open))
+    }
+
     button?.addEventListener('click', () => {
-        let startOpacity = 0
-        let endOpacity = 1
+        const open = !isOpen()
 
-        if (doc.classList.contains(className)) {
-            startOpacity = 1
-            endOpacity = 0
-        }
-
-        nav?.animate([{ opacity: startOpacity }, { opacity: endOpacity }], {
+        nav?.animate([{ opacity: open ? 0 : 1 }, { opacity: open ? 1 : 0 }], {
             duration: 100,
         })
 
-        doc.classList.toggle(className)
+        setOpen(open)
     })
 
-    doc.addEventListener('keyup', (el) => {
-        if (el.key === 'Escape') {
-            doc.classList.remove(className)
+    doc.addEventListener('keyup', (event) => {
+        if (event.key === 'Escape' && isOpen()) {
+            setOpen(false)
         }
     })
 </script>
