@@ -1,0 +1,3 @@
+# English visitors get the English not-found page. Netlify only serves the
+# root 404.html by default. The Astro adapter appends its own rules below.
+/en/*  /en/404/index.html  404
