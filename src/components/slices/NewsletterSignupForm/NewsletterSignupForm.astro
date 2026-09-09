@@ -153,6 +153,8 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
     }
 
     .inlineForm {
+        container: inlineNewsletter / inline-size;
+
         .wrapper {
             border-block: none;
             font-size: var(--font-size-3);
@@ -183,16 +185,25 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
         form {
             align-items: end;
             display: flex;
+            flex-direction: column;
             gap: var(--space-3);
+
+            @container inlineNewsletter (width > 19rem) {
+                flex-direction: row;
+            }
         }
 
         .newsletterFormFields {
             padding-bottom: 0;
+            width: 100%;
         }
 
         .newsletterButton {
             padding-inline: var(--space-4);
-            width: auto;
+
+            @container inlineNewsletter (width > 19rem) {
+                width: auto;
+            }
         }
     }
 </style>
