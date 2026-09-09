@@ -1,5 +1,6 @@
 ---
 import { Font } from 'astro:assets'
+import { isFilled } from '@prismicio/client'
 import { SITE_NAME } from '@lib/constants'
 import { LANGS, LOCALES, getOgLocales } from '@lib/i18n'
 import { resolveRoute } from '@lib/prismic-link-resolver'
@@ -11,8 +12,10 @@ type Props = LayoutProps
 const { description, ogImage, ogImageAlt, title } = Astro.props
 const { lang } = Astro.locals
 
-const BASE_URL = Astro.site?.toString() || 'http://www.agathegiraud.com/'
-const ogUrl = new URL(Astro.url.pathname, BASE_URL).toString()
+const BASE_URL = Astro.site?.toString() ?? 'https://www.agathegiraud.com/'
+const absolute = (path: string) => new URL(path, BASE_URL).toString()
+
+const canonical = absolute(Astro.url.pathname)
 const { current, alternates } = getOgLocales(lang)
 
 // Autodiscover the user's current locale.
@@ -22,8 +25,8 @@ const feeds = [lang, ...LANGS.filter((l) => l !== lang)].map((l) => ({
 }))
 
 const isHome = Astro.url.pathname === resolveRoute({ lang, type: 'homepage' })
-const ogTitle = title || SITE_NAME
-const documentTitle = title && !isHome ? `${title} - ${SITE_NAME}` : ogTitle
+const ogTitle = isFilled.keyText(title) ? title : SITE_NAME
+const documentTitle = isHome ? ogTitle : `${ogTitle} - ${SITE_NAME}`
 ---
 
 <head>
