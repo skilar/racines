@@ -15,31 +15,29 @@ const { author } = Astro.props
 const { lang } = Astro.locals
 ---
 
-{
-    isFilled.contentRelationship(author) &&
-        author.data &&
-        isFilled.richText(author.data.biography) && (
-            <div class="authorCallout">
-                {isFilled.image(author.data.photo) && (
-                    <div class="authorPortrait">
-                        <Image image={author.data.photo} />
-                    </div>
-                )}
-
-                <div class="about">
-                    <h2>{UI[lang].aboutTheAuthor}</h2>
-                    <PrismicRichText richText={author.data.biography} />
+{isFilled.contentRelationship(author) &&
+    author.data &&
+    isFilled.richText(author.data.biography) && (
+        <div class="authorCallout">
+            {isFilled.image(author.data.photo) && (
+                <div class="authorPortrait">
+                    <Image image={author.data.photo} />
                 </div>
+            )}
+
+            <div class="about">
+                <h2>{UI[lang].aboutTheAuthor}</h2>
+                <PrismicRichText class="bio" richText={author.data.biography} />
             </div>
-        )
-}
+        </div>
+    )}
 
 <style>
     .authorCallout {
         background-color: var(--color-ivory-2);
         border: 1px solid var(--color-ivory-4);
         border-bottom: var(--double-border);
-        font-size: var(--font-size-4);
+        font-size: var(--font-size-3-sc);
         margin-inline: auto;
         margin-top: var(--space-9);
         max-width: var(--width-text);
@@ -72,5 +70,11 @@ const { lang } = Astro.locals
         font-variant-caps: all-small-caps;
         font-weight: var(--font-weight-medium);
         padding-bottom: var(--space-1);
+    }
+
+    .bio {
+        p:has(+ p) {
+            margin-bottom: var(--space-3);
+        }
     }
 </style>
