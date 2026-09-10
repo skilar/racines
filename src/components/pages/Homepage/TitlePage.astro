@@ -38,60 +38,47 @@ const { lang } = Astro.locals
         <LangSelector alternateLanguages={alternateLanguages} style="hangtag" />
 
         <div class="mainImageContainer">
-            {
-                isFilled.image(mainImage) && (
-                    <Image class="mainImage" image={mainImage} quality={75} />
-                )
-            }
+            {isFilled.image(mainImage) && (
+                <Image class="mainImage" image={mainImage} quality={75} />
+            )}
         </div>
 
         <div class="textWrapper">
             <div class="text">
                 <div>
-                    {
-                        isFilled.keyText(title) && (
-                            <h1 class="title">{fixText(title, lang)}</h1>
-                        )
-                    }
+                    {isFilled.keyText(title) && (
+                        <h1 class="title">{fixText(title, lang)}</h1>
+                    )}
 
                     <PrismicRichText class="subtitle" richText={subtitle} />
                 </div>
 
                 <PrismicRichText class="caption" richText={description} />
 
-                {
-                    nav.length > 0 && (
-                        <nav aria-label={UI[lang].menu}>
-                            <ul class="nav">
-                                {nav.map(({ ariaCurrent, attrs, label }) => (
-                                    <li>
-                                        <a
-                                            {...attrs}
-                                            aria-current={ariaCurrent}
-                                        >
-                                            <span class="linkTitle">
-                                                {label}
-                                            </span>
-                                            <span class="arrow">→</span>
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </nav>
-                    )
-                }
+                {nav.length > 0 && (
+                    <nav aria-label={UI[lang].menu}>
+                        <ul class="nav">
+                            {nav.map(({ ariaCurrent, attrs, label }) => (
+                                <li>
+                                    <a {...attrs} aria-current={ariaCurrent}>
+                                        <span class="linkTitle">{label}</span>
+                                        <span class="arrow">→</span>
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                )}
             </div>
 
             <div class="lily">
-                {
-                    isFilled.image(floralImage) && (
-                        <Image
-                            image={floralImage}
-                            quality={75}
-                            withBackgroundImage={false}
-                        />
-                    )
-                }
+                {isFilled.image(floralImage) && (
+                    <Image
+                        image={floralImage}
+                        quality={75}
+                        withBackgroundImage={false}
+                    />
+                )}
             </div>
         </div>
     </div>
@@ -171,6 +158,10 @@ const { lang } = Astro.locals
     .caption {
         font-size: var(--font-size-3-sc);
         margin-bottom: var(--space-3);
+
+        a {
+            color: var(--color-ivory-2);
+        }
     }
 
     .nav {
