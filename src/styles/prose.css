@@ -17,7 +17,11 @@
     }
 
     :is(p, ol, ul) {
-        &:has(+ h2, + h3) {
+        &:has(+ h2) {
+            margin-bottom: calc(var(--post-line) * 4);
+        }
+
+        &:has(+ h3) {
             margin-bottom: calc(var(--post-line) * 2);
         }
 
