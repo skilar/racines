@@ -970,6 +970,16 @@ export interface ImageListSliceDefaultPrimaryImagesItem {
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	image: prismic.ImageField<never>;
+	
+	/**
+	 * Image Caption field in *ImageList → Horizontal → Primary → Images*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.default.primary.images[].image_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	image_caption: prismic.RichTextField;
 }
 
 /**
@@ -985,6 +995,16 @@ export interface ImageListSliceVerticalPrimaryImagesItem {
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	image: prismic.ImageField<never>;
+	
+	/**
+	 * Image Caption field in *ImageList → Vertical → Primary → Images*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.vertical.primary.images[].image_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	image_caption: prismic.RichTextField;
 }
 
 /**
@@ -1000,6 +1020,16 @@ export interface ImageListSliceHorizonalWithSingleCaptionPrimaryImagesItem {
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	image: prismic.ImageField<never>;
+	
+	/**
+	 * Image Caption field in *ImageList → Horizonal with single caption → Primary → Images*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.horizonalWithSingleCaption.primary.images[].image_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	image_caption: prismic.RichTextField;
 }
 
 /**
