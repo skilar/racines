@@ -8,6 +8,7 @@ interface Props extends HTMLAttributes<'input'> {
     hideLabel?: boolean
     label: string
     name: string
+    required?: boolean
     size?: '3' | '4'
 }
 
@@ -17,6 +18,7 @@ const {
     id,
     label,
     name,
+    required = false,
     size = '4',
     type,
     ...rest
@@ -36,9 +38,10 @@ const inputId = id ?? name
         caption={label}
         for={inputId}
         isVisuallyHidden={hideLabel}
+        required={required}
         size={size}
     />
-    <input id={inputId} name={name} type={type} {...rest} />
+    <input id={inputId} name={name} required={required} type={type} {...rest} />
 </div>
 
 <style>

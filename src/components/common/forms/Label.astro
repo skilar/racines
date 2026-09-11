@@ -1,10 +1,13 @@
 ---
+import { UI } from '@lib/i18n'
+
 import type { HTMLAttributes } from 'astro/types'
 
 interface Props extends HTMLAttributes<'label'> {
     caption: string
     for: string
     isVisuallyHidden?: boolean
+    required?: boolean
     size?: '3' | '4'
 }
 
@@ -12,9 +15,11 @@ const {
     caption,
     for: htmlFor,
     isVisuallyHidden = false,
+    required = false,
     size = '4',
     ...rest
 } = Astro.props
+const { lang } = Astro.locals
 ---
 
 <label
@@ -27,7 +32,7 @@ const {
     for={htmlFor}
     {...rest}
 >
-    {caption}
+    {caption} {!required && <span class="optional">({UI[lang].optional})</span>}
 </label>
 
 <style>
@@ -35,7 +40,6 @@ const {
         color: var(--color-ivory-10);
         display: block;
         font-size: var(--font-size-3-sc);
-        font-variant-caps: all-small-caps;
         font-weight: var(--font-weight-medium);
         letter-spacing: 0.25px;
         margin-bottom: var(--space-1);
@@ -43,5 +47,12 @@ const {
         &.small {
             font-size: var(--font-size-3);
         }
+    }
+
+    .optional {
+        color: var(--color-ivory-9);
+        font-size: var(--font-size-3);
+        font-weight: var(--font-weight-normal);
+        margin-left: var(--space-2);
     }
 </style>
