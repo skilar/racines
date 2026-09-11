@@ -43,10 +43,6 @@
         font-weight: var(--font-weight-medium);
     }
 
-    p {
-        text-align: justify;
-    }
-
     ol,
     ul {
         margin-left: calc(var(--post-line) * 3);

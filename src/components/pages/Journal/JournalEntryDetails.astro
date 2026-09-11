@@ -39,34 +39,25 @@ const { lang } = Astro.locals
     {dateString}
 </time>
 
-<h2 class="title">
-    {href ? <a href={href}>{title}</a> : title}
-</h2>
+<h2 class="title">{href ? <a href={href}>{title}</a> : title}</h2>
 
 <PrismicRichText class="subtitle" richText={subtitle} />
 <PrismicRichText class="description" richText={description} />
 
-{
-    isFilled.image(coverImage) && (
-        <div class="imageWrapper">
-            <Image image={coverImage} />
-            <PrismicRichText
-                class="description"
-                richText={coverImageDescription}
-            />
-        </div>
-    )
-}
+{isFilled.image(coverImage) && (
+    <div class="imageWrapper">
+        <Image image={coverImage} />
+        <PrismicRichText class="description" richText={coverImageDescription} />
+    </div>
+)}
 {preview && <PrismicRichText class="preview prose" richText={preview.text} />}
-{
-    href && preview?.hasMore && (
-        <a class="readMore" href={href}>
-            <span class="linkTitle">{UI[lang].readMore}</span>
-            <span class="visuallyHidden"> — {title}</span>
-            <span class="arrow">→</span>
-        </a>
-    )
-}
+{href && preview?.hasMore && (
+    <a class="readMore" href={href}>
+        <span class="linkTitle">{UI[lang].readMore}</span>
+        <span class="visuallyHidden"> — {title}</span>
+        <span class="arrow">→</span>
+    </a>
+)}
 
 <style>
     .postDate {
@@ -115,6 +106,7 @@ const { lang } = Astro.locals
 
     .preview {
         margin-top: var(--space-6);
+        text-align: justify;
     }
 
     .readMore {

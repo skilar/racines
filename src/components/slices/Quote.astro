@@ -14,20 +14,16 @@ const { slice } = Astro.props
 
 <div class="container" data-slice-type={slice.slice_type}>
     <div class="prose quoteSlice">
-        {
-            isFilled.keyText(slice.primary.title) && (
-                <h2 class="title">{slice.primary.title}</h2>
-            )
-        }
+        {isFilled.keyText(slice.primary.title) && (
+            <h2 class="title">{slice.primary.title}</h2>
+        )}
 
-        {
-            isFilled.richText(slice.primary.caption) && (
-                <PrismicRichText
-                    class="description"
-                    richText={slice.primary.caption}
-                />
-            )
-        }
+        {isFilled.richText(slice.primary.caption) && (
+            <PrismicRichText
+                class="description"
+                richText={slice.primary.caption}
+            />
+        )}
     </div>
 </div>
 
@@ -51,9 +47,9 @@ const { slice } = Astro.props
         max-width: var(--width-text);
         text-align: center;
 
-    .title {
-        font-size: var(--font-size-5);
-        margin-bottom: var(--space-5);
-    }
+        .title {
+            font-size: var(--font-size-5);
+            margin-bottom: var(--space-5);
+        }
     }
 </style>
