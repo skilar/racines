@@ -29,20 +29,13 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
     data-slice-type={slice.slice_type}
 >
     <div class="wrapper">
-        {
-            isFilled.keyText(slice.primary.title) && (
-                <h2>{fixText(slice.primary.title, lang)}</h2>
-            )
-        }
+        {isFilled.keyText(slice.primary.title) && (
+            <h2>{fixText(slice.primary.title, lang)}</h2>
+        )}
 
-        {
-            isFilled.richText(slice.primary.caption) && (
-                <PrismicRichText
-                    class="caption"
-                    richText={slice.primary.caption}
-                />
-            )
-        }
+        {isFilled.richText(slice.primary.caption) && (
+            <PrismicRichText class="caption" richText={slice.primary.caption} />
+        )}
 
         <form
             action="https://buttondown.com/api/emails/embed-subscribe/agathegiraud"
@@ -50,31 +43,31 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
             target="_blank"
         >
             <div class="newsletterFormFields">
-                {
-                    !isInline && (
-                        <div class="names">
-                            <Input
-                                id={`${formId}-first-name`}
-                                label={UI[lang].firstName}
-                                name="metadata__first_name"
-                                type="text"
-                            />
-                            <Input
-                                id={`${formId}-last-name`}
-                                label={UI[lang].lastName}
-                                name="metadata__last_name"
-                                type="text"
-                            />
-                        </div>
-                    )
-                }
+                {!isInline && (
+                    <div class="names">
+                        <Input
+                            id={`${formId}-first-name`}
+                            label={UI[lang].firstName}
+                            name="metadata__first_name"
+                            placeholder={UI[lang].firstName}
+                            type="text"
+                        />
+                        <Input
+                            id={`${formId}-last-name`}
+                            label={UI[lang].lastName}
+                            name="metadata__last_name"
+                            placeholder={UI[lang].lastName}
+                            type="text"
+                        />
+                    </div>
+                )}
 
                 <Input
                     hideLabel={isInline}
                     id={`${formId}-email`}
                     label={UI[lang].emailAddress}
                     name="email"
-                    placeholder="example@example.com"
+                    placeholder={UI[lang].emailAddress}
                     required
                     size={isInline ? '3' : '4'}
                     type="email"
