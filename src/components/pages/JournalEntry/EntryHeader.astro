@@ -1,5 +1,5 @@
 ---
-import { isFilled } from '@prismicio/client'
+import { asText, isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
@@ -20,8 +20,8 @@ const { lang } = Astro.locals
 
 const dateString = getJournalEntryDate(publicationDate, lang)
 
-const heading = isFilled.keyText(title)
-    ? fixText(title, lang)
+const heading = isFilled.richText(title)
+    ? fixText(asText(title), lang)
     : UI[lang].untitledEntry
 ---
 
@@ -32,7 +32,9 @@ const heading = isFilled.keyText(title)
 
     <PrismicRichText class="description" richText={description} />
 
-    <time class="date" datetime={publicationDate}>{dateString}</time>
+    <time class="date" datetime={publicationDate}>
+        {dateString}
+    </time>
 </div>
 
 <style>

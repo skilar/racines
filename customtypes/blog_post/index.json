@@ -29,10 +29,15 @@
         }
       },
       "title": {
-        "type": "Text",
+        "type": "StructuredText",
         "config": {
           "label": "Title",
-          "placeholder": ""
+          "placeholder": "",
+          "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums"
+          ],
+          "allowTargetBlank": true
         }
       },
       "subtitle": {
@@ -41,6 +46,9 @@
           "label": "Subtitle",
           "placeholder": "",
           "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -50,6 +58,9 @@
           "label": "Short description",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -67,6 +78,9 @@
           "label": "Cover Image Description",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums"
+          ],
           "allowTargetBlank": true
         }
       },
