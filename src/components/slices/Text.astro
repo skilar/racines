@@ -27,6 +27,7 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
     >
         <PrismicRichText
             class="prose textContents"
+            hideLeadingQuote={hasBigCap}
             noteOffset={noteOffset}
             richText={slice.primary.text}
         />

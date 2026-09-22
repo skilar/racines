@@ -1,6 +1,7 @@
 ---
 import { asHTML, isFilled } from '@prismicio/client'
 import getFixer from '@lib/get-fixer'
+import hideLeadingQuote from '@lib/hide-leading-quote'
 import { noteId, noteRefId } from '@lib/notes'
 import tightenNoteRefs from '@lib/tighten-note-refs'
 
@@ -8,6 +9,11 @@ import type { RichTextField } from '@prismicio/client'
 
 interface Props {
     class?: string
+    /**
+     * Hides a quote mark opening the first paragraph, so a big cap styled with
+     * `::first-letter` enlarges the letter rather than the quote.
+     */
+    hideLeadingQuote?: boolean
     /**
      * Footnotes are numbered across a whole slice zone, so a field cannot know
      * where its own numbering starts. `SliceZone` counts what came before and
@@ -18,14 +24,20 @@ interface Props {
     richText: RichTextField
 }
 
-const { class: className, noteOffset, richText, ...rest } = Astro.props
+const {
+    class: className,
+    hideLeadingQuote: shouldHideLeadingQuote = false,
+    noteOffset,
+    richText,
+    ...rest
+} = Astro.props
 const { lang } = Astro.locals
 
 // `asHTML` walks the tree in document order, so a running count here follows the
 // order the markers appear in on the page.
 let noteNumber = noteOffset ?? 0
 
-const htmlRichText = isFilled.richText(richText)
+const fixedHtml = isFilled.richText(richText)
     ? tightenNoteRefs(
           getFixer(lang).fixHtml(
               asHTML(richText, {
@@ -52,6 +64,12 @@ const htmlRichText = isFilled.richText(richText)
           ),
       )
     : null
+
+// Always runs after JoliTypo
+const htmlRichText =
+    fixedHtml && shouldHideLeadingQuote
+        ? hideLeadingQuote(fixedHtml)
+        : fixedHtml
 ---
 
 {htmlRichText && <div class={className} set:html={htmlRichText} {...rest} />}
