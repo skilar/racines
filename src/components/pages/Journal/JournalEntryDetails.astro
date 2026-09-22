@@ -1,62 +1,97 @@
 ---
 import { isFilled } from '@prismicio/client'
+import getPostPreview from '@lib/get-post-preview'
 import { UI } from '@lib/i18n'
 
 import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
+import SliceZone from '@components/common/SliceZone.astro'
 
+import type { ImageField, RichTextField } from '@prismicio/client'
+import type { JournalItem } from '@lib/get-journal-items'
 import type { PostPreview } from '@lib/get-post-preview'
-import type { BlogPostDocument } from '@typez/generated/prismic'
 
 interface Props {
-    coverImage: BlogPostDocument['data']['cover_image']
-    coverImageDescription: BlogPostDocument['data']['cover_image_description']
-    dateString: string
-    description: BlogPostDocument['data']['short_description']
-    href: string | null
-    preview: PostPreview | null
-    publicationDate: BlogPostDocument['first_publication_date']
-    subtitle: BlogPostDocument['data']['subtitle']
-    title: string
+    item: JournalItem
 }
 
-const {
-    coverImage,
-    coverImageDescription,
-    dateString,
-    description,
-    href,
-    preview,
-    publicationDate,
-    subtitle,
-    title,
-} = Astro.props
-
+const { item } = Astro.props
 const { lang } = Astro.locals
+
+let coverImage: ImageField | undefined
+let coverImageDescription: RichTextField | undefined
+let description: RichTextField | undefined
+let hasTitle = true
+let label: string | undefined
+let preview: PostPreview | null = null
+
+switch (item.type) {
+    case 'blog_post':
+        coverImage = item.doc.data.cover_image
+        coverImageDescription = item.doc.data.cover_image_description
+        description = item.doc.data.short_description
+        preview = getPostPreview(item.doc.data.slices)
+        break
+    case 'notebook_post':
+        hasTitle = isFilled.richText(item.doc.data.title)
+        break
+    case 'recipe':
+        label = UI[lang].recipe
+        preview = getPostPreview(item.doc.data.slices)
+        break
+}
+
+const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
 ---
 
-<time class="postDate" datetime={publicationDate}>
-    {dateString}
+<time class="postDate" datetime={item.publicationDate}>
+    {hasTitle ? (
+        item.dateString
+    ) : (
+        <a href={item.href}>
+            {item.dateString}
+            <span class="visuallyHidden"> — {item.title}</span>
+        </a>
+    )}
 </time>
 
-<h2 class="title">{href ? <a href={href}>{title}</a> : title}</h2>
+{label && <p class="label">{label}</p>}
 
-<PrismicRichText class="subtitle" richText={subtitle} />
-<PrismicRichText class="description" richText={description} />
+{hasTitle && (
+    <h2 class="title">
+        <a href={item.href}>{item.title}</a>
+    </h2>
+)}
 
-{isFilled.image(coverImage) && (
+{subtitle && <PrismicRichText class="subtitle" richText={subtitle} />}
+{description && <PrismicRichText class="description" richText={description} />}
+
+{coverImage && isFilled.image(coverImage) && (
     <div class="imageWrapper">
         <Image image={coverImage} />
-        <PrismicRichText class="description" richText={coverImageDescription} />
+        {coverImageDescription && (
+            <PrismicRichText
+                class="description"
+                richText={coverImageDescription}
+            />
+        )}
     </div>
 )}
+
 {preview && <PrismicRichText class="preview prose" richText={preview.text} />}
-{href && preview?.hasMore && (
-    <a class="readMore" href={href}>
+
+{preview?.hasMore && (
+    <a class="readMore" href={item.href}>
         <span class="linkTitle">{UI[lang].readMore}</span>
-        <span class="visuallyHidden"> — {title}</span>
+        <span class="visuallyHidden"> — {item.title}</span>
         <span class="arrow">→</span>
     </a>
+)}
+
+{item.type === 'notebook_post' && (
+    <div class="body">
+        <SliceZone slices={item.doc.data.slices} />
+    </div>
 )}
 
 <style>
@@ -66,6 +101,19 @@ const { lang } = Astro.locals
         font-size: var(--font-size-3-sc);
         font-variant-numeric: oldstyle-nums;
         font-weight: var(--font-weight-medium);
+        margin-bottom: var(--space-2);
+
+        a {
+            color: inherit;
+        }
+    }
+
+    .label {
+        color: var(--color-blue-10);
+        font-size: var(--font-size-3-sc);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-medium);
+        line-height: 1;
         margin-bottom: var(--space-2);
     }
 
@@ -107,6 +155,16 @@ const { lang } = Astro.locals
     .preview {
         margin-top: var(--space-6);
         text-align: justify;
+    }
+
+    .body {
+        .title + & {
+            margin-top: var(--space-4);
+        }
+
+        :global(> div:has(+ div)) {
+            margin-bottom: var(--space-5);
+        }
     }
 
     .readMore {

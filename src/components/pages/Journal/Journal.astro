@@ -1,10 +1,6 @@
 ---
-import { asText, isFilled } from '@prismicio/client'
-import { client, getBlogPosts } from '@lib/prismic'
-import { fixText } from '@lib/get-fixer'
-import { UI } from '@lib/i18n'
-import getJournalEntryDate from '@lib/get-journal-entry-date'
-import getPostPreview from '@lib/get-post-preview'
+import { getJournalItems } from '@lib/get-journal-items'
+import { client } from '@lib/prismic'
 
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 import PageWrapper from '@components/layout/PageWrapper.astro'
@@ -13,21 +9,7 @@ import JournalEntryDetails from './JournalEntryDetails.astro'
 const { lang } = Astro.locals
 
 const page = await client.getByUID('page', 'journal', { lang })
-const blogPosts = await getBlogPosts(lang)
-
-const posts = blogPosts.map((post) => ({
-    dateString: getJournalEntryDate(post.first_publication_date, lang),
-    coverImage: post.data.cover_image,
-    coverImageDescription: post.data.cover_image_description,
-    description: post.data.short_description,
-    href: post.url,
-    preview: getPostPreview(post.data.slices),
-    publicationDate: post.first_publication_date,
-    subtitle: post.data.subtitle,
-    title: isFilled.richText(post.data.title)
-        ? fixText(asText(post.data.title), lang)
-        : UI[lang].untitledEntry,
-}))
+const items = await getJournalItems(lang)
 ---
 
 <LayoutWithHeader
@@ -36,11 +18,11 @@ const posts = blogPosts.map((post) => ({
     title={page.data.meta_title}
 >
     <PageWrapper pageStyle={page.data.page_style} title={page.data.title}>
-        {posts.length > 0 && (
+        {items.length > 0 && (
             <div class="posts">
-                {posts.map((post) => (
+                {items.map((item) => (
                     <article>
-                        <JournalEntryDetails {...post} />
+                        <JournalEntryDetails item={item} />
                     </article>
                 ))}
             </div>

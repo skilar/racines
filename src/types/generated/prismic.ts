@@ -409,6 +409,77 @@ interface LayoutDocumentData {
  */
 export type LayoutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<LayoutDocumentData>, "layout", Lang>;
 
+type NotebookPostDocumentDataSlicesSlice = ImageListSlice | TextSlice
+
+/**
+ * Content for Notebook Post documents
+ */
+interface NotebookPostDocumentData {
+	/**
+	 * Title field in *Notebook Post*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: notebook_post.title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Slice Zone field in *Notebook Post*
+	 *
+	 * - **Field Type**: Slice Zone
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: notebook_post.slices[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/slices
+	 */
+	slices: prismic.SliceZone<NotebookPostDocumentDataSlicesSlice>;/**
+	 * Meta Title field in *Notebook Post*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A title of the page used for social media and search engines
+	 * - **API ID Path**: notebook_post.meta_title
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+	
+	/**
+	 * Meta Description field in *Notebook Post*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A brief summary of the page
+	 * - **API ID Path**: notebook_post.meta_description
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+	
+	/**
+	 * Meta Image field in *Notebook Post*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: notebook_post.meta_image
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Notebook Post document from Prismic
+ *
+ * - **API ID**: `notebook_post`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type NotebookPostDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<NotebookPostDocumentData>, "notebook_post", Lang>;
+
 type PageDocumentDataSlicesSlice = TextSlice | ImageListSlice | NewsletterSignupFormSlice | BigTextWithImageSlice
 
 /**
@@ -491,6 +562,77 @@ interface PageDocumentData {
  * @typeParam Lang - Language API ID of the document.
  */
 export type PageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
+
+type RecipeDocumentDataSlicesSlice = ImageListSlice | TextSlice
+
+/**
+ * Content for Recipe documents
+ */
+interface RecipeDocumentData {
+	/**
+	 * Title field in *Recipe*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recipe.title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Slice Zone field in *Recipe*
+	 *
+	 * - **Field Type**: Slice Zone
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recipe.slices[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/slices
+	 */
+	slices: prismic.SliceZone<RecipeDocumentDataSlicesSlice>;/**
+	 * Meta Title field in *Recipe*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A title of the page used for social media and search engines
+	 * - **API ID Path**: recipe.meta_title
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+	
+	/**
+	 * Meta Description field in *Recipe*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A brief summary of the page
+	 * - **API ID Path**: recipe.meta_description
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+	
+	/**
+	 * Meta Image field in *Recipe*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: recipe.meta_image
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Recipe document from Prismic
+ *
+ * - **API ID**: `recipe`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type RecipeDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<RecipeDocumentData>, "recipe", Lang>;
 
 type TempHomepageDocumentDataSlicesSlice = HeroSlice | ImageListSlice
 
@@ -585,7 +727,7 @@ interface TempHomepageDocumentData {
  */
 export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
 
-export type AllDocumentTypes = AuthorDocument | BlogPostDocument | HomepageDocument | LayoutDocument | PageDocument | TempHomepageDocument;
+export type AllDocumentTypes = AuthorDocument | BlogPostDocument | HomepageDocument | LayoutDocument | NotebookPostDocument | PageDocument | RecipeDocument | TempHomepageDocument;
 
 /**
  * Primary content in *BigTextWithImage → Default → Primary*
@@ -1346,9 +1488,15 @@ declare module "@prismicio/client" {
 			LayoutDocument,
 			LayoutDocumentData,
 			LayoutDocumentDataSlices1Slice,
+			NotebookPostDocument,
+			NotebookPostDocumentData,
+			NotebookPostDocumentDataSlicesSlice,
 			PageDocument,
 			PageDocumentData,
 			PageDocumentDataSlicesSlice,
+			RecipeDocument,
+			RecipeDocumentData,
+			RecipeDocumentDataSlicesSlice,
 			TempHomepageDocument,
 			TempHomepageDocumentData,
 			TempHomepageDocumentDataSlicesSlice,

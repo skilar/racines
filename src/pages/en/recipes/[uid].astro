@@ -1,0 +1,13 @@
+---
+import getStaticPrismicPaths from '@lib/get-static-prismic-paths'
+
+import Recipe from '@components/pages/Recipe/Recipe.astro'
+
+export async function getStaticPaths() {
+    return await getStaticPrismicPaths({ lang: 'en-us', type: 'recipe' })
+}
+
+const { uid } = Astro.params
+---
+
+<Recipe uid={uid} />

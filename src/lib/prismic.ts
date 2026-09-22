@@ -1,8 +1,17 @@
-import { createClient } from '@prismicio/client'
-import { ROUTES } from '@lib/constants'
+import { createClient, filter } from '@prismicio/client'
+import { JOURNAL_TYPES, ROUTES } from '@lib/constants'
 
+import type { Ordering } from '@prismicio/client'
 import type { Lang } from '@lib/i18n'
-import type { BlogPostDocument, LayoutDocument } from '@typez/generated/prismic'
+import type {
+    BlogPostDocument,
+    LayoutDocument,
+    NotebookPostDocument,
+    RecipeDocument,
+} from '@typez/generated/prismic'
+
+export type JournalDocument =
+    BlogPostDocument | NotebookPostDocument | RecipeDocument
 
 const repository = import.meta.env.PRISMIC_REPOSITORY
 
@@ -27,11 +36,14 @@ export function getLayout(lang: Lang): Promise<LayoutDocument> {
     return layout
 }
 
-export function getBlogPosts(lang: Lang): Promise<BlogPostDocument[]> {
-    return client.getAllByType('blog_post', {
+const NEWEST_FIRST: Ordering[] = [
+    { field: 'document.first_publication_date', direction: 'desc' },
+]
+
+export function getJournalDocuments(lang: Lang): Promise<JournalDocument[]> {
+    return client.dangerouslyGetAll<JournalDocument>({
         lang,
-        orderings: [
-            { field: 'document.first_publication_date', direction: 'desc' },
-        ],
+        filters: [filter.any('document.type', [...JOURNAL_TYPES])],
+        orderings: NEWEST_FIRST,
     })
 }

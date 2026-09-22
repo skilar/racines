@@ -1,5 +1,5 @@
 ---
-import { asText, isFilled } from '@prismicio/client'
+import { isFilled } from '@prismicio/client'
 import getEntryTitle from '@lib/get-entry-title'
 import getOgImage from '@lib/get-og-image'
 import { client } from '@lib/prismic'
@@ -10,8 +10,6 @@ import SliceZone from '@components/common/SliceZone.astro'
 import Endnotes from '@components/entry/Endnotes.astro'
 import EntryHeader from '@components/entry/EntryHeader.astro'
 import Lightbox from '@components/entry/Lightbox.astro'
-import AuthorCallout from './AuthorCallout.astro'
-import CoverImage from './CoverImage.astro'
 
 interface Props {
     uid: string
@@ -20,25 +18,19 @@ interface Props {
 const { uid } = Astro.props
 const { lang } = Astro.locals
 
-const page = await client.getByUID('blog_post', uid, { lang })
-
+const page = await client.getByUID('notebook_post', uid, { lang })
 const zoomableImages = collectZoomableImages(page.data.slices)
-
-const ogImage = getOgImage(page.data.meta_image, page.data.cover_image)
-
+const ogImage = getOgImage(page.data.meta_image)
 const heading = getEntryTitle(page.data, lang)
 
-// Keeps the heading for assistive tech when an essay somehow has no title.
+// An untitled post takes its heading from its opening words, which the
+// reader is about to see anyway, so only assistive tech gets the heading.
 const hideHeading = !isFilled.richText(page.data.title)
-
-const description = isFilled.keyText(page.data.meta_description)
-    ? page.data.meta_description
-    : asText(page.data.short_description)
 ---
 
 <LayoutWithHeader
     alternateLanguages={page.alternate_languages}
-    description={description}
+    description={page.data.meta_description}
     modifiedTime={page.last_publication_date}
     ogImage={ogImage?.url}
     ogImageAlt={ogImage?.alt}
@@ -49,22 +41,15 @@ const description = isFilled.keyText(page.data.meta_description)
     <main id="main" class="contained">
         <article>
             <EntryHeader
-                description={page.data.short_description}
                 heading={heading}
                 hideHeading={hideHeading}
                 publicationDate={page.first_publication_date}
-                subtitle={page.data.subtitle}
             />
 
             <div class="post">
-                <CoverImage
-                    description={page.data.cover_image_description}
-                    image={page.data.cover_image}
-                />
-
                 {isFilled.sliceZone(page.data.slices) && (
                     <SliceZone
-                        hasBigCap
+                        hasBigCap={false}
                         numberNotes
                         slices={page.data.slices}
                         zoomImages
@@ -73,8 +58,6 @@ const description = isFilled.keyText(page.data.meta_description)
 
                 <Endnotes slices={page.data.slices} />
             </div>
-
-            <AuthorCallout author={page.data.author} />
         </article>
 
         <Lightbox images={zoomableImages} />

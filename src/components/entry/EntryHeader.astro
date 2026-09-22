@@ -1,36 +1,38 @@
 ---
-import { asText, isFilled } from '@prismicio/client'
-import { fixText } from '@lib/get-fixer'
-import { UI } from '@lib/i18n'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
 
-import PrismicRichText from '../../common/PrismicRichText.astro'
+import PrismicRichText from '@components/common/PrismicRichText.astro'
 
-import type { BlogPostDocument } from '@typez/generated/prismic'
+import type { RichTextField } from '@prismicio/client'
 
 interface Props {
-    description: BlogPostDocument['data']['short_description']
-    publicationDate: BlogPostDocument['first_publication_date']
-    subtitle: BlogPostDocument['data']['subtitle']
-    title: BlogPostDocument['data']['title']
+    description?: RichTextField | undefined
+    heading: string
+    hideHeading?: boolean
+    publicationDate: string
+    subtitle?: RichTextField | undefined
 }
 
-const { description, publicationDate, subtitle, title } = Astro.props
+const {
+    description,
+    heading,
+    hideHeading = false,
+    publicationDate,
+    subtitle,
+} = Astro.props
 const { lang } = Astro.locals
 
 const dateString = getJournalEntryDate(publicationDate, lang)
-
-const heading = isFilled.richText(title)
-    ? fixText(asText(title), lang)
-    : UI[lang].untitledEntry
 ---
 
 <div class="postMeta">
-    <h1>{heading}</h1>
+    <h1 class:list={[{ visuallyHidden: hideHeading }]}>{heading}</h1>
 
-    <PrismicRichText class="subtitle" richText={subtitle} />
+    {subtitle && <PrismicRichText class="subtitle" richText={subtitle} />}
 
-    <PrismicRichText class="description" richText={description} />
+    {description && (
+        <PrismicRichText class="description" richText={description} />
+    )}
 
     <time class="date" datetime={publicationDate}>
         {dateString}

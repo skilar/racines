@@ -1,13 +1,23 @@
 ---
+import { JOURNAL_UID_TYPES } from '@lib/constants'
 import getStaticPrismicPaths from '@lib/get-static-prismic-paths'
 
 import JournalEntry from '@components/pages/JournalEntry/JournalEntry.astro'
+import NotebookPost from '@components/pages/NotebookPost/NotebookPost.astro'
+
+import type { InferGetStaticPropsType } from 'astro'
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
 export async function getStaticPaths() {
-    return await getStaticPrismicPaths({ lang: 'fr-fr', type: 'blog_post' })
+    return await getStaticPrismicPaths({
+        lang: 'fr-fr',
+        type: JOURNAL_UID_TYPES,
+    })
 }
 
 const { uid } = Astro.params
+const { type } = Astro.props
 ---
 
-<JournalEntry uid={uid} />
+{type === 'blog_post' ? <JournalEntry uid={uid} /> : <NotebookPost uid={uid} />}

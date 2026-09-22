@@ -10,7 +10,7 @@ import type {
     RichTextField,
 } from '@prismicio/client'
 import type { Lang } from '@lib/i18n'
-import type { BlogPostDocument } from '@typez/generated/prismic'
+import type { JournalDocument } from '@lib/prismic'
 
 const IMAGE_MAX_WIDTH = 1200
 const IMAGE_QUALITY = 75
@@ -77,13 +77,13 @@ function renderImage(
 const rowImageWidth = (count: number) =>
     Math.floor((READER_COLUMN - ROW_GAP * (count - 1)) / count)
 
-export default function renderBlogPostHtml(
-    post: BlogPostDocument,
+export default function renderEntryHtml(
+    entry: JournalDocument,
     lang: Lang,
     site: string,
 ): string {
     const fixer = getFixer(lang)
-    const { uid } = post
+    const { uid } = entry
 
     let noteNumber = 0
 
@@ -120,24 +120,31 @@ export default function renderBlogPostHtml(
               )
             : ''
 
-    const parts: string[] = [
-        renderRichText(post.data.subtitle, {
-            paragraph: ({ children }) =>
-                `<h2 style="font-weight:400">${children}</h2>`,
-        }),
-    ]
+    const parts: string[] = []
 
-    if (isFilled.image(post.data.cover_image)) {
-        const description = renderRichText(post.data.cover_image_description)
-
+    // Only an essay opens with a subtitle and a cover image.
+    if (entry.type === 'blog_post') {
         parts.push(
-            `<figure>${renderImage(post.data.cover_image, IMAGE_MAX_WIDTH)}${description && `<figcaption>${description}</figcaption>`}</figure>`,
+            renderRichText(entry.data.subtitle, {
+                paragraph: ({ children }) =>
+                    `<h2 style="font-weight:400">${children}</h2>`,
+            }),
         )
-    } else {
-        parts.push(renderRichText(post.data.cover_image_description))
+
+        if (isFilled.image(entry.data.cover_image)) {
+            const description = renderRichText(
+                entry.data.cover_image_description,
+            )
+
+            parts.push(
+                `<figure>${renderImage(entry.data.cover_image, IMAGE_MAX_WIDTH)}${description && `<figcaption>${description}</figcaption>`}</figure>`,
+            )
+        } else {
+            parts.push(renderRichText(entry.data.cover_image_description))
+        }
     }
 
-    for (const slice of post.data.slices) {
+    for (const slice of entry.data.slices) {
         switch (slice.slice_type) {
             case 'image_list': {
                 const images = slice.primary.images
@@ -196,7 +203,7 @@ export default function renderBlogPostHtml(
         }
     }
 
-    const notes = collectNotes(post.data.slices, lang)
+    const notes = collectNotes(entry.data.slices, lang)
 
     if (notes.length > 0) {
         const items = notes
