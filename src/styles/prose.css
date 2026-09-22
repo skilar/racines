@@ -21,6 +21,10 @@
             margin-bottom: calc(var(--post-line) * 4);
         }
 
+        &:has(+ .block-img) {
+            margin-bottom: calc(var(--post-line) * 3);
+        }
+
         &:has(+ h3) {
             margin-bottom: calc(var(--post-line) * 2);
         }
@@ -54,5 +58,11 @@
 
     ul {
         list-style-type: circle;
+    }
+
+    .block-img {
+        &:has(+ p, + ol, + ul) {
+            margin-bottom: calc(var(--post-line) * 3);
+        }
     }
 }

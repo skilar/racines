@@ -21,7 +21,15 @@ const items = await getJournalItems(lang)
         {items.length > 0 && (
             <div class="posts">
                 {items.map((item) => (
-                    <article>
+                    <article
+                        class:list={[
+                            {
+                                journal: item.type === 'blog_post',
+                                notebook: item.type === 'notebook_post',
+                                recipe: item.type === 'recipe',
+                            },
+                        ]}
+                    >
                         <JournalEntryDetails item={item} />
                     </article>
                 ))}
@@ -52,5 +60,11 @@ const items = await getJournalItems(lang)
             margin-bottom: var(--space-8);
             padding-bottom: var(--space-9);
         }
+    }
+
+    .notebook {
+        background-color: var(--color-ivory-1);
+        border-block: var(--double-border);
+        padding: var(--space-5);
     }
 </style>

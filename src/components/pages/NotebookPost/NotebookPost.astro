@@ -8,7 +8,7 @@ import { collectZoomableImages } from '@lib/zoom'
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 import SliceZone from '@components/common/SliceZone.astro'
 import Endnotes from '@components/entry/Endnotes.astro'
-import EntryHeader from '@components/entry/EntryHeader.astro'
+import JournalEntryDate from '@components/entry/JournalEntryDate.astro'
 import Lightbox from '@components/entry/Lightbox.astro'
 
 interface Props {
@@ -40,11 +40,11 @@ const hideHeading = !isFilled.richText(page.data.title)
 >
     <main id="main" class="contained">
         <article>
-            <EntryHeader
-                heading={heading}
-                hideHeading={hideHeading}
-                publicationDate={page.first_publication_date}
-            />
+            <JournalEntryDate publicationDate={page.first_publication_date} />
+
+            <h1 class:list={['title', { visuallyHidden: hideHeading }]}>
+                {heading}
+            </h1>
 
             <div class="post">
                 {isFilled.sliceZone(page.data.slices) && (
@@ -70,13 +70,32 @@ const hideHeading = !isFilled.richText(page.data.title)
         margin-block: var(--space-5) var(--space-9);
     }
 
+    article {
+        background-color: var(--color-ivory-1);
+        border-block: var(--double-border);
+        font-size: var(--font-size-4);
+        margin-inline: auto;
+        max-width: var(--width-text);
+        padding: var(--space-5);
+    }
+
+    .title {
+        color: var(--color-black);
+        font-size: var(--font-size-5);
+        font-weight: var(--font-weight-bold);
+    }
+
     .post {
+        .title + & {
+            margin-top: var(--space-4);
+        }
+
         > :global(div) {
             margin-inline: auto;
         }
 
         :global(> div:has(+ div)) {
-            margin-bottom: var(--space-8);
+            margin-bottom: var(--space-5);
         }
 
         .note-ref {

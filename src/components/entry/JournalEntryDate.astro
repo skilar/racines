@@ -1,0 +1,49 @@
+---
+import getJournalEntryDate from '@lib/get-journal-entry-date'
+
+interface Props {
+    // When set, the date links to the entry (feed cards for untitled posts).
+    link?: { href: string; title: string } | undefined
+    publicationDate: string
+}
+
+const { link, publicationDate } = Astro.props
+const { lang } = Astro.locals
+
+const dateString = getJournalEntryDate(publicationDate, lang)
+---
+
+<time class="postDate" datetime={publicationDate}>
+    {link ? (
+        <a href={link.href}>
+            {dateString}
+            <span class="visuallyHidden"> — {link.title}</span>
+        </a>
+    ) : (
+        dateString
+    )}
+</time>
+
+<style>
+    .postDate {
+        color: var(--color-ivory-9);
+        display: block;
+        font-size: var(--font-size-3-sc);
+        font-variant-numeric: oldstyle-nums;
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--space-5);
+
+        &:has(+ .notebookPostBody) {
+            margin-bottom: var(--space-7);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+</style>

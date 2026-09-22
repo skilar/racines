@@ -6,6 +6,7 @@ import { UI } from '@lib/i18n'
 import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 import SliceZone from '@components/common/SliceZone.astro'
+import JournalEntryDate from '@components/entry/JournalEntryDate.astro'
 
 import type { ImageField, RichTextField } from '@prismicio/client'
 import type { JournalItem } from '@lib/get-journal-items'
@@ -44,18 +45,11 @@ switch (item.type) {
 const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
 ---
 
-<time class="postDate" datetime={item.publicationDate}>
-    {hasTitle ? (
-        item.dateString
-    ) : (
-        <a href={item.href}>
-            {item.dateString}
-            <span class="visuallyHidden"> — {item.title}</span>
-        </a>
-    )}
-</time>
-
 {label && <p class="label">{label}</p>}
+
+{item.type === 'notebook_post' && (
+    <JournalEntryDate link={item} publicationDate={item.publicationDate} />
+)}
 
 {hasTitle && (
     <h2 class="title">
@@ -65,6 +59,10 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
 
 {subtitle && <PrismicRichText class="subtitle" richText={subtitle} />}
 {description && <PrismicRichText class="description" richText={description} />}
+
+{item.type !== 'notebook_post' && (
+    <JournalEntryDate publicationDate={item.publicationDate} />
+)}
 
 {coverImage && isFilled.image(coverImage) && (
     <div class="imageWrapper">
@@ -89,25 +87,12 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
 )}
 
 {item.type === 'notebook_post' && (
-    <div class="body">
+    <div class="notebookPostBody">
         <SliceZone slices={item.doc.data.slices} />
     </div>
 )}
 
 <style>
-    .postDate {
-        color: var(--color-ivory-9);
-        display: block;
-        font-size: var(--font-size-3-sc);
-        font-variant-numeric: oldstyle-nums;
-        font-weight: var(--font-weight-medium);
-        margin-bottom: var(--space-2);
-
-        a {
-            color: inherit;
-        }
-    }
-
     .label {
         color: var(--color-blue-10);
         font-size: var(--font-size-3-sc);
@@ -145,7 +130,7 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
     .description {
         color: var(--color-ivory-11);
         font-size: var(--font-size-3-sc);
-        margin-top: var(--space-4);
+        margin-block: var(--space-5);
     }
 
     .imageWrapper {
@@ -157,7 +142,7 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
         text-align: justify;
     }
 
-    .body {
+    .notebookPostBody {
         .title + & {
             margin-top: var(--space-4);
         }
@@ -186,7 +171,7 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
             }
 
             .arrow {
-                translate: 1rem 0;
+                translate: var(--space-1) 0;
             }
         }
     }

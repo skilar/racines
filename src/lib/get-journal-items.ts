@@ -1,5 +1,4 @@
 import getEntryTitle from '@lib/get-entry-title'
-import getJournalEntryDate from '@lib/get-journal-entry-date'
 import { getJournalDocuments } from '@lib/prismic'
 import { resolveRoute } from '@lib/prismic-link-resolver'
 
@@ -7,7 +6,6 @@ import type { Lang } from '@lib/i18n'
 import type { JournalDocument } from '@lib/prismic'
 
 interface JournalItemBase {
-    dateString: string
     href: string
     publicationDate: string
     title: string
@@ -24,7 +22,6 @@ export type JournalItemType = JournalItem['type']
 function toJournalItem(doc: JournalDocument, lang: Lang): JournalItem {
     // TypeScript cannot see that `doc.type` and `doc` stay paired.
     return {
-        dateString: getJournalEntryDate(doc.first_publication_date, lang),
         doc,
         href: doc.url ?? resolveRoute({ lang, type: doc.type, uid: doc.uid }),
         publicationDate: doc.first_publication_date,
