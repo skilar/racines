@@ -92,15 +92,19 @@ const description = isFilled.keyText(page.data.meta_description)
         }
 
         .note-ref {
-            font-variant-numeric: ordinal;
-            margin-left: -0.125rem;
+            background-color: var(--color-red-8);
+            border-radius: 8px;
+            color: var(--color-ivory-1);
+            font-size: var(--font-size-2-sc);
+            font-variant-numeric: lining-nums;
+            padding-inline: var(--space-2);
+            position: relative;
             scroll-margin-block: var(--space-6);
             text-decoration: none;
+            top: -0.2rem;
 
             &:hover {
-                color: var(--color-red-8);
-                text-decoration: underline;
-                text-decoration-thickness: var(--underline-thickness-1);
+                background-color: var(--color-red-6);
             }
         }
     }

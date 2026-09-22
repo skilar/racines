@@ -2,10 +2,11 @@
 import { UI } from '@lib/i18n'
 import { collectNotes } from '@lib/notes'
 
-import type { BlogPostDocument } from '@typez/generated/prismic'
+import type { SliceZone } from '@prismicio/client'
+import type { AnySlice } from '@typez/prismic'
 
 interface Props {
-    slices: BlogPostDocument['data']['slices']
+    slices: SliceZone<AnySlice>
 }
 
 const { slices } = Astro.props
@@ -14,30 +15,28 @@ const { lang } = Astro.locals
 const notes = collectNotes(slices, lang)
 ---
 
-{
-    notes.length > 0 && (
-        <section class="endnotes" aria-labelledby="endnotesHeading">
-            <h2 class="endnotesHeading" id="endnotesHeading">
-                {UI[lang].notes}
-            </h2>
+{notes.length > 0 && (
+    <section class="endnotes" aria-labelledby="endnotesHeading">
+        <h2 class="endnotesHeading" id="endnotesHeading">
+            {UI[lang].notes}
+        </h2>
 
-            <ol class="backlinkList">
-                {notes.map((note) => (
-                    <li class="backlinkListItem" id={note.id}>
-                        <Fragment set:html={note.html} />{' '}
-                        <a
-                            class="backlink"
-                            href={`#${note.refId}`}
-                            aria-label={UI[lang].backToRef(note.number)}
-                        >
-                            ^
-                        </a>
-                    </li>
-                ))}
-            </ol>
-        </section>
-    )
-}
+        <ol class="backlinkList">
+            {notes.map((note) => (
+                <li class="backlinkListItem" id={note.id}>
+                    <Fragment set:html={note.html} />{' '}
+                    <a
+                        class="backlink"
+                        href={`#${note.refId}`}
+                        aria-label={UI[lang].backToRef(note.number)}
+                    >
+                        ^
+                    </a>
+                </li>
+            ))}
+        </ol>
+    </section>
+)}
 
 <style>
     .endnotes {
