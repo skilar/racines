@@ -22,48 +22,42 @@ const linkAttrs = getLinkAttrs(slice.primary.link)
 <div class="container" data-slice-type={slice.slice_type}>
     <div class="wrapper">
         <div>
-            {
-                isFilled.keyText(slice.primary.title) && (
-                    <h2>{fixText(slice.primary.title, lang)}</h2>
-                )
-            }
+            {isFilled.keyText(slice.primary.title) && (
+                <h2>{fixText(slice.primary.title, lang)}</h2>
+            )}
 
             <PrismicRichText
                 class="description"
                 richText={slice.primary.caption}
             />
 
-            {
-                linkAttrs && isFilled.keyText(slice.primary.link.text) && (
-                    <a class="journalLink" {...linkAttrs}>
-                        <span class="linkTitle">
-                            {fixText(slice.primary.link.text, lang)}
-                        </span>
-                        <span class="arrow">→</span>
-                    </a>
-                )
-            }
+            {linkAttrs && isFilled.keyText(slice.primary.link.text) && (
+                <a class="journalLink" {...linkAttrs}>
+                    <span class="linkTitle">
+                        {fixText(slice.primary.link.text, lang)}
+                    </span>
+                    <span class="arrow">→</span>
+                </a>
+            )}
         </div>
 
-        {
-            isFilled.group(slice.primary.blog_posts) && (
-                <div class="blogPostsContainer">
-                    <ul class="blogPosts">
-                        {slice.primary.blog_posts.map(({ blog_post: post }) =>
-                            isFilled.contentRelationship(post) && post.data ? (
-                                <BlogPostItem
-                                    coverImage={post.data.cover_image}
-                                    href={post.url}
-                                    publishedAt={getRelationshipDate(post)}
-                                    subtitle={post.data.subtitle}
-                                    title={post.data.title}
-                                />
-                            ) : null,
-                        )}
-                    </ul>
-                </div>
-            )
-        }
+        {isFilled.group(slice.primary.blog_posts) && (
+            <div class="blogPostsContainer">
+                <ul class="blogPosts">
+                    {slice.primary.blog_posts.map(({ blog_post: post }) =>
+                        isFilled.contentRelationship(post) && post.data ? (
+                            <BlogPostItem
+                                coverImage={post.data.cover_image}
+                                href={post.url}
+                                publishedAt={getRelationshipDate(post)}
+                                subtitle={post.data.subtitle}
+                                title={post.data.title}
+                            />
+                        ) : null,
+                    )}
+                </ul>
+            </div>
+        )}
     </div>
 </div>
 
@@ -116,7 +110,7 @@ const linkAttrs = getLinkAttrs(slice.primary.link)
             }
 
             .arrow {
-                translate: 1rem 0;
+                translate: var(--space-2) 0;
             }
         }
     }
