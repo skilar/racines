@@ -1,4 +1,5 @@
 ---
+import { JOURNAL_PAGE_UID } from '@lib/constants'
 import { getJournalItems } from '@lib/get-journal-items'
 import { client } from '@lib/prismic'
 
@@ -8,7 +9,7 @@ import JournalEntryDetails from './JournalEntryDetails.astro'
 
 const { lang } = Astro.locals
 
-const page = await client.getByUID('page', 'journal', { lang })
+const page = await client.getByUID('page', JOURNAL_PAGE_UID, { lang })
 const items = await getJournalItems(lang)
 ---
 
