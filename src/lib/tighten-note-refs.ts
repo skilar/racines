@@ -10,11 +10,12 @@ import { constants } from '@skilar/jolitypo-ts'
  * JoliTypo re-serializes, so a French non-breaking space arrives here as an
  * entity rather than a character. U+202F is left raw.
  *
- * The optional `<sup>` and the `footnote` class are for the RSS feed, whose
- * markers follow MultiMarkdown's shape so readers turn them into popovers.
+ * On the site a marker is a `noteRef` wrapper. The optional `<sup>` and the
+ * `footnote` class are for the RSS feed, whose markers follow MultiMarkdown's
+ * shape so readers turn them into popovers.
  */
 const SPACE_BEFORE_NOTE_REF =
-    /(?:&nbsp;|[\s\u00A0\u202F])+(?=(?:<sup[^>]*>)?<a class="(?:note-ref|footnote)")/g
+    /(?:&nbsp;|[\s\u00A0\u202F])+(?=<span class="noteRef"|(?:<sup[^>]*>)?<a class="footnote")/g
 
 // Runs on the serialized HTML.
 export default function tightenNoteRefs(html: string): string {

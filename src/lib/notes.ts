@@ -24,6 +24,7 @@ export interface Note {
 // Anchors for the markers and the endnotes.
 export const noteId = (number: number) => `note-${number}`
 export const noteRefId = (number: number) => `ref-${number}`
+export const noteTipId = (number: number) => `tip-${number}`
 
 /**
  * We pull notes only from these fields within these slices. Only articles

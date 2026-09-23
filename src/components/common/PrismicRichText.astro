@@ -2,7 +2,7 @@
 import { asHTML, isFilled } from '@prismicio/client'
 import getFixer from '@lib/get-fixer'
 import hideLeadingQuote from '@lib/hide-leading-quote'
-import { noteId, noteRefId } from '@lib/notes'
+import { noteId, noteRefId, noteTipId } from '@lib/notes'
 import tightenNoteRefs from '@lib/tighten-note-refs'
 
 import type { RichTextField } from '@prismicio/client'
@@ -44,7 +44,7 @@ const fixedHtml = isFilled.richText(richText)
                   serializer: {
                       // Returning nothing falls through to Prismic's default,
                       // `<span class="{label}">`.
-                      label: ({ node }) => {
+                      label: ({ children, node }) => {
                           if (
                               node.data.label !== 'footnote' ||
                               noteOffset === undefined
@@ -56,8 +56,12 @@ const fixedHtml = isFilled.richText(richText)
 
                           const ref = noteRefId(noteNumber)
                           const note = noteId(noteNumber)
+                          const tip = noteTipId(noteNumber)
 
-                          return `<a class="note-ref" id="${ref}" href="#${note}">${noteNumber}</a>`
+                          // The marker is both a link to the endnote and a
+                          // button that opens the note in a popover. CSS
+                          // shows whichever the browser supports.
+                          return `<span class="noteRef" id="${ref}"><a class="noteLink" href="#${note}">${noteNumber}</a><button class="noteButton" popovertarget="${tip}" type="button">${noteNumber}</button></span><span class="noteTip" id="${tip}" popover>${children}</span>`
                       },
                   },
               }),
