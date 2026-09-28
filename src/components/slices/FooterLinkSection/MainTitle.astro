@@ -19,11 +19,9 @@ const { lang } = Astro.locals
 ---
 
 <div class="container" data-slice-type={sliceType}>
-    {
-        isFilled.keyText(slice.primary.title) && (
-            <h2>{fixText(slice.primary.title, lang)}</h2>
-        )
-    }
+    {isFilled.keyText(slice.primary.title) && (
+        <h2>{fixText(slice.primary.title, lang)}</h2>
+    )}
 
     <PrismicRichText class="subtitle" richText={slice.primary.subtitle} />
     <PrismicRichText class="caption" richText={slice.primary.caption} />
@@ -61,8 +59,7 @@ const { lang } = Astro.locals
     .subtitle {
         color: var(--color-red-8);
         font-size: var(--font-size-4);
-        font-variant-caps: all-small-caps;
-        letter-spacing: 0.25px;
+        font-style: italic;
     }
 
     .caption {

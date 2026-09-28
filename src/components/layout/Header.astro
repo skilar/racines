@@ -28,13 +28,11 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
         <Nav alternateLanguages={alternateLanguages} menu={menu} />
 
         <div class="logo">
-            {
-                isFilled.keyText(title) && (
-                    <a class="title" href={homeHref}>
-                        {fixText(title, lang)}
-                    </a>
-                )
-            }
+            {isFilled.keyText(title) && (
+                <a class="title" href={homeHref}>
+                    {fixText(title, lang)}
+                </a>
+            )}
 
             <PrismicRichText class="subtitle" richText={subtitle} />
         </div>
@@ -88,8 +86,7 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
     .subtitle {
         color: var(--header-text-color);
         font-size: var(--font-size-3-sc);
-        font-variant-caps: all-small-caps;
-        letter-spacing: 1px;
+        font-style: italic;
     }
 
     .desktopLangSelector {
