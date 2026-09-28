@@ -15,7 +15,7 @@
         "prismic:pull": "node --env-file-if-exists=.env scripts/prismic-models.ts pull",
         "prismic:push": "node --env-file-if-exists=.env scripts/prismic-models.ts push",
         "prismic:status": "node --env-file-if-exists=.env scripts/prismic-models.ts status",
-        "release": "dotenv release-it",
+        "release": "dotenv run release-it",
         "typegen": "npx prismic-ts-codegen"
     },
     "dependencies": {
