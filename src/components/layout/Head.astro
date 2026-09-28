@@ -22,7 +22,7 @@ const {
 } = Astro.props
 const { lang } = Astro.locals
 
-const BASE_URL = Astro.site?.toString() ?? 'https://www.agathegiraud.com/'
+const BASE_URL = Astro.site?.toString() ?? 'https://www.racinesversailles.com/'
 const absolute = (path: string) => new URL(path, BASE_URL).toString()
 
 const canonical = absolute(Astro.url.pathname)

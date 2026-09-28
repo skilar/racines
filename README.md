@@ -1,1 +1,1 @@
-Racines website
+The website for Racines Versailles, including Prismic for the CMS, deployed to Netlify.

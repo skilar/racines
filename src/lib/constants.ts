@@ -55,4 +55,4 @@ export const RESERVED_UIDS = new Set([
     ...Object.values(RECIPES_PAGE_UID),
 ])
 
-export const SITE_NAME = 'Agathe Giraud'
+export const SITE_NAME = 'Racines Versailles'
