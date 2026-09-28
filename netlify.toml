@@ -1,0 +1,11 @@
+[[redirects]]
+from = "/rva/js/script.js"
+to = "https://plausible.io/js/pa-gfb7KXhyV1V4lsLs935Qv.js"
+status = 200
+force = true
+
+[[redirects]]
+from = "/rva/api/event"
+to = "https://plausible.io/api/event"
+status = 200
+force = true
