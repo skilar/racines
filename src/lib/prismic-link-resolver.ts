@@ -1,5 +1,10 @@
 import { asLink, isFilled } from '@prismicio/client'
-import { JOURNAL_PAGE_UID, JOURNAL_TYPES, ROUTES } from '@lib/constants'
+import {
+    JOURNAL_PAGE_UID,
+    JOURNAL_TYPES,
+    ROUTES,
+    SECTION_PAGE_UIDS,
+} from '@lib/constants'
 import { fixText } from '@lib/get-fixer'
 
 import type { LinkField } from '@prismicio/client'
@@ -95,8 +100,9 @@ export function getLinkAttrs(link: LinkField): LinkAttrs | null {
 }
 
 /**
- * A journal entry lives at a path of its own, but in the nav it belongs to the
- * journal, so its section is the journal index rather than its own path.
+ * A journal entry, or the index of one type of entry, lives at a path of its
+ * own, but in the nav it belongs to the journal, so its section is the journal
+ * index rather than its own path.
  */
 export function getSectionPath(currentPath: string, lang: Lang): string {
     const current = withTrailingSlash(currentPath)
@@ -108,7 +114,16 @@ export function getSectionPath(currentPath: string, lang: Lang): string {
             toPattern(route.path).test(current),
     )
 
-    return isEntry
+    const isSectionIndex = JOURNAL_TYPES.some(
+        (type) =>
+            resolveRoute({
+                lang,
+                type: PAGE_TYPE,
+                uid: SECTION_PAGE_UIDS[type][lang],
+            }) === current,
+    )
+
+    return isEntry || isSectionIndex
         ? resolveRoute({ lang, type: PAGE_TYPE, uid: JOURNAL_PAGE_UID })
         : current
 }

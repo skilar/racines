@@ -1,5 +1,5 @@
 ---
-import { JOURNAL_PAGE_UID } from '@lib/constants'
+import { JOURNAL_PAGE_UID, SECTION_PAGE_UIDS } from '@lib/constants'
 import { getJournalItems } from '@lib/get-journal-items'
 import { client } from '@lib/prismic'
 
@@ -7,10 +7,19 @@ import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 import PageWrapper from '@components/layout/PageWrapper.astro'
 import JournalEntryDetails from './JournalEntryDetails.astro'
 
+import type { JournalType } from '@lib/constants'
+
+interface Props {
+    section?: JournalType | undefined
+}
+
+const { section } = Astro.props
 const { lang } = Astro.locals
 
-const page = await client.getByUID('page', JOURNAL_PAGE_UID, { lang })
-const items = await getJournalItems(lang)
+const pageUid = section ? SECTION_PAGE_UIDS[section][lang] : JOURNAL_PAGE_UID
+
+const page = await client.getByUID('page', pageUid, { lang })
+const items = await getJournalItems(lang, section && [section])
 ---
 
 <LayoutWithHeader
@@ -31,7 +40,7 @@ const items = await getJournalItems(lang)
                             },
                         ]}
                     >
-                        <JournalEntryDetails item={item} />
+                        <JournalEntryDetails item={item} showLabel={!section} />
                     </article>
                 ))}
             </div>

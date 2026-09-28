@@ -14,9 +14,10 @@ import type { PostPreview } from '@lib/get-post-preview'
 
 interface Props {
     item: JournalItem
+    showLabel?: boolean
 }
 
-const { item } = Astro.props
+const { item, showLabel = true } = Astro.props
 const { lang } = Astro.locals
 
 let coverImage: ImageField | undefined
@@ -37,7 +38,7 @@ switch (item.type) {
         hasTitle = isFilled.richText(item.doc.data.title)
         break
     case 'recipe':
-        label = UI[lang].recipe
+        label = showLabel ? UI[lang].recipe : undefined
         preview = getPostPreview(item.doc.data.slices)
         break
 }
