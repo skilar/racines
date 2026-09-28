@@ -2,6 +2,7 @@ import { createClient, filter } from '@prismicio/client'
 import { JOURNAL_TYPES, ROUTES } from '@lib/constants'
 
 import type { Ordering } from '@prismicio/client'
+import type { JournalType } from '@lib/constants'
 import type { Lang } from '@lib/i18n'
 import type {
     BlogPostDocument,
@@ -40,10 +41,13 @@ const NEWEST_FIRST: Ordering[] = [
     { field: 'document.first_publication_date', direction: 'desc' },
 ]
 
-export function getJournalDocuments(lang: Lang): Promise<JournalDocument[]> {
+export function getJournalDocuments(
+    lang: Lang,
+    types: readonly JournalType[] = JOURNAL_TYPES,
+): Promise<JournalDocument[]> {
     return client.dangerouslyGetAll<JournalDocument>({
         lang,
-        filters: [filter.any('document.type', [...JOURNAL_TYPES])],
+        filters: [filter.any('document.type', [...types])],
         orderings: NEWEST_FIRST,
     })
 }

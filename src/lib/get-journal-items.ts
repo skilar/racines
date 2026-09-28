@@ -2,6 +2,7 @@ import getEntryTitle from '@lib/get-entry-title'
 import { getJournalDocuments } from '@lib/prismic'
 import { resolveRoute } from '@lib/prismic-link-resolver'
 
+import type { JournalType } from '@lib/constants'
 import type { Lang } from '@lib/i18n'
 import type { JournalDocument } from '@lib/prismic'
 
@@ -30,8 +31,11 @@ function toJournalItem(doc: JournalDocument, lang: Lang): JournalItem {
     } as JournalItem
 }
 
-export async function getJournalItems(lang: Lang): Promise<JournalItem[]> {
-    const documents = await getJournalDocuments(lang)
+export async function getJournalItems(
+    lang: Lang,
+    types?: readonly JournalType[],
+): Promise<JournalItem[]> {
+    const documents = await getJournalDocuments(lang, types)
 
     return documents.map((doc) => toJournalItem(doc, lang))
 }
