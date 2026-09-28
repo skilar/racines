@@ -54,6 +54,7 @@ const hreflangs = [
 const isHome = Astro.url.pathname === resolveRoute({ lang, type: 'homepage' })
 const ogTitle = isFilled.keyText(title) ? title : SITE_NAME
 const documentTitle = isHome ? ogTitle : `${ogTitle} - ${SITE_NAME}`
+const isProd = import.meta.env.PROD
 ---
 
 <head>
@@ -80,6 +81,30 @@ const documentTitle = isHome ? ogTitle : `${ogTitle} - ${SITE_NAME}`
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <Font cssVariable="--font-garamond" preload />
+
+    {isProd && (
+        <>
+            <script
+                async
+                src="https://racinesversailles.com/rva/js/script.js"
+            ></script>
+            <script is:inline>
+                ;((window.plausible =
+                    window.plausible ||
+                    function () {
+                        ;(plausible.q = plausible.q || []).push(arguments)
+                    }),
+                    (plausible.init =
+                        plausible.init ||
+                        function (i) {
+                            plausible.o = i || {}
+                        }))
+                plausible.init({
+                    endpoint: '/rva/api/event',
+                })
+            </script>
+        </>
+    )}
 
     <meta property="og:title" content={ogTitle} />
     <meta property="og:site_name" content={SITE_NAME} />
