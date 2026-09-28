@@ -12,14 +12,6 @@ export default defineConfig({
     adapter: netlify(),
     base: '/',
     fonts: [
-        // {
-        //     cssVariable: '--font-crimson-text',
-        //     fallbacks: ['serif'],
-        //     name: 'Crimson Text',
-        //     provider: fontProviders.fontsource(),
-        //     styles: ['normal'],
-        //     weights: ['400 800'],
-        // },
         {
             cssVariable: '--font-garamond',
             fallbacks: ['serif'],
@@ -63,6 +55,6 @@ export default defineConfig({
             },
         }),
     ],
-    site: 'https://www.agathegiraud.com',
+    site: 'https://www.racinesversailles.com',
     trailingSlash: 'always',
 })
