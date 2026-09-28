@@ -5,10 +5,12 @@
   "json": {
     "Main": {
       "title": {
-        "type": "Text",
+        "type": "StructuredText",
         "config": {
           "label": "Title",
-          "placeholder": ""
+          "placeholder": "",
+          "multi": "heading1",
+          "allowTargetBlank": false
         }
       },
       "subtitle": {
