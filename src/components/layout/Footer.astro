@@ -17,25 +17,23 @@ const hasLegal = isFilled.richText(legal)
 const hasSlices = isFilled.sliceZone(slices)
 ---
 
-{
-    (hasLegal || hasSlices) && (
-        <footer>
-            <div class="footer contained">
-                {hasSlices && (
-                    <div class="footerSlices">
-                        <SliceZone slices={slices} />
-                    </div>
-                )}
+{(hasLegal || hasSlices) && (
+    <footer>
+        <div class="footer contained">
+            {hasSlices && (
+                <div class="footerSlices">
+                    <SliceZone slices={slices} />
+                </div>
+            )}
 
-                {hasLegal && (
-                    <div class="legal">
-                        <PrismicRichText richText={legal} />
-                    </div>
-                )}
-            </div>
-        </footer>
-    )
-}
+            {hasLegal && (
+                <div class="legal">
+                    <PrismicRichText richText={legal} />
+                </div>
+            )}
+        </div>
+    </footer>
+)}
 
 <style>
     footer {
@@ -44,7 +42,7 @@ const hasSlices = isFilled.sliceZone(slices)
     }
 
     .footer {
-        padding-block: var(--space-6);
+        padding-block: var(--space-6) var(--space-9);
 
         @container footer (width > 60rem) {
             padding-block: var(--space-7);
