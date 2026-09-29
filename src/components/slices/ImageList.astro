@@ -1,7 +1,7 @@
 ---
 import { isFilled } from '@prismicio/client'
 
-import PrismicRichText from '../common/PrismicRichText.astro'
+import ImageCaption from '../common/ImageCaption.astro'
 import ZoomableImage from '../common/ZoomableImage.astro'
 
 import type { ImageListSlice } from '@typez/generated/prismic'
@@ -27,37 +27,29 @@ const sizes = isVertical
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
-    {
-        images.length > 0 && (
-            <ul class:list={['imageList', { vertical: isVertical }]}>
-                {images.map((image, index) => (
-                    <li>
-                        <ZoomableImage
-                            class="listImage"
-                            image={image}
-                            quality={75}
-                            sizes={sizes}
-                            zoomIndex={
-                                zoomOffset === undefined
-                                    ? undefined
-                                    : zoomOffset + index
-                            }
-                        />
-                    </li>
-                ))}
-            </ul>
-        )
-    }
-    {
-        'caption' in slice.primary &&
-            isFilled.richText(slice.primary.caption) && (
-                <PrismicRichText
-                    class="caption"
-                    noteOffset={noteOffset}
-                    richText={slice.primary.caption}
-                />
-            )
-    }
+    {images.length > 0 && (
+        <ul class:list={['imageList', { vertical: isVertical }]}>
+            {images.map((image, index) => (
+                <li>
+                    <ZoomableImage
+                        class="listImage"
+                        image={image}
+                        quality={75}
+                        sizes={sizes}
+                        zoomIndex={
+                            zoomOffset === undefined
+                                ? undefined
+                                : zoomOffset + index
+                        }
+                    />
+                </li>
+            ))}
+        </ul>
+    )}
+
+    {'caption' in slice.primary && isFilled.richText(slice.primary.caption) && (
+        <ImageCaption noteOffset={noteOffset} caption={slice.primary.caption} />
+    )}
 </div>
 
 <style>
@@ -101,13 +93,5 @@ const sizes = isVertical
         @container imageList (width >= 40rem) {
             flex: 1 1 0;
         }
-    }
-
-    .caption {
-        color: var(--color-grey-11);
-        font-size: var(--font-size-3);
-        margin-inline: auto;
-        margin-top: var(--space-4);
-        max-width: var(--width-text);
     }
 </style>
