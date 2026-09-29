@@ -46,24 +46,46 @@ switch (item.type) {
 const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
 ---
 
-{label && <p class="label">{label}</p>}
+<div
+    class:list={[
+        'header',
+        {
+            journal: item.type === 'blog_post',
+            notebook: item.type === 'notebook_post',
+            recipe: item.type === 'recipe',
+        },
+    ]}
+>
+    {label && <p class="label">{label}</p>}
 
-{item.type === 'notebook_post' && (
-    <JournalEntryDate link={item} publicationDate={item.publicationDate} />
-)}
+    {item.type === 'notebook_post' && (
+        <JournalEntryDate link={item} publicationDate={item.publicationDate} />
+    )}
 
-{hasTitle && (
-    <h2 class="title">
-        <a href={item.href}>{item.title}</a>
-    </h2>
-)}
+    {hasTitle && (
+        <h2
+            class:list={[
+                'title',
+                {
+                    journal: item.type === 'blog_post',
+                    notebook: item.type === 'notebook_post',
+                    recipe: item.type === 'recipe',
+                },
+            ]}
+        >
+            <a href={item.href}>{item.title}</a>
+        </h2>
+    )}
 
-{subtitle && <PrismicRichText class="subtitle" richText={subtitle} />}
-{description && <PrismicRichText class="description" richText={description} />}
+    {subtitle && <PrismicRichText class="subtitle" richText={subtitle} />}
+    {description && (
+        <PrismicRichText class="description" richText={description} />
+    )}
 
-{item.type !== 'notebook_post' && (
-    <JournalEntryDate publicationDate={item.publicationDate} />
-)}
+    {item.type !== 'notebook_post' && (
+        <JournalEntryDate publicationDate={item.publicationDate} />
+    )}
+</div>
 
 {coverImage && isFilled.image(coverImage) && (
     <div class="imageWrapper">
@@ -94,6 +116,10 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
 )}
 
 <style>
+    .header.journal {
+        text-align: center;
+    }
+
     .label {
         color: var(--color-blue-10);
         font-size: var(--font-size-3-sc);
@@ -104,7 +130,11 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
     }
 
     .title {
-        font-size: var(--font-size-5);
+        font-size: var(--font-size-5-sc);
+
+        &.notebook {
+            font-size: var(--font-size-4-sc);
+        }
 
         a {
             color: var(--color-black);
@@ -119,6 +149,7 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
     }
 
     .subtitle {
+        color: var(--color-red-8);
         font-style: italic;
         font-weight: var(--font-weight-medium);
         margin-top: var(--space-4);
@@ -143,12 +174,12 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
     }
 
     .notebookPostBody {
-        .title + & {
+        .header + & {
             margin-top: var(--space-4);
         }
 
         :global(> div:has(+ div)) {
-            margin-bottom: var(--space-5);
+            margin-bottom: var(--space-7);
         }
     }
 

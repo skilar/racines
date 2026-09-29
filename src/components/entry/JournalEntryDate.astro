@@ -26,15 +26,14 @@ const dateString = getJournalEntryDate(publicationDate, lang)
 
 <style>
     .postDate {
-        color: var(--color-ivory-9);
+        color: var(--color-blue-11);
         display: block;
         font-size: var(--font-size-3-sc);
-        font-variant-numeric: oldstyle-nums;
         font-weight: var(--font-weight-medium);
         margin-bottom: var(--space-5);
 
-        &:has(+ .notebookPostBody) {
-            margin-bottom: var(--space-7);
+        &:has(+ h2) {
+            color: var(--color-ivory-9);
         }
 
         a {
