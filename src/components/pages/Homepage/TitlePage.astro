@@ -42,38 +42,45 @@ const { lang } = Astro.locals
             )}
         </div>
 
-        <div class="textWrapper">
-            <div class="text">
-                <div>
-                    {isFilled.richText(title) && (
-                        <PrismicRichText class="title" richText={title} />
+        <div class="textWithBgImage">
+            <div class="textWrapper">
+                <div class="text">
+                    <div>
+                        {isFilled.richText(title) && (
+                            <PrismicRichText class="title" richText={title} />
+                        )}
+
+                        <PrismicRichText class="subtitle" richText={subtitle} />
+                    </div>
+
+                    <PrismicRichText class="caption" richText={description} />
+
+                    {nav.length > 0 && (
+                        <nav aria-label={UI[lang].menu}>
+                            <ul class="nav">
+                                {nav.map(({ ariaCurrent, attrs, label }) => (
+                                    <li>
+                                        <a
+                                            {...attrs}
+                                            aria-current={ariaCurrent}
+                                        >
+                                            <span class="linkTitle">
+                                                {label}
+                                            </span>
+                                            <span class="arrow">→</span>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
                     )}
-
-                    <PrismicRichText class="subtitle" richText={subtitle} />
                 </div>
-
-                <PrismicRichText class="caption" richText={description} />
-
-                {nav.length > 0 && (
-                    <nav aria-label={UI[lang].menu}>
-                        <ul class="nav">
-                            {nav.map(({ ariaCurrent, attrs, label }) => (
-                                <li>
-                                    <a {...attrs} aria-current={ariaCurrent}>
-                                        <span class="linkTitle">{label}</span>
-                                        <span class="arrow">→</span>
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
-                )}
             </div>
 
-            <div class="lily">
+            <div class="illustration">
                 {isFilled.image(floralImage) && (
                     <Image
-                        class="lilyImage"
+                        class="illustrationImage"
                         image={floralImage}
                         quality={75}
                         withBackgroundImage={false}
@@ -119,31 +126,50 @@ const { lang } = Astro.locals
         min-height: 100svh;
     }
 
-    .textWrapper {
+    .textWithBgImage {
         align-items: center;
         background-color: var(--color-red-10);
         color: var(--color-white);
+        container: textWithBgImage / inline-size;
         display: flex;
         justify-content: center;
         overflow: hidden;
-        padding-block: calc(var(--space-9) * 2);
-        padding-inline: var(--space-6);
         position: relative;
         text-align: center;
+        z-index: 1;
 
         @container titlePage (width > 50rem) {
             flex-basis: 100%;
             flex-grow: 1;
+        }
+    }
+
+    .textWrapper {
+        align-items: center;
+        background-color: oklch(0.361 0.1302 15.24 / 50%);
+        display: flex;
+        height: 100%;
+        padding-block: calc(var(--space-9) * 2);
+        padding-inline: var(--space-6);
+        position: relative;
+        width: 100%;
+        z-index: 10;
+
+        @container titlePage (width > 50rem) {
             padding: var(--space-6);
+        }
+
+        @container textWithBgImage (width >= 43rem) {
+            background-color: transparent;
         }
     }
 
     .text {
         display: grid;
         gap: var(--space-7);
+        margin-inline: auto;
         max-height: 100svh;
         max-width: 55ch;
-        z-index: 10;
     }
 
     .title {
@@ -198,22 +224,18 @@ const { lang } = Astro.locals
         }
     }
 
-    .lily {
+    .illustration {
         bottom: -0.5rem;
-        filter: blur(0.1px);
         opacity: 0.85;
         position: absolute;
-        right: -7rem;
+        right: -2rem;
+        right: 0;
         top: 1.5rem;
         width: 17rem;
         z-index: 1;
-
-        @container titlePage (width >= 42rem) {
-            right: 0;
-        }
     }
 
-    .lilyImage {
+    .illustrationImage {
         height: 100%;
         width: auto;
     }
