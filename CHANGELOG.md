@@ -1,6 +1,25 @@
 # Changelog
 
-## 1.0.0
+## [v1.0.1](https://github.com/skilar/racines/compare/v1.0.0...v1.0.1)
+
+-   Add Image slice type [`1104b18`](https://github.com/skilar/racines/commit/1104b18b1f9832e89d1a5d61b7bf6f647c1f70ad)
+-   Bump dependencies [`0528773`](https://github.com/skilar/racines/commit/0528773914d243fb0b902d9094dc407d739a937f)
+-   Update journal and notebook post styles [`165fd7d`](https://github.com/skilar/racines/commit/165fd7de94b421124c0425f3985a67dc175f9168)
+-   Add discrete URL for all three different blog post types [`ef6e15a`](https://github.com/skilar/racines/commit/ef6e15a6e68ccd89f9cacea07486eefd5ae88a53)
+-   Update homepage illustration styles [`727ed60`](https://github.com/skilar/racines/commit/727ed601ee59c0c42f3415af9a06caec31be6bb9)
+-   Increase footer bottom padding [`98011dc`](https://github.com/skilar/racines/commit/98011dc47fccfebf53b323ecb90a3bf58fafe564)
+-   Add Plausible [`07ceb51`](https://github.com/skilar/racines/commit/07ceb51ed8d40671bd55481ea6ddd977c2bb284a)
+-   Replace more image captions with &lt;ImageCaption /&gt; [`68fbd50`](https://github.com/skilar/racines/commit/68fbd50604646d8646de688425f12d565315faee)
+-   Update header and footer subtitle styles [`653991f`](https://github.com/skilar/racines/commit/653991faef2de186e26ca1381deaf460da89d25f)
+-   Rename site to Racines Versailles [`7e7b6db`](https://github.com/skilar/racines/commit/7e7b6dbfba0125abea33f24328dc78acd2203a03)
+-   Update homepage illustration [`8b90e96`](https://github.com/skilar/racines/commit/8b90e962a0988d7b494e5c4f27fb2bcebe0e6221)
+-   Convert homepage title to rich text [`41c527b`](https://github.com/skilar/racines/commit/41c527b97d97a176b011791a030c2c7f006cc5f1)
+-   Fix name field wrapping in newsletter form [`2a9658b`](https://github.com/skilar/racines/commit/2a9658b6b31cc2152aa2a2514d1fb103ae7111c4)
+-   Add ordinal-nums to more Prismic fields [`4ba5194`](https://github.com/skilar/racines/commit/4ba51948860beba269f0c8bd0ce8106b37c73a20)
+-   Fix zoomOffset in &lt;Image&gt; [`587aa28`](https://github.com/skilar/racines/commit/587aa28039611b709673f9aec0cbe92f96cc12d8)
+-   Increase bottom margin of BigTextWithImage title [`1e05bcd`](https://github.com/skilar/racines/commit/1e05bcda0f8f45f112e1e59bc5b8833dddbae653)
+
+## v1.0.0 (28 September 2026)
 
 -   Initial commit [`a6a6b59`](https://github.com/skilar/racines/commit/a6a6b598ffb818175cfff0e1b117ea34b348f115)
 -   Add Netlify adapter [`3a5b954`](https://github.com/skilar/racines/commit/3a5b95410634f25179160110c3eed42e20b583a2)
