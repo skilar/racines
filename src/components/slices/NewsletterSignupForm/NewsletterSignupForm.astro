@@ -95,6 +95,7 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
 
 <style>
     .container {
+        container: newsletter / inline-size;
         max-width: var(--width-text);
 
         :global(.withSidebar) & {
@@ -139,7 +140,13 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
 
     .names {
         display: flex;
-        gap: var(--space-5);
+        flex-direction: column;
+        gap: var(--space-4);
+
+        @container newsletter (width > 30rem) {
+            flex-direction: row;
+            gap: var(--space-5);
+        }
     }
 
     .newsletterButton {
