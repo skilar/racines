@@ -4,6 +4,7 @@ import getPostPreview from '@lib/get-post-preview'
 import { UI } from '@lib/i18n'
 
 import Image from '@components/common/Image.astro'
+import ImageCaption from '@components/common/ImageCaption.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 import SliceZone from '@components/common/SliceZone.astro'
 import JournalEntryDate from '@components/entry/JournalEntryDate.astro'
@@ -90,11 +91,9 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
 {coverImage && isFilled.image(coverImage) && (
     <div class="imageWrapper">
         <Image image={coverImage} />
+
         {coverImageDescription && (
-            <PrismicRichText
-                class="description"
-                richText={coverImageDescription}
-            />
+            <ImageCaption caption={coverImageDescription} />
         )}
     </div>
 )}
