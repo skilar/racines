@@ -45,6 +45,9 @@
             },
             "big_text_with_image": {
               "type": "SharedSlice"
+            },
+            "image": {
+              "type": "SharedSlice"
             }
           }
         }

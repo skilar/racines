@@ -6,6 +6,7 @@ import BigTextWithImage from '@components/slices/BigTextWithImage.astro'
 import BlogPostLinkSection from '@components/slices/BlogPostLinkSection/BlogPostLinkSection.astro'
 import FooterLinkSection from '@components/slices/FooterLinkSection/FooterLinkSection.astro'
 import Hero from '@components/slices/Hero/Hero.astro'
+import Image from '@components/slices/Image.astro'
 import ImageList from '@components/slices/ImageList.astro'
 import NewsletterSignupForm from '@components/slices/NewsletterSignupForm/NewsletterSignupForm.astro'
 import Quote from '@components/slices/Quote.astro'
@@ -56,42 +57,48 @@ const firstTextSliceIndex = slices.findIndex(
 )
 ---
 
-{
-    slices.map((slice, index) => {
-        const noteOffset = noteOffsets[index]
-        const zoomOffset = zoomOffsets[index]
+{slices.map((slice, index) => {
+    const noteOffset = noteOffsets[index]
+    const zoomOffset = zoomOffsets[index]
 
-        switch (slice.slice_type) {
-            case 'big_text_with_image':
-                return <BigTextWithImage slice={slice} />
-            case 'blog_post_link_section':
-                return <BlogPostLinkSection slice={slice} />
-            case 'footer_link_section':
-                return <FooterLinkSection slice={slice} />
-            case 'hero':
-                return <Hero slice={slice} />
-            case 'image_list':
-                return (
-                    <ImageList
-                        noteOffset={noteOffset}
-                        slice={slice}
-                        zoomOffset={zoomOffset}
-                    />
-                )
-            case 'newsletter_signup_form':
-                return <NewsletterSignupForm slice={slice} />
-            case 'quote':
-                return <Quote slice={slice} />
-            case 'text':
-                return (
-                    <Text
-                        hasBigCap={hasBigCap && index === firstTextSliceIndex}
-                        noteOffset={noteOffset}
-                        slice={slice}
-                    />
-                )
-            default:
-                return null
-        }
-    })
-}
+    switch (slice.slice_type) {
+        case 'big_text_with_image':
+            return <BigTextWithImage slice={slice} />
+        case 'blog_post_link_section':
+            return <BlogPostLinkSection slice={slice} />
+        case 'footer_link_section':
+            return <FooterLinkSection slice={slice} />
+        case 'hero':
+            return <Hero slice={slice} />
+        case 'image':
+            return (
+                <Image
+                    noteOffset={noteOffset}
+                    slice={slice}
+                    zoomOffset={zoomOffset}
+                />
+            )
+        case 'image_list':
+            return (
+                <ImageList
+                    noteOffset={noteOffset}
+                    slice={slice}
+                    zoomOffset={zoomOffset}
+                />
+            )
+        case 'newsletter_signup_form':
+            return <NewsletterSignupForm slice={slice} />
+        case 'quote':
+            return <Quote slice={slice} />
+        case 'text':
+            return (
+                <Text
+                    hasBigCap={hasBigCap && index === firstTextSliceIndex}
+                    noteOffset={noteOffset}
+                    slice={slice}
+                />
+            )
+        default:
+            return null
+    }
+})}

@@ -97,7 +97,7 @@ interface AuthorDocumentData {
  */
 export type AuthorDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<AuthorDocumentData>, "author", Lang>;
 
-type BlogPostDocumentDataSlicesSlice = TextSlice | ImageListSlice
+type BlogPostDocumentDataSlicesSlice = TextSlice | ImageListSlice | ImageSlice
 
 /**
  * Content for Blog Post documents
@@ -409,7 +409,7 @@ interface LayoutDocumentData {
  */
 export type LayoutDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<LayoutDocumentData>, "layout", Lang>;
 
-type NotebookPostDocumentDataSlicesSlice = ImageListSlice | TextSlice
+type NotebookPostDocumentDataSlicesSlice = ImageListSlice | TextSlice | ImageSlice
 
 /**
  * Content for Notebook Post documents
@@ -480,7 +480,7 @@ interface NotebookPostDocumentData {
  */
 export type NotebookPostDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<NotebookPostDocumentData>, "notebook_post", Lang>;
 
-type PageDocumentDataSlicesSlice = TextSlice | ImageListSlice | NewsletterSignupFormSlice | BigTextWithImageSlice
+type PageDocumentDataSlicesSlice = TextSlice | ImageListSlice | NewsletterSignupFormSlice | BigTextWithImageSlice | ImageSlice
 
 /**
  * Content for Page documents
@@ -563,7 +563,7 @@ interface PageDocumentData {
  */
 export type PageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
-type RecipeDocumentDataSlicesSlice = ImageListSlice | TextSlice
+type RecipeDocumentDataSlicesSlice = ImageListSlice | TextSlice | ImageSlice
 
 /**
  * Content for Recipe documents
@@ -1100,6 +1100,54 @@ type HeroSliceVariation = HeroSliceDefault | HeroSliceImageWithGradient
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
+ * Primary content in *Image → Default → Primary*
+ */
+export interface ImageSliceDefaultPrimary {
+	/**
+	 * Image field in *Image → Default → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image.default.primary.image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * Caption field in *Image → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image.default.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	caption: prismic.RichTextField;
+}
+
+/**
+ * Default variation for Image Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageSliceDefault = prismic.SharedSliceVariation<"default", Simplify<ImageSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *Image*
+ */
+type ImageSliceVariation = ImageSliceDefault
+
+/**
+ * Image Shared Slice
+ *
+ * - **API ID**: `image`
+ * - **Description**: Image
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageSlice = prismic.SharedSlice<"image", ImageSliceVariation>;
+
+/**
  * Item in *ImageList → Horizontal → Primary → Images*
  */
 export interface ImageListSliceDefaultPrimaryImagesItem {
@@ -1523,6 +1571,10 @@ declare module "@prismicio/client" {
 			HeroSliceVariation,
 			HeroSliceDefault,
 			HeroSliceImageWithGradient,
+			ImageSlice,
+			ImageSliceDefaultPrimary,
+			ImageSliceVariation,
+			ImageSliceDefault,
 			ImageListSlice,
 			ImageListSliceDefaultPrimaryImagesItem,
 			ImageListSliceDefaultPrimary,

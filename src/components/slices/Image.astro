@@ -1,0 +1,46 @@
+---
+import { isFilled } from '@prismicio/client'
+
+import ImageCaption from '../common/ImageCaption.astro'
+import ZoomableImage from '../common/ZoomableImage.astro'
+
+import type { ImageSlice } from '@typez/generated/prismic'
+
+interface Props {
+    noteOffset?: number | undefined
+    slice: ImageSlice
+    zoomOffset?: number | undefined
+}
+
+const { noteOffset, slice, zoomOffset } = Astro.props
+
+const sizes = `auto, (min-width: 650px) min(100vw, 65rem), 50vw`
+---
+
+<div class="container" data-slice-type={slice.slice_type}>
+    {isFilled.image(slice.primary.image) && (
+        <ZoomableImage
+            class="listImage"
+            image={slice.primary.image}
+            quality={75}
+            sizes={sizes}
+            zoomIndex={zoomOffset === undefined ? undefined : zoomOffset}
+        />
+    )}
+
+    <ImageCaption noteOffset={noteOffset} caption={slice.primary.caption} />
+</div>
+
+<style>
+    .container {
+        container: imageList / inline-size;
+        max-width: var(--width-image);
+
+        :global(.withSidebar) & {
+            display: grid;
+            grid-template-columns: var(--with-sidebar-cols);
+            gap: var(--with-sidebar-gap);
+            max-width: unset;
+        }
+    }
+</style>

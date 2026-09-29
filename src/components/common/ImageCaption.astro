@@ -1,0 +1,24 @@
+---
+import PrismicRichText from './PrismicRichText.astro'
+
+import type { RichTextField } from '@prismicio/client'
+
+interface Props {
+    caption: RichTextField
+    noteOffset?: number | undefined
+}
+
+const { caption, noteOffset } = Astro.props
+---
+
+<PrismicRichText class="caption" noteOffset={noteOffset} richText={caption} />
+
+<style>
+    .caption {
+        color: var(--color-grey-11);
+        font-size: var(--font-size-3);
+        margin-inline: auto;
+        margin-top: var(--space-4);
+        max-width: var(--width-text);
+    }
+</style>

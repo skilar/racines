@@ -32,6 +32,9 @@
             },
             "text": {
               "type": "SharedSlice"
+            },
+            "image": {
+              "type": "SharedSlice"
             }
           }
         }

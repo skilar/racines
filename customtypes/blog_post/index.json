@@ -94,6 +94,9 @@
             },
             "image_list": {
               "type": "SharedSlice"
+            },
+            "image": {
+              "type": "SharedSlice"
             }
           }
         }

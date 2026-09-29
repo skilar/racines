@@ -14,6 +14,16 @@ export interface LightboxItem {
 
 export function getZoomableImages(slice: AnySlice): LightboxItem[] {
     switch (slice.slice_type) {
+        case 'image':
+            // Same condition as `Image.astro`, which only renders when filled.
+            return isFilled.image(slice.primary.image)
+                ? [
+                      {
+                          image: slice.primary.image,
+                          caption: slice.primary.caption,
+                      },
+                  ]
+                : []
         case 'image_list':
             // Filter on the same condition as `ImageList.astro` so that the
             // indices line up with each image's `data-zoom-index`.
