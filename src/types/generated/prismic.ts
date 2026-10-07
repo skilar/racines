@@ -97,7 +97,7 @@ interface AuthorDocumentData {
  */
 export type AuthorDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<AuthorDocumentData>, "author", Lang>;
 
-type BlogPostDocumentDataSlicesSlice = TextSlice | ImageListSlice | ImageSlice
+type BlogPostDocumentDataSlicesSlice = TextSlice | ImageListSlice | ImageSlice | SourceListSlice
 
 /**
  * Content for Blog Post documents
@@ -1449,6 +1449,190 @@ type QuoteSliceVariation = QuoteSliceDefault
 export type QuoteSlice = prismic.SharedSlice<"quote", QuoteSliceVariation>;
 
 /**
+ * Item in *SourceList → Default → Primary → Sources*
+ */
+export interface SourceListSliceDefaultPrimarySourcesItem {
+	/**
+	 * Type field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: book
+	 * - **API ID Path**: source_list.default.primary.sources[].type
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	type: prismic.SelectField<"book" | "section" | "artwork" | "web_page", "filled">;
+	
+	/**
+	 * Author field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].author
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	author: prismic.RichTextField;
+	
+	/**
+	 * Article field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].article
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	article: prismic.RichTextField;
+	
+	/**
+	 * Book field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].book
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	book: prismic.RichTextField;
+	
+	/**
+	 * Title field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Container (book or site name) field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].container
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	container: prismic.RichTextField;
+	
+	/**
+	 * Volume field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].volume
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	volume: prismic.RichTextField;
+	
+	/**
+	 * Pages field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].pages
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	pages: prismic.RichTextField;
+	
+	/**
+	 * Place field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].place
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	place: prismic.RichTextField;
+	
+	/**
+	 * Publisher field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].publisher
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	publisher: prismic.RichTextField;
+	
+	/**
+	 * Date field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].date
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	date: prismic.RichTextField;
+	
+	/**
+	 * Medium field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].medium
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	medium: prismic.RichTextField;
+	
+	/**
+	 * Collection field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].collection
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	collection: prismic.RichTextField;
+	
+	/**
+	 * Link field in *SourceList → Default → Primary → Sources*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[].link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Primary content in *SourceList → Default → Primary*
+ */
+export interface SourceListSliceDefaultPrimary {
+	/**
+	 * Sources field in *SourceList → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: source_list.default.primary.sources[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	sources: prismic.GroupField<Simplify<SourceListSliceDefaultPrimarySourcesItem>>;
+}
+
+/**
+ * Default variation for SourceList Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type SourceListSliceDefault = prismic.SharedSliceVariation<"default", Simplify<SourceListSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *SourceList*
+ */
+type SourceListSliceVariation = SourceListSliceDefault
+
+/**
+ * SourceList Shared Slice
+ *
+ * - **API ID**: `source_list`
+ * - **Description**: SourceList
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type SourceListSlice = prismic.SharedSlice<"source_list", SourceListSliceVariation>;
+
+/**
  * Primary content in *Text → Default → Primary*
  */
 export interface TextSliceDefaultPrimary {
@@ -1620,6 +1804,11 @@ declare module "@prismicio/client" {
 			QuoteSliceDefaultPrimary,
 			QuoteSliceVariation,
 			QuoteSliceDefault,
+			SourceListSlice,
+			SourceListSliceDefaultPrimarySourcesItem,
+			SourceListSliceDefaultPrimary,
+			SourceListSliceVariation,
+			SourceListSliceDefault,
 			TextSlice,
 			TextSliceDefaultPrimary,
 			TextSlicePullQuotePrimary,

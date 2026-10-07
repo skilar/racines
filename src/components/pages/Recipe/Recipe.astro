@@ -8,6 +8,7 @@ import { collectZoomableImages } from '@lib/zoom'
 import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
 import SliceZone from '@components/common/SliceZone.astro'
 import Endnotes from '@components/entry/Endnotes.astro'
+import Sources from '@components/entry/Sources.astro'
 import EntryHeader from '@components/entry/EntryHeader.astro'
 import Lightbox from '@components/entry/Lightbox.astro'
 
@@ -57,6 +58,7 @@ const hideHeading = !isFilled.richText(page.data.title)
                 )}
 
                 <Endnotes slices={page.data.slices} />
+                <Sources slices={page.data.slices} />
             </div>
         </article>
 

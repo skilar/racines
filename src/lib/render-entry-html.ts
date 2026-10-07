@@ -1,4 +1,6 @@
 import { asHTML, isFilled } from '@prismicio/client'
+import escapeAttr from '@lib/escape-attr'
+import formatSource from '@lib/format-source'
 import getFixer from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
 import { collectNotes } from '@lib/notes'
@@ -25,13 +27,6 @@ const RELATIVE_URL = /\b(href|src)="(\/(?!\/)[^"]*)"/g
 // Use MultiMarkdown's naming for footnote anchors. NetNewsWire detects this.
 const noteId = (uid: string, number: number) => `fn-${uid}-${number}`
 const noteRefId = (uid: string, number: number) => `fnref-${uid}-${number}`
-
-const escapeAttr = (value: string) =>
-    value
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
 
 function absolutizeUrls(html: string, site: string): string {
     if (!site) {
@@ -219,6 +214,20 @@ export default function renderEntryHtml(
 
         parts.push(
             `<div class="footnotes"><hr /><h3>${UI[lang].notes}</h3><ol>${items}</ol></div>`,
+        )
+    }
+
+    const sources = entry.data.slices.flatMap((slice) =>
+        slice.slice_type === 'source_list' ? slice.primary.sources : [],
+    )
+
+    if (sources.length > 0) {
+        const items = sources
+            .map((source) => `<li>${formatSource(source, lang)}</li>`)
+            .join('')
+
+        parts.push(
+            `<div>${notes.length > 0 ? '' : '<hr />'}<h3>${UI[lang].sources}</h3><ul>${items}</ul></div>`,
         )
     }
 
