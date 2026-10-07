@@ -9,7 +9,8 @@ import type { LayoutProps } from '@typez/types'
 
 type Props = LayoutProps
 
-const { alternateLanguages, ...props } = Astro.props
+const props = Astro.props
+const { alternateLanguages } = props
 const { lang } = Astro.locals
 
 const layout = await getLayout(lang)

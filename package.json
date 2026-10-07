@@ -16,6 +16,7 @@
         "prismic:push": "node --env-file-if-exists=.env scripts/prismic-models.ts push",
         "prismic:status": "node --env-file-if-exists=.env scripts/prismic-models.ts status",
         "release": "dotenv run release-it",
+        "test": "node --test src/**/*.test.ts",
         "typegen": "npx prismic-ts-codegen"
     },
     "dependencies": {
@@ -30,6 +31,7 @@
         "@astrojs/check": "^0.9.10",
         "@astrojs/ts-plugin": "^1.10.12",
         "@eslint/js": "^10.0.1",
+        "@netlify/edge-functions": "^3.0.8",
         "@prismicio/custom-types-client": "^2.1.0",
         "@prismicio/types": "^0.2.9",
         "@types/node": "^26.6.4",

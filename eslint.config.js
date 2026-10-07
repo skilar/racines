@@ -49,4 +49,11 @@ export default defineConfig([
             '@typescript-eslint/no-unsafe-return': 'off',
         },
     },
+    {
+        files: ['**/*.test.ts'],
+        rules: {
+            // `node:test` runs the promises `describe` and `it` return.
+            '@typescript-eslint/no-floating-promises': 'off',
+        },
+    },
 ])
