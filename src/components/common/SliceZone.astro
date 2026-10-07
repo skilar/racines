@@ -90,6 +90,9 @@ const firstTextSliceIndex = slices.findIndex(
             return <NewsletterSignupForm slice={slice} />
         case 'quote':
             return <Quote slice={slice} />
+        // Back matter: `Sources` renders these after the notes.
+        case 'source_list':
+            return null
         case 'text':
             return (
                 <Text

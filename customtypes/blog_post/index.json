@@ -97,6 +97,9 @@
             },
             "image": {
               "type": "SharedSlice"
+            },
+            "source_list": {
+              "type": "SharedSlice"
             }
           }
         }

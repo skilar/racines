@@ -1,0 +1,72 @@
+---
+import formatSource from '@lib/format-source'
+import { UI } from '@lib/i18n'
+
+import type { SliceZone } from '@prismicio/client'
+import type { AnySlice } from '@typez/prismic'
+
+interface Props {
+    slices: SliceZone<AnySlice>
+}
+
+const { slices } = Astro.props
+const { lang } = Astro.locals
+
+const sources = slices.flatMap((slice) =>
+    slice.slice_type === 'source_list' ? slice.primary.sources : [],
+)
+---
+
+{sources.length > 0 && (
+    <section class="sources" aria-labelledby="sourcesHeading">
+        <h2 class="sourcesHeading" id="sourcesHeading">
+            {UI[lang].sources}
+        </h2>
+
+        <ul class="sourceList">
+            {sources.map((source) => (
+                <li set:html={formatSource(source, lang)} />
+            ))}
+        </ul>
+    </section>
+)}
+
+<style>
+    .sources {
+        border-top: 1px solid var(--color-ivory-4);
+        font-size: var(--font-size-3);
+        margin-inline: auto;
+        margin-top: var(--space-9);
+        max-width: var(--width-text);
+        padding-top: var(--space-4);
+
+        /* Notes and sources read as one block of back matter. */
+        :global(.endnotes) + & {
+            border-top: none;
+            margin-top: var(--space-6);
+            padding-top: 0;
+        }
+    }
+
+    .sourcesHeading {
+        font-family: var(--font-serif);
+        font-size: var(--font-size-3-sc);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-medium);
+        margin-bottom: var(--space-4);
+    }
+
+    .sourceList {
+        list-style-type: circle;
+        margin-left: var(--space-5);
+
+        li {
+            padding-inline-start: 2em;
+            text-indent: -2em;
+
+            &:not(:last-child) {
+                margin-bottom: var(--space-2);
+            }
+        }
+    }
+</style>
