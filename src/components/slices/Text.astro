@@ -20,6 +20,7 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
             'container',
             {
                 hasBigCap,
+                isAside: slice.variation === 'aside',
                 isPullQuote: slice.variation === 'pullQuote',
             },
         ]}
@@ -62,6 +63,17 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
             margin-bottom: calc(var(--space-3) * -1.5);
             margin-right: var(--space-1);
             margin-top: var(--space-2);
+        }
+    }
+
+    .isAside {
+        background-color: var(--color-ivory-1);
+        border-block: var(--double-border);
+        padding-block: var(--space-7);
+        padding-inline: var(--space-6);
+
+        .textContents {
+            font-size: var(--font-size-3-sc);
         }
     }
 

@@ -1497,9 +1497,33 @@ export interface TextSlicePullQuotePrimary {
 export type TextSlicePullQuote = prismic.SharedSliceVariation<"pullQuote", Simplify<TextSlicePullQuotePrimary>, never>;
 
 /**
+ * Primary content in *Text → Aside → Primary*
+ */
+export interface TextSliceAsidePrimary {
+	/**
+	 * Text field in *Text → Aside → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: text.aside.primary.text
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	text: prismic.RichTextField;
+}
+
+/**
+ * Aside variation for Text Slice
+ *
+ * - **API ID**: `aside`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TextSliceAside = prismic.SharedSliceVariation<"aside", Simplify<TextSliceAsidePrimary>, never>;
+
+/**
  * Slice variation for *Text*
  */
-type TextSliceVariation = TextSliceDefault | TextSlicePullQuote
+type TextSliceVariation = TextSliceDefault | TextSlicePullQuote | TextSliceAside
 
 /**
  * Text Shared Slice
@@ -1599,9 +1623,11 @@ declare module "@prismicio/client" {
 			TextSlice,
 			TextSliceDefaultPrimary,
 			TextSlicePullQuotePrimary,
+			TextSliceAsidePrimary,
 			TextSliceVariation,
 			TextSliceDefault,
-			TextSlicePullQuote
+			TextSlicePullQuote,
+			TextSliceAside
 		}
 	}
 }
