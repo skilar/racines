@@ -82,8 +82,8 @@ audio,
 video {
     border: 0;
     box-sizing: border-box;
-    font-feature-settings: 'liga';
     font-size: 100%;
+    font-variant-ligatures: common-ligatures;
     margin: 0;
     padding: 0;
     vertical-align: baseline;
