@@ -40,24 +40,6 @@
                   "allowTargetBlank": true
                 }
               },
-              "article": {
-                "type": "StructuredText",
-                "config": {
-                  "label": "Article",
-                  "placeholder": "",
-                  "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-                  "allowTargetBlank": true
-                }
-              },
-              "book": {
-                "type": "StructuredText",
-                "config": {
-                  "label": "Book",
-                  "placeholder": "",
-                  "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-                  "allowTargetBlank": true
-                }
-              },
               "title": {
                 "type": "StructuredText",
                 "config": {

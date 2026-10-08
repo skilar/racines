@@ -1474,26 +1474,6 @@ export interface SourceListSliceDefaultPrimarySourcesItem {
 	author: prismic.RichTextField;
 	
 	/**
-	 * Article field in *SourceList → Default → Primary → Sources*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: source_list.default.primary.sources[].article
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	article: prismic.RichTextField;
-	
-	/**
-	 * Book field in *SourceList → Default → Primary → Sources*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: source_list.default.primary.sources[].book
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	book: prismic.RichTextField;
-	
-	/**
 	 * Title field in *SourceList → Default → Primary → Sources*
 	 *
 	 * - **Field Type**: Rich Text
