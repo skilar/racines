@@ -1,138 +1,126 @@
 {
-  "id": "blog_post",
-  "label": "Blog Post",
-  "repeatable": true,
-  "json": {
-    "Main": {
-      "uid": {
-        "type": "UID",
-        "config": {
-          "label": "UID"
-        }
-      },
-      "author": {
-        "type": "Link",
-        "config": {
-          "label": "Author",
-          "select": "document",
-          "customtypes": [
-            {
-              "id": "author",
-              "fields": [
-                "name",
-                "biography",
-                "photo"
-              ]
+    "id": "blog_post",
+    "label": "Blog Post",
+    "repeatable": true,
+    "json": {
+        "Main": {
+            "uid": {
+                "type": "UID",
+                "config": {
+                    "label": "UID"
+                }
+            },
+            "author": {
+                "type": "Link",
+                "config": {
+                    "label": "Author",
+                    "select": "document",
+                    "customtypes": [
+                        {
+                            "id": "author",
+                            "fields": ["name", "biography", "photo"]
+                        }
+                    ],
+                    "repeat": false
+                }
+            },
+            "title": {
+                "type": "StructuredText",
+                "config": {
+                    "label": "Title",
+                    "placeholder": "",
+                    "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                    "labels": ["ordinal-nums", "small-caps"],
+                    "allowTargetBlank": true
+                }
+            },
+            "subtitle": {
+                "type": "StructuredText",
+                "config": {
+                    "label": "Subtitle",
+                    "placeholder": "",
+                    "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                    "labels": ["ordinal-nums", "small-caps"],
+                    "allowTargetBlank": true
+                }
+            },
+            "short_description": {
+                "type": "StructuredText",
+                "config": {
+                    "label": "Short description",
+                    "placeholder": "",
+                    "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                    "labels": ["ordinal-nums", "small-caps"],
+                    "allowTargetBlank": true
+                }
+            },
+            "cover_image": {
+                "type": "Image",
+                "config": {
+                    "label": "Cover Image",
+                    "constraint": {},
+                    "thumbnails": []
+                }
+            },
+            "cover_image_description": {
+                "type": "StructuredText",
+                "config": {
+                    "label": "Cover Image Description",
+                    "placeholder": "",
+                    "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                    "labels": ["ordinal-nums", "small-caps"],
+                    "allowTargetBlank": true
+                }
+            },
+            "slices": {
+                "type": "Slices",
+                "fieldset": "Slice Zone",
+                "config": {
+                    "choices": {
+                        "text": {
+                            "type": "SharedSlice"
+                        },
+                        "image_list": {
+                            "type": "SharedSlice"
+                        },
+                        "image": {
+                            "type": "SharedSlice"
+                        },
+                        "source_list": {
+                            "type": "SharedSlice"
+                        }
+                    }
+                }
             }
-          ],
-          "repeat": false
-        }
-      },
-      "title": {
-        "type": "StructuredText",
-        "config": {
-          "label": "Title",
-          "placeholder": "",
-          "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-          "labels": [
-            "ordinal-nums"
-          ],
-          "allowTargetBlank": true
-        }
-      },
-      "subtitle": {
-        "type": "StructuredText",
-        "config": {
-          "label": "Subtitle",
-          "placeholder": "",
-          "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-          "labels": [
-            "ordinal-nums"
-          ],
-          "allowTargetBlank": true
-        }
-      },
-      "short_description": {
-        "type": "StructuredText",
-        "config": {
-          "label": "Short description",
-          "placeholder": "",
-          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-          "labels": [
-            "ordinal-nums"
-          ],
-          "allowTargetBlank": true
-        }
-      },
-      "cover_image": {
-        "type": "Image",
-        "config": {
-          "label": "Cover Image",
-          "constraint": {},
-          "thumbnails": []
-        }
-      },
-      "cover_image_description": {
-        "type": "StructuredText",
-        "config": {
-          "label": "Cover Image Description",
-          "placeholder": "",
-          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-          "labels": [
-            "ordinal-nums"
-          ],
-          "allowTargetBlank": true
-        }
-      },
-      "slices": {
-        "type": "Slices",
-        "fieldset": "Slice Zone",
-        "config": {
-          "choices": {
-            "text": {
-              "type": "SharedSlice"
+        },
+        "SEO & Metadata": {
+            "meta_title": {
+                "type": "Text",
+                "config": {
+                    "label": "Meta Title",
+                    "placeholder": "A title of the page used for social media and search engines"
+                }
             },
-            "image_list": {
-              "type": "SharedSlice"
+            "meta_description": {
+                "type": "Text",
+                "config": {
+                    "label": "Meta Description",
+                    "placeholder": "A brief summary of the page"
+                }
             },
-            "image": {
-              "type": "SharedSlice"
-            },
-            "source_list": {
-              "type": "SharedSlice"
+            "meta_image": {
+                "type": "Image",
+                "config": {
+                    "label": "Meta Image",
+                    "constraint": {
+                        "width": 2400,
+                        "height": 1260
+                    },
+                    "thumbnails": []
+                }
             }
-          }
         }
-      }
     },
-    "SEO & Metadata": {
-      "meta_title": {
-        "type": "Text",
-        "config": {
-          "label": "Meta Title",
-          "placeholder": "A title of the page used for social media and search engines"
-        }
-      },
-      "meta_description": {
-        "type": "Text",
-        "config": {
-          "label": "Meta Description",
-          "placeholder": "A brief summary of the page"
-        }
-      },
-      "meta_image": {
-        "type": "Image",
-        "config": {
-          "label": "Meta Image",
-          "constraint": {
-            "width": 2400,
-            "height": 1260
-          },
-          "thumbnails": []
-        }
-      }
-    }
-  },
-  "status": true,
-  "format": "page"
+    "status": true,
+    "format": "page"
 }

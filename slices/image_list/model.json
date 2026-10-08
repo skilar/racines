@@ -1,134 +1,132 @@
 {
-  "id": "image_list",
-  "type": "SharedSlice",
-  "name": "ImageList",
-  "variations": [
-    {
-      "id": "default",
-      "name": "Horizontal",
-      "description": "Default",
-      "imageUrl": "",
-      "docURL": "...",
-      "version": "initial",
-      "primary": {
-        "images": {
-          "type": "Group",
-          "config": {
-            "label": "Images",
-            "repeat": true,
-            "fields": {
-              "image": {
-                "type": "Image",
-                "config": {
-                  "label": "Image",
-                  "constraint": {
-                    "width": 3500
-                  },
-                  "thumbnails": []
+    "id": "image_list",
+    "type": "SharedSlice",
+    "name": "ImageList",
+    "variations": [
+        {
+            "id": "default",
+            "name": "Horizontal",
+            "description": "Default",
+            "imageUrl": "",
+            "docURL": "...",
+            "version": "initial",
+            "primary": {
+                "images": {
+                    "type": "Group",
+                    "config": {
+                        "label": "Images",
+                        "repeat": true,
+                        "fields": {
+                            "image": {
+                                "type": "Image",
+                                "config": {
+                                    "label": "Image",
+                                    "constraint": {
+                                        "width": 3500
+                                    },
+                                    "thumbnails": []
+                                }
+                            },
+                            "image_caption": {
+                                "type": "StructuredText",
+                                "config": {
+                                    "label": "Image Caption",
+                                    "placeholder": "",
+                                    "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                                    "allowTargetBlank": true
+                                }
+                            }
+                        }
+                    }
                 }
-              },
-              "image_caption": {
-                "type": "StructuredText",
-                "config": {
-                  "label": "Image Caption",
-                  "placeholder": "",
-                  "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-                  "allowTargetBlank": true
-                }
-              }
             }
-          }
-        }
-      }
-    },
-    {
-      "id": "vertical",
-      "name": "Vertical",
-      "description": "Default",
-      "imageUrl": "",
-      "docURL": "...",
-      "version": "initial",
-      "primary": {
-        "images": {
-          "type": "Group",
-          "config": {
-            "label": "Images",
-            "repeat": true,
-            "fields": {
-              "image": {
-                "type": "Image",
-                "config": {
-                  "label": "Image",
-                  "constraint": {
-                    "width": 3500
-                  },
-                  "thumbnails": []
-                }
-              },
-              "image_caption": {
-                "type": "StructuredText",
-                "config": {
-                  "label": "Image Caption",
-                  "placeholder": "",
-                  "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-                  "allowTargetBlank": true
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "horizonalWithSingleCaption",
-      "name": "Horizonal with single caption",
-      "description": "Default",
-      "imageUrl": "",
-      "docURL": "...",
-      "version": "initial",
-      "primary": {
-        "caption": {
-          "type": "StructuredText",
-          "config": {
-            "label": "Caption",
-            "placeholder": "",
-            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-            "labels": [
-              "ordinal-nums"
-            ],
-            "allowTargetBlank": true
-          }
         },
-        "images": {
-          "type": "Group",
-          "config": {
-            "label": "Images",
-            "repeat": true,
-            "fields": {
-              "image": {
-                "type": "Image",
-                "config": {
-                  "label": "Image",
-                  "constraint": {
-                    "width": 3500
-                  },
-                  "thumbnails": []
+        {
+            "id": "vertical",
+            "name": "Vertical",
+            "description": "Default",
+            "imageUrl": "",
+            "docURL": "...",
+            "version": "initial",
+            "primary": {
+                "images": {
+                    "type": "Group",
+                    "config": {
+                        "label": "Images",
+                        "repeat": true,
+                        "fields": {
+                            "image": {
+                                "type": "Image",
+                                "config": {
+                                    "label": "Image",
+                                    "constraint": {
+                                        "width": 3500
+                                    },
+                                    "thumbnails": []
+                                }
+                            },
+                            "image_caption": {
+                                "type": "StructuredText",
+                                "config": {
+                                    "label": "Image Caption",
+                                    "placeholder": "",
+                                    "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                                    "allowTargetBlank": true
+                                }
+                            }
+                        }
+                    }
                 }
-              },
-              "image_caption": {
-                "type": "StructuredText",
-                "config": {
-                  "label": "Image Caption",
-                  "placeholder": "",
-                  "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-                  "allowTargetBlank": true
-                }
-              }
             }
-          }
+        },
+        {
+            "id": "horizonalWithSingleCaption",
+            "name": "Horizonal with single caption",
+            "description": "Default",
+            "imageUrl": "",
+            "docURL": "...",
+            "version": "initial",
+            "primary": {
+                "caption": {
+                    "type": "StructuredText",
+                    "config": {
+                        "label": "Caption",
+                        "placeholder": "",
+                        "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                        "labels": ["ordinal-nums", "small-caps"],
+                        "allowTargetBlank": true
+                    }
+                },
+                "images": {
+                    "type": "Group",
+                    "config": {
+                        "label": "Images",
+                        "repeat": true,
+                        "fields": {
+                            "image": {
+                                "type": "Image",
+                                "config": {
+                                    "label": "Image",
+                                    "constraint": {
+                                        "width": 3500
+                                    },
+                                    "thumbnails": []
+                                }
+                            },
+                            "image_caption": {
+                                "type": "StructuredText",
+                                "config": {
+                                    "label": "Image Caption",
+                                    "placeholder": "",
+                                    "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                                    "allowTargetBlank": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
-    }
-  ],
-  "description": "ImageList"
+    ],
+    "description": "ImageList"
 }

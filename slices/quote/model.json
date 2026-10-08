@@ -1,37 +1,35 @@
 {
-  "id": "quote",
-  "type": "SharedSlice",
-  "name": "Quote",
-  "variations": [
-    {
-      "id": "default",
-      "name": "Default",
-      "description": "Default",
-      "imageUrl": "",
-      "docURL": "...",
-      "version": "initial",
-      "primary": {
-        "title": {
-          "type": "Text",
-          "config": {
-            "label": "Title",
-            "placeholder": ""
-          }
-        },
-        "caption": {
-          "type": "StructuredText",
-          "config": {
-            "label": "Caption",
-            "placeholder": "",
-            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
-            "labels": [
-              "ordinal-nums"
-            ],
-            "allowTargetBlank": true
-          }
+    "id": "quote",
+    "type": "SharedSlice",
+    "name": "Quote",
+    "variations": [
+        {
+            "id": "default",
+            "name": "Default",
+            "description": "Default",
+            "imageUrl": "",
+            "docURL": "...",
+            "version": "initial",
+            "primary": {
+                "title": {
+                    "type": "Text",
+                    "config": {
+                        "label": "Title",
+                        "placeholder": ""
+                    }
+                },
+                "caption": {
+                    "type": "StructuredText",
+                    "config": {
+                        "label": "Caption",
+                        "placeholder": "",
+                        "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                        "labels": ["ordinal-nums", "small-caps"],
+                        "allowTargetBlank": true
+                    }
+                }
+            }
         }
-      }
-    }
-  ],
-  "description": "Quote"
+    ],
+    "description": "Quote"
 }

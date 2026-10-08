@@ -5,6 +5,10 @@
     width: 100%;
 }
 
+.small-caps {
+    font-variant-caps: all-small-caps;
+}
+
 .ordinal-nums {
     font-variant-position: super;
 }
