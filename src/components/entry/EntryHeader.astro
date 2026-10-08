@@ -7,7 +7,7 @@ import type { RichTextField } from '@prismicio/client'
 
 interface Props {
     description?: RichTextField | undefined
-    heading: string
+    headingHtml: string
     hideHeading?: boolean
     publicationDate: string
     subtitle?: RichTextField | undefined
@@ -15,7 +15,7 @@ interface Props {
 
 const {
     description,
-    heading,
+    headingHtml,
     hideHeading = false,
     publicationDate,
     subtitle,
@@ -26,7 +26,7 @@ const dateString = getJournalEntryDate(publicationDate, lang)
 ---
 
 <div class="postMeta">
-    <h1 class:list={[{ visuallyHidden: hideHeading }]}>{heading}</h1>
+    <h1 class:list={[{ visuallyHidden: hideHeading }]} set:html={headingHtml} />
 
     {subtitle && <PrismicRichText class="subtitle" richText={subtitle} />}
 
@@ -56,6 +56,7 @@ const dateString = getJournalEntryDate(publicationDate, lang)
 
     .subtitle {
         color: var(--color-red-8);
+        font-feature-settings: 'swsh';
         font-size: var(--font-size-4);
         font-style: italic;
         font-weight: var(--font-weight-medium);
