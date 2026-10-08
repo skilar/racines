@@ -3,6 +3,7 @@ import { asHTML, isFilled } from '@prismicio/client'
 import getFixer from '@lib/get-fixer'
 import hideLeadingQuote from '@lib/hide-leading-quote'
 import { noteId, noteRefId, noteTipId } from '@lib/notes'
+import splitRomanOrdinal from '@lib/split-roman-ordinal'
 import tightenNoteRefs from '@lib/tighten-note-refs'
 
 import type { RichTextField } from '@prismicio/client'
@@ -44,7 +45,14 @@ const fixedHtml = isFilled.richText(richText)
                   serializer: {
                       // Returning nothing falls through to Prismic's default,
                       // `<span class="{label}">`.
-                      label: ({ children, node }) => {
+                      label: ({ children, node, text }) => {
+                          if (
+                              node.data.label === 'small-caps' ||
+                              node.data.label === 'ordinal-nums'
+                          ) {
+                              return splitRomanOrdinal(text)
+                          }
+
                           if (
                               node.data.label !== 'footnote' ||
                               noteOffset === undefined
