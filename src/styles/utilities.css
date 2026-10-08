@@ -6,7 +6,7 @@
 }
 
 .ordinal-nums {
-    font-variant-numeric: ordinal;
+    font-variant-position: super;
 }
 
 .visuallyHidden {
