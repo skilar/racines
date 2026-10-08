@@ -1,44 +1,12 @@
-import { asHTML, asLink, isFilled } from '@prismicio/client'
+import { asLink, isFilled } from '@prismicio/client'
 import getFixer from '@lib/get-fixer'
 import escapeAttr from '@lib/escape-attr'
+import inline from '@lib/inline-rich-text'
 
-import type {
-    HTMLRichTextMapSerializer,
-    RichTextField,
-} from '@prismicio/client'
 import type { Lang } from '@lib/i18n'
 import type { SourceListSliceDefaultPrimarySourcesItem } from '@typez/generated/prismic'
 
 type Source = SourceListSliceDefaultPrimarySourcesItem
-
-const unwrap = ({ children }: { children: string }) => children
-
-// A citation is one run of text, so every block gives up its wrapper. Images
-// and embeds have no place in it at all.
-const INLINE: HTMLRichTextMapSerializer = {
-    heading1: unwrap,
-    heading2: unwrap,
-    heading3: unwrap,
-    heading4: unwrap,
-    heading5: unwrap,
-    heading6: unwrap,
-    paragraph: unwrap,
-    preformatted: unwrap,
-    list: unwrap,
-    oList: unwrap,
-    listItem: unwrap,
-    oListItem: unwrap,
-    image: () => '',
-    embed: () => '',
-}
-
-const inline = (field: RichTextField): string =>
-    isFilled.richText(field)
-        ? field
-              .map((block) => asHTML([block], { serializer: INLINE }).trim())
-              .filter(Boolean)
-              .join(' ')
-        : ''
 
 const TERMINAL = /[.?!…]$/
 

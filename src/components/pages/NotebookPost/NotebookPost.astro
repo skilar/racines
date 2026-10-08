@@ -1,6 +1,6 @@
 ---
 import { isFilled } from '@prismicio/client'
-import getEntryTitle from '@lib/get-entry-title'
+import getEntryTitle, { getEntryTitleHtml } from '@lib/get-entry-title'
 import getOgImage from '@lib/get-og-image'
 import { client } from '@lib/prismic'
 import { collectZoomableImages } from '@lib/zoom'
@@ -23,6 +23,7 @@ const page = await client.getByUID('notebook_post', uid, { lang })
 const zoomableImages = collectZoomableImages(page.data.slices)
 const ogImage = getOgImage(page.data.meta_image)
 const heading = getEntryTitle(page.data, lang)
+const headingHtml = getEntryTitleHtml(page.data, lang)
 
 // An untitled post takes its heading from its opening words, which the
 // reader is about to see anyway, so only assistive tech gets the heading.
@@ -43,9 +44,10 @@ const hideHeading = !isFilled.richText(page.data.title)
         <article>
             <JournalEntryDate publicationDate={page.first_publication_date} />
 
-            <h1 class:list={['title', { visuallyHidden: hideHeading }]}>
-                {heading}
-            </h1>
+            <h1
+                class:list={['title', { visuallyHidden: hideHeading }]}
+                set:html={headingHtml}
+            />
 
             <div class="post">
                 {isFilled.sliceZone(page.data.slices) && (

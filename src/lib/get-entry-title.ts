@@ -1,7 +1,9 @@
 import { asText, isFilled } from '@prismicio/client'
-import { fixText } from '@lib/get-fixer'
+import escapeAttr from '@lib/escape-attr'
+import getFixer, { fixText } from '@lib/get-fixer'
 import getPostPreview from '@lib/get-post-preview'
 import { UI } from '@lib/i18n'
+import inlineRichText from '@lib/inline-rich-text'
 
 import type { RichTextField, SliceZone } from '@prismicio/client'
 import type { Lang } from '@lib/i18n'
@@ -48,4 +50,14 @@ export default function getEntryTitle(
     const opening = slices ? getOpeningText(slices) : ''
 
     return opening ? fixText(opening, lang) : UI[lang].untitledEntry
+}
+
+/**
+ * The title as HTML, for the visible headings, so labels like small caps
+ * survive. The fallbacks are plain text, so they are only escaped.
+ */
+export function getEntryTitleHtml(entry: Entry, lang: Lang): string {
+    return isFilled.richText(entry.title)
+        ? getFixer(lang).fixHtml(inlineRichText(entry.title))
+        : escapeAttr(getEntryTitle(entry, lang))
 }

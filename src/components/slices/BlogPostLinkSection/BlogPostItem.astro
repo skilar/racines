@@ -1,7 +1,6 @@
 ---
-import { asText, isFilled } from '@prismicio/client'
-import { fixText } from '@lib/get-fixer'
-import { UI } from '@lib/i18n'
+import { isFilled } from '@prismicio/client'
+import { getEntryTitleHtml } from '@lib/get-entry-title'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
 
 import Image from '../../common/Image.astro'
@@ -20,9 +19,7 @@ interface Props {
 const { coverImage, href, publishedAt, subtitle, title } = Astro.props
 const { lang } = Astro.locals
 
-const postTitle = isFilled.richText(title)
-    ? fixText(asText(title), lang)
-    : UI[lang].untitledEntry
+const postTitle = getEntryTitleHtml({ title }, lang)
 
 const dateString = getJournalEntryDate(publishedAt, lang)
 ---
@@ -40,11 +37,9 @@ const dateString = getJournalEntryDate(publishedAt, lang)
         </time>
 
         {href ? (
-            <a class="postTitle" href={href}>
-                {postTitle}
-            </a>
+            <a class="postTitle" href={href} set:html={postTitle} />
         ) : (
-            <span class="postTitle">{postTitle}</span>
+            <span class="postTitle" set:html={postTitle} />
         )}
 
         <PrismicRichText class="postDescription" richText={subtitle} />

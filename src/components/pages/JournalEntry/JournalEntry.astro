@@ -1,6 +1,6 @@
 ---
 import { asText, isFilled } from '@prismicio/client'
-import getEntryTitle from '@lib/get-entry-title'
+import getEntryTitle, { getEntryTitleHtml } from '@lib/get-entry-title'
 import getOgImage from '@lib/get-og-image'
 import { client } from '@lib/prismic'
 import { collectZoomableImages } from '@lib/zoom'
@@ -51,7 +51,7 @@ const description = isFilled.keyText(page.data.meta_description)
         <article>
             <EntryHeader
                 description={page.data.short_description}
-                heading={heading}
+                headingHtml={getEntryTitleHtml(page.data, lang)}
                 hideHeading={hideHeading}
                 publicationDate={page.first_publication_date}
                 subtitle={page.data.subtitle}
