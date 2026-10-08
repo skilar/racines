@@ -63,6 +63,30 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
             margin-bottom: calc(var(--space-3) * -1.5);
             margin-right: var(--space-1);
             margin-top: var(--space-2);
+
+            /*
+             * Chrome and Safari size a floated first letter differently, so
+             * where supported let the cap sit on the line grid instead.
+             */
+            @supports (initial-letter: 2) or (-webkit-initial-letter: 2) {
+                -webkit-initial-letter: 2;
+                initial-letter: 2;
+                float: none;
+                font-size: inherit;
+                margin: 0 var(--space-1) 0 0;
+            }
+        }
+
+        /*
+         * Safari drops an initial letter onto its own line when the text is
+         * trimmed, so untrim it and pull in the margins by the amount the
+         * cap-to-alphabetic trim would have taken off.
+         */
+        @supports (initial-letter: 2) or (-webkit-initial-letter: 2) {
+            .textContents {
+                margin-block: calc((1lh - 1cap) / -2);
+                text-box-trim: none;
+            }
         }
     }
 
