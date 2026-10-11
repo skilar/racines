@@ -1,6 +1,24 @@
 # Changelog
 
-## [v1.0.1](https://github.com/skilar/racines/compare/v1.0.0...v1.0.1)
+## [v1.1.0](https://github.com/skilar/racines/compare/v1.0.1...v1.1.0)
+
+-   Bump dependencies [`0c512e8`](https://github.com/skilar/racines/commit/0c512e8c019d5a58321a0dc5e73e85600f3ceb1d)
+-   Bump dependencies [`c4517ab`](https://github.com/skilar/racines/commit/c4517abf77741efc483a60fa3b5e1a668d668e1d)
+-   Add small caps [`0c3665a`](https://github.com/skilar/racines/commit/0c3665ad3421df11da15e72c8754080d8f07cc2a)
+-   Add sources slice [`e56701e`](https://github.com/skilar/racines/commit/e56701e455a13fa57f1b1c0a5cefee2ec57b7f03)
+-   Add swash to site title [`8297636`](https://github.com/skilar/racines/commit/82976363b1d8515be1cca88238e31053f08541ca)
+-   Add automatic lang redirection [`eeef9b7`](https://github.com/skilar/racines/commit/eeef9b763434b69e7adb1ba47cbe83877f6e0dd8)
+-   Show small caps and ordinal nums in post titles [`f28707a`](https://github.com/skilar/racines/commit/f28707adaae59dd1197df9d4fbf4277d503754e8)
+-   Add aside variant for text slice [`51a72a2`](https://github.com/skilar/racines/commit/51a72a2859b8d7ce19a81e655ceb82c1d5ab78ab)
+-   Remove article and book from SourceList slice [`f65963b`](https://github.com/skilar/racines/commit/f65963b3e8ac7bee2614b31d11edd006083b6c1d)
+-   Workaround for prismic label bug [`43af6d9`](https://github.com/skilar/racines/commit/43af6d94aaea4d50957d2e8d09cccbad7e735e5d)
+-   Fix big first letter in Chrome and Safari [`1bb8532`](https://github.com/skilar/racines/commit/1bb85321599ca91595a41fc225dec1334400c7c7)
+-   Add swash caps to post subtitles [`ed8431e`](https://github.com/skilar/racines/commit/ed8431e5f2d52385b552a363618be9ffc2dfbed4)
+-   Use superscript nums instead of ordinal nums [`ba7dc22`](https://github.com/skilar/racines/commit/ba7dc22312a79cfb9bb8843fc090bf701c8f9d71)
+-   Update ligature CSS declaration [`a0c8c6b`](https://github.com/skilar/racines/commit/a0c8c6b1a5f3793bb5133be149c266c111c107fc)
+-   Add robots.txt [`940e816`](https://github.com/skilar/racines/commit/940e816dfaa2e1cf0b6dd836167d1a1a87d42ea1)
+
+## [v1.0.1](https://github.com/skilar/racines/compare/v1.0.0...v1.0.1) (29 September 2026)
 
 -   Add Image slice type [`1104b18`](https://github.com/skilar/racines/commit/1104b18b1f9832e89d1a5d61b7bf6f647c1f70ad)
 -   Bump dependencies [`0528773`](https://github.com/skilar/racines/commit/0528773914d243fb0b902d9094dc407d739a937f)
