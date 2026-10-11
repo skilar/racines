@@ -347,13 +347,13 @@ interface LayoutDocumentData {
 	/**
 	 * Title field in *Layout*
 	 *
-	 * - **Field Type**: Text
+	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: *None*
 	 * - **API ID Path**: layout.title
 	 * - **Tab**: Header
-	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
-	title: prismic.KeyTextField;
+	title: prismic.RichTextField;
 	
 	/**
 	 * Subtitle field in *Layout*
@@ -902,12 +902,12 @@ export interface FooterLinkSectionSliceDefaultPrimary {
 	/**
 	 * Title field in *FooterLinkSection → Main Title → Primary*
 	 *
-	 * - **Field Type**: Text
+	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: *None*
 	 * - **API ID Path**: footer_link_section.default.primary.title
-	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
-	title: prismic.KeyTextField;
+	title: prismic.RichTextField;
 	
 	/**
 	 * Subtitle field in *FooterLinkSection → Main Title → Primary*

@@ -5,12 +5,16 @@
     width: 100%;
 }
 
+.ordinal-nums {
+    font-variant-position: super;
+}
+
 .small-caps {
     font-variant-caps: all-small-caps;
 }
 
-.ordinal-nums {
-    font-variant-position: super;
+.swash {
+    font-feature-settings: 'swsh' 1;
 }
 
 .visuallyHidden {

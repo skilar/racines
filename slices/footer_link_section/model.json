@@ -12,10 +12,15 @@
       "version": "initial",
       "primary": {
         "title": {
-          "type": "Text",
+          "type": "StructuredText",
           "config": {
             "label": "Title",
-            "placeholder": ""
+            "placeholder": "",
+            "multi": "heading2",
+            "labels": [
+              "swash"
+            ],
+            "allowTargetBlank": true
           }
         },
         "subtitle": {

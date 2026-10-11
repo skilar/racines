@@ -1,6 +1,5 @@
 ---
 import { isFilled } from '@prismicio/client'
-import { fixText } from '@lib/get-fixer'
 
 import PrismicRichText from '../../common/PrismicRichText.astro'
 
@@ -15,12 +14,11 @@ interface Props {
 }
 
 const { slice, sliceType } = Astro.props
-const { lang } = Astro.locals
 ---
 
 <div class="container" data-slice-type={sliceType}>
-    {isFilled.keyText(slice.primary.title) && (
-        <h2>{fixText(slice.primary.title, lang)}</h2>
+    {isFilled.richText(slice.primary.title) && (
+        <PrismicRichText class="title" richText={slice.primary.title} />
     )}
 
     <PrismicRichText class="subtitle" richText={slice.primary.subtitle} />
@@ -47,19 +45,19 @@ const { lang } = Astro.locals
         }
     }
 
-    h2 {
+    .title {
         color: var(--color-blue-10);
-        font-size: var(--font-size-4-sc);
+        font-size: var(--font-size-5);
+        font-style: italic;
         font-weight: var(--font-weight-bold);
-        letter-spacing: 0.5px;
-        line-height: 1;
+        line-height: 1.1;
         margin-bottom: 0;
     }
 
     .subtitle {
         color: var(--color-red-8);
         font-size: var(--font-size-4);
-        font-style: italic;
+        font-weight: var(--font-weight-medium);
     }
 
     .caption {

@@ -1,6 +1,5 @@
 ---
 import { isFilled } from '@prismicio/client'
-import { fixText } from '@lib/get-fixer'
 import { resolveRoute } from '@lib/prismic-link-resolver'
 
 import PrismicRichText from '../common/PrismicRichText.astro'
@@ -28,9 +27,9 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
         <Nav alternateLanguages={alternateLanguages} menu={menu} />
 
         <div class="logo">
-            {isFilled.keyText(title) && (
+            {isFilled.richText(title) && (
                 <a class="title" href={homeHref}>
-                    {fixText(title, lang)}
+                    <PrismicRichText richText={title} />
                 </a>
             )}
 
@@ -71,8 +70,8 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
         color: var(--header-text-color);
         font-family: var(--font-serif);
         font-size: var(--font-size-5);
+        font-style: italic;
         font-weight: var(--font-weight-bold);
-        letter-spacing: 1px;
         line-height: 1;
         margin-bottom: 0;
         text-decoration: none;
@@ -86,7 +85,7 @@ const homeHref = resolveRoute({ lang, type: 'homepage' })
     .subtitle {
         color: var(--header-text-color);
         font-size: var(--font-size-3-sc);
-        font-style: italic;
+        font-weight: var(--font-weight-medium);
     }
 
     .desktopLangSelector {
