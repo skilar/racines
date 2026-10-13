@@ -1,6 +1,15 @@
 # Changelog
 
-## [v1.1.0](https://github.com/skilar/racines/compare/v1.0.1...v1.1.0)
+## [v1.1.1](https://github.com/skilar/racines/compare/v1.1.0...v1.1.1)
+
+-   Update ImaegList crop sizes [`4b132ae`](https://github.com/skilar/racines/commit/4b132aeae4303c03a7b0c76f8afe254f3ccb8436)
+-   Bump dependencies [`3abebeb`](https://github.com/skilar/racines/commit/3abebeb89da39c65fc29377eda5df4728fdcbd49)
+-   Move lightbox controls on narrower viewports [`9e59b52`](https://github.com/skilar/racines/commit/9e59b52a0a326729bf8943f908c192573d1bd42f)
+-   Maintain image ratios in ImageList [`8ab4b32`](https://github.com/skilar/racines/commit/8ab4b32f5476c8b365bc73273c93a070a938eb08)
+-   Fix lightbox autofocus [`948050b`](https://github.com/skilar/racines/commit/948050b53a238d13bd4c9dc5ebb815ed80f75125)
+-   Update lightbox image preview size [`e2fd083`](https://github.com/skilar/racines/commit/e2fd0832f0c551a95070c1f43c114476d98f33db)
+
+## [v1.1.0](https://github.com/skilar/racines/compare/v1.0.1...v1.1.0) (11 October 2026)
 
 -   Bump dependencies [`0c512e8`](https://github.com/skilar/racines/commit/0c512e8c019d5a58321a0dc5e73e85600f3ceb1d)
 -   Bump dependencies [`c4517ab`](https://github.com/skilar/racines/commit/c4517abf77741efc483a60fa3b5e1a668d668e1d)
