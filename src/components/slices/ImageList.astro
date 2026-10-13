@@ -14,28 +14,34 @@ interface Props {
 
 const { noteOffset, slice, zoomOffset } = Astro.props
 
-// Make sure there are actually images in the slice
 const images = slice.primary.images
     .map(({ image }) => image)
     .filter(isFilled.image)
-
 const isVertical = slice.variation === 'vertical'
-const count = Math.max(images.length, 1)
-const sizes = isVertical
-    ? 'auto, 100vw'
-    : `auto, (min-width: 650px) calc(min(100vw, 65rem) / ${count}), 50vw`
+
+const ratios = images.map(
+    ({ dimensions }) => dimensions.width / dimensions.height,
+)
+const totalRatio = ratios.reduce((sum, ratio) => sum + ratio, 0) || 1
+
+const getSizes = (ratio: number) =>
+    isVertical
+        ? 'auto, 100vw'
+        : `auto, (min-width: 650px) calc(min(100vw, 60rem) * ${ratio / totalRatio}), calc(min(60vw, 22rem) * ${ratio})`
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
     {images.length > 0 && (
         <ul class:list={['imageList', { vertical: isVertical }]}>
             {images.map((image, index) => (
-                <li>
+                <li
+                    style={isVertical ? undefined : `--ratio: ${ratios[index]}`}
+                >
                     <ZoomableImage
                         class="listImage"
                         image={image}
                         quality={75}
-                        sizes={sizes}
+                        sizes={getSizes(ratios[index] ?? 1)}
                         zoomIndex={
                             zoomOffset === undefined
                                 ? undefined
@@ -87,11 +93,14 @@ const sizes = isVertical
     }
 
     .imageList:not(.vertical) li {
-        flex: 0 0 50vw;
+        --strip-height: min(60vw, 22rem);
+
+        flex: 0 0
+            calc(var(--ratio, 1) * var(--strip-height) + var(--space-1) + 2px);
         min-width: 0;
 
         @container imageList (width >= 40rem) {
-            flex: 1 1 0;
+            flex: var(--ratio, 1) 1 0;
         }
     }
 </style>
