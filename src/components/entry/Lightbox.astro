@@ -154,6 +154,8 @@ const WIDTHS = [800, 1200, 1600, 2400]
         min-block-size: 0;
 
         :global(.slideImage) {
+            contain: inline-size;
+            contain-intrinsic-inline-size: 100vw;
             block-size: auto;
             inline-size: auto;
             max-block-size: 100%;
