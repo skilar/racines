@@ -18,7 +18,12 @@ const WIDTHS = [800, 1200, 1600, 2400]
 ---
 
 {images.length > 0 && (
-    <dialog aria-label={UI[lang].imageViewer} class="lightbox" id="lightbox">
+    <dialog
+        aria-label={UI[lang].imageViewer}
+        autofocus
+        class="lightbox"
+        id="lightbox"
+    >
         <ul class="track" id="lightboxTrack">
             {images.map(({ image, caption }) => (
                 <li class="slide">
@@ -94,6 +99,7 @@ const WIDTHS = [800, 1200, 1600, 2400]
         max-block-size: none;
         max-inline-size: none;
         opacity: 0;
+        outline: none;
         padding: 0;
         transition:
             opacity 150ms ease,
