@@ -134,6 +134,7 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
 
     .title {
         font-size: var(--font-size-5-sc);
+        line-height: 1.1;
 
         &.notebook {
             font-size: var(--font-size-4-sc);
@@ -159,14 +160,21 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
         margin-top: var(--space-4);
 
         @container journal (width > 40rem) {
-            margin-top: 0;
+            margin-top: var(--space-1);
         }
     }
 
     .description {
         color: var(--color-ivory-11);
         font-size: var(--font-size-3-sc);
-        margin-block: var(--space-5);
+        margin-top: var(--space-5);
+    }
+
+    .subtitle,
+    .description {
+        &:has(+ .postDate) {
+            margin-bottom: var(--space-5);
+        }
     }
 
     .imageWrapper {
