@@ -20,22 +20,22 @@
         "typegen": "npx prismic-ts-codegen"
     },
     "dependencies": {
-        "@astrojs/netlify": "^8.2.9",
+        "@astrojs/netlify": "^8.2.10",
         "@astrojs/rss": "^4.0.19",
         "@astrojs/sitemap": "^3.7.4",
         "@prismicio/client": "^7.22.3",
         "@skilar/jolitypo-ts": "^0.1.0",
-        "astro": "^7.3.8"
+        "astro": "^7.4.0"
     },
     "devDependencies": {
         "@astrojs/check": "^0.9.10",
         "@astrojs/ts-plugin": "^1.10.12",
         "@eslint/js": "^10.0.1",
-        "@netlify/edge-functions": "^3.0.8",
+        "@netlify/edge-functions": "^4.0.2",
         "@prismicio/custom-types-client": "^2.1.0",
         "@prismicio/types": "^0.2.9",
         "@types/node": "^26.6.5",
-        "dotenv": "^18.0.7",
+        "dotenv": "^18.0.8",
         "dotenv-cli": "^11.0.0",
         "eslint": "^10.12.0",
         "eslint-config-prettier": "^10.1.8",
