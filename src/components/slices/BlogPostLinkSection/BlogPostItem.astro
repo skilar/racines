@@ -6,79 +6,113 @@ import getJournalEntryDate from '@lib/get-journal-entry-date'
 import Image from '../../common/Image.astro'
 import PrismicRichText from '../../common/PrismicRichText.astro'
 
-import type { BlogPostDocument } from '@typez/generated/prismic'
+import type { ImageField, RichTextField } from '@prismicio/client'
+import type { JournalItem } from '@lib/get-journal-items'
+import type { NotebookPostDocument } from '@typez/generated/prismic'
 
 interface Props {
-    coverImage: BlogPostDocument['data']['cover_image']
-    href: string | undefined
-    publishedAt: BlogPostDocument['first_publication_date']
-    subtitle: BlogPostDocument['data']['subtitle']
-    title: BlogPostDocument['data']['title']
+    item: JournalItem
 }
 
-const { coverImage, href, publishedAt, subtitle, title } = Astro.props
+const { item } = Astro.props
+
+function getFirstSliceImage(
+    slices: NotebookPostDocument['data']['slices'],
+): ImageField | undefined {
+    for (const slice of slices) {
+        const images =
+            slice.slice_type === 'image'
+                ? [slice.primary.image]
+                : slice.slice_type === 'image_list'
+                  ? slice.primary.images.map(({ image }) => image)
+                  : []
+        const image = images.find((image) => isFilled.image(image))
+
+        if (image) {
+            return image
+        }
+    }
+
+    return undefined
+}
 const { lang } = Astro.locals
 
-const postTitle = getEntryTitleHtml({ title }, lang)
+let image: ImageField
+let subtitle: RichTextField | null = null
+let description: RichTextField | null = null
 
-const dateString = getJournalEntryDate(publishedAt, lang)
+switch (item.type) {
+    case 'blog_post':
+        image = item.doc.data.cover_image
+        subtitle = item.doc.data.subtitle
+        description = item.doc.data.short_description
+        break
+    case 'notebook_post':
+        image =
+            getFirstSliceImage(item.doc.data.slices) ?? item.doc.data.meta_image
+        break
+    case 'recipe':
+        image = item.doc.data.meta_image
+        break
+}
+
+const postTitle = getEntryTitleHtml(item.doc.data, lang)
+const dateString = getJournalEntryDate(item.publicationDate, lang)
 ---
 
-<li class="post">
-    {isFilled.image(coverImage) && (
+<li class="post" data-type={item.type}>
+    {isFilled.image(image) && (
         <div>
-            <Image class="postImage" image={coverImage} quality={75} />
+            <Image image={image} quality={75} />
         </div>
     )}
 
     <div class="postText">
-        <time class="postDate" datetime={publishedAt}>
+        <time class="postDate" datetime={item.publicationDate}>
             {dateString}
         </time>
 
-        {href ? (
-            <a class="postTitle" href={href} set:html={postTitle} />
-        ) : (
-            <span class="postTitle" set:html={postTitle} />
+        <a class="postTitle" href={item.href} set:html={postTitle} />
+
+        {subtitle && (
+            <PrismicRichText class="postSubtitle" richText={subtitle} />
         )}
 
-        <PrismicRichText class="postDescription" richText={subtitle} />
+        {description && (
+            <PrismicRichText class="postDescription" richText={description} />
+        )}
     </div>
 </li>
 
 <style>
     .post {
         display: grid;
-        gap: 0;
-        grid-row: auto / span 2;
-        grid-template-rows: subgrid;
+        gap: var(--space-5);
     }
 
-    .postImage {
-        height: 15rem;
-        object-fit: cover;
-    }
-
-    .postText {
-        background-color: var(--color-ivory-2);
-        border-inline: 1px solid var(--color-ivory-4);
-        border-bottom: var(--double-border);
-        padding-block: var(--space-4) var(--space-5);
-        padding-inline: var(--space-3);
+    .postLabel {
+        color: var(--color-blue-10);
+        font-size: var(--font-size-3-sc);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-medium);
+        line-height: 1;
+        margin-bottom: var(--space-2);
     }
 
     .postDate {
         color: var(--color-ivory-9);
         display: block;
         font-size: var(--font-size-3-sc);
-        font-variant-caps: all-small-caps;
+        font-variant-caps: normal;
         font-weight: var(--font-weight-medium);
         line-height: 1;
-        margin-bottom: var(--space-4);
+        margin-bottom: var(--space-5);
+        text-box-edge: cap alphabetic;
+        text-box-trim: trim-both;
     }
 
     .postTitle {
-        color: var(--color-red-8);
+        color: var(--color-ivory-11);
         display: inline-block;
         font-size: var(--font-size-4);
         font-weight: var(--font-weight-bold);
@@ -92,13 +126,66 @@ const dateString = getJournalEntryDate(publishedAt, lang)
             text-decoration-thickness: 1px;
         }
 
+        &:has(+ :is(.postSubtitle, .postDescription)) {
+            margin-bottom: var(--space-2);
+        }
+    }
+
+    .postSubtitle {
+        color: var(--color-ivory-10);
+        font-size: var(--font-size-3-sc);
+
         &:has(+ .postDescription) {
-            margin-bottom: var(--space-4);
+            margin-bottom: var(--space-3);
         }
     }
 
     .postDescription {
-        color: var(--color-grey-11);
-        font-size: var(--font-size-3);
+        color: var(--color-ivory-12);
+        font-size: var(--font-size-4);
+    }
+
+    .post[data-type='blog_post'] {
+        @container featuredBlogPostsList (width > 40rem) {
+            grid-template-columns: 18rem 1fr;
+        }
+
+        .postTitle {
+            font-size: var(--font-size-5);
+        }
+    }
+
+    .post[data-type='notebook_post'] {
+        background-color: var(--color-ivory-1);
+        border: 1px solid var(--color-ivory-4);
+        border-radius: 2px;
+        gap: var(--space-4);
+        padding: var(--space-2) var(--space-2) var(--space-5);
+
+        @container featuredBlogPostsList (width > 35rem) {
+            grid-template-columns: 7rem 1fr;
+            padding: var(--space-2);
+        }
+
+        .postText {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .postDate {
+            margin-bottom: var(--space-4);
+        }
+
+        .postTitle {
+            font-style: italic;
+            font-weight: var(--font-weight-medium);
+        }
+    }
+
+    .post[data-type='recipe'] {
+        @container featuredBlogPostsList (width > 40rem) {
+            grid-template-columns: 18rem 1fr;
+        }
     }
 </style>

@@ -799,7 +799,7 @@ export interface BlogPostLinkSectionSliceDefaultPrimaryBlogPostsItem {
 	 * - **API ID Path**: blog_post_link_section.default.primary.blog_posts[].blog_post
 	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
 	 */
-	blog_post: ContentRelationshipFieldWithData<[{"id":"blog_post","fields":["title","subtitle","short_description","cover_image"]}]>;
+	blog_post: prismic.ContentRelationshipField<"blog_post"> | prismic.ContentRelationshipField<"notebook_post"> | prismic.ContentRelationshipField<"recipe">;
 }
 
 /**

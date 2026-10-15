@@ -20,7 +20,7 @@ type JournalItemOf<Doc> = Doc extends JournalDocument
 export type JournalItem = JournalItemOf<JournalDocument>
 export type JournalItemType = JournalItem['type']
 
-function toJournalItem(doc: JournalDocument, lang: Lang): JournalItem {
+export function toJournalItem(doc: JournalDocument, lang: Lang): JournalItem {
     // TypeScript cannot see that `doc.type` and `doc` stay paired.
     return {
         doc,

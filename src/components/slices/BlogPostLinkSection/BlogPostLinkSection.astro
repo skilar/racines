@@ -1,12 +1,15 @@
 ---
 import { isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
+import { toJournalItem } from '@lib/get-journal-items'
+import { client } from '@lib/prismic'
 import { getLinkAttrs } from '@lib/prismic-link-resolver'
-import getRelationshipDate from '@lib/get-relationship-date'
 
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 import BlogPostItem from './BlogPostItem.astro'
 
+import type { JournalItem } from '@lib/get-journal-items'
+import type { JournalDocument } from '@lib/prismic'
 import type { BlogPostLinkSectionSlice } from '@typez/generated/prismic'
 
 interface Props {
@@ -17,6 +20,23 @@ const { slice } = Astro.props
 const { lang } = Astro.locals
 
 const linkAttrs = getLinkAttrs(slice.primary.link)
+
+const ids = slice.primary.blog_posts
+    .map(({ blog_post: post }) => post)
+    .filter(isFilled.contentRelationship)
+    .map((post) => post.id)
+
+const documents = ids.length
+    ? await client.getAllByIDs<JournalDocument>(ids, { lang })
+    : []
+const documentsById = new Map(documents.map((doc) => [doc.id, doc]))
+
+// The API does not keep the editor's order and drops unpublished entries.
+const items: JournalItem[] = ids.flatMap((id) => {
+    const doc = documentsById.get(id)
+
+    return doc ? [toJournalItem(doc, lang)] : []
+})
 ---
 
 <div class="container" data-slice-type={slice.slice_type}>
@@ -41,20 +61,12 @@ const linkAttrs = getLinkAttrs(slice.primary.link)
             )}
         </div>
 
-        {isFilled.group(slice.primary.blog_posts) && (
+        {items.length > 0 && (
             <div class="blogPostsContainer">
                 <ul class="blogPosts">
-                    {slice.primary.blog_posts.map(({ blog_post: post }) =>
-                        isFilled.contentRelationship(post) && post.data ? (
-                            <BlogPostItem
-                                coverImage={post.data.cover_image}
-                                href={post.url}
-                                publishedAt={getRelationshipDate(post)}
-                                subtitle={post.data.subtitle}
-                                title={post.data.title}
-                            />
-                        ) : null,
-                    )}
+                    {items.map((item) => (
+                        <BlogPostItem item={item} />
+                    ))}
                 </ul>
             </div>
         )}
@@ -116,19 +128,11 @@ const linkAttrs = getLinkAttrs(slice.primary.link)
     }
 
     .blogPostsContainer {
-        container: featuredBlogPostsList / inline-size;
     }
 
     .blogPosts {
+        container: featuredBlogPostsList / inline-size;
         display: grid;
-        gap: var(--space-5);
-
-        @container featuredBlogPostsList (width > 40rem) {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        @container featuredBlogPostsList (width > 50rem) {
-            grid-template-columns: repeat(3, 1fr);
-        }
+        gap: var(--space-7);
     }
 </style>
