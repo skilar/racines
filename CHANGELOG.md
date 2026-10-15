@@ -1,6 +1,12 @@
 # Changelog
 
-## [v1.1.1](https://github.com/skilar/racines/compare/v1.1.0...v1.1.1)
+## [v1.2.0](https://github.com/skilar/racines/compare/v1.1.1...v1.2.0)
+
+-   Bump dependencies [`cbd5501`](https://github.com/skilar/racines/commit/cbd55016a3a8e901233912b69e2b4fac174060d0)
+-   Show all three post types in BlogPostLinkSection slice [`8becf19`](https://github.com/skilar/racines/commit/8becf19a3d7bec3540a5b9b1e42db538063acc47)
+-   Update blog post header styles [`f913970`](https://github.com/skilar/racines/commit/f913970f610885fcf630b5171274c61b0cb0e0c4)
+
+## [v1.1.1](https://github.com/skilar/racines/compare/v1.1.0...v1.1.1) (13 October 2026)
 
 -   Update ImaegList crop sizes [`4b132ae`](https://github.com/skilar/racines/commit/4b132aeae4303c03a7b0c76f8afe254f3ccb8436)
 -   Bump dependencies [`3abebeb`](https://github.com/skilar/racines/commit/3abebeb89da39c65fc29377eda5df4728fdcbd49)
