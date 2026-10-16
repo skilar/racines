@@ -1,0 +1,28 @@
+---
+import ImageListRepeatable from './ImageListRepeatable.astro'
+import ImageListBold from './ImageListBold.astro'
+
+import type { ImageListSlice } from '@typez/generated/prismic'
+
+interface Props {
+    noteOffset?: number | undefined
+    slice: ImageListSlice
+    zoomOffset?: number | undefined
+}
+
+const { noteOffset, slice, zoomOffset } = Astro.props
+---
+
+{slice.variation === 'twoBoldImages' ? (
+    <ImageListBold
+        noteOffset={noteOffset}
+        slice={slice}
+        zoomOffset={zoomOffset}
+    />
+) : (
+    <ImageListRepeatable
+        noteOffset={noteOffset}
+        slice={slice}
+        zoomOffset={zoomOffset}
+    />
+)}

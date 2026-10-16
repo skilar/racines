@@ -1305,9 +1305,74 @@ export interface ImageListSliceHorizonalWithSingleCaptionPrimary {
 export type ImageListSliceHorizonalWithSingleCaption = prismic.SharedSliceVariation<"horizonalWithSingleCaption", Simplify<ImageListSliceHorizonalWithSingleCaptionPrimary>, never>;
 
 /**
+ * Primary content in *ImageList → Two Bold Images → Primary*
+ */
+export interface ImageListSliceTwoBoldImagesPrimary {
+	/**
+	 * Background Color field in *ImageList → Two Bold Images → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Burgundy
+	 * - **API ID Path**: image_list.twoBoldImages.primary.background_color
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	background_color: prismic.SelectField<"Burgundy" | "Navy" | "Tan", "filled">;
+	
+	/**
+	 * Image One field in *ImageList → Two Bold Images → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.twoBoldImages.primary.image_one
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image_one: prismic.ImageField<never>;
+	
+	/**
+	 * Image One Caption field in *ImageList → Two Bold Images → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.twoBoldImages.primary.image_one_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	image_one_caption: prismic.RichTextField;
+	
+	/**
+	 * Image Two field in *ImageList → Two Bold Images → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.twoBoldImages.primary.image_two
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image_two: prismic.ImageField<never>;
+	
+	/**
+	 * Image Two Caption field in *ImageList → Two Bold Images → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.twoBoldImages.primary.image_two_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	image_two_caption: prismic.RichTextField;
+}
+
+/**
+ * Two Bold Images variation for ImageList Slice
+ *
+ * - **API ID**: `twoBoldImages`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageListSliceTwoBoldImages = prismic.SharedSliceVariation<"twoBoldImages", Simplify<ImageListSliceTwoBoldImagesPrimary>, never>;
+
+/**
  * Slice variation for *ImageList*
  */
-type ImageListSliceVariation = ImageListSliceDefault | ImageListSliceVertical | ImageListSliceHorizonalWithSingleCaption
+type ImageListSliceVariation = ImageListSliceDefault | ImageListSliceVertical | ImageListSliceHorizonalWithSingleCaption | ImageListSliceTwoBoldImages
 
 /**
  * ImageList Shared Slice
@@ -1770,10 +1835,12 @@ declare module "@prismicio/client" {
 			ImageListSliceVerticalPrimary,
 			ImageListSliceHorizonalWithSingleCaptionPrimaryImagesItem,
 			ImageListSliceHorizonalWithSingleCaptionPrimary,
+			ImageListSliceTwoBoldImagesPrimary,
 			ImageListSliceVariation,
 			ImageListSliceDefault,
 			ImageListSliceVertical,
 			ImageListSliceHorizonalWithSingleCaption,
+			ImageListSliceTwoBoldImages,
 			NewsletterSignupFormSlice,
 			NewsletterSignupFormSliceDefaultPrimary,
 			NewsletterSignupFormSliceInlineSignupFormPrimary,

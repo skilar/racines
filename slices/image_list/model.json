@@ -123,6 +123,63 @@
           }
         }
       }
+    },
+    {
+      "id": "twoBoldImages",
+      "name": "Two Bold Images",
+      "description": "Default",
+      "imageUrl": "",
+      "docURL": "...",
+      "version": "initial",
+      "primary": {
+        "background_color": {
+          "type": "Select",
+          "config": {
+            "label": "Background Color",
+            "placeholder": "",
+            "default_value": "Burgundy",
+            "options": [
+              "Burgundy",
+              "Navy",
+              "Tan"
+            ]
+          }
+        },
+        "image_one": {
+          "type": "Image",
+          "config": {
+            "label": "Image One",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "image_one_caption": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Image One Caption",
+            "placeholder": "",
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "allowTargetBlank": true
+          }
+        },
+        "image_two": {
+          "type": "Image",
+          "config": {
+            "label": "Image Two",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "image_two_caption": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Image Two Caption",
+            "placeholder": "",
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "allowTargetBlank": true
+          }
+        }
+      }
     }
   ],
   "description": "ImageList"

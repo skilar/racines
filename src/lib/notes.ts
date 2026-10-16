@@ -1,4 +1,4 @@
-import { asHTML } from '@prismicio/client'
+import { asHTML, isFilled } from '@prismicio/client'
 import getFixer from '@lib/get-fixer'
 
 import type {
@@ -33,6 +33,25 @@ export const noteTipId = (number: number) => `tip-${number}`
 export function getNoteFields(slice: AnySlice): RichTextField[] {
     switch (slice.slice_type) {
         case 'image_list':
+            // This variation captions each image on its own. A caption only
+            // renders with its image, like `ImageListBold.astro`.
+            if (slice.variation === 'twoBoldImages') {
+                const { primary } = slice
+
+                return [
+                    {
+                        image: primary.image_one,
+                        caption: primary.image_one_caption,
+                    },
+                    {
+                        image: primary.image_two,
+                        caption: primary.image_two_caption,
+                    },
+                ].flatMap(({ image, caption }) =>
+                    isFilled.image(image) ? [caption] : [],
+                )
+            }
+
             // Not all variations have a caption
             return 'caption' in slice.primary ? [slice.primary.caption] : []
         case 'text':
@@ -65,9 +84,13 @@ function getFootnotes(field: RichTextField) {
     )
 }
 
+export function countFieldNotes(field: RichTextField): number {
+    return getFootnotes(field).length
+}
+
 export function countNotes(slice: AnySlice): number {
     return getNoteFields(slice).reduce(
-        (total, field) => total + getFootnotes(field).length,
+        (total, field) => total + countFieldNotes(field),
         0,
     )
 }

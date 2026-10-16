@@ -142,6 +142,33 @@ export default function renderEntryHtml(
     for (const slice of entry.data.slices) {
         switch (slice.slice_type) {
             case 'image_list': {
+                // Each image carries its own caption, so each gets a figure.
+                if (slice.variation === 'twoBoldImages') {
+                    const pairs = [
+                        [
+                            slice.primary.image_one,
+                            slice.primary.image_one_caption,
+                        ],
+                        [
+                            slice.primary.image_two,
+                            slice.primary.image_two_caption,
+                        ],
+                    ] as const
+
+                    for (const [image, imageCaption] of pairs) {
+                        if (!isFilled.image(image)) {
+                            continue
+                        }
+
+                        const caption = renderRichText(imageCaption)
+
+                        parts.push(
+                            `<figure>${renderImage(image, IMAGE_MAX_WIDTH)}${caption && `<figcaption>${caption}</figcaption>`}</figure>`,
+                        )
+                    }
+                    break
+                }
+
                 const images = slice.primary.images
                     .map(({ image }) => image)
                     .filter(isFilled.image)

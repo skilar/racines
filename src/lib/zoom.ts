@@ -25,6 +25,19 @@ export function getZoomableImages(slice: AnySlice): LightboxItem[] {
                   ]
                 : []
         case 'image_list':
+            if (slice.variation === 'twoBoldImages') {
+                return [
+                    {
+                        image: slice.primary.image_one,
+                        caption: slice.primary.image_one_caption,
+                    },
+                    {
+                        image: slice.primary.image_two,
+                        caption: slice.primary.image_two_caption,
+                    },
+                ].filter(({ image }) => isFilled.image(image))
+            }
+
             // Filter on the same condition as `ImageList.astro` so that the
             // indices line up with each image's `data-zoom-index`.
             return slice.primary.images

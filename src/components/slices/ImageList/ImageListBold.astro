@@ -1,0 +1,121 @@
+---
+import { isFilled } from '@prismicio/client'
+import { countFieldNotes } from '@lib/notes'
+
+import ImageCaption from '../../common/ImageCaption.astro'
+import ZoomableImage from '../../common/ZoomableImage.astro'
+
+import type { ImageListSlice } from '@typez/generated/prismic'
+
+interface Props {
+    noteOffset?: number | undefined
+    slice: Extract<ImageListSlice, { variation: 'twoBoldImages' }>
+    zoomOffset?: number | undefined
+}
+
+const { noteOffset, slice, zoomOffset } = Astro.props
+const {
+    background_color,
+    image_one,
+    image_one_caption,
+    image_two,
+    image_two_caption,
+} = slice.primary
+
+const figures = [
+    { image: image_one, caption: image_one_caption },
+    { image: image_two, caption: image_two_caption },
+].flatMap(({ image, caption }) =>
+    isFilled.image(image) ? [{ image, caption }] : [],
+)
+
+const getNoteOffset = (index: number) =>
+    noteOffset === undefined || index === 0
+        ? noteOffset
+        : noteOffset + countFieldNotes(figures[0]?.caption ?? [])
+
+const background = (background_color ?? 'Burgundy').toLowerCase()
+const sizes = 'auto, (min-width: 650px) calc(min(100vw, 80rem) / 2), 100vw'
+---
+
+{figures.length > 0 && (
+    <div
+        class="container"
+        data-background={background}
+        data-slice-type={slice.slice_type}
+        data-slice-variation={slice.variation}
+    >
+        <div class="figures">
+            {figures.map(({ image, caption }, index) => (
+                <figure>
+                    <ZoomableImage
+                        class="doubleBold"
+                        image={image}
+                        quality={75}
+                        sizes={sizes}
+                        zoomIndex={
+                            zoomOffset === undefined
+                                ? undefined
+                                : zoomOffset + index
+                        }
+                    />
+
+                    {isFilled.richText(caption) && (
+                        <ImageCaption
+                            caption={caption}
+                            noteOffset={getNoteOffset(index)}
+                        />
+                    )}
+                </figure>
+            ))}
+        </div>
+    </div>
+)}
+
+<style>
+    .container {
+        --bold-background: var(--color-red-10);
+        --bold-text: var(--color-ivory-1);
+
+        background: var(--bold-background);
+        color: var(--bold-text);
+        container: boldImages / inline-size;
+        padding-block: calc(var(--space-9) * 2);
+
+        &[data-background='navy'] {
+            --bold-background: var(--color-blue-11);
+        }
+
+        &[data-background='tan'] {
+            --bold-background: var(--color-ivory-1);
+            --bold-text: var(--color-grey-11);
+        }
+    }
+
+    .figures {
+        display: grid;
+
+        @container boldImages (width >= 40rem) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    figure {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .doubleBold {
+        border: var(--space-3) solid var(--color-ivory-1);
+        max-width: 25rem;
+    }
+
+    .figures :global(.caption) {
+        color: inherit;
+        margin-top: var(--space-3);
+        max-width: none;
+    }
+</style>
