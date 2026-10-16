@@ -13,25 +13,17 @@ const { pageStyle, title } = Astro.props
 const { lang } = Astro.locals
 ---
 
-<main
-    id="main"
-    class:list={[
-        'contained',
-        {
-            withSidebar: pageStyle === 'With Sidebar',
-        },
-    ]}
->
+<main id="main" class:list={{ withSidebar: pageStyle === 'With Sidebar' }}>
     <div class="container">
-        {
-            isFilled.keyText(title) && (
+        {isFilled.keyText(title) && (
+            <div class="contained">
                 <div class="pageHeader">
                     <h1>{fixText(title, lang)}</h1>
                 </div>
-            )
-        }
+            </div>
+        )}
 
-        <div class="slices">
+        <div class="slices bleedGrid">
             <slot />
         </div>
     </div>
@@ -81,6 +73,7 @@ const { lang } = Astro.locals
     .slices {
         > :global(div) {
             margin-inline: auto;
+            width: 100%;
         }
 
         :global(> div:has(+ div)) {
