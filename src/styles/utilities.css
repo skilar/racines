@@ -28,6 +28,23 @@
     width: 1px;
 }
 
+[data-background] {
+    --surface-background: var(--color-red-10);
+    --surface-text: var(--color-ivory-1);
+
+    background-color: var(--surface-background);
+    color: var(--surface-text);
+}
+
+[data-background='navy'] {
+    --surface-background: var(--color-blue-11);
+}
+
+[data-background='tan'] {
+    --surface-background: var(--color-ivory-1);
+    --surface-text: var(--color-grey-11);
+}
+
 .bleedGrid {
     display: grid;
     grid-template-columns:
@@ -43,7 +60,8 @@
     > :is(
         [data-slice-type='quote'],
         [data-slice-type='hero'][data-slice-variation='imageWithGradient'],
-        [data-slice-type='image_list'][data-slice-variation='twoBoldImages']
+        [data-slice-type='image_list'][data-slice-variation='twoBoldImages'],
+        [data-slice-type='testimonial']
     ) {
         grid-column: full;
     }

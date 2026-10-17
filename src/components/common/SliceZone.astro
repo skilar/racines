@@ -10,6 +10,7 @@ import Image from '@components/slices/Image.astro'
 import ImageList from '@components/slices/ImageList/ImageList.astro'
 import NewsletterSignupForm from '@components/slices/NewsletterSignupForm/NewsletterSignupForm.astro'
 import Quote from '@components/slices/Quote.astro'
+import Testimonial from '@components/slices/Testimonial.astro'
 import Text from '@components/slices/Text.astro'
 
 import type { SliceZone } from '@prismicio/client'
@@ -93,6 +94,8 @@ const firstTextSliceIndex = slices.findIndex(
         // Back matter: `Sources` renders these after the notes.
         case 'source_list':
             return null
+        case 'testimonial':
+            return <Testimonial slice={slice} />
         case 'text':
             return (
                 <Text

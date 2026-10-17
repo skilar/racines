@@ -104,12 +104,20 @@
         "config": {
           "label": "Booking Status",
           "placeholder": "",
-          "default_value": "coming_soon",
+          "default_value": "notify",
           "options": [
-            "coming_soon",
-            "open",
-            "full"
+            "notify",
+            "open"
           ]
+        }
+      },
+      "booking_availability": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Booking Availability",
+          "placeholder": "",
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "allowTargetBlank": true
         }
       },
       "booking_link": {
@@ -155,6 +163,12 @@
               "type": "SharedSlice"
             },
             "text": {
+              "type": "SharedSlice"
+            },
+            "quote": {
+              "type": "SharedSlice"
+            },
+            "testimonial": {
               "type": "SharedSlice"
             }
           }

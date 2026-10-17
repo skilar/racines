@@ -727,7 +727,7 @@ interface TempHomepageDocumentData {
  */
 export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
 
-type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice
+type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice | QuoteSlice | TestimonialSlice
 
 /**
  * Content for Workshop documents
@@ -848,12 +848,23 @@ interface WorkshopDocumentData {
 	 *
 	 * - **Field Type**: Select
 	 * - **Placeholder**: *None*
-	 * - **Default Value**: coming_soon
+	 * - **Default Value**: notify
 	 * - **API ID Path**: workshop.booking_status
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/select
 	 */
-	booking_status: prismic.SelectField<"coming_soon" | "open" | "full", "filled">;
+	booking_status: prismic.SelectField<"notify" | "open", "filled">;
+	
+	/**
+	 * Booking Availability field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.booking_availability
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	booking_availability: prismic.RichTextField;
 	
 	/**
 	 * Booking Link field in *Workshop*
@@ -1894,6 +1905,142 @@ type SourceListSliceVariation = SourceListSliceDefault
 export type SourceListSlice = prismic.SharedSlice<"source_list", SourceListSliceVariation>;
 
 /**
+ * Primary content in *Testimonial → Default → Primary*
+ */
+export interface TestimonialSliceDefaultPrimary {
+	/**
+	 * Quote field in *Testimonial → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: testimonial.default.primary.quote
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	quote: prismic.RichTextField;
+	
+	/**
+	 * Source field in *Testimonial → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: testimonial.default.primary.source
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	source: prismic.RichTextField;
+	
+	/**
+	 * Background Color field in *Testimonial → Default → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Tan
+	 * - **API ID Path**: testimonial.default.primary.background_color
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	background_color: prismic.SelectField<"Tan" | "Burgundy" | "Navy", "filled">;
+}
+
+/**
+ * Default variation for Testimonial Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TestimonialSliceDefault = prismic.SharedSliceVariation<"default", Simplify<TestimonialSliceDefaultPrimary>, never>;
+
+/**
+ * Primary content in *Testimonial → With Image → Primary*
+ */
+export interface TestimonialSliceWithImagePrimary {
+	/**
+	 * Quote field in *Testimonial → With Image → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: testimonial.withImage.primary.quote
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	quote: prismic.RichTextField;
+	
+	/**
+	 * Source field in *Testimonial → With Image → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: testimonial.withImage.primary.source
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	source: prismic.RichTextField;
+	
+	/**
+	 * Background Color field in *Testimonial → With Image → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Tan
+	 * - **API ID Path**: testimonial.withImage.primary.background_color
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	background_color: prismic.SelectField<"Tan" | "Burgundy" | "Navy", "filled">;
+	
+	/**
+	 * Image Position field in *Testimonial → With Image → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Left
+	 * - **API ID Path**: testimonial.withImage.primary.image_position
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	image_position: prismic.SelectField<"Left" | "Right", "filled">;
+	
+	/**
+	 * Image Background Color field in *Testimonial → With Image → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Navy
+	 * - **API ID Path**: testimonial.withImage.primary.image_background_color
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	image_background_color: prismic.SelectField<"Navy" | "Burgundy" | "Tan", "filled">;
+	
+	/**
+	 * Image field in *Testimonial → With Image → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: testimonial.withImage.primary.image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
+ * With Image variation for Testimonial Slice
+ *
+ * - **API ID**: `withImage`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TestimonialSliceWithImage = prismic.SharedSliceVariation<"withImage", Simplify<TestimonialSliceWithImagePrimary>, never>;
+
+/**
+ * Slice variation for *Testimonial*
+ */
+type TestimonialSliceVariation = TestimonialSliceDefault | TestimonialSliceWithImage
+
+/**
+ * Testimonial Shared Slice
+ *
+ * - **API ID**: `testimonial`
+ * - **Description**: Testimonial
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TestimonialSlice = prismic.SharedSlice<"testimonial", TestimonialSliceVariation>;
+
+/**
  * Primary content in *Text → Default → Primary*
  */
 export interface TextSliceDefaultPrimary {
@@ -2133,6 +2280,12 @@ declare module "@prismicio/client" {
 			SourceListSliceDefaultPrimary,
 			SourceListSliceVariation,
 			SourceListSliceDefault,
+			TestimonialSlice,
+			TestimonialSliceDefaultPrimary,
+			TestimonialSliceWithImagePrimary,
+			TestimonialSliceVariation,
+			TestimonialSliceDefault,
+			TestimonialSliceWithImage,
 			TextSlice,
 			TextSliceDefaultPrimary,
 			TextSlicePullQuotePrimary,

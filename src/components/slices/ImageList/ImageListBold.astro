@@ -34,7 +34,7 @@ const getNoteOffset = (index: number) =>
         ? noteOffset
         : noteOffset + countFieldNotes(figures[0]?.caption ?? [])
 
-const background = (background_color ?? 'Burgundy').toLowerCase()
+const background = background_color.toLowerCase()
 const sizes = 'auto, (min-width: 650px) calc(min(100vw, 80rem) / 2), 100vw'
 ---
 
@@ -74,22 +74,8 @@ const sizes = 'auto, (min-width: 650px) calc(min(100vw, 80rem) / 2), 100vw'
 
 <style>
     .container {
-        --bold-background: var(--color-red-10);
-        --bold-text: var(--color-ivory-1);
-
-        background: var(--bold-background);
-        color: var(--bold-text);
         container: boldImages / inline-size;
         padding-block: calc(var(--space-9) * 2);
-
-        &[data-background='navy'] {
-            --bold-background: var(--color-blue-11);
-        }
-
-        &[data-background='tan'] {
-            --bold-background: var(--color-ivory-1);
-            --bold-text: var(--color-grey-11);
-        }
     }
 
     .figures {
@@ -109,7 +95,7 @@ const sizes = 'auto, (min-width: 650px) calc(min(100vw, 80rem) / 2), 100vw'
     }
 
     .doubleBold {
-        border: var(--space-3) solid var(--color-ivory-1);
+        border: var(--image-border);
         max-width: 25rem;
     }
 
