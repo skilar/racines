@@ -4,6 +4,7 @@ import { getEntryTitleHtml } from '@lib/get-entry-title'
 import getPostPreview from '@lib/get-post-preview'
 import { UI } from '@lib/i18n'
 
+import ArrowLink from '@components/common/ArrowLink.astro'
 import Image from '@components/common/Image.astro'
 import ImageCaption from '@components/common/ImageCaption.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
@@ -105,11 +106,12 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
 {preview && <PrismicRichText class="preview prose" richText={preview.text} />}
 
 {preview?.hasMore && (
-    <a class="readMore" href={item.href}>
-        <span class="linkTitle">{UI[lang].readMore}</span>
-        <span class="visuallyHidden"> — {item.title}</span>
-        <span class="arrow">→</span>
-    </a>
+    <ArrowLink
+        caption={UI[lang].readMore}
+        class="readMore"
+        hiddenCaption={` — ${item.title}`}
+        href={item.href}
+    />
 )}
 
 {item.type === 'notebook_post' && (
@@ -197,25 +199,7 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
 
     .readMore {
         color: var(--color-red-8);
-        display: inline-flex;
         font-weight: var(--font-weight-bold);
-        gap: var(--space-1);
         margin-top: var(--space-7);
-        text-decoration: none;
-
-        .arrow {
-            transition: translate 200ms ease-in-out;
-        }
-
-        &:hover {
-            .linkTitle {
-                text-decoration: underline;
-                text-decoration-thickness: var(--underline-thickness-1);
-            }
-
-            .arrow {
-                translate: var(--space-1) 0;
-            }
-        }
     }
 </style>

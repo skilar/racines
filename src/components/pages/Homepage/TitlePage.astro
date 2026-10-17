@@ -2,6 +2,7 @@
 import { isFilled } from '@prismicio/client'
 import { UI } from '@lib/i18n'
 
+import ArrowLink from '@components/common/ArrowLink.astro'
 import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 import LangSelector from '@components/layout/LangSelector.astro'
@@ -60,15 +61,12 @@ const { lang } = Astro.locals
                             <ul class="nav">
                                 {nav.map(({ ariaCurrent, attrs, label }) => (
                                     <li>
-                                        <a
+                                        <ArrowLink
                                             {...attrs}
                                             aria-current={ariaCurrent}
-                                        >
-                                            <span class="linkTitle">
-                                                {label}
-                                            </span>
-                                            <span class="arrow">→</span>
-                                        </a>
+                                            caption={label}
+                                            class="navLink"
+                                        />
                                     </li>
                                 ))}
                             </ul>
@@ -202,26 +200,12 @@ const { lang } = Astro.locals
         padding-block: var(--space-4) var(--space-5);
         text-align: left;
 
-        .arrow {
-            transition: translate 200ms ease-in-out;
-        }
+        .navLink {
+            --arrow-travel: 1rem;
 
-        a {
             color: var(--color-white);
             display: flex;
             justify-content: space-between;
-            text-decoration: none;
-
-            &:hover {
-                .linkTitle {
-                    text-decoration: underline;
-                    text-decoration-thickness: 1px;
-                }
-
-                .arrow {
-                    translate: 1rem 0;
-                }
-            }
         }
     }
 

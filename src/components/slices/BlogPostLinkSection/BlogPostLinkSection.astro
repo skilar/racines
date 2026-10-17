@@ -5,6 +5,7 @@ import { toJournalItem } from '@lib/get-journal-items'
 import { client } from '@lib/prismic'
 import { getLinkAttrs } from '@lib/prismic-link-resolver'
 
+import ArrowLink from '@components/common/ArrowLink.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 import BlogPostItem from './BlogPostItem.astro'
 
@@ -52,12 +53,11 @@ const items: JournalItem[] = ids.flatMap((id) => {
             />
 
             {linkAttrs && isFilled.keyText(slice.primary.link.text) && (
-                <a class="journalLink" {...linkAttrs}>
-                    <span class="linkTitle">
-                        {fixText(slice.primary.link.text, lang)}
-                    </span>
-                    <span class="arrow">→</span>
-                </a>
+                <ArrowLink
+                    caption={fixText(slice.primary.link.text, lang)}
+                    class="journalLink"
+                    {...linkAttrs}
+                />
             )}
         </div>
 
@@ -104,27 +104,11 @@ const items: JournalItem[] = ids.flatMap((id) => {
     }
 
     .journalLink {
+        --arrow-travel: var(--space-2);
+
         color: var(--color-red-8);
-        display: inline-flex;
         font-size: var(--font-size-4);
         font-weight: var(--font-weight-bold);
-        gap: var(--space-1);
-        text-decoration: none;
-
-        .arrow {
-            transition: translate 200ms ease-in-out;
-        }
-
-        &:hover {
-            .linkTitle {
-                text-decoration: underline;
-                text-decoration-thickness: var(--underline-thickness-1);
-            }
-
-            .arrow {
-                translate: var(--space-2) 0;
-            }
-        }
     }
 
     .blogPostsContainer {
