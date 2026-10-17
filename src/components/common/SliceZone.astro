@@ -6,6 +6,7 @@ import BigTextWithImage from '@components/slices/BigTextWithImage.astro'
 import BlogPostLinkSection from '@components/slices/BlogPostLinkSection/BlogPostLinkSection.astro'
 import FooterLinkSection from '@components/slices/FooterLinkSection/FooterLinkSection.astro'
 import Hero from '@components/slices/Hero/Hero.astro'
+import HistoricalSources from '@components/slices/HistoricalSources.astro'
 import Image from '@components/slices/Image.astro'
 import ImageList from '@components/slices/ImageList/ImageList.astro'
 import NewsletterSignupForm from '@components/slices/NewsletterSignupForm/NewsletterSignupForm.astro'
@@ -71,6 +72,8 @@ const firstTextSliceIndex = slices.findIndex(
             return <FooterLinkSection slice={slice} />
         case 'hero':
             return <Hero slice={slice} />
+        case 'historical_sources':
+            return <HistoricalSources slice={slice} />
         case 'image':
             return (
                 <Image

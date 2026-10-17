@@ -4,16 +4,32 @@ import type { HTMLAttributes } from 'astro/types'
 interface Props extends HTMLAttributes<'a'> {
     caption: string
     class?: string
+    description?: string | undefined
     hiddenCaption?: string | undefined
     href: string
 }
 
-const { caption, class: className, hiddenCaption, ...rest } = Astro.props
+const {
+    caption,
+    class: className,
+    description,
+    hiddenCaption,
+    ...rest
+} = Astro.props
 ---
 
 <a class:list={['arrowLink', className]} {...rest}>
-    <span class="linkTitle">{caption}</span>
+    {description ? (
+        <span class="text">
+            <span class="linkTitle">{caption}</span>
+            <span class="description">{description}</span>
+        </span>
+    ) : (
+        <span class="linkTitle">{caption}</span>
+    )}
+
     {hiddenCaption && <span class="visuallyHidden">{hiddenCaption}</span>}
+
     <span class="arrow" aria-hidden="true">
         →
     </span>
@@ -37,6 +53,15 @@ const { caption, class: className, hiddenCaption, ...rest } = Astro.props
                 translate: var(--arrow-travel, var(--space-1)) 0;
             }
         }
+    }
+
+    .text {
+        display: grid;
+        gap: var(--space-1);
+    }
+
+    .description {
+        font-weight: var(--font-weight-normal);
     }
 
     .arrow {
