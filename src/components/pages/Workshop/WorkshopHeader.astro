@@ -1,0 +1,75 @@
+---
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+import WorkshopHeaderGridItem from './WorkshopHeaderGridItem.astro'
+
+import type { WorkshopDocument } from '@typez/generated/prismic'
+
+interface Props {
+    booking_status: WorkshopDocument['data']['booking_status']
+    capacity: WorkshopDocument['data']['capacity']
+    description: WorkshopDocument['data']['description']
+    duration: WorkshopDocument['data']['duration']
+    language: WorkshopDocument['data']['language']
+    price: WorkshopDocument['data']['price']
+    show_private_workshop_link: WorkshopDocument['data']['show_private_workshop_link']
+    subtitle: WorkshopDocument['data']['subtitle']
+    title: WorkshopDocument['data']['title']
+}
+
+const {
+    booking_status,
+    capacity,
+    description,
+    duration,
+    language,
+    price,
+    show_private_workshop_link,
+    subtitle,
+    title,
+} = Astro.props
+---
+
+<div class="header">
+    <div class="textWrapper">
+        <PrismicRichText class="title" richText={title} />
+        <PrismicRichText class="subtitle" richText={subtitle} />
+        <PrismicRichText class="description" richText={description} />
+
+        <dl class="detailsGrid">
+            <WorkshopHeaderGridItem item={duration} title="Duration" />
+            <WorkshopHeaderGridItem item={capacity} title="Capacity" />
+            <WorkshopHeaderGridItem item={price} title="Price" />
+            <WorkshopHeaderGridItem item={language} title="Language" />
+        </dl>
+    </div>
+</div>
+
+<style>
+    .header {
+        background-color: var(--color-ivory-1);
+    }
+
+    .textWrapper {
+        max-width: var(--width-text);
+    }
+
+    .title {
+        font-size: var(--font-size-6);
+    }
+
+    .subtitle {
+        font-size: var(--font-size-4);
+        font-style: italic;
+        font-weight: var(--font-weight-medium);
+    }
+
+    .description {
+        font-size: var(--font-size-4);
+    }
+
+    .detailsGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+        gap: var(--space-4);
+    }
+</style>

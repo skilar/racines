@@ -480,7 +480,7 @@ interface NotebookPostDocumentData {
  */
 export type NotebookPostDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<NotebookPostDocumentData>, "notebook_post", Lang>;
 
-type PageDocumentDataSlicesSlice = TextSlice | ImageListSlice | NewsletterSignupFormSlice | BigTextWithImageSlice | ImageSlice
+type PageDocumentDataSlicesSlice = TextSlice | ImageListSlice | NewsletterSignupFormSlice | BigTextWithImageSlice | ImageSlice | WorkshopHeaderSlice
 
 /**
  * Content for Page documents
@@ -727,7 +727,168 @@ interface TempHomepageDocumentData {
  */
 export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
 
-export type AllDocumentTypes = AuthorDocument | BlogPostDocument | HomepageDocument | LayoutDocument | NotebookPostDocument | PageDocument | RecipeDocument | TempHomepageDocument;
+type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice
+
+/**
+ * Content for Workshop documents
+ */
+interface WorkshopDocumentData {
+	/**
+	 * Title field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Subtitle field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.subtitle
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	subtitle: prismic.RichTextField;
+	
+	/**
+	 * Description field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.description
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Duration field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.duration
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	duration: prismic.RichTextField;
+	
+	/**
+	 * Capacity field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.capacity
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	capacity: prismic.RichTextField;
+	
+	/**
+	 * Price field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.price
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	price: prismic.RichTextField;
+	
+	/**
+	 * Language field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.language
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	language: prismic.RichTextField;
+	
+	/**
+	 * Booking Status field in *Workshop*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: coming_soon
+	 * - **API ID Path**: workshop.booking_status
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	booking_status: prismic.SelectField<"coming_soon" | "open" | "full", "filled">;
+	
+	/**
+	 * Show Private Workshop Link field in *Workshop*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: workshop.show_private_workshop_link
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	show_private_workshop_link: prismic.BooleanField;
+	
+	/**
+	 * Slice Zone field in *Workshop*
+	 *
+	 * - **Field Type**: Slice Zone
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.slices[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/slices
+	 */
+	slices: prismic.SliceZone<WorkshopDocumentDataSlicesSlice>;/**
+	 * Meta Title field in *Workshop*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A title of the page used for social media and search engines
+	 * - **API ID Path**: workshop.meta_title
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+	
+	/**
+	 * Meta Description field in *Workshop*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: A brief summary of the page
+	 * - **API ID Path**: workshop.meta_description
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+	
+	/**
+	 * Meta Image field in *Workshop*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.meta_image
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Workshop document from Prismic
+ *
+ * - **API ID**: `workshop`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type WorkshopDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<WorkshopDocumentData>, "workshop", Lang>;
+
+export type AllDocumentTypes = AuthorDocument | BlogPostDocument | HomepageDocument | LayoutDocument | NotebookPostDocument | PageDocument | RecipeDocument | TempHomepageDocument | WorkshopDocument;
 
 /**
  * Primary content in *BigTextWithImage → Default → Primary*
@@ -1763,6 +1924,64 @@ type TextSliceVariation = TextSliceDefault | TextSlicePullQuote | TextSliceAside
  */
 export type TextSlice = prismic.SharedSlice<"text", TextSliceVariation>;
 
+/**
+ * Primary content in *WorkshopHeader → Default → Primary*
+ */
+export interface WorkshopHeaderSliceDefaultPrimary {
+	/**
+	 * Title field in *WorkshopHeader → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_header.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Subtitle field in *WorkshopHeader → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_header.default.primary.subtitle
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	subtitle: prismic.RichTextField;
+	
+	/**
+	 * Description field in *WorkshopHeader → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_header.default.primary.description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+}
+
+/**
+ * Default variation for WorkshopHeader Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type WorkshopHeaderSliceDefault = prismic.SharedSliceVariation<"default", Simplify<WorkshopHeaderSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *WorkshopHeader*
+ */
+type WorkshopHeaderSliceVariation = WorkshopHeaderSliceDefault
+
+/**
+ * WorkshopHeader Shared Slice
+ *
+ * - **API ID**: `workshop_header`
+ * - **Description**: WorkshopHeader
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type WorkshopHeaderSlice = prismic.SharedSlice<"workshop_header", WorkshopHeaderSliceVariation>;
+
 declare module "@prismicio/client" {
 	interface CreateClient {
 		(repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
@@ -1801,6 +2020,9 @@ declare module "@prismicio/client" {
 			TempHomepageDocument,
 			TempHomepageDocumentData,
 			TempHomepageDocumentDataSlicesSlice,
+			WorkshopDocument,
+			WorkshopDocumentData,
+			WorkshopDocumentDataSlicesSlice,
 			AllDocumentTypes,
 			BigTextWithImageSlice,
 			BigTextWithImageSliceDefaultPrimary,
@@ -1863,7 +2085,11 @@ declare module "@prismicio/client" {
 			TextSliceVariation,
 			TextSliceDefault,
 			TextSlicePullQuote,
-			TextSliceAside
+			TextSliceAside,
+			WorkshopHeaderSlice,
+			WorkshopHeaderSliceDefaultPrimary,
+			WorkshopHeaderSliceVariation,
+			WorkshopHeaderSliceDefault
 		}
 	}
 }

@@ -1,0 +1,77 @@
+---
+import { isFilled } from '@prismicio/client'
+import getEntryTitle from '@lib/get-entry-title'
+import getOgImage from '@lib/get-og-image'
+import { client } from '@lib/prismic'
+import { collectZoomableImages } from '@lib/zoom'
+
+import LayoutWithHeader from '@layouts/LayoutWithHeader.astro'
+import SliceZone from '@components/common/SliceZone.astro'
+import Lightbox from '@components/entry/Lightbox.astro'
+import WorkshopHeader from './WorkshopHeader.astro'
+
+interface Props {
+    uid: string
+}
+
+const { uid } = Astro.props
+const { lang } = Astro.locals
+
+const page = await client.getByUID('workshop', uid, { lang })
+const zoomableImages = collectZoomableImages(page.data.slices)
+const ogImage = getOgImage(page.data.meta_image)
+const heading = getEntryTitle(page.data, lang)
+---
+
+<LayoutWithHeader
+    alternateLanguages={page.alternate_languages}
+    description={page.data.meta_description}
+    modifiedTime={page.last_publication_date}
+    ogImage={ogImage?.url}
+    ogImageAlt={ogImage?.alt}
+    title={page.data.meta_title ?? heading}
+>
+    <main id="main" class="contained">
+        <WorkshopHeader
+            booking_status={page.data.booking_status}
+            capacity={page.data.capacity}
+            description={page.data.description}
+            duration={page.data.duration}
+            language={page.data.language}
+            price={page.data.price}
+            show_private_workshop_link={page.data.show_private_workshop_link}
+            subtitle={page.data.subtitle}
+            title={page.data.title}
+        />
+
+        <div class="workshop">
+            {isFilled.sliceZone(page.data.slices) && (
+                <SliceZone
+                    hasBigCap
+                    numberNotes
+                    slices={page.data.slices}
+                    zoomImages
+                />
+            )}
+        </div>
+
+        <Lightbox images={zoomableImages} />
+    </main>
+</LayoutWithHeader>
+
+<style>
+    main {
+        container: workshop / inline-size;
+        margin-block: var(--space-5) var(--space-9);
+    }
+
+    .workshop {
+        > :global(div) {
+            margin-inline: auto;
+        }
+
+        :global(> div:has(+ div)) {
+            margin-bottom: var(--space-8);
+        }
+    }
+</style>

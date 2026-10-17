@@ -48,6 +48,9 @@
             },
             "image": {
               "type": "SharedSlice"
+            },
+            "workshop_header": {
+              "type": "SharedSlice"
             }
           }
         }
