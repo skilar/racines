@@ -1,0 +1,45 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends HTMLAttributes<'a'> {
+    caption: string
+    class?: string
+    hiddenCaption?: string | undefined
+    href: string
+}
+
+const { caption, class: className, hiddenCaption, ...rest } = Astro.props
+---
+
+<a class:list={['arrowLink', className]} {...rest}>
+    <span class="linkTitle">{caption}</span>
+    {hiddenCaption && <span class="visuallyHidden">{hiddenCaption}</span>}
+    <span class="arrow" aria-hidden="true">
+        →
+    </span>
+</a>
+
+<style>
+    /* Set `--arrow-travel` on the link to change how far the arrow moves on
+       hover. Color, size, and weight come from wherever the link is used. */
+    .arrowLink {
+        display: inline-flex;
+        gap: var(--space-1);
+        text-decoration: none;
+
+        &:hover {
+            .linkTitle {
+                text-decoration: underline;
+                text-decoration-thickness: var(--underline-thickness-1);
+            }
+
+            .arrow {
+                translate: var(--arrow-travel, var(--space-1)) 0;
+            }
+        }
+    }
+
+    .arrow {
+        transition: translate 200ms ease-in-out;
+    }
+</style>
