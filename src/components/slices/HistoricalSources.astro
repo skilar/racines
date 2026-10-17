@@ -1,0 +1,149 @@
+---
+import { asText, isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
+
+import ArrowLink from '../common/ArrowLink.astro'
+import Image from '../common/Image.astro'
+import PrismicRichText from '../common/PrismicRichText.astro'
+
+import type { HistoricalSourcesSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: HistoricalSourcesSlice
+}
+
+const { slice } = Astro.props
+const { lang } = Astro.locals
+const { description, historical_image: image, link, title } = slice.primary
+
+const links = link.flatMap((item) => {
+    const attrs = getLinkAttrs(item.link)
+    const caption = fixText(asText(item.title), lang)
+
+    return attrs && caption
+        ? [
+              {
+                  attrs,
+                  caption,
+                  description: fixText(asText(item.description), lang),
+              },
+          ]
+        : []
+})
+---
+
+<div
+    class="container"
+    data-slice-type={slice.slice_type}
+    data-slice-variation={slice.variation}
+>
+    <div class:list={['layout', { withImage: isFilled.image(image) }]}>
+        {isFilled.image(image) && (
+            <div class="imageWrapper">
+                <Image
+                    class="historicalImage"
+                    image={image}
+                    sizes="auto, (min-width: 650px) 25rem, 100vw"
+                />
+            </div>
+        )}
+
+        <div class="text">
+            <PrismicRichText class="title" richText={title} />
+
+            <PrismicRichText class="description prose" richText={description} />
+
+            {links.length > 0 && (
+                <ul class="links">
+                    {links.map(({ attrs, caption, description }) => (
+                        <li>
+                            <ArrowLink
+                                caption={caption}
+                                class="sourceLink"
+                                description={description || undefined}
+                                {...attrs}
+                            />
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        container: historicalSources / inline-size;
+        display: flex;
+        min-height: 100svh;
+        width: 100%;
+    }
+
+    .layout {
+        display: grid;
+        gap: var(--space-7);
+        padding-block: var(--space-9);
+
+        @container historicalSources (width >= 48rem) {
+            &.withImage {
+                align-items: center;
+                gap: var(--space-9);
+                grid-template-columns: minmax(0, 25rem) minmax(0, 1fr);
+            }
+        }
+    }
+
+    .imageWrapper {
+        justify-self: center;
+        max-width: 25rem;
+        width: 100%;
+    }
+
+    .historicalImage {
+        border: var(--image-border);
+        border-color: var(--color-ivory-7);
+        width: 100%;
+    }
+
+    .text {
+        max-width: var(--width-text);
+    }
+
+    .title {
+        font-feature-settings: 'swsh';
+        font-size: var(--font-size-6);
+        font-style: italic;
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-5);
+    }
+
+    .description {
+        font-size: var(--font-size-4);
+    }
+
+    .links {
+        border-block: var(--double-border);
+        display: grid;
+        gap: var(--space-4);
+        list-style: none;
+        margin-top: var(--space-7);
+        padding-block: var(--space-5);
+    }
+
+    .sourceLink {
+        --arrow-travel: var(--space-3);
+
+        align-items: center;
+        color: inherit;
+        display: flex;
+        font-size: var(--font-size-4);
+        font-weight: var(--font-weight-medium);
+        justify-content: space-between;
+
+        :global(.description) {
+            color: var(--color-ivory-10);
+            font-size: var(--font-size-3-sc);
+        }
+    }
+</style>

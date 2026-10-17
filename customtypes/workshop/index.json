@@ -170,6 +170,9 @@
             },
             "testimonial": {
               "type": "SharedSlice"
+            },
+            "historical_sources": {
+              "type": "SharedSlice"
             }
           }
         }

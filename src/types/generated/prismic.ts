@@ -727,7 +727,7 @@ interface TempHomepageDocumentData {
  */
 export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
 
-type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice | QuoteSlice | TestimonialSlice
+type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice | QuoteSlice | TestimonialSlice | HistoricalSourcesSlice
 
 /**
  * Content for Workshop documents
@@ -1325,6 +1325,109 @@ type HeroSliceVariation = HeroSliceDefault | HeroSliceImageWithGradient
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
+
+/**
+ * Item in *HistoricalSources → Default → Primary → Link*
+ */
+export interface HistoricalSourcesSliceDefaultPrimaryLinkItem {
+	/**
+	 * Title field in *HistoricalSources → Default → Primary → Link*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: historical_sources.default.primary.link[].title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Description field in *HistoricalSources → Default → Primary → Link*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: historical_sources.default.primary.link[].description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Link field in *HistoricalSources → Default → Primary → Link*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: historical_sources.default.primary.link[].link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Primary content in *HistoricalSources → Default → Primary*
+ */
+export interface HistoricalSourcesSliceDefaultPrimary {
+	/**
+	 * Historical Image field in *HistoricalSources → Default → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: historical_sources.default.primary.historical_image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	historical_image: prismic.ImageField<never>;
+	
+	/**
+	 * Title field in *HistoricalSources → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: historical_sources.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Description field in *HistoricalSources → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: historical_sources.default.primary.description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Link field in *HistoricalSources → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: historical_sources.default.primary.link[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	link: prismic.GroupField<Simplify<HistoricalSourcesSliceDefaultPrimaryLinkItem>>;
+}
+
+/**
+ * Default variation for HistoricalSources Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HistoricalSourcesSliceDefault = prismic.SharedSliceVariation<"default", Simplify<HistoricalSourcesSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *HistoricalSources*
+ */
+type HistoricalSourcesSliceVariation = HistoricalSourcesSliceDefault
+
+/**
+ * HistoricalSources Shared Slice
+ *
+ * - **API ID**: `historical_sources`
+ * - **Description**: HistoricalSources
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HistoricalSourcesSlice = prismic.SharedSlice<"historical_sources", HistoricalSourcesSliceVariation>;
 
 /**
  * Primary content in *Image → Default → Primary*
@@ -2248,6 +2351,11 @@ declare module "@prismicio/client" {
 			HeroSliceVariation,
 			HeroSliceDefault,
 			HeroSliceImageWithGradient,
+			HistoricalSourcesSlice,
+			HistoricalSourcesSliceDefaultPrimaryLinkItem,
+			HistoricalSourcesSliceDefaultPrimary,
+			HistoricalSourcesSliceVariation,
+			HistoricalSourcesSliceDefault,
 			ImageSlice,
 			ImageSliceDefaultPrimary,
 			ImageSliceVariation,
