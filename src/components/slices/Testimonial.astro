@@ -1,0 +1,121 @@
+---
+import { isFilled } from '@prismicio/client'
+
+import Image from '../common/Image.astro'
+import PrismicRichText from '../common/PrismicRichText.astro'
+
+import type { TestimonialSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: TestimonialSlice
+}
+
+const { slice } = Astro.props
+
+const background = slice.primary.background_color.toLowerCase()
+
+const imagePanel =
+    slice.variation === 'withImage' && isFilled.image(slice.primary.image)
+        ? {
+              background: slice.primary.image_background_color.toLowerCase(),
+              image: slice.primary.image,
+              position: slice.primary.image_position.toLowerCase(),
+          }
+        : null
+---
+
+<div
+    class="container"
+    data-slice-type={slice.slice_type}
+    data-slice-variation={slice.variation}
+>
+    <div
+        class:list={['panels', { withImage: imagePanel }]}
+        data-image-position={imagePanel?.position}
+    >
+        {imagePanel && (
+            <div
+                class="panel imagePanel"
+                data-background={imagePanel.background}
+            >
+                <Image
+                    class="testimonialImage"
+                    image={imagePanel.image}
+                    quality={75}
+                    sizes="auto, (min-width: 650px) calc(min(100vw, 80rem) / 2), 100vw"
+                />
+            </div>
+        )}
+
+        <div class="panel textPanel" data-background={background}>
+            <div class="prose testimonialSlice">
+                <PrismicRichText class="quote" richText={slice.primary.quote} />
+                <PrismicRichText
+                    class="source"
+                    richText={slice.primary.source}
+                />
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        --post-line-height: var(--line-height-default);
+        --post-text-size: var(--font-size-4);
+        --post-line: calc(
+            (var(--post-line-height) * var(--post-text-size)) / 2
+        );
+
+        container: testimonial / inline-size;
+        width: 100%;
+    }
+
+    .panels {
+        &.withImage {
+            display: grid;
+
+            @container testimonial (width >= 40rem) {
+                grid-template-columns: 1fr 1fr;
+
+                &[data-image-position='right'] .imagePanel {
+                    order: 1;
+                }
+            }
+        }
+    }
+
+    .panel {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        padding-block: calc(var(--space-9) * 2);
+        padding-inline: var(--space-7);
+    }
+
+    .testimonialImage {
+        border: var(--image-border);
+        max-width: 25rem;
+        width: 100%;
+    }
+
+    .testimonialSlice {
+        font-size: var(--font-size-5-sc);
+        max-width: var(--width-text);
+        text-align: center;
+    }
+
+    .quote {
+        font-style: italic;
+        font-weight: var(--font-weight-medium);
+
+        &:has(+ .source) {
+            margin-bottom: var(--space-3);
+        }
+    }
+
+    .source {
+        font-size: var(--font-size-4-sc);
+        font-variant-caps: all-small-caps;
+    }
+</style>
