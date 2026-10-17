@@ -9,6 +9,7 @@ const ROUTE_PATTERNS = {
     notebook_post: { 'fr-fr': 'carnet/:uid', 'en-us': 'notebook/:uid' },
     page: ':uid',
     recipe: { 'fr-fr': 'recettes/:uid', 'en-us': 'recipes/:uid' },
+    workshop: { 'fr-fr': 'ateliers/:uid', 'en-us': 'workshops/:uid' },
 } as const satisfies Record<string, string | Record<Lang, string>>
 
 export type RoutedType = keyof typeof ROUTE_PATTERNS

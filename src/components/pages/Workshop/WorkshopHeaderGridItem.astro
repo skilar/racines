@@ -1,0 +1,31 @@
+---
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+
+import type { WorkshopDocument } from '@typez/generated/prismic'
+
+interface Props {
+    item:
+        | WorkshopDocument['data']['capacity']
+        | WorkshopDocument['data']['duration']
+        | WorkshopDocument['data']['language']
+        | WorkshopDocument['data']['price']
+    title: string
+}
+
+const { item, title } = Astro.props
+---
+
+{item && (
+    <div>
+        <dt class="visuallyHidden">{title}</dt>
+        <dd>
+            <PrismicRichText class="item" richText={item} />
+        </dd>
+    </div>
+)}
+
+<style>
+    .item {
+        font-size: var(--font-size-4);
+    }
+</style>
