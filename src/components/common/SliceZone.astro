@@ -13,6 +13,7 @@ import NewsletterSignupForm from '@components/slices/NewsletterSignupForm/Newsle
 import Quote from '@components/slices/Quote.astro'
 import Testimonial from '@components/slices/Testimonial.astro'
 import Text from '@components/slices/Text.astro'
+import WorkshopExplanation from '@components/slices/WorkshopExplanation.astro'
 
 import type { SliceZone } from '@prismicio/client'
 import type { AnySlice } from '@typez/prismic'
@@ -107,6 +108,8 @@ const firstTextSliceIndex = slices.findIndex(
                     slice={slice}
                 />
             )
+        case 'workshop_explanation':
+            return <WorkshopExplanation slice={slice} />
         default:
             return null
     }

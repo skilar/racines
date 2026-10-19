@@ -727,7 +727,7 @@ interface TempHomepageDocumentData {
  */
 export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
 
-type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice | QuoteSlice | TestimonialSlice | HistoricalSourcesSlice
+type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice | QuoteSlice | TestimonialSlice | HistoricalSourcesSlice | WorkshopExplanationSlice
 
 /**
  * Content for Workshop documents
@@ -2230,6 +2230,188 @@ type TextSliceVariation = TextSliceDefault | TextSlicePullQuote | TextSliceAside
 export type TextSlice = prismic.SharedSlice<"text", TextSliceVariation>;
 
 /**
+ * Item in *WorkshopExplanation → Default → Primary → Images*
+ */
+export interface WorkshopExplanationSliceDefaultPrimaryImagesItem {
+	/**
+	 * Image field in *WorkshopExplanation → Default → Primary → Images*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.default.primary.images[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * Title field in *WorkshopExplanation → Default → Primary → Images*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.default.primary.images[].title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Description field in *WorkshopExplanation → Default → Primary → Images*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.default.primary.images[].description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+}
+
+/**
+ * Item in *WorkshopExplanation → WithMainImage → Primary → Images*
+ */
+export interface WorkshopExplanationSliceWithMainImagePrimaryImagesItem {
+	/**
+	 * Image field in *WorkshopExplanation → WithMainImage → Primary → Images*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.withMainImage.primary.images[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * Title field in *WorkshopExplanation → WithMainImage → Primary → Images*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.withMainImage.primary.images[].title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Description field in *WorkshopExplanation → WithMainImage → Primary → Images*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.withMainImage.primary.images[].description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+}
+
+/**
+ * Primary content in *WorkshopExplanation → Default → Primary*
+ */
+export interface WorkshopExplanationSliceDefaultPrimary {
+	/**
+	 * Title field in *WorkshopExplanation → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Description field in *WorkshopExplanation → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.default.primary.description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Images field in *WorkshopExplanation → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.default.primary.images[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	images: prismic.GroupField<Simplify<WorkshopExplanationSliceDefaultPrimaryImagesItem>>;
+}
+
+/**
+ * Default variation for WorkshopExplanation Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type WorkshopExplanationSliceDefault = prismic.SharedSliceVariation<"default", Simplify<WorkshopExplanationSliceDefaultPrimary>, never>;
+
+/**
+ * Primary content in *WorkshopExplanation → WithMainImage → Primary*
+ */
+export interface WorkshopExplanationSliceWithMainImagePrimary {
+	/**
+	 * Title field in *WorkshopExplanation → WithMainImage → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.withMainImage.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Description field in *WorkshopExplanation → WithMainImage → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.withMainImage.primary.description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Main Image field in *WorkshopExplanation → WithMainImage → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.withMainImage.primary.main_image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	main_image: prismic.ImageField<never>;
+	
+	/**
+	 * Images field in *WorkshopExplanation → WithMainImage → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.withMainImage.primary.images[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	images: prismic.GroupField<Simplify<WorkshopExplanationSliceWithMainImagePrimaryImagesItem>>;
+}
+
+/**
+ * WithMainImage variation for WorkshopExplanation Slice
+ *
+ * - **API ID**: `withMainImage`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type WorkshopExplanationSliceWithMainImage = prismic.SharedSliceVariation<"withMainImage", Simplify<WorkshopExplanationSliceWithMainImagePrimary>, never>;
+
+/**
+ * Slice variation for *WorkshopExplanation*
+ */
+type WorkshopExplanationSliceVariation = WorkshopExplanationSliceDefault | WorkshopExplanationSliceWithMainImage
+
+/**
+ * WorkshopExplanation Shared Slice
+ *
+ * - **API ID**: `workshop_explanation`
+ * - **Description**: WorkshopExplanation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type WorkshopExplanationSlice = prismic.SharedSlice<"workshop_explanation", WorkshopExplanationSliceVariation>;
+
+/**
  * Primary content in *WorkshopHeader → Default → Primary*
  */
 export interface WorkshopHeaderSliceDefaultPrimary {
@@ -2402,6 +2584,14 @@ declare module "@prismicio/client" {
 			TextSliceDefault,
 			TextSlicePullQuote,
 			TextSliceAside,
+			WorkshopExplanationSlice,
+			WorkshopExplanationSliceDefaultPrimaryImagesItem,
+			WorkshopExplanationSliceDefaultPrimary,
+			WorkshopExplanationSliceWithMainImagePrimaryImagesItem,
+			WorkshopExplanationSliceWithMainImagePrimary,
+			WorkshopExplanationSliceVariation,
+			WorkshopExplanationSliceDefault,
+			WorkshopExplanationSliceWithMainImage,
 			WorkshopHeaderSlice,
 			WorkshopHeaderSliceDefaultPrimary,
 			WorkshopHeaderSliceVariation,
