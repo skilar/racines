@@ -173,6 +173,9 @@
             },
             "historical_sources": {
               "type": "SharedSlice"
+            },
+            "workshop_explanation": {
+              "type": "SharedSlice"
             }
           }
         }

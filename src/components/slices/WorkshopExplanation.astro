@@ -1,0 +1,108 @@
+---
+import { isFilled } from '@prismicio/client'
+
+import Image from '../common/Image.astro'
+import PrismicRichText from '../common/PrismicRichText.astro'
+
+import type { WorkshopExplanationSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: WorkshopExplanationSlice
+}
+
+const { slice } = Astro.props
+const { description, images, title } = slice.primary
+const mainImage =
+    slice.variation === 'withMainImage' ? slice.primary.main_image : undefined
+---
+
+<div
+    class="container"
+    data-slice-type={slice.slice_type}
+    data-slice-variation={slice.variation}
+>
+    {images.length > 0 && (
+        <ul class="imagesList">
+            {images.map((item) => (
+                <li class="imageListItem">
+                    {isFilled.image(item.image) && (
+                        <Image class="imageListItemImage" image={item.image} />
+                    )}
+
+                    <PrismicRichText richText={item.title} />
+
+                    <PrismicRichText richText={item.description} />
+                </li>
+            ))}
+        </ul>
+    )}
+
+    <div class="head">
+        <div class="text">
+            <PrismicRichText class="title" richText={title} />
+
+            <PrismicRichText class="description prose" richText={description} />
+        </div>
+
+        {mainImage && isFilled.image(mainImage) && (
+            <Image class="mainImage" image={mainImage} />
+        )}
+    </div>
+</div>
+
+<style>
+    .container {
+        /* align-items: start;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; */
+        min-height: 100svh;
+        padding-block: var(--space-9);
+        width: 100%;
+    }
+
+    .head {
+        align-items: center;
+        display: grid;
+        gap: var(--space-7);
+        grid-template-columns: var(--width-text) 20rem;
+    }
+
+    .title {
+        font-feature-settings: 'swsh';
+        font-size: var(--font-size-6);
+        font-style: italic;
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-5);
+    }
+
+    .description {
+        font-size: var(--font-size-4);
+    }
+
+    .mainImage {
+        border: var(--image-border);
+        border-color: var(--color-ivory-7);
+    }
+
+    .imagesList {
+        display: grid;
+        gap: var(--space-5);
+        grid-template-columns: repeat(3, 1fr);
+        margin-top: var(--space-9);
+    }
+
+    .imageListItem {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .imageListItemImage {
+        max-width: 20rem;
+
+        &:has(+ div) {
+            margin-bottom: var(--space-4);
+        }
+    }
+</style>
