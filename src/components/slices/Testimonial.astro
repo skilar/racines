@@ -15,7 +15,7 @@ const { slice } = Astro.props
 const background = slice.primary.background_color.toLowerCase()
 
 const imagePanel =
-    slice.variation === 'withImage' && isFilled.image(slice.primary.image)
+    slice.variation !== 'default' && isFilled.image(slice.primary.image)
         ? {
               background: slice.primary.image_background_color.toLowerCase(),
               image: slice.primary.image,
@@ -48,13 +48,31 @@ const imagePanel =
         )}
 
         <div class="panel textPanel" data-background={background}>
-            <div class="prose testimonialSlice">
-                <PrismicRichText class="quote" richText={slice.primary.quote} />
-                <PrismicRichText
-                    class="source"
-                    richText={slice.primary.source}
-                />
-            </div>
+            {slice.variation === 'plainText' ? (
+                <div class="prose plainText">
+                    <PrismicRichText
+                        class="title"
+                        richText={slice.primary.title}
+                    />
+
+                    <PrismicRichText
+                        class="body"
+                        richText={slice.primary.quote}
+                    />
+                </div>
+            ) : (
+                <div class="prose testimonialSlice">
+                    <PrismicRichText
+                        class="quote"
+                        richText={slice.primary.quote}
+                    />
+
+                    <PrismicRichText
+                        class="source"
+                        richText={slice.primary.source}
+                    />
+                </div>
+            )}
         </div>
     </div>
 </div>
@@ -103,6 +121,25 @@ const imagePanel =
         font-size: var(--font-size-5-sc);
         max-width: var(--width-text);
         text-align: center;
+    }
+
+    .plainText {
+        font-size: var(--font-size-4);
+        max-width: var(--width-text);
+    }
+
+    .title {
+        font-feature-settings: 'swsh';
+
+        font-style: italic;
+
+        h2 {
+            font-size: var(--font-size-6);
+        }
+
+        &:has(+ .body) {
+            margin-bottom: var(--post-line);
+        }
     }
 
     .quote {

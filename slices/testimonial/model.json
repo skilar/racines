@@ -117,6 +117,80 @@
           }
         }
       }
+    },
+    {
+      "id": "plainText",
+      "name": "Plain Text",
+      "description": "Default",
+      "imageUrl": "",
+      "docURL": "...",
+      "version": "initial",
+      "primary": {
+        "title": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Title",
+            "placeholder": "",
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "allowTargetBlank": true
+          }
+        },
+        "quote": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Quote",
+            "placeholder": "",
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "allowTargetBlank": true
+          }
+        },
+        "background_color": {
+          "type": "Select",
+          "config": {
+            "label": "Background Color",
+            "placeholder": "",
+            "default_value": "Tan",
+            "options": [
+              "Tan",
+              "Burgundy",
+              "Navy"
+            ]
+          }
+        },
+        "image_position": {
+          "type": "Select",
+          "config": {
+            "label": "Image Position",
+            "placeholder": "",
+            "default_value": "Left",
+            "options": [
+              "Left",
+              "Right"
+            ]
+          }
+        },
+        "image_background_color": {
+          "type": "Select",
+          "config": {
+            "label": "Image Background Color",
+            "placeholder": "",
+            "default_value": "Navy",
+            "options": [
+              "Navy",
+              "Burgundy",
+              "Tan"
+            ]
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        }
+      }
     }
   ],
   "description": "Testimonial"
