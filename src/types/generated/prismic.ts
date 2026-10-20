@@ -2281,9 +2281,86 @@ export interface TestimonialSliceWithImagePrimary {
 export type TestimonialSliceWithImage = prismic.SharedSliceVariation<"withImage", Simplify<TestimonialSliceWithImagePrimary>, never>;
 
 /**
+ * Primary content in *Testimonial → Plain Text → Primary*
+ */
+export interface TestimonialSlicePlainTextPrimary {
+	/**
+	 * Title field in *Testimonial → Plain Text → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: testimonial.plainText.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Quote field in *Testimonial → Plain Text → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: testimonial.plainText.primary.quote
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	quote: prismic.RichTextField;
+	
+	/**
+	 * Background Color field in *Testimonial → Plain Text → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Tan
+	 * - **API ID Path**: testimonial.plainText.primary.background_color
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	background_color: prismic.SelectField<"Tan" | "Burgundy" | "Navy", "filled">;
+	
+	/**
+	 * Image Position field in *Testimonial → Plain Text → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Left
+	 * - **API ID Path**: testimonial.plainText.primary.image_position
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	image_position: prismic.SelectField<"Left" | "Right", "filled">;
+	
+	/**
+	 * Image Background Color field in *Testimonial → Plain Text → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Navy
+	 * - **API ID Path**: testimonial.plainText.primary.image_background_color
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	image_background_color: prismic.SelectField<"Navy" | "Burgundy" | "Tan", "filled">;
+	
+	/**
+	 * Image field in *Testimonial → Plain Text → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: testimonial.plainText.primary.image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
+ * Plain Text variation for Testimonial Slice
+ *
+ * - **API ID**: `plainText`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TestimonialSlicePlainText = prismic.SharedSliceVariation<"plainText", Simplify<TestimonialSlicePlainTextPrimary>, never>;
+
+/**
  * Slice variation for *Testimonial*
  */
-type TestimonialSliceVariation = TestimonialSliceDefault | TestimonialSliceWithImage
+type TestimonialSliceVariation = TestimonialSliceDefault | TestimonialSliceWithImage | TestimonialSlicePlainText
 
 /**
  * Testimonial Shared Slice
@@ -2776,9 +2853,11 @@ declare module "@prismicio/client" {
 			TestimonialSlice,
 			TestimonialSliceDefaultPrimary,
 			TestimonialSliceWithImagePrimary,
+			TestimonialSlicePlainTextPrimary,
 			TestimonialSliceVariation,
 			TestimonialSliceDefault,
 			TestimonialSliceWithImage,
+			TestimonialSlicePlainText,
 			TextSlice,
 			TextSliceDefaultPrimary,
 			TextSlicePullQuotePrimary,
