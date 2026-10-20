@@ -11,14 +11,6 @@
       "docURL": "...",
       "version": "initial",
       "primary": {
-        "historical_image": {
-          "type": "Image",
-          "config": {
-            "label": "Historical Image",
-            "constraint": {},
-            "thumbnails": []
-          }
-        },
         "title": {
           "type": "StructuredText",
           "config": {
@@ -32,6 +24,23 @@
           "type": "StructuredText",
           "config": {
             "label": "Description",
+            "placeholder": "",
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "allowTargetBlank": true
+          }
+        },
+        "historical_image": {
+          "type": "Image",
+          "config": {
+            "label": "Historical Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "historical_image_caption": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Historical Image Caption",
             "placeholder": "",
             "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
             "allowTargetBlank": true
@@ -73,6 +82,18 @@
                 }
               }
             }
+          }
+        },
+        "image_position": {
+          "type": "Select",
+          "config": {
+            "label": "Image Position",
+            "placeholder": "",
+            "default_value": "Left",
+            "options": [
+              "Left",
+              "Right"
+            ]
           }
         }
       }

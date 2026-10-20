@@ -5,6 +5,7 @@ import { getLinkAttrs } from '@lib/prismic-link-resolver'
 
 import ArrowLink from '../common/ArrowLink.astro'
 import Image from '../common/Image.astro'
+import ImageCaption from '../common/ImageCaption.astro'
 import PrismicRichText from '../common/PrismicRichText.astro'
 
 import type { HistoricalSourcesSlice } from '@typez/generated/prismic'
@@ -16,6 +17,7 @@ interface Props {
 const { slice } = Astro.props
 const { lang } = Astro.locals
 const { description, historical_image: image, link, title } = slice.primary
+const imagePosition = slice.primary.image_position.toLowerCase()
 
 const links = link.flatMap((item) => {
     const attrs = getLinkAttrs(item.link)
@@ -38,13 +40,20 @@ const links = link.flatMap((item) => {
     data-slice-type={slice.slice_type}
     data-slice-variation={slice.variation}
 >
-    <div class:list={['layout', { withImage: isFilled.image(image) }]}>
+    <div
+        class:list={['layout', { withImage: isFilled.image(image) }]}
+        data-image-position={imagePosition}
+    >
         {isFilled.image(image) && (
             <div class="imageWrapper">
                 <Image
                     class="historicalImage"
                     image={image}
                     sizes="auto, (min-width: 650px) 25rem, 100vw"
+                />
+
+                <ImageCaption
+                    caption={slice.primary.historical_image_caption}
                 />
             </div>
         )}
@@ -90,6 +99,14 @@ const links = link.flatMap((item) => {
                 align-items: center;
                 gap: var(--space-9);
                 grid-template-columns: minmax(0, 25rem) minmax(0, 1fr);
+
+                &[data-image-position='right'] {
+                    grid-template-columns: minmax(0, 1fr) minmax(0, 25rem);
+
+                    .imageWrapper {
+                        order: 1;
+                    }
+                }
             }
         }
     }
