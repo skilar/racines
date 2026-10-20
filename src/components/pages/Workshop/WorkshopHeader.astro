@@ -7,6 +7,7 @@ import { getLinkAttrs } from '@lib/prismic-link-resolver'
 import ArrowLink from '@components/common/ArrowLink.astro'
 import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
+import WorkshopBooking from './WorkshopBooking.astro'
 
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
@@ -16,6 +17,7 @@ interface Props {
     bookingStatus: WorkshopDocument['data']['booking_status']
     description: WorkshopDocument['data']['description']
     featuredImage: WorkshopDocument['data']['featured_image']
+    notifyTag: string
     privateWorkshopLink: WorkshopDocument['data']['private_workshop_link']
     showPrivateWorkshopLink: WorkshopDocument['data']['show_private_workshop_link']
     subtitle: WorkshopDocument['data']['subtitle']
@@ -28,6 +30,7 @@ const {
     bookingStatus,
     description,
     featuredImage,
+    notifyTag,
     privateWorkshopLink,
     showPrivateWorkshopLink,
     subtitle,
@@ -65,6 +68,12 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
                 <PrismicRichText
                     class="bookingAvailability"
                     richText={bookingAvailability}
+                />
+
+                <WorkshopBooking
+                    bookingLink={bookingLink}
+                    bookingStatus={bookingStatus}
+                    notifyTag={notifyTag}
                 />
             </div>
 

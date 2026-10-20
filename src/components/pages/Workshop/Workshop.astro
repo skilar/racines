@@ -18,6 +18,11 @@ const { lang } = Astro.locals
 const page = await client.getByUID('workshop', uid, { lang })
 const ogImage = getOgImage(page.data.meta_image, page.data.featured_image)
 const heading = getEntryTitle(page.data, lang)
+const frenchUid =
+    lang === 'fr-fr'
+        ? page.uid
+        : (page.alternate_languages.find((alt) => alt.lang === 'fr-fr')?.uid ??
+          page.uid)
 ---
 
 <LayoutWithHeader
@@ -35,6 +40,7 @@ const heading = getEntryTitle(page.data, lang)
             bookingStatus={page.data.booking_status}
             description={page.data.description}
             featuredImage={page.data.featured_image}
+            notifyTag={`atelier-${frenchUid}`}
             privateWorkshopLink={page.data.private_workshop_link}
             showPrivateWorkshopLink={page.data.show_private_workshop_link}
             subtitle={page.data.subtitle}

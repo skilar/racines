@@ -1,0 +1,120 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+import { UI } from '@lib/i18n'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
+
+import Button from '@components/common/Button.astro'
+import Checkbox from '@components/common/forms/Checkbox.astro'
+import Input from '@components/common/forms/Input.astro'
+
+import type { WorkshopDocument } from '@typez/generated/prismic'
+
+interface Props {
+    bookingLink: WorkshopDocument['data']['booking_link']
+    bookingStatus: WorkshopDocument['data']['booking_status']
+    notifyTag: string
+}
+
+const { bookingLink, bookingStatus, notifyTag } = Astro.props
+const { lang } = Astro.locals
+
+// If we don't have a booking form, we show the notify signup form
+const bookingLinkAttrs =
+    bookingStatus === 'open' ? getLinkAttrs(bookingLink) : null
+
+// If the Prismic link doesn't have a caption, we fall back to the UI string
+const caption = isFilled.keyText(bookingLink.text)
+    ? fixText(bookingLink.text, lang)
+    : bookingLinkAttrs
+      ? UI[lang].bookNow
+      : UI[lang].notifyMe
+---
+
+{bookingLinkAttrs ? (
+    <Button as="link" caption={caption} {...bookingLinkAttrs} />
+) : (
+    <form
+        action="https://buttondown.com/api/emails/embed-subscribe/agathegiraud"
+        class="notifyForm"
+        method="post"
+        target="_blank"
+    >
+        <div class="fields">
+            <Input
+                hideLabel
+                id="workshop-notify-email"
+                label={UI[lang].emailAddress}
+                name="email"
+                placeholder={UI[lang].emailAddress}
+                required
+                size="4"
+                type="email"
+            />
+
+            <Input
+                hideLabel
+                id="workshop-notify-tag"
+                label="Tag"
+                name="tag"
+                type="hidden"
+                value={notifyTag}
+            />
+
+            <Input
+                hideLabel
+                id="workshop-notify-tag-all"
+                label="Tag"
+                name="tag"
+                type="hidden"
+                value="ateliers"
+            />
+
+            <Input
+                hideLabel
+                label="Embed"
+                name="embed"
+                type="hidden"
+                value="1"
+            />
+
+            <Button
+                caption={caption}
+                inlineWithFormField
+                size="4"
+                type="submit"
+            />
+        </div>
+
+        <div class="newsletterOptIn">
+            <Checkbox
+                id="workshop-notify-newsletter"
+                label={UI[lang].alsoSendNewsletter}
+                name="tag"
+                size="3"
+                value="newsletter"
+            />
+        </div>
+    </form>
+)}
+
+<style>
+    .notifyForm {
+        width: 100%;
+    }
+
+    .fields {
+        align-items: end;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+
+        > :global(.inputWrapper:not(.visuallyHidden)) {
+            flex: 1 1 14rem;
+        }
+    }
+
+    .newsletterOptIn {
+        margin-top: var(--space-3);
+    }
+</style>
