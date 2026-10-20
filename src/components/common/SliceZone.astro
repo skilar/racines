@@ -13,9 +13,11 @@ import NewsletterSignupForm from '@components/slices/NewsletterSignupForm.astro'
 import Quote from '@components/slices/Quote.astro'
 import Testimonial from '@components/slices/Testimonial.astro'
 import Text from '@components/slices/Text.astro'
+import WorkshopDetails from '@components/slices/WorkshopDetails/WorkshopDetails.astro'
 import WorkshopExplanation from '@components/slices/WorkshopExplanation.astro'
 
 import type { SliceZone } from '@prismicio/client'
+import type { WorkshopDocument } from '@typez/generated/prismic'
 import type { AnySlice } from '@typez/prismic'
 
 interface Props {
@@ -24,6 +26,8 @@ interface Props {
     // Article bodies number their footnotes across the whole zone.
     numberNotes?: boolean
     slices: SliceZone<AnySlice>
+    // Workshop pages hand their document data to slices that display it.
+    workshop?: WorkshopDocument['data']
     // Article bodies open their images in a full-screen viewer.
     zoomImages?: boolean
 }
@@ -32,6 +36,7 @@ const {
     hasBigCap = false,
     numberNotes = false,
     slices,
+    workshop,
     zoomImages = false,
 } = Astro.props
 
@@ -108,6 +113,10 @@ const firstTextSliceIndex = slices.findIndex(
                     slice={slice}
                 />
             )
+        case 'workshop_details':
+            return workshop ? (
+                <WorkshopDetails slice={slice} workshop={workshop} />
+            ) : null
         case 'workshop_explanation':
             return <WorkshopExplanation slice={slice} />
         default:

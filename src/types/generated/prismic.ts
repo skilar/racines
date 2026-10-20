@@ -727,7 +727,7 @@ interface TempHomepageDocumentData {
  */
 export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
 
-type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice | QuoteSlice | TestimonialSlice | HistoricalSourcesSlice | WorkshopExplanationSlice
+type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice | QuoteSlice | TestimonialSlice | HistoricalSourcesSlice | WorkshopExplanationSlice | NewsletterSignupFormSlice | WorkshopDetailsSlice
 
 /**
  * Content for Workshop documents
@@ -2275,6 +2275,44 @@ type TextSliceVariation = TextSliceDefault | TextSlicePullQuote | TextSliceAside
 export type TextSlice = prismic.SharedSlice<"text", TextSliceVariation>;
 
 /**
+ * Primary content in *WorkshopDetails → Default → Primary*
+ */
+export interface WorkshopDetailsSliceDefaultPrimary {
+	/**
+	 * Title field in *WorkshopDetails → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_details.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+}
+
+/**
+ * Default variation for WorkshopDetails Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type WorkshopDetailsSliceDefault = prismic.SharedSliceVariation<"default", Simplify<WorkshopDetailsSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *WorkshopDetails*
+ */
+type WorkshopDetailsSliceVariation = WorkshopDetailsSliceDefault
+
+/**
+ * WorkshopDetails Shared Slice
+ *
+ * - **API ID**: `workshop_details`
+ * - **Description**: WorkshopDetails
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type WorkshopDetailsSlice = prismic.SharedSlice<"workshop_details", WorkshopDetailsSliceVariation>;
+
+/**
  * Item in *WorkshopExplanation → Default → Primary → Images*
  */
 export interface WorkshopExplanationSliceDefaultPrimaryImagesItem {
@@ -2631,6 +2669,10 @@ declare module "@prismicio/client" {
 			TextSliceDefault,
 			TextSlicePullQuote,
 			TextSliceAside,
+			WorkshopDetailsSlice,
+			WorkshopDetailsSliceDefaultPrimary,
+			WorkshopDetailsSliceVariation,
+			WorkshopDetailsSliceDefault,
 			WorkshopExplanationSlice,
 			WorkshopExplanationSliceDefaultPrimaryImagesItem,
 			WorkshopExplanationSliceDefaultPrimary,
