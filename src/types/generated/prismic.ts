@@ -1700,9 +1700,94 @@ export interface ImageListSliceTwoBoldImagesPrimary {
 export type ImageListSliceTwoBoldImages = prismic.SharedSliceVariation<"twoBoldImages", Simplify<ImageListSliceTwoBoldImagesPrimary>, never>;
 
 /**
+ * Primary content in *ImageList → Three Bold Images → Primary*
+ */
+export interface ImageListSliceThreeBoldImagesPrimary {
+	/**
+	 * Background Color field in *ImageList → Three Bold Images → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Burgundy
+	 * - **API ID Path**: image_list.threeBoldImages.primary.background_color
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	background_color: prismic.SelectField<"Burgundy" | "Navy" | "Tan", "filled">;
+	
+	/**
+	 * Image One field in *ImageList → Three Bold Images → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.threeBoldImages.primary.image_one
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image_one: prismic.ImageField<never>;
+	
+	/**
+	 * Image One Caption field in *ImageList → Three Bold Images → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.threeBoldImages.primary.image_one_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	image_one_caption: prismic.RichTextField;
+	
+	/**
+	 * Image Two field in *ImageList → Three Bold Images → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.threeBoldImages.primary.image_two
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image_two: prismic.ImageField<never>;
+	
+	/**
+	 * Image Two Caption field in *ImageList → Three Bold Images → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.threeBoldImages.primary.image_two_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	image_two_caption: prismic.RichTextField;
+	
+	/**
+	 * Image Three field in *ImageList → Three Bold Images → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.threeBoldImages.primary.image_three
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image_three: prismic.ImageField<never>;
+	
+	/**
+	 * Image Three Caption field in *ImageList → Three Bold Images → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: image_list.threeBoldImages.primary.image_three_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	image_three_caption: prismic.RichTextField;
+}
+
+/**
+ * Three Bold Images variation for ImageList Slice
+ *
+ * - **API ID**: `threeBoldImages`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageListSliceThreeBoldImages = prismic.SharedSliceVariation<"threeBoldImages", Simplify<ImageListSliceThreeBoldImagesPrimary>, never>;
+
+/**
  * Slice variation for *ImageList*
  */
-type ImageListSliceVariation = ImageListSliceDefault | ImageListSliceVertical | ImageListSliceHorizonalWithSingleCaption | ImageListSliceTwoBoldImages
+type ImageListSliceVariation = ImageListSliceDefault | ImageListSliceVertical | ImageListSliceHorizonalWithSingleCaption | ImageListSliceTwoBoldImages | ImageListSliceThreeBoldImages
 
 /**
  * ImageList Shared Slice
@@ -2633,11 +2718,13 @@ declare module "@prismicio/client" {
 			ImageListSliceHorizonalWithSingleCaptionPrimaryImagesItem,
 			ImageListSliceHorizonalWithSingleCaptionPrimary,
 			ImageListSliceTwoBoldImagesPrimary,
+			ImageListSliceThreeBoldImagesPrimary,
 			ImageListSliceVariation,
 			ImageListSliceDefault,
 			ImageListSliceVertical,
 			ImageListSliceHorizonalWithSingleCaption,
 			ImageListSliceTwoBoldImages,
+			ImageListSliceThreeBoldImages,
 			NewsletterSignupFormSlice,
 			NewsletterSignupFormSliceDefaultPrimary,
 			NewsletterSignupFormSliceInlineSignupFormPrimary,

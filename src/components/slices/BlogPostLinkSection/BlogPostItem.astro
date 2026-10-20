@@ -1,5 +1,6 @@
 ---
 import { isFilled } from '@prismicio/client'
+import { getBoldImages, isBoldImageList } from '@lib/bold-images'
 import { getEntryTitleHtml } from '@lib/get-entry-title'
 import getJournalEntryDate from '@lib/get-journal-entry-date'
 
@@ -24,8 +25,8 @@ function getFirstSliceImage(
             slice.slice_type === 'image'
                 ? [slice.primary.image]
                 : slice.slice_type === 'image_list'
-                  ? slice.variation === 'twoBoldImages'
-                      ? [slice.primary.image_one, slice.primary.image_two]
+                  ? isBoldImageList(slice)
+                      ? getBoldImages(slice).map(({ image }) => image)
                       : slice.primary.images.map(({ image }) => image)
                   : []
         const image = images.find((image) => isFilled.image(image))

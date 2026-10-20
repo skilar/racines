@@ -1,4 +1,6 @@
 ---
+import { isBoldImageList } from '@lib/bold-images'
+
 import ImageListRepeatable from './ImageListRepeatable.astro'
 import ImageListBold from './ImageListBold.astro'
 
@@ -13,7 +15,7 @@ interface Props {
 const { noteOffset, slice, zoomOffset } = Astro.props
 ---
 
-{slice.variation === 'twoBoldImages' ? (
+{isBoldImageList(slice) ? (
     <ImageListBold
         noteOffset={noteOffset}
         slice={slice}

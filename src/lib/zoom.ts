@@ -1,4 +1,5 @@
 import { isFilled } from '@prismicio/client'
+import { getBoldImages, isBoldImageList } from '@lib/bold-images'
 
 import type {
     ImageFieldImage,
@@ -25,17 +26,8 @@ export function getZoomableImages(slice: AnySlice): LightboxItem[] {
                   ]
                 : []
         case 'image_list':
-            if (slice.variation === 'twoBoldImages') {
-                return [
-                    {
-                        image: slice.primary.image_one,
-                        caption: slice.primary.image_one_caption,
-                    },
-                    {
-                        image: slice.primary.image_two,
-                        caption: slice.primary.image_two_caption,
-                    },
-                ].filter(({ image }) => isFilled.image(image))
+            if (isBoldImageList(slice)) {
+                return getBoldImages(slice)
             }
 
             // Filter on the same condition as `ImageList.astro` so that the
