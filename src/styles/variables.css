@@ -111,6 +111,8 @@
     --width-wide: 80rem;
 
     --double-border: 4px double var(--color-ivory-4);
+    --image-border: var(--space-1) solid var(--color-white);
+
     --outline-focus-visible: 2px solid var(--color-red-8);
     --outline-offset-focus-visible: 2px;
 }

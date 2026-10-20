@@ -10,6 +10,14 @@
           "label": "UID"
         }
       },
+      "featured_image": {
+        "type": "Image",
+        "config": {
+          "label": "Featured Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
       "title": {
         "type": "StructuredText",
         "config": {
@@ -73,6 +81,24 @@
           "allowTargetBlank": true
         }
       },
+      "level": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Level",
+          "placeholder": "",
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "allowTargetBlank": true
+        }
+      },
+      "allergens": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Allergens",
+          "placeholder": "",
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "allowTargetBlank": true
+        }
+      },
       "booking_status": {
         "type": "Select",
         "config": {
@@ -86,6 +112,17 @@
           ]
         }
       },
+      "booking_link": {
+        "type": "Link",
+        "config": {
+          "label": "Booking Link",
+          "placeholder": "",
+          "select": null,
+          "allowTargetBlank": true,
+          "allowText": true,
+          "repeat": false
+        }
+      },
       "show_private_workshop_link": {
         "type": "Boolean",
         "config": {
@@ -93,6 +130,17 @@
           "default_value": true,
           "placeholder_true": "true",
           "placeholder_false": "false"
+        }
+      },
+      "private_workshop_link": {
+        "type": "Link",
+        "config": {
+          "label": "Private Workshop Link",
+          "placeholder": "",
+          "select": null,
+          "allowTargetBlank": true,
+          "allowText": true,
+          "repeat": false
         }
       },
       "slices": {
