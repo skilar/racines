@@ -1,0 +1,66 @@
+---
+import PrismicRichText from '../../common/PrismicRichText.astro'
+import WorkshopDetailsGridItem from './WorkshopDetailsGridItem.astro'
+
+import type {
+    WorkshopDetailsSlice,
+    WorkshopDocument,
+} from '@typez/generated/prismic'
+
+interface Props {
+    slice: WorkshopDetailsSlice
+    workshop: WorkshopDocument['data']
+}
+
+const { slice, workshop } = Astro.props
+const { title } = slice.primary
+const { allergens, capacity, duration, language, level, price } = workshop
+---
+
+<div
+    class="contained container"
+    data-slice-type={slice.slice_type}
+    data-slice-variation={slice.variation}
+>
+    <PrismicRichText class="title" richText={title} />
+
+    <dl class="detailsGrid">
+        <WorkshopDetailsGridItem item={duration} title="Duration" />
+        <WorkshopDetailsGridItem item={capacity} title="Capacity" />
+        <WorkshopDetailsGridItem item={price} title="Price" />
+        <WorkshopDetailsGridItem item={language} title="Language" />
+        <WorkshopDetailsGridItem item={level} title="Level" />
+        <WorkshopDetailsGridItem
+            class="allergens"
+            item={allergens}
+            title="Allergens"
+        />
+    </dl>
+</div>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-block: var(--space-9);
+        min-height: 100svh;
+    }
+
+    .title {
+        font-size: var(--font-size-5-sc);
+    }
+
+    .detailsGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+        gap: var(--space-4);
+        margin-block: var(--space-5);
+    }
+
+    .allergens {
+        font-size: var(--font-size-4);
+        grid-column: 1 / -1;
+        max-width: var(--width-text);
+    }
+</style>

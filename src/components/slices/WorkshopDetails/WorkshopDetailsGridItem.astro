@@ -4,6 +4,7 @@ import PrismicRichText from '@components/common/PrismicRichText.astro'
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
 interface Props {
+    class?: string
     item:
         | WorkshopDocument['data']['capacity']
         | WorkshopDocument['data']['duration']
@@ -12,12 +13,12 @@ interface Props {
     title: string
 }
 
-const { item, title } = Astro.props
+const { class: className, item, title, ...rest } = Astro.props
 ---
 
 {item && (
-    <div>
-        <dt class="visuallyHidden">{title}</dt>
+    <div class={className} {...rest}>
+        <dt class="title">{title}</dt>
         <dd>
             <PrismicRichText class="item" richText={item} />
         </dd>
@@ -25,6 +26,12 @@ const { item, title } = Astro.props
 )}
 
 <style>
+    .title {
+        font-size: var(--font-size-3-sc);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-medium);
+    }
+
     .item {
         font-size: var(--font-size-4);
     }
