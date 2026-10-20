@@ -182,6 +182,9 @@
             },
             "workshop_details": {
               "type": "SharedSlice"
+            },
+            "workshop_alternatives": {
+              "type": "SharedSlice"
             }
           }
         }

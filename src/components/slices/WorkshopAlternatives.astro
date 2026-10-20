@@ -1,0 +1,81 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
+
+import ArrowLink from '../common/ArrowLink.astro'
+import PrismicRichText from '../common/PrismicRichText.astro'
+
+import type { WorkshopAlternativesSlice } from '@typez/generated/prismic'
+
+interface Props {
+    slice: WorkshopAlternativesSlice
+}
+
+const { slice } = Astro.props
+const { lang } = Astro.locals
+
+const alternatives = slice.primary.alternative.map((item) => {
+    const linkAttrs = getLinkAttrs(item.link)
+    const linkCaption = isFilled.keyText(item.link.text)
+        ? fixText(item.link.text, lang)
+        : undefined
+
+    return {
+        description: item.description,
+        link: linkAttrs && linkCaption ? { linkAttrs, linkCaption } : null,
+        title: item.title,
+    }
+})
+---
+
+<div
+    class="container"
+    data-slice-type={slice.slice_type}
+    data-slice-variation={slice.variation}
+    id="workshop-alternatives"
+>
+    {alternatives.length > 0 && (
+        <ul class="alternatives prose">
+            {alternatives.map(({ description, link, title }) => (
+                <li class="alternative prose">
+                    <PrismicRichText class="title" richText={title} />
+
+                    <PrismicRichText
+                        class="description"
+                        richText={description}
+                    />
+
+                    {link && (
+                        <ArrowLink
+                            caption={link.linkCaption}
+                            class="link"
+                            {...link.linkAttrs}
+                        />
+                    )}
+                </li>
+            ))}
+        </ul>
+    )}
+</div>
+
+<style>
+    .container {
+        container: workshopAlternatives / inline-size;
+        padding-block: var(--space-9);
+        width: 100%;
+    }
+
+    .alternatives {
+        display: grid;
+        gap: var(--space-7);
+
+        @container workshopAlternatives (width >= 40rem) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    .link {
+        margin-top: var(--space-5);
+    }
+</style>
