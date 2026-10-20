@@ -10,10 +10,10 @@ export const UI = {
     'fr-fr': {
         aboutTheAuthor: 'À propos de l’autrice',
         allergens: 'Allergènes',
-        alsoSendNewsletter: 'M’envoyer aussi la lettre d’information',
+        alsoSendNewsletter: 'M’envoyer aussi la newsletter',
         backToRef: (number: number) => `Retour à l’appel de note ${number}`,
         bookNow: 'Réserver',
-        capacity: 'Capacité',
+        capacity: '№ participants',
         closeImageViewer: 'Fermer la visionneuse',
         duration: 'Durée',
         emailAddress: 'E-mail',
