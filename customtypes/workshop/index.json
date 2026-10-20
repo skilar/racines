@@ -24,6 +24,10 @@
           "label": "Title",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums",
+            "small-caps"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -33,6 +37,10 @@
           "label": "Subtitle",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums",
+            "small-caps"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -42,6 +50,10 @@
           "label": "Description",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums",
+            "small-caps"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -51,6 +63,10 @@
           "label": "Duration",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums",
+            "small-caps"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -60,6 +76,10 @@
           "label": "Capacity",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums",
+            "small-caps"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -69,6 +89,10 @@
           "label": "Price",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums",
+            "small-caps"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -78,6 +102,10 @@
           "label": "Language",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums",
+            "small-caps"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -87,6 +115,10 @@
           "label": "Level",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums",
+            "small-caps"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -96,6 +128,10 @@
           "label": "Allergens",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums",
+            "small-caps"
+          ],
           "allowTargetBlank": true
         }
       },
@@ -117,6 +153,10 @@
           "label": "Booking Availability",
           "placeholder": "",
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "labels": [
+            "ordinal-nums",
+            "small-caps"
+          ],
           "allowTargetBlank": true
         }
       },

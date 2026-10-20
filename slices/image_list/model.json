@@ -159,6 +159,10 @@
             "label": "Image One Caption",
             "placeholder": "",
             "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "labels": [
+              "ordinal-nums",
+              "small-caps"
+            ],
             "allowTargetBlank": true
           }
         },
@@ -176,6 +180,10 @@
             "label": "Image Two Caption",
             "placeholder": "",
             "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "labels": [
+              "ordinal-nums",
+              "small-caps"
+            ],
             "allowTargetBlank": true
           }
         }
@@ -216,6 +224,10 @@
             "label": "Image One Caption",
             "placeholder": "",
             "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "labels": [
+              "ordinal-nums",
+              "small-caps"
+            ],
             "allowTargetBlank": true
           }
         },
@@ -233,6 +245,10 @@
             "label": "Image Two Caption",
             "placeholder": "",
             "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "labels": [
+              "ordinal-nums",
+              "small-caps"
+            ],
             "allowTargetBlank": true
           }
         },
@@ -250,6 +266,10 @@
             "label": "Image Three Caption",
             "placeholder": "",
             "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+            "labels": [
+              "ordinal-nums",
+              "small-caps"
+            ],
             "allowTargetBlank": true
           }
         }
