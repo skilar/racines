@@ -95,15 +95,15 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
                     bookingStatus={bookingStatus}
                     notifyTag={notifyTag}
                 />
-
-                {privateWorkshopLinkAttrs && (
-                    <ArrowLink
-                        caption={privateWorkshopCaption}
-                        class="privateWorkshopLink"
-                        {...privateWorkshopLinkAttrs}
-                    />
-                )}
             </div>
+
+            {privateWorkshopLinkAttrs && (
+                <ArrowLink
+                    caption={privateWorkshopCaption}
+                    class="privateWorkshopLink"
+                    {...privateWorkshopLinkAttrs}
+                />
+            )}
         </div>
     </div>
 </div>
@@ -111,7 +111,6 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
 <style>
     .header {
         align-items: center;
-        /* background-color: var(--color-ivory-1); */
         container: workshopHeader / inline-size;
         display: flex;
         padding-block: var(--space-9);
@@ -151,12 +150,14 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
 
     .title {
         font-size: var(--font-size-6);
+        line-height: 1.1;
     }
 
     .subtitle {
         font-size: var(--font-size-4-sc);
         font-style: italic;
         font-weight: var(--font-weight-medium);
+        margin-top: var(--space-1);
     }
 
     .description {
@@ -180,8 +181,8 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
     }
 
     .bookingAvailability {
-        font-size: var(--font-size-4);
-        font-weight: var(--font-weight-medium);
+        font-size: var(--font-size-4-sc);
+        font-weight: var(--font-weight-bold);
         width: 100%;
     }
 
