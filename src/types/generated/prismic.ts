@@ -1782,9 +1782,54 @@ export interface NewsletterSignupFormSliceInlineSignupFormPrimary {
 export type NewsletterSignupFormSliceInlineSignupForm = prismic.SharedSliceVariation<"inlineSignupForm", Simplify<NewsletterSignupFormSliceInlineSignupFormPrimary>, never>;
 
 /**
+ * Primary content in *NewsletterSignupForm → FullBleed → Primary*
+ */
+export interface NewsletterSignupFormSliceFullBleedPrimary {
+	/**
+	 * Title field in *NewsletterSignupForm → FullBleed → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: newsletter_signup_form.fullBleed.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Caption field in *NewsletterSignupForm → FullBleed → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: newsletter_signup_form.fullBleed.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	caption: prismic.RichTextField;
+	
+	/**
+	 * Background Color field in *NewsletterSignupForm → FullBleed → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Burgundy
+	 * - **API ID Path**: newsletter_signup_form.fullBleed.primary.background_color
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	background_color: prismic.SelectField<"Burgundy" | "Navy" | "Tan", "filled">;
+}
+
+/**
+ * FullBleed variation for NewsletterSignupForm Slice
+ *
+ * - **API ID**: `fullBleed`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type NewsletterSignupFormSliceFullBleed = prismic.SharedSliceVariation<"fullBleed", Simplify<NewsletterSignupFormSliceFullBleedPrimary>, never>;
+
+/**
  * Slice variation for *NewsletterSignupForm*
  */
-type NewsletterSignupFormSliceVariation = NewsletterSignupFormSliceDefault | NewsletterSignupFormSliceInlineSignupForm
+type NewsletterSignupFormSliceVariation = NewsletterSignupFormSliceDefault | NewsletterSignupFormSliceInlineSignupForm | NewsletterSignupFormSliceFullBleed
 
 /**
  * NewsletterSignupForm Shared Slice
@@ -2558,9 +2603,11 @@ declare module "@prismicio/client" {
 			NewsletterSignupFormSlice,
 			NewsletterSignupFormSliceDefaultPrimary,
 			NewsletterSignupFormSliceInlineSignupFormPrimary,
+			NewsletterSignupFormSliceFullBleedPrimary,
 			NewsletterSignupFormSliceVariation,
 			NewsletterSignupFormSliceDefault,
 			NewsletterSignupFormSliceInlineSignupForm,
+			NewsletterSignupFormSliceFullBleed,
 			QuoteSlice,
 			QuoteSliceDefaultPrimary,
 			QuoteSliceVariation,

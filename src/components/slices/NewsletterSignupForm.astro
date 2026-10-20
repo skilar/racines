@@ -3,9 +3,9 @@ import { isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
 import { UI } from '@lib/i18n'
 
-import Input from '../../common/forms/Input.astro'
-import Button from '../../common/Button.astro'
-import PrismicRichText from '../../common/PrismicRichText.astro'
+import Input from '../common/forms/Input.astro'
+import Button from '../common/Button.astro'
+import PrismicRichText from '../common/PrismicRichText.astro'
 
 import type { NewsletterSignupFormSlice } from '@typez/generated/prismic'
 
@@ -17,16 +17,22 @@ const { slice } = Astro.props
 const { lang } = Astro.locals
 
 const isInline = slice.variation === 'inlineSignupForm'
+const isFullBleed = slice.variation === 'fullBleed'
 
-// Creates a unique form ID based on the Prismic slice ID, to keep multiple
-// signup forms on one page unique. Clean up the Prismic ID by replacing
-// any character that's not a-Z, A-Z, or 0-9 with a dash.
+const background = isFullBleed
+    ? slice.primary.background_color.toLowerCase()
+    : undefined
+const isDarkBackground = background === 'burgundy' || background === 'navy'
+
+// Unique form ID based on the Prismic slice ID
 const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
 ---
 
 <div
-    class:list={['container', { inlineForm: isInline }]}
+    class:list={['container', { fullBleed: isFullBleed, inlineForm: isInline }]}
+    data-background={background}
     data-slice-type={slice.slice_type}
+    data-slice-variation={slice.variation}
 >
     <div class="wrapper">
         {isFilled.keyText(slice.primary.title) && (
@@ -75,6 +81,15 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
 
                 <Input
                     hideLabel
+                    id={`${formId}-tag`}
+                    label="Tag"
+                    name="tag"
+                    type="hidden"
+                    value="newsletter"
+                />
+
+                <Input
+                    hideLabel
                     label="Embed"
                     name="embed"
                     type="hidden"
@@ -87,6 +102,7 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
                 class="newsletterButton"
                 inlineWithFormField={isInline}
                 size={isInline ? '3' : '4'}
+                style={isDarkBackground ? 'subtle' : 'primary'}
                 type="submit"
             />
         </form>
@@ -151,6 +167,23 @@ const formId = `newsletter-${slice.id.replace(/[^a-zA-Z0-9-]/g, '-')}`
 
     .newsletterButton {
         width: 100%;
+    }
+
+    .fullBleed {
+        max-width: none;
+        padding-block: calc(var(--space-9) * 2);
+        padding-inline: var(--space-7);
+
+        .wrapper {
+            border-block: none;
+            margin-inline: auto;
+            padding-block: 0;
+        }
+
+        :global(label),
+        :global(label .optional) {
+            color: inherit;
+        }
     }
 
     .inlineForm {

@@ -61,6 +61,7 @@
         [data-slice-type='quote'],
         [data-slice-type='hero'][data-slice-variation='imageWithGradient'],
         [data-slice-type='image_list'][data-slice-variation='twoBoldImages'],
+        [data-slice-type='newsletter_signup_form'][data-slice-variation='fullBleed'],
         [data-slice-type='testimonial']
     ) {
         grid-column: full;

@@ -176,6 +176,9 @@
             },
             "workshop_explanation": {
               "type": "SharedSlice"
+            },
+            "newsletter_signup_form": {
+              "type": "SharedSlice"
             }
           }
         }
