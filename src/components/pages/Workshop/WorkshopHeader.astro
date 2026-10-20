@@ -8,6 +8,7 @@ import ArrowLink from '@components/common/ArrowLink.astro'
 import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
 import WorkshopBooking from './WorkshopBooking.astro'
+import WorkshopDetailsGrid from './WorkshopDetailsGrid.astro'
 
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
@@ -15,9 +16,14 @@ interface Props {
     bookingAvailability: WorkshopDocument['data']['booking_availability']
     bookingLink: WorkshopDocument['data']['booking_link']
     bookingStatus: WorkshopDocument['data']['booking_status']
+    capacity: WorkshopDocument['data']['capacity']
     description: WorkshopDocument['data']['description']
+    duration: WorkshopDocument['data']['duration']
     featuredImage: WorkshopDocument['data']['featured_image']
+    language: WorkshopDocument['data']['language']
+    level: WorkshopDocument['data']['level']
     notifyTag: string
+    price: WorkshopDocument['data']['price']
     privateWorkshopLink: WorkshopDocument['data']['private_workshop_link']
     showPrivateWorkshopLink: WorkshopDocument['data']['show_private_workshop_link']
     subtitle: WorkshopDocument['data']['subtitle']
@@ -28,9 +34,14 @@ const {
     bookingAvailability,
     bookingLink,
     bookingStatus,
+    capacity,
     description,
+    duration,
     featuredImage,
+    language,
+    level,
     notifyTag,
+    price,
     privateWorkshopLink,
     showPrivateWorkshopLink,
     subtitle,
@@ -64,6 +75,15 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
             <PrismicRichText class="subtitle" richText={subtitle} />
             <PrismicRichText class="description" richText={description} />
 
+            <WorkshopDetailsGrid
+                capacity={capacity}
+                class="workshopDetails"
+                duration={duration}
+                language={language}
+                level={level}
+                price={price}
+            />
+
             <div class="ctaWrapper">
                 <PrismicRichText
                     class="bookingAvailability"
@@ -75,15 +95,15 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
                     bookingStatus={bookingStatus}
                     notifyTag={notifyTag}
                 />
-            </div>
 
-            {privateWorkshopLinkAttrs && (
-                <ArrowLink
-                    caption={privateWorkshopCaption}
-                    class="privateWorkshopLink"
-                    {...privateWorkshopLinkAttrs}
-                />
-            )}
+                {privateWorkshopLinkAttrs && (
+                    <ArrowLink
+                        caption={privateWorkshopCaption}
+                        class="privateWorkshopLink"
+                        {...privateWorkshopLinkAttrs}
+                    />
+                )}
+            </div>
         </div>
     </div>
 </div>
@@ -144,15 +164,19 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
         margin-top: var(--space-4);
     }
 
-    .ctaWrapper {
-        align-items: center;
+    .workshopDetails {
         border-block: var(--double-border);
-        border-block: 1px solid var(--color-ivory-5);
+        margin-block: var(--space-8);
+        padding-block: var(--space-6);
+    }
+
+    .ctaWrapper {
+        background-color: var(--color-ivory-1);
         display: flex;
         flex-direction: column;
         gap: var(--space-4);
-        margin-top: var(--space-7);
-        padding-block: var(--space-6);
+        padding-block: var(--space-5);
+        padding-inline: var(--space-5);
     }
 
     .bookingAvailability {

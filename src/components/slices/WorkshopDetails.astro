@@ -1,0 +1,48 @@
+---
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+import WorkshopDetailsGrid from '@components/pages/Workshop/WorkshopDetailsGrid.astro'
+
+import type {
+    WorkshopDetailsSlice,
+    WorkshopDocument,
+} from '@typez/generated/prismic'
+
+interface Props {
+    slice: WorkshopDetailsSlice
+    workshop: WorkshopDocument['data']
+}
+
+const { slice, workshop } = Astro.props
+const { title } = slice.primary
+---
+
+<div
+    class="contained container"
+    data-slice-type={slice.slice_type}
+    data-slice-variation={slice.variation}
+>
+    <PrismicRichText class="title" richText={title} />
+
+    <WorkshopDetailsGrid
+        allergens={workshop.allergens}
+        capacity={workshop.capacity}
+        duration={workshop.duration}
+        language={workshop.language}
+        level={workshop.level}
+        price={workshop.price}
+    />
+</div>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-block: var(--space-9);
+        min-height: 100svh;
+    }
+
+    .title {
+        font-size: var(--font-size-5-sc);
+    }
+</style>
