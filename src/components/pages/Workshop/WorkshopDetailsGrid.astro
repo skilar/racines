@@ -1,4 +1,6 @@
 ---
+import { UI } from '@lib/i18n'
+
 import WorkshopDetailsGridItem from './WorkshopDetailsGridItem.astro'
 
 import type { WorkshopDocument } from '@typez/generated/prismic'
@@ -23,19 +25,20 @@ const {
     price,
     ...rest
 } = Astro.props
+const { lang } = Astro.locals
 ---
 
 <dl class:list={['detailsGrid', className]} {...rest}>
-    <WorkshopDetailsGridItem item={duration} title="Duration" />
-    <WorkshopDetailsGridItem item={capacity} title="Capacity" />
-    <WorkshopDetailsGridItem item={price} title="Price" />
-    <WorkshopDetailsGridItem item={language} title="Language" />
-    <WorkshopDetailsGridItem item={level} title="Level" />
+    <WorkshopDetailsGridItem item={duration} title={UI[lang].duration} />
+    <WorkshopDetailsGridItem item={capacity} title={UI[lang].capacity} />
+    <WorkshopDetailsGridItem item={price} title={UI[lang].price} />
+    <WorkshopDetailsGridItem item={language} title={UI[lang].language} />
+    <WorkshopDetailsGridItem item={level} title={UI[lang].level} />
     {allergens && (
         <WorkshopDetailsGridItem
             class="allergens"
             item={allergens}
-            title="Allergens"
+            title={UI[lang].allergens}
         />
     )}
 </dl>
