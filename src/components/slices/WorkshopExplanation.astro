@@ -42,7 +42,12 @@ const mainImageCaption =
         </ul>
     )}
 
-    <div class="head">
+    <div
+        class:list={[
+            'head',
+            { withImage: mainImage && isFilled.image(mainImage) },
+        ]}
+    >
         <div class="text">
             <PrismicRichText class="title" richText={title} />
 
@@ -63,18 +68,31 @@ const mainImageCaption =
 
 <style>
     .container {
+        container: workshopExplanation / inline-size;
         display: flex;
+        flex-direction: column;
+        justify-content: center;
         min-height: 100svh;
         padding-block: var(--space-9);
         width: 100%;
     }
 
     .head {
-        align-items: center;
         display: grid;
         gap: var(--space-7);
-        grid-template-columns: var(--width-text) 1fr;
-        width: 100%;
+
+        @container workshopExplanation (width >= 48rem) {
+            &.withImage {
+                align-items: center;
+                grid-template-columns:
+                    minmax(0, var(--width-text))
+                    minmax(0, 1fr);
+            }
+        }
+    }
+
+    .text {
+        max-width: var(--width-text);
     }
 
     .title {
@@ -92,8 +110,11 @@ const mainImageCaption =
     .imagesList {
         display: grid;
         gap: var(--space-5);
-        grid-template-columns: repeat(3, 1fr);
         margin-top: var(--space-9);
+
+        @container workshopExplanation (width >= 40rem) {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
     }
 
     .imageListItem {
