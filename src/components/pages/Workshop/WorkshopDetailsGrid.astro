@@ -1,0 +1,56 @@
+---
+import WorkshopDetailsGridItem from './WorkshopDetailsGridItem.astro'
+
+import type { WorkshopDocument } from '@typez/generated/prismic'
+
+interface Props {
+    allergens?: WorkshopDocument['data']['allergens']
+    capacity: WorkshopDocument['data']['capacity']
+    class?: string
+    duration: WorkshopDocument['data']['duration']
+    language: WorkshopDocument['data']['language']
+    level: WorkshopDocument['data']['level']
+    price: WorkshopDocument['data']['price']
+}
+
+const {
+    allergens,
+    capacity,
+    class: className,
+    duration,
+    language,
+    level,
+    price,
+    ...rest
+} = Astro.props
+---
+
+<dl class:list={['detailsGrid', className]} {...rest}>
+    <WorkshopDetailsGridItem item={duration} title="Duration" />
+    <WorkshopDetailsGridItem item={capacity} title="Capacity" />
+    <WorkshopDetailsGridItem item={price} title="Price" />
+    <WorkshopDetailsGridItem item={language} title="Language" />
+    <WorkshopDetailsGridItem item={level} title="Level" />
+    {allergens && (
+        <WorkshopDetailsGridItem
+            class="allergens"
+            item={allergens}
+            title="Allergens"
+        />
+    )}
+</dl>
+
+<style>
+    .detailsGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+        gap: var(--space-4);
+        margin-block: var(--space-5);
+    }
+
+    .allergens {
+        font-size: var(--font-size-4);
+        grid-column: 1 / -1;
+        max-width: var(--width-text);
+    }
+</style>
