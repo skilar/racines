@@ -130,15 +130,15 @@ const imagePanel =
 
     .title {
         font-feature-settings: 'swsh';
-
         font-style: italic;
+        line-height: 1.1;
 
         h2 {
             font-size: var(--font-size-6);
         }
 
         &:has(+ .body) {
-            margin-bottom: var(--post-line);
+            margin-bottom: calc(var(--post-line) * 2);
         }
     }
 
