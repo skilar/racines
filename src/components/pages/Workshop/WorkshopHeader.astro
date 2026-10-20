@@ -1,56 +1,122 @@
 ---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+import { UI } from '@lib/i18n'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
+
+import ArrowLink from '@components/common/ArrowLink.astro'
+import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
-import WorkshopHeaderGridItem from './WorkshopHeaderGridItem.astro'
 
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
 interface Props {
-    booking_status: WorkshopDocument['data']['booking_status']
-    capacity: WorkshopDocument['data']['capacity']
+    bookingAvailability: WorkshopDocument['data']['booking_availability']
+    bookingLink: WorkshopDocument['data']['booking_link']
+    bookingStatus: WorkshopDocument['data']['booking_status']
     description: WorkshopDocument['data']['description']
-    duration: WorkshopDocument['data']['duration']
-    language: WorkshopDocument['data']['language']
-    price: WorkshopDocument['data']['price']
-    show_private_workshop_link: WorkshopDocument['data']['show_private_workshop_link']
+    featuredImage: WorkshopDocument['data']['featured_image']
+    privateWorkshopLink: WorkshopDocument['data']['private_workshop_link']
+    showPrivateWorkshopLink: WorkshopDocument['data']['show_private_workshop_link']
     subtitle: WorkshopDocument['data']['subtitle']
     title: WorkshopDocument['data']['title']
 }
 
 const {
-    booking_status,
-    capacity,
+    bookingAvailability,
+    bookingLink,
+    bookingStatus,
     description,
-    duration,
-    language,
-    price,
-    show_private_workshop_link,
+    featuredImage,
+    privateWorkshopLink,
+    showPrivateWorkshopLink,
     subtitle,
     title,
 } = Astro.props
+const { lang } = Astro.locals
+
+const privateWorkshopLinkAttrs = showPrivateWorkshopLink
+    ? getLinkAttrs(privateWorkshopLink)
+    : null
+
+const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
+    ? fixText(privateWorkshopLink.text, lang)
+    : UI[lang].requestPrivateWorkshop
 ---
 
 <div class="header">
-    <div class="textWrapper">
-        <PrismicRichText class="title" richText={title} />
-        <PrismicRichText class="subtitle" richText={subtitle} />
-        <PrismicRichText class="description" richText={description} />
+    <div class="contained layout">
+        {isFilled.image(featuredImage) && (
+            <div class="featuredImage">
+                <Image
+                    image={featuredImage}
+                    priority
+                    sizes="(min-width: 60rem) 35rem, 100vw"
+                />
+            </div>
+        )}
 
-        <dl class="detailsGrid">
-            <WorkshopHeaderGridItem item={duration} title="Duration" />
-            <WorkshopHeaderGridItem item={capacity} title="Capacity" />
-            <WorkshopHeaderGridItem item={price} title="Price" />
-            <WorkshopHeaderGridItem item={language} title="Language" />
-        </dl>
+        <div class="textWrapper">
+            <PrismicRichText class="title" richText={title} />
+            <PrismicRichText class="subtitle" richText={subtitle} />
+            <PrismicRichText class="description" richText={description} />
+
+            <div class="ctaWrapper">
+                <PrismicRichText
+                    class="bookingAvailability"
+                    richText={bookingAvailability}
+                />
+            </div>
+
+            {privateWorkshopLinkAttrs && (
+                <ArrowLink
+                    caption={privateWorkshopCaption}
+                    class="privateWorkshopLink"
+                    {...privateWorkshopLinkAttrs}
+                />
+            )}
+        </div>
     </div>
 </div>
 
 <style>
     .header {
-        background-color: var(--color-ivory-1);
+        align-items: center;
+        /* background-color: var(--color-ivory-1); */
+        container: workshopHeader / inline-size;
+        display: flex;
+        padding-block: var(--space-9);
+        min-height: 100vh;
+    }
+
+    .layout {
+        display: grid;
+        gap: var(--space-7);
+
+        @container workshopHeader (width > 60rem) {
+            align-items: center;
+            gap: calc(var(--space-8) * 2);
+            grid-template-columns: minmax(0, 40rem) minmax(0, 1fr);
+        }
+    }
+
+    .featuredImage {
+        border: var(--image-border);
+        max-width: 30rem;
+
+        @container workshopHeader (width > 60rem) {
+            grid-column: 2;
+            grid-row: 1;
+        }
     }
 
     .textWrapper {
         max-width: var(--width-text);
+
+        @container workshopHeader (width > 60rem) {
+            grid-column: 1;
+            grid-row: 1;
+        }
     }
 
     .title {
@@ -58,18 +124,36 @@ const {
     }
 
     .subtitle {
-        font-size: var(--font-size-4);
+        font-size: var(--font-size-4-sc);
         font-style: italic;
         font-weight: var(--font-weight-medium);
     }
 
     .description {
         font-size: var(--font-size-4);
+        margin-top: var(--space-4);
     }
 
-    .detailsGrid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    .ctaWrapper {
+        align-items: center;
+        border-block: var(--double-border);
+        border-block: 1px solid var(--color-ivory-5);
+        display: flex;
+        flex-direction: column;
         gap: var(--space-4);
+        margin-top: var(--space-7);
+        padding-block: var(--space-6);
+    }
+
+    .bookingAvailability {
+        font-size: var(--font-size-4);
+        font-weight: var(--font-weight-medium);
+        width: 100%;
+    }
+
+    .privateWorkshopLink {
+        color: var(--color-ivory-10);
+        font-size: var(--font-size-3-sc);
+        margin-top: var(--space-5);
     }
 </style>

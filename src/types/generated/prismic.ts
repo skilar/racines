@@ -734,6 +734,17 @@ type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice
  */
 interface WorkshopDocumentData {
 	/**
+	 * Featured Image field in *Workshop*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.featured_image
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	featured_image: prismic.ImageField<never>;
+	
+	/**
 	 * Title field in *Workshop*
 	 *
 	 * - **Field Type**: Rich Text
@@ -811,6 +822,28 @@ interface WorkshopDocumentData {
 	language: prismic.RichTextField;
 	
 	/**
+	 * Level field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.level
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	level: prismic.RichTextField;
+	
+	/**
+	 * Allergens field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.allergens
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	allergens: prismic.RichTextField;
+	
+	/**
 	 * Booking Status field in *Workshop*
 	 *
 	 * - **Field Type**: Select
@@ -823,6 +856,17 @@ interface WorkshopDocumentData {
 	booking_status: prismic.SelectField<"coming_soon" | "open" | "full", "filled">;
 	
 	/**
+	 * Booking Link field in *Workshop*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.booking_link
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	booking_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	
+	/**
 	 * Show Private Workshop Link field in *Workshop*
 	 *
 	 * - **Field Type**: Boolean
@@ -833,6 +877,17 @@ interface WorkshopDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/boolean
 	 */
 	show_private_workshop_link: prismic.BooleanField;
+	
+	/**
+	 * Private Workshop Link field in *Workshop*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.private_workshop_link
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	private_workshop_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 	
 	/**
 	 * Slice Zone field in *Workshop*
