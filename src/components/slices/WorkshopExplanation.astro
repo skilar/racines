@@ -2,6 +2,7 @@
 import { isFilled } from '@prismicio/client'
 
 import Image from '../common/Image.astro'
+import ImageCaption from '../common/ImageCaption.astro'
 import PrismicRichText from '../common/PrismicRichText.astro'
 
 import type { WorkshopExplanationSlice } from '@typez/generated/prismic'
@@ -14,6 +15,10 @@ const { slice } = Astro.props
 const { description, images, title } = slice.primary
 const mainImage =
     slice.variation === 'withMainImage' ? slice.primary.main_image : undefined
+const mainImageCaption =
+    slice.variation === 'withMainImage'
+        ? slice.primary.main_image_caption
+        : undefined
 ---
 
 <div
@@ -45,17 +50,20 @@ const mainImage =
         </div>
 
         {mainImage && isFilled.image(mainImage) && (
-            <Image class="mainImage" image={mainImage} />
+            <div>
+                <Image class="mainImage" image={mainImage} />
+
+                {mainImageCaption && (
+                    <ImageCaption caption={mainImageCaption} />
+                )}
+            </div>
         )}
     </div>
 </div>
 
 <style>
     .container {
-        /* align-items: start;
         display: flex;
-        flex-direction: column;
-        justify-content: center; */
         min-height: 100svh;
         padding-block: var(--space-9);
         width: 100%;
@@ -65,7 +73,8 @@ const mainImage =
         align-items: center;
         display: grid;
         gap: var(--space-7);
-        grid-template-columns: var(--width-text) 20rem;
+        grid-template-columns: var(--width-text) 1fr;
+        width: 100%;
     }
 
     .title {
@@ -78,11 +87,6 @@ const mainImage =
 
     .description {
         font-size: var(--font-size-4);
-    }
-
-    .mainImage {
-        border: var(--image-border-thin);
-        border-color: var(--color-ivory-4);
     }
 
     .imagesList {

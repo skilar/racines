@@ -2567,6 +2567,16 @@ export interface WorkshopExplanationSliceWithMainImagePrimary {
 	main_image: prismic.ImageField<never>;
 	
 	/**
+	 * Main Image Caption field in *WorkshopExplanation → WithMainImage → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_explanation.withMainImage.primary.main_image_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	main_image_caption: prismic.RichTextField;
+	
+	/**
 	 * Images field in *WorkshopExplanation → WithMainImage → Primary*
 	 *
 	 * - **Field Type**: Group
