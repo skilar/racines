@@ -727,7 +727,7 @@ interface TempHomepageDocumentData {
  */
 export type TempHomepageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<TempHomepageDocumentData>, "temp_homepage", Lang>;
 
-type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice | QuoteSlice | TestimonialSlice | HistoricalSourcesSlice | WorkshopExplanationSlice | NewsletterSignupFormSlice | WorkshopDetailsSlice
+type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice | QuoteSlice | TestimonialSlice | HistoricalSourcesSlice | WorkshopExplanationSlice | NewsletterSignupFormSlice | WorkshopDetailsSlice | WorkshopAlternativesSlice
 
 /**
  * Content for Workshop documents
@@ -2458,6 +2458,79 @@ type TextSliceVariation = TextSliceDefault | TextSlicePullQuote | TextSliceAside
 export type TextSlice = prismic.SharedSlice<"text", TextSliceVariation>;
 
 /**
+ * Item in *WorkshopAlternatives → Default → Primary → Alternative*
+ */
+export interface WorkshopAlternativesSliceDefaultPrimaryAlternativeItem {
+	/**
+	 * Title field in *WorkshopAlternatives → Default → Primary → Alternative*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_alternatives.default.primary.alternative[].title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Description field in *WorkshopAlternatives → Default → Primary → Alternative*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_alternatives.default.primary.alternative[].description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Link field in *WorkshopAlternatives → Default → Primary → Alternative*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_alternatives.default.primary.alternative[].link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Primary content in *WorkshopAlternatives → Default → Primary*
+ */
+export interface WorkshopAlternativesSliceDefaultPrimary {
+	/**
+	 * Alternative field in *WorkshopAlternatives → Default → Primary*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop_alternatives.default.primary.alternative[]
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	alternative: prismic.GroupField<Simplify<WorkshopAlternativesSliceDefaultPrimaryAlternativeItem>>;
+}
+
+/**
+ * Default variation for WorkshopAlternatives Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type WorkshopAlternativesSliceDefault = prismic.SharedSliceVariation<"default", Simplify<WorkshopAlternativesSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *WorkshopAlternatives*
+ */
+type WorkshopAlternativesSliceVariation = WorkshopAlternativesSliceDefault
+
+/**
+ * WorkshopAlternatives Shared Slice
+ *
+ * - **API ID**: `workshop_alternatives`
+ * - **Description**: WorkshopAlternatives
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type WorkshopAlternativesSlice = prismic.SharedSlice<"workshop_alternatives", WorkshopAlternativesSliceVariation>;
+
+/**
  * Primary content in *WorkshopDetails → Default → Primary*
  */
 export interface WorkshopDetailsSliceDefaultPrimary {
@@ -2866,6 +2939,11 @@ declare module "@prismicio/client" {
 			TextSliceDefault,
 			TextSlicePullQuote,
 			TextSliceAside,
+			WorkshopAlternativesSlice,
+			WorkshopAlternativesSliceDefaultPrimaryAlternativeItem,
+			WorkshopAlternativesSliceDefaultPrimary,
+			WorkshopAlternativesSliceVariation,
+			WorkshopAlternativesSliceDefault,
 			WorkshopDetailsSlice,
 			WorkshopDetailsSliceDefaultPrimary,
 			WorkshopDetailsSliceVariation,

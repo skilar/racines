@@ -13,6 +13,7 @@ import NewsletterSignupForm from '@components/slices/NewsletterSignupForm.astro'
 import Quote from '@components/slices/Quote.astro'
 import Testimonial from '@components/slices/Testimonial.astro'
 import Text from '@components/slices/Text.astro'
+import WorkshopAlternatives from '@components/slices/WorkshopAlternatives.astro'
 import WorkshopDetails from '@components/slices/WorkshopDetails.astro'
 import WorkshopExplanation from '@components/slices/WorkshopExplanation.astro'
 
@@ -113,6 +114,8 @@ const firstTextSliceIndex = slices.findIndex(
                     slice={slice}
                 />
             )
+        case 'workshop_alternatives':
+            return <WorkshopAlternatives slice={slice} />
         case 'workshop_details':
             return workshop ? (
                 <WorkshopDetails slice={slice} workshop={workshop} />
