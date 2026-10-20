@@ -1366,16 +1366,6 @@ export interface HistoricalSourcesSliceDefaultPrimaryLinkItem {
  */
 export interface HistoricalSourcesSliceDefaultPrimary {
 	/**
-	 * Historical Image field in *HistoricalSources → Default → Primary*
-	 *
-	 * - **Field Type**: Image
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: historical_sources.default.primary.historical_image
-	 * - **Documentation**: https://prismic.io/docs/fields/image
-	 */
-	historical_image: prismic.ImageField<never>;
-	
-	/**
 	 * Title field in *HistoricalSources → Default → Primary*
 	 *
 	 * - **Field Type**: Rich Text
@@ -1396,6 +1386,26 @@ export interface HistoricalSourcesSliceDefaultPrimary {
 	description: prismic.RichTextField;
 	
 	/**
+	 * Historical Image field in *HistoricalSources → Default → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: historical_sources.default.primary.historical_image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	historical_image: prismic.ImageField<never>;
+	
+	/**
+	 * Historical Image Caption field in *HistoricalSources → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: historical_sources.default.primary.historical_image_caption
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	historical_image_caption: prismic.RichTextField;
+	
+	/**
 	 * Link field in *HistoricalSources → Default → Primary*
 	 *
 	 * - **Field Type**: Group
@@ -1404,6 +1414,17 @@ export interface HistoricalSourcesSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
 	 */
 	link: prismic.GroupField<Simplify<HistoricalSourcesSliceDefaultPrimaryLinkItem>>;
+	
+	/**
+	 * Image Position field in *HistoricalSources → Default → Primary*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: Left
+	 * - **API ID Path**: historical_sources.default.primary.image_position
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	image_position: prismic.SelectField<"Left" | "Right", "filled">;
 }
 
 /**
