@@ -1,0 +1,43 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends Omit<HTMLAttributes<'input'>, 'type'> {
+    class?: string
+    label: string
+    name: string
+    size?: '3' | '4'
+}
+
+const { class: className, id, label, name, size = '4', ...rest } = Astro.props
+
+const inputId = id ?? name
+---
+
+<label class:list={['checkbox', { small: size === '3' }, className]}>
+    <input id={inputId} name={name} type="checkbox" {...rest} />
+    {label}
+</label>
+
+<style>
+    .checkbox {
+        align-items: center;
+        color: var(--color-ivory-10);
+        display: flex;
+        font-size: var(--font-size-4);
+        gap: var(--space-2);
+
+        &.small {
+            font-size: var(--font-size-3);
+        }
+    }
+
+    input {
+        accent-color: var(--color-red-9);
+        margin: 0;
+
+        &:focus-visible {
+            outline: 3px solid var(--color-blue-4);
+            outline-offset: 1px;
+        }
+    }
+</style>
