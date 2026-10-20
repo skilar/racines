@@ -1,4 +1,5 @@
-import { asHTML, isFilled } from '@prismicio/client'
+import { asHTML } from '@prismicio/client'
+import { getBoldImages, isBoldImageList } from '@lib/bold-images'
 import getFixer from '@lib/get-fixer'
 
 import type {
@@ -33,23 +34,10 @@ export const noteTipId = (number: number) => `tip-${number}`
 export function getNoteFields(slice: AnySlice): RichTextField[] {
     switch (slice.slice_type) {
         case 'image_list':
-            // This variation captions each image on its own. A caption only
+            // These variations caption each image on its own. A caption only
             // renders with its image, like `ImageListBold.astro`.
-            if (slice.variation === 'twoBoldImages') {
-                const { primary } = slice
-
-                return [
-                    {
-                        image: primary.image_one,
-                        caption: primary.image_one_caption,
-                    },
-                    {
-                        image: primary.image_two,
-                        caption: primary.image_two_caption,
-                    },
-                ].flatMap(({ image, caption }) =>
-                    isFilled.image(image) ? [caption] : [],
-                )
+            if (isBoldImageList(slice)) {
+                return getBoldImages(slice).map(({ caption }) => caption)
             }
 
             // Not all variations have a caption

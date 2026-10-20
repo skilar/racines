@@ -1,41 +1,38 @@
 ---
 import { isFilled } from '@prismicio/client'
+import { getBoldImages } from '@lib/bold-images'
 import { countFieldNotes } from '@lib/notes'
 
 import ImageCaption from '../../common/ImageCaption.astro'
 import ZoomableImage from '../../common/ZoomableImage.astro'
 
-import type { ImageListSlice } from '@typez/generated/prismic'
+import type { BoldImageListSlice } from '@lib/bold-images'
 
 interface Props {
     noteOffset?: number | undefined
-    slice: Extract<ImageListSlice, { variation: 'twoBoldImages' }>
+    slice: BoldImageListSlice
     zoomOffset?: number | undefined
 }
 
 const { noteOffset, slice, zoomOffset } = Astro.props
-const {
-    background_color,
-    image_one,
-    image_one_caption,
-    image_two,
-    image_two_caption,
-} = slice.primary
 
-const figures = [
-    { image: image_one, caption: image_one_caption },
-    { image: image_two, caption: image_two_caption },
-].flatMap(({ image, caption }) =>
-    isFilled.image(image) ? [{ image, caption }] : [],
-)
+const figures = getBoldImages(slice)
+const isThree = slice.variation === 'threeBoldImages'
 
 const getNoteOffset = (index: number) =>
-    noteOffset === undefined || index === 0
+    noteOffset === undefined
         ? noteOffset
-        : noteOffset + countFieldNotes(figures[0]?.caption ?? [])
+        : figures
+              .slice(0, index)
+              .reduce(
+                  (offset, { caption }) => offset + countFieldNotes(caption),
+                  noteOffset,
+              )
 
-const background = background_color.toLowerCase()
-const sizes = 'auto, (min-width: 650px) calc(min(100vw, 80rem) / 2), 100vw'
+const background = slice.primary.background_color.toLowerCase()
+const sizes = isThree
+    ? 'auto, (min-width: 960px) calc(min(100vw, 80rem) / 3), 100vw'
+    : 'auto, (min-width: 650px) calc(min(100vw, 80rem) / 2), 100vw'
 ---
 
 {figures.length > 0 && (
@@ -45,7 +42,7 @@ const sizes = 'auto, (min-width: 650px) calc(min(100vw, 80rem) / 2), 100vw'
         data-slice-type={slice.slice_type}
         data-slice-variation={slice.variation}
     >
-        <div class="figures">
+        <div class:list={['figures', { three: isThree }]}>
             {figures.map(({ image, caption }, index) => (
                 <figure>
                     <ZoomableImage
@@ -76,13 +73,26 @@ const sizes = 'auto, (min-width: 650px) calc(min(100vw, 80rem) / 2), 100vw'
     .container {
         container: boldImages / inline-size;
         padding-block: calc(var(--space-9) * 2);
+        padding-inline: var(--space-7);
     }
 
     .figures {
         display: grid;
+        gap: var(--space-9);
 
         @container boldImages (width >= 40rem) {
             grid-template-columns: 1fr 1fr;
+        }
+
+        &.three {
+            @container boldImages (width >= 40rem) {
+                grid-template-columns: 1fr;
+                padding-inline: var(--space-9);
+            }
+
+            @container boldImages (width >= 60rem) {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     }
 
@@ -101,7 +111,5 @@ const sizes = 'auto, (min-width: 650px) calc(min(100vw, 80rem) / 2), 100vw'
 
     .figures :global(.caption) {
         color: inherit;
-        margin-top: var(--space-3);
-        max-width: none;
     }
 </style>

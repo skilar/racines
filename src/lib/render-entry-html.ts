@@ -1,4 +1,5 @@
 import { asHTML, isFilled } from '@prismicio/client'
+import { getBoldImages, isBoldImageList } from '@lib/bold-images'
 import escapeAttr from '@lib/escape-attr'
 import formatSource from '@lib/format-source'
 import getFixer from '@lib/get-fixer'
@@ -143,23 +144,11 @@ export default function renderEntryHtml(
         switch (slice.slice_type) {
             case 'image_list': {
                 // Each image carries its own caption, so each gets a figure.
-                if (slice.variation === 'twoBoldImages') {
-                    const pairs = [
-                        [
-                            slice.primary.image_one,
-                            slice.primary.image_one_caption,
-                        ],
-                        [
-                            slice.primary.image_two,
-                            slice.primary.image_two_caption,
-                        ],
-                    ] as const
-
-                    for (const [image, imageCaption] of pairs) {
-                        if (!isFilled.image(image)) {
-                            continue
-                        }
-
+                if (isBoldImageList(slice)) {
+                    for (const {
+                        image,
+                        caption: imageCaption,
+                    } of getBoldImages(slice)) {
                         const caption = renderRichText(imageCaption)
 
                         parts.push(
