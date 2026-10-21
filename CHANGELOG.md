@@ -1,6 +1,10 @@
 # Changelog
 
-## [v1.3.0](https://github.com/skilar/racines/compare/v1.2.0...v1.3.0)
+## [v1.3.1](https://github.com/skilar/racines/compare/v1.3.0...v1.3.1)
+
+-   Add workshop availability description [`ba01c52`](https://github.com/skilar/racines/commit/ba01c52e59f6335387e8f4fb4f7411c27cdda8aa)
+
+## [v1.3.0](https://github.com/skilar/racines/compare/v1.2.0...v1.3.0) (20 October 2026)
 
 -   Add workshop page slice [`b5e9b20`](https://github.com/skilar/racines/commit/b5e9b201b3f338541f0ab0bbacd12257bb9f19f4)
 -   Add Testimonial slice [`6f6a8ad`](https://github.com/skilar/racines/commit/6f6a8ad64590f1bbfd63ddbbcf544f3cdbe0c927)
