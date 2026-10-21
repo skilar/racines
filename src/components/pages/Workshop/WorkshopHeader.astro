@@ -14,6 +14,7 @@ import type { WorkshopDocument } from '@typez/generated/prismic'
 
 interface Props {
     bookingAvailability: WorkshopDocument['data']['booking_availability']
+    bookingAvailabilityDescription: WorkshopDocument['data']['booking_availability_description']
     bookingLink: WorkshopDocument['data']['booking_link']
     bookingStatus: WorkshopDocument['data']['booking_status']
     capacity: WorkshopDocument['data']['capacity']
@@ -32,6 +33,7 @@ interface Props {
 
 const {
     bookingAvailability,
+    bookingAvailabilityDescription,
     bookingLink,
     bookingStatus,
     capacity,
@@ -88,6 +90,11 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
                 <PrismicRichText
                     class="bookingAvailability"
                     richText={bookingAvailability}
+                />
+
+                <PrismicRichText
+                    class="bookingAvailabilityDescription"
+                    richText={bookingAvailabilityDescription}
                 />
 
                 <WorkshopBooking
@@ -173,9 +180,6 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
 
     .ctaWrapper {
         background-color: var(--color-ivory-1);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-4);
         padding-block: var(--space-5);
         padding-inline: var(--space-5);
     }
@@ -183,7 +187,17 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
     .bookingAvailability {
         font-size: var(--font-size-4-sc);
         font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-4);
         width: 100%;
+
+        &:has(+ .bookingAvailabilityDescription) {
+            margin-bottom: var(--space-1);
+        }
+    }
+
+    .bookingAvailabilityDescription {
+        font-size: var(--font-size-3-sc);
+        margin-bottom: var(--space-6);
     }
 
     .privateWorkshopLink {

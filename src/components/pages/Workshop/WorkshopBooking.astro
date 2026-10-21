@@ -5,7 +5,6 @@ import { UI } from '@lib/i18n'
 import { getLinkAttrs } from '@lib/prismic-link-resolver'
 
 import Button from '@components/common/Button.astro'
-import Checkbox from '@components/common/forms/Checkbox.astro'
 import Input from '@components/common/forms/Input.astro'
 
 import type { WorkshopDocument } from '@typez/generated/prismic'
@@ -83,16 +82,6 @@ const caption = isFilled.keyText(bookingLink.text)
                 inlineWithFormField
                 size="4"
                 type="submit"
-            />
-        </div>
-
-        <div class="newsletterOptIn">
-            <Checkbox
-                id="workshop-notify-newsletter"
-                label={UI[lang].alsoSendNewsletter}
-                name="tag"
-                size="3"
-                value="newsletter"
             />
         </div>
     </form>

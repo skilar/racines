@@ -160,6 +160,15 @@
           "allowTargetBlank": true
         }
       },
+      "booking_availability_description": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Booking Availability Description",
+          "placeholder": "",
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "allowTargetBlank": true
+        }
+      },
       "booking_link": {
         "type": "Link",
         "config": {

@@ -867,6 +867,17 @@ interface WorkshopDocumentData {
 	booking_availability: prismic.RichTextField;
 	
 	/**
+	 * Booking Availability Description field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.booking_availability_description
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	booking_availability_description: prismic.RichTextField;
+	
+	/**
 	 * Booking Link field in *Workshop*
 	 *
 	 * - **Field Type**: Link
