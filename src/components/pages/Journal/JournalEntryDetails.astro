@@ -161,6 +161,10 @@ const subtitle = item.type === 'blog_post' ? item.doc.data.subtitle : undefined
         font-weight: var(--font-weight-medium);
         margin-top: var(--space-4);
 
+        em {
+            font-style: normal;
+        }
+
         @container journal (width > 40rem) {
             margin-top: var(--space-1);
         }
