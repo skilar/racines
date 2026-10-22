@@ -1,6 +1,10 @@
 # Changelog
 
-## [v1.3.2](https://github.com/skilar/racines/compare/v1.3.1...v1.3.2)
+## [v1.3.3](https://github.com/skilar/racines/compare/v1.3.2...v1.3.3)
+
+-   Fix italics within italics [`9212b75`](https://github.com/skilar/racines/commit/9212b75b7bf6af0960e450c5fd48388185381dae)
+
+## [v1.3.2](https://github.com/skilar/racines/compare/v1.3.1...v1.3.2) (22 October 2026)
 
 -   Bump dependencies [`3665273`](https://github.com/skilar/racines/commit/3665273f27340ae8df9022d7052dc0f57ea8e1bd)
 -   Update favicon [`5871bc8`](https://github.com/skilar/racines/commit/5871bc8aea1852e4a618318fcbdf005c55670190)
