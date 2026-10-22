@@ -1,6 +1,11 @@
 # Changelog
 
-## [v1.3.1](https://github.com/skilar/racines/compare/v1.3.0...v1.3.1)
+## [v1.3.2](https://github.com/skilar/racines/compare/v1.3.1...v1.3.2)
+
+-   Bump dependencies [`3665273`](https://github.com/skilar/racines/commit/3665273f27340ae8df9022d7052dc0f57ea8e1bd)
+-   Update favicon [`5871bc8`](https://github.com/skilar/racines/commit/5871bc8aea1852e4a618318fcbdf005c55670190)
+
+## [v1.3.1](https://github.com/skilar/racines/compare/v1.3.0...v1.3.1) (21 October 2026)
 
 -   Add workshop availability description [`ba01c52`](https://github.com/skilar/racines/commit/ba01c52e59f6335387e8f4fb4f7411c27cdda8aa)
 
