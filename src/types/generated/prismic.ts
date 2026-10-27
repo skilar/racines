@@ -878,6 +878,17 @@ interface WorkshopDocumentData {
 	booking_availability_description: prismic.RichTextField;
 	
 	/**
+	 * Booking Availability Notify Button Text field in *Workshop*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.booking_availability_notify_button_text
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	booking_availability_notify_button_text: prismic.KeyTextField;
+	
+	/**
 	 * Booking Link field in *Workshop*
 	 *
 	 * - **Field Type**: Link
@@ -952,6 +963,17 @@ interface WorkshopDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	meta_image: prismic.ImageField<never>;
+	
+	/**
+	 * Ticket Tailor Event Series ID field in *Workshop*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.tickettailor_event_series_id
+	 * - **Tab**: SEO & Metadata
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	tickettailor_event_series_id: prismic.KeyTextField;
 }
 
 /**

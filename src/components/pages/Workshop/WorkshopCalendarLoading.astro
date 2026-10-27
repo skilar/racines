@@ -1,0 +1,64 @@
+---
+import { UI } from '@lib/i18n'
+
+const { lang } = Astro.locals
+---
+
+<div class="loading" role="status">
+    <span class="spinner" aria-hidden="true"></span>
+    <span class="visuallyHidden">{UI[lang].loadingDates}</span>
+</div>
+
+<p class="giveUp" role="status">
+    {UI[lang].datesUnavailable}
+</p>
+
+<style>
+    .loading {
+        animation: hide 0s 8s forwards;
+        display: grid;
+        min-height: 20rem;
+        place-items: center;
+    }
+
+    .giveUp {
+        animation: show 0s 8s forwards;
+        font-size: var(--font-size-3-sc);
+        height: 0;
+        overflow: hidden;
+        visibility: hidden;
+    }
+
+    @keyframes hide {
+        to {
+            display: none;
+        }
+    }
+
+    @keyframes show {
+        to {
+            height: auto;
+            overflow: visible;
+            visibility: visible;
+        }
+    }
+
+    .spinner {
+        animation: spin 900ms linear infinite;
+        border: 2px solid var(--color-ivory-4);
+        border-radius: 50%;
+        border-top-color: var(--color-red-9);
+        height: 2rem;
+        width: 2rem;
+
+        @media (prefers-reduced-motion: reduce) {
+            animation-duration: 3s;
+        }
+    }
+
+    @keyframes spin {
+        to {
+            rotate: 1turn;
+        }
+    }
+</style>

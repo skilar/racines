@@ -1,0 +1,69 @@
+---
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+import WorkshopBooking from './WorkshopBooking.astro'
+import WorkshopCalendar from './WorkshopCalendar.astro'
+
+import type { CalendarMonth } from '@lib/tickettailor'
+import type { WorkshopDocument } from '@typez/generated/prismic'
+
+interface Props {
+    bookingAvailability: WorkshopDocument['data']['booking_availability']
+    bookingAvailabilityDescription: WorkshopDocument['data']['booking_availability_description']
+    bookingLink: WorkshopDocument['data']['booking_link']
+    bookingNotifyButtonText: WorkshopDocument['data']['booking_availability_notify_button_text']
+    bookingStatus: WorkshopDocument['data']['booking_status']
+    months?: CalendarMonth[]
+    notifyTag: string
+}
+
+const {
+    bookingAvailability,
+    bookingAvailabilityDescription,
+    bookingLink,
+    bookingNotifyButtonText,
+    bookingStatus,
+    months = [],
+    notifyTag,
+} = Astro.props
+---
+
+{months.length > 0 ? (
+    <WorkshopCalendar months={months} />
+) : (
+    <>
+        <PrismicRichText
+            class="bookingAvailability"
+            richText={bookingAvailability}
+        />
+
+        <PrismicRichText
+            class="bookingAvailabilityDescription"
+            richText={bookingAvailabilityDescription}
+        />
+
+        <WorkshopBooking
+            bookingLink={bookingLink}
+            bookingNotifyButtonText={bookingNotifyButtonText}
+            bookingStatus={bookingStatus}
+            notifyTag={notifyTag}
+        />
+    </>
+)}
+
+<style>
+    .bookingAvailability {
+        font-size: var(--font-size-4-sc);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-4);
+        width: 100%;
+
+        &:has(+ .bookingAvailabilityDescription) {
+            margin-bottom: var(--space-1);
+        }
+    }
+
+    .bookingAvailabilityDescription {
+        font-size: var(--font-size-3-sc);
+        margin-bottom: var(--space-6);
+    }
+</style>

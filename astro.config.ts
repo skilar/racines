@@ -1,4 +1,4 @@
-import { defineConfig, fontProviders } from 'astro/config'
+import { defineConfig, envField, fontProviders } from 'astro/config'
 import sitemap from '@astrojs/sitemap'
 import netlify from '@astrojs/netlify'
 import { DEFAULT_LANG, LANGS, LOCALES } from './src/lib/i18n'
@@ -11,6 +11,15 @@ const ERROR_PAGE = /\/(404|500)\/$/
 export default defineConfig({
     adapter: netlify(),
     base: '/',
+    env: {
+        schema: {
+            TICKET_TAILOR_API_KEY: envField.string({
+                access: 'secret',
+                context: 'server',
+                optional: true,
+            }),
+        },
+    },
     fonts: [
         {
             cssVariable: '--font-garamond',

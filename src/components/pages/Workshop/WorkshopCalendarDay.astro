@@ -1,0 +1,168 @@
+---
+import { UI } from '@lib/i18n'
+
+import Button from '@components/common/Button.astro'
+
+import type { CalendarDay } from '@lib/tickettailor'
+
+interface Props {
+    day: CalendarDay
+    // e.g. “samedi 7 novembre”
+    label: string
+    timeFormat: Intl.DateTimeFormat
+}
+
+const { day, label, timeFormat } = Astro.props
+const { lang } = Astro.locals
+
+const id = `sessions-${day.date}`
+const soldOut = day.sessions.every((session) => session.soldOut)
+---
+
+{day.sessions.length === 0 ? (
+    <span class:list={['day', { past: day.isPast }]}>{day.day}</span>
+) : (
+    <>
+        <button
+            aria-label={soldOut ? `${label}, ${UI[lang].soldOut}` : label}
+            class:list={['day', 'hasSessions', { soldOut }]}
+            popovertarget={id}
+            type="button"
+        >
+            {day.day}
+        </button>
+
+        <div class="sessions" id={id} popover>
+            <p class="sessionsDate">{label}</p>
+
+            <ul>
+                {day.sessions.map((session) => (
+                    <li class="session">
+                        <span class="sessionTime">
+                            {timeFormat.formatRange(session.start, session.end)}
+                        </span>
+
+                        <span class="sessionSpots">
+                            {session.soldOut
+                                ? UI[lang].soldOut
+                                : UI[lang].spotsLeft(session.spotsLeft)}
+                        </span>
+
+                        {!session.soldOut && (
+                            <Button
+                                as="link"
+                                caption={UI[lang].bookNow}
+                                href={session.url}
+                                size="3"
+                                target="_blank"
+                            />
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </>
+)}
+
+<style>
+    .day {
+        aspect-ratio: 1;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        color: var(--color-ivory-9);
+        display: grid;
+        font-size: var(--font-size-3);
+        font-variant-numeric: lining-nums tabular-nums;
+        margin-inline: auto;
+        max-width: 2.75rem;
+        place-items: center;
+        width: 100%;
+
+        &.past {
+            color: var(--color-ivory-6);
+        }
+    }
+
+    .hasSessions {
+        background-color: var(--color-ivory-2);
+        border-color: var(--color-red-9);
+        color: var(--color-red-9);
+        cursor: pointer;
+        font-weight: var(--font-weight-bold);
+        transition:
+            background-color 100ms ease,
+            color 100ms ease;
+
+        &:hover,
+        &:has(+ :popover-open) {
+            background-color: var(--color-red-9);
+            color: var(--color-ivory-1);
+        }
+
+        &.soldOut {
+            border-color: var(--color-ivory-5);
+            color: var(--color-ivory-7);
+            font-weight: var(--font-weight-normal);
+            text-decoration: line-through;
+
+            &:hover,
+            &:has(+ :popover-open) {
+                background-color: var(--color-ivory-3);
+                color: var(--color-ivory-10);
+            }
+        }
+    }
+
+    .sessions {
+        background-color: var(--color-ivory-1);
+        border: 1px solid var(--color-ivory-4);
+        box-shadow: 0 2px 4px oklch(0 0 0 / 15%);
+        color: var(--color-black);
+        /* The reset zeroes the popover's default centring margin */
+        margin: auto;
+        padding: var(--space-4);
+        text-align: start;
+        width: min(22rem, calc(100vw - 2 * var(--space-4)));
+    }
+
+    .sessionsDate {
+        font-size: var(--font-size-3-sc);
+        font-variant-caps: all-small-caps;
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-3);
+    }
+
+    .session {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-1) var(--space-3);
+
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--color-ivory-4);
+            margin-bottom: var(--space-3);
+            padding-bottom: var(--space-3);
+        }
+    }
+
+    .sessionTime {
+        font-variant-numeric: lining-nums;
+        font-weight: var(--font-weight-bold);
+    }
+
+    .sessionSpots {
+        color: var(--color-ivory-10);
+        flex: 1;
+        font-size: var(--font-size-2-sc);
+    }
+
+    @supports (anchor-name: --a) {
+        .sessions {
+            inset: auto;
+            justify-self: anchor-center;
+            margin: var(--space-2) 0;
+            position-area: block-end;
+            position-try-fallbacks: flip-block;
+        }
+    }
+</style>

@@ -7,16 +7,13 @@ import { getLinkAttrs } from '@lib/prismic-link-resolver'
 import ArrowLink from '@components/common/ArrowLink.astro'
 import Image from '@components/common/Image.astro'
 import PrismicRichText from '@components/common/PrismicRichText.astro'
-import WorkshopBooking from './WorkshopBooking.astro'
+import WorkshopBookingIsland from './WorkshopBookingIsland.astro'
+import WorkshopCalendarLoading from './WorkshopCalendarLoading.astro'
 import WorkshopDetailsGrid from './WorkshopDetailsGrid.astro'
 
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
 interface Props {
-    bookingAvailability: WorkshopDocument['data']['booking_availability']
-    bookingAvailabilityDescription: WorkshopDocument['data']['booking_availability_description']
-    bookingLink: WorkshopDocument['data']['booking_link']
-    bookingStatus: WorkshopDocument['data']['booking_status']
     capacity: WorkshopDocument['data']['capacity']
     description: WorkshopDocument['data']['description']
     duration: WorkshopDocument['data']['duration']
@@ -29,13 +26,10 @@ interface Props {
     showPrivateWorkshopLink: WorkshopDocument['data']['show_private_workshop_link']
     subtitle: WorkshopDocument['data']['subtitle']
     title: WorkshopDocument['data']['title']
+    uid: string
 }
 
 const {
-    bookingAvailability,
-    bookingAvailabilityDescription,
-    bookingLink,
-    bookingStatus,
     capacity,
     description,
     duration,
@@ -48,6 +42,7 @@ const {
     showPrivateWorkshopLink,
     subtitle,
     title,
+    uid,
 } = Astro.props
 const { lang } = Astro.locals
 
@@ -87,21 +82,14 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
             />
 
             <div class="ctaWrapper">
-                <PrismicRichText
-                    class="bookingAvailability"
-                    richText={bookingAvailability}
-                />
-
-                <PrismicRichText
-                    class="bookingAvailabilityDescription"
-                    richText={bookingAvailabilityDescription}
-                />
-
-                <WorkshopBooking
-                    bookingLink={bookingLink}
-                    bookingStatus={bookingStatus}
+                <WorkshopBookingIsland
+                    lang={lang}
                     notifyTag={notifyTag}
-                />
+                    server:defer
+                    uid={uid}
+                >
+                    <WorkshopCalendarLoading slot="fallback" />
+                </WorkshopBookingIsland>
             </div>
 
             {privateWorkshopLinkAttrs && (
@@ -182,22 +170,6 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
         background-color: var(--color-ivory-1);
         padding-block: var(--space-5);
         padding-inline: var(--space-5);
-    }
-
-    .bookingAvailability {
-        font-size: var(--font-size-4-sc);
-        font-weight: var(--font-weight-bold);
-        margin-bottom: var(--space-4);
-        width: 100%;
-
-        &:has(+ .bookingAvailabilityDescription) {
-            margin-bottom: var(--space-1);
-        }
-    }
-
-    .bookingAvailabilityDescription {
-        font-size: var(--font-size-3-sc);
-        margin-bottom: var(--space-6);
     }
 
     .privateWorkshopLink {

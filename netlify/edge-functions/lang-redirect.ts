@@ -74,7 +74,9 @@ export default async (request: Request, context: Context) => {
 }
 
 export const config: Config = {
-    excludedPath: ['/_astro/*', '/.netlify/*', '/rva/*'],
+    // Server islands load from the page, so their path says nothing about
+    // the visitor's language and should not count as switching it.
+    excludedPath: ['/_astro/*', '/_server-islands/*', '/.netlify/*', '/rva/*'],
     // Files with an extension: feeds, sitemaps, icons, images.
     excludedPattern: '\\.[a-z0-9]+$',
     method: 'GET',

@@ -35,12 +35,6 @@ const frenchUid =
 >
     <main id="main">
         <WorkshopHeader
-            bookingAvailability={page.data.booking_availability}
-            bookingAvailabilityDescription={
-                page.data.booking_availability_description
-            }
-            bookingLink={page.data.booking_link}
-            bookingStatus={page.data.booking_status}
             capacity={page.data.capacity}
             description={page.data.description}
             duration={page.data.duration}
@@ -52,6 +46,7 @@ const frenchUid =
             privateWorkshopLink={page.data.private_workshop_link}
             showPrivateWorkshopLink={page.data.show_private_workshop_link}
             subtitle={page.data.subtitle}
+            uid={page.uid}
             title={page.data.title}
         />
 

@@ -1,0 +1,238 @@
+---
+import { LOCALES, UI } from '@lib/i18n'
+import { TICKET_TAILOR_TIME_ZONE } from '@lib/tickettailor'
+
+import WorkshopCalendarDay from './WorkshopCalendarDay.astro'
+
+import type { CalendarMonth } from '@lib/tickettailor'
+
+interface Props {
+    months: CalendarMonth[]
+}
+
+const { months } = Astro.props
+const { lang } = Astro.locals
+const { bcp47, firstDayOfWeek } = LOCALES[lang]
+
+// Calendar dates are formatted in UTC, since they're already venue dates
+const toDate = (date: string) => new Date(`${date}T00:00:00Z`)
+const monthFormat = new Intl.DateTimeFormat(bcp47, {
+    month: 'long',
+    timeZone: 'UTC',
+    year: 'numeric',
+})
+const dayFormat = new Intl.DateTimeFormat(bcp47, {
+    day: 'numeric',
+    month: 'long',
+    timeZone: 'UTC',
+    weekday: 'long',
+})
+const timeFormat = new Intl.DateTimeFormat(bcp47, {
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZone: TICKET_TAILOR_TIME_ZONE,
+})
+
+// 31 December 2023 was a Sunday
+const weekdays = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(Date.UTC(2023, 11, 31 + firstDayOfWeek + i))
+
+    return {
+        long: date.toLocaleDateString(bcp47, {
+            timeZone: 'UTC',
+            weekday: 'long',
+        }),
+        short: date.toLocaleDateString(bcp47, {
+            timeZone: 'UTC',
+            weekday: 'narrow',
+        }),
+    }
+})
+
+const monthNames = months.map((month) =>
+    monthFormat.format(new Date(Date.UTC(month.year, month.month - 1))),
+)
+
+// Each month follows a visually hidden radio button, and only the month after
+// the checked one shows. The arrows are labels for the neighbouring months'
+// radios, so switching months needs no script, and keyboard users can step
+// through months with the arrow keys.
+const toggleId = (month: CalendarMonth | undefined) =>
+    month && `calendarMonth-${month.id}`
+---
+
+<div
+    aria-label={UI[lang].availableDates}
+    class:list={['calendar', { single: months.length === 1 }]}
+    role="group"
+>
+    {months.map((month, i) => {
+        const previous = toggleId(months[i - 1])
+        const next = toggleId(months[i + 1])
+
+        return (
+            <>
+                <input
+                    aria-label={monthNames[i]}
+                    checked={i === 0}
+                    class="monthToggle visuallyHidden"
+                    id={toggleId(month)}
+                    name="calendarMonth"
+                    type="radio"
+                />
+
+                <div class="month">
+                    <div class="monthHeader" aria-hidden="true">
+                        {previous ? (
+                            <label
+                                class="monthArrow"
+                                for={previous}
+                                title={UI[lang].previousMonth}
+                            >
+                                ‹
+                            </label>
+                        ) : (
+                            <span class="monthArrow disabled">‹</span>
+                        )}
+
+                        <span class="monthName">{monthNames[i]}</span>
+
+                        {next ? (
+                            <label
+                                class="monthArrow"
+                                for={next}
+                                title={UI[lang].nextMonth}
+                            >
+                                ›
+                            </label>
+                        ) : (
+                            <span class="monthArrow disabled">›</span>
+                        )}
+                    </div>
+
+                    <table>
+                        <caption class="visuallyHidden">
+                            {monthNames[i]}
+                        </caption>
+
+                        <thead>
+                            <tr>
+                                {weekdays.map((weekday) => (
+                                    <th scope="col">
+                                        <abbr title={weekday.long}>
+                                            {weekday.short}
+                                        </abbr>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {month.weeks.map((week) => (
+                                <tr>
+                                    {week.map((day) => (
+                                        <td>
+                                            {day && (
+                                                <WorkshopCalendarDay
+                                                    day={day}
+                                                    label={dayFormat.format(
+                                                        toDate(day.date),
+                                                    )}
+                                                    timeFormat={timeFormat}
+                                                />
+                                            )}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </>
+        )
+    })}
+</div>
+
+<style>
+    .month {
+        display: none;
+    }
+
+    .monthToggle:checked + .month {
+        display: block;
+    }
+
+    .monthHeader {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: var(--space-5);
+    }
+
+    .monthName {
+        font-size: var(--font-size-3-sc);
+        font-weight: var(--font-weight-bold);
+    }
+
+    .monthToggle:focus-visible + .month .monthName {
+        outline: 2px solid var(--color-red-9);
+        outline-offset: 2px;
+    }
+
+    .single .monthArrow {
+        visibility: hidden;
+    }
+
+    .monthArrow {
+        border: 1px solid var(--color-ivory-5);
+        border-radius: 2px;
+        color: var(--color-ivory-12);
+        cursor: pointer;
+        display: grid;
+        font-size: var(--font-size-4);
+        height: 2.25rem;
+        line-height: 1;
+        place-items: center;
+        user-select: none;
+        width: 2.25rem;
+
+        &:hover {
+            background-color: var(--color-ivory-3);
+        }
+
+        &.disabled {
+            cursor: default;
+            opacity: 0.3;
+
+            &:hover {
+                background-color: transparent;
+            }
+        }
+    }
+
+    table {
+        border-collapse: collapse;
+        margin-inline: auto;
+        max-width: 30rem;
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    th {
+        background-color: var(--color-ivory-2);
+        color: var(--color-ivory-10);
+        font-size: var(--font-size-2-sc);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-2);
+        padding-block: var(--space-2);
+
+        abbr {
+            text-decoration: none;
+        }
+    }
+
+    td {
+        padding: 2px;
+        text-align: center;
+    }
+</style>

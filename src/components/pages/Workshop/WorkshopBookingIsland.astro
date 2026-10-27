@@ -1,0 +1,58 @@
+---
+import { isFilled } from '@prismicio/client'
+import { LOCALES } from '@lib/i18n'
+import { client } from '@lib/prismic'
+import { TICKET_TAILOR_TIME_ZONE, buildCalendarMonths } from '@lib/tickettailor'
+import { getUpcomingOccurrences } from '@lib/tickettailor-api'
+
+import WorkshopBookingBox from './WorkshopBookingBox.astro'
+
+import type { Lang } from '@lib/i18n'
+
+interface Props {
+    lang: Lang
+    notifyTag: string
+    uid: string
+}
+
+const { lang, notifyTag, uid } = Astro.props
+
+// Middleware can't read lang from the URL, so the page passes it instead.
+Astro.locals.lang = lang
+
+const { data } = await client.getByUID('workshop', uid, { lang })
+
+const seriesId =
+    data.booking_status === 'open' &&
+    isFilled.keyText(data.tickettailor_event_series_id)
+        ? data.tickettailor_event_series_id.trim()
+        : null
+
+const occurrences = seriesId ? await getUpcomingOccurrences(seriesId) : null
+const months = occurrences
+    ? buildCalendarMonths(occurrences, {
+          firstDayOfWeek: LOCALES[lang].firstDayOfWeek,
+          now: new Date(),
+          timeZone: TICKET_TAILOR_TIME_ZONE,
+      })
+    : []
+
+// Cache briefly on Netlify's CDN. A failed Ticket Tailor lookup
+// isn't cached, so the next view tries again.
+if (!seriesId || occurrences) {
+    Astro.response.headers.set(
+        'Netlify-CDN-Cache-Control',
+        'public, durable, s-maxage=60, stale-while-revalidate=300',
+    )
+}
+---
+
+<WorkshopBookingBox
+    bookingAvailability={data.booking_availability}
+    bookingAvailabilityDescription={data.booking_availability_description}
+    bookingLink={data.booking_link}
+    bookingNotifyButtonText={data.booking_availability_notify_button_text}
+    bookingStatus={data.booking_status}
+    months={months}
+    notifyTag={notifyTag}
+/>

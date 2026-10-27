@@ -169,6 +169,13 @@
           "allowTargetBlank": true
         }
       },
+      "booking_availability_notify_button_text": {
+        "type": "Text",
+        "config": {
+          "label": "Booking Availability Notify Button Text",
+          "placeholder": ""
+        }
+      },
       "booking_link": {
         "type": "Link",
         "config": {
@@ -263,6 +270,13 @@
             "height": 1260
           },
           "thumbnails": []
+        }
+      },
+      "tickettailor_event_series_id": {
+        "type": "Text",
+        "config": {
+          "label": "Ticket Tailor Event Series ID",
+          "placeholder": ""
         }
       }
     }
