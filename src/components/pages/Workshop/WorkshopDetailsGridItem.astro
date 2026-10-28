@@ -25,10 +25,14 @@ const { class: className, item, title, ...rest } = Astro.props
 
 <style>
     .title {
+        color: var(--color-ivory-10);
         font-size: var(--font-size-3-sc);
         font-variant-caps: all-small-caps;
         font-weight: var(--font-weight-medium);
         letter-spacing: 0.5px;
+        margin-bottom: var(--space-2);
+        text-box-trim: trim-both;
+        text-box-edge: cap alphabetic;
     }
 
     .item {
