@@ -1,5 +1,6 @@
 ---
 import PrismicRichText from '@components/common/PrismicRichText.astro'
+import WorkshopBookingLink from '@components/pages/Workshop/WorkshopBookingLink.astro'
 import WorkshopDetailsGrid from '@components/pages/Workshop/WorkshopDetailsGrid.astro'
 
 import type {
@@ -31,6 +32,12 @@ const { title } = slice.primary
         level={workshop.level}
         price={workshop.price}
     />
+
+    <WorkshopBookingLink
+        bookingLink={workshop.booking_link}
+        bookingStatus={workshop.booking_status}
+        class="detailsBookingLink"
+    />
 </div>
 
 <style>
@@ -40,6 +47,11 @@ const { title } = slice.primary
         justify-content: center;
         padding-block: var(--space-9);
         min-height: 100svh;
+    }
+
+    .detailsBookingLink {
+        margin-top: var(--space-6);
+        max-width: 50rem;
     }
 
     .title {

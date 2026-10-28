@@ -88,24 +88,14 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
                 price={price}
             />
 
-            <div class="ctaWrapper">
-                <PrismicRichText
-                    class="bookingAvailability"
-                    richText={bookingAvailability}
-                />
-
-                <PrismicRichText
-                    class="bookingAvailabilityDescription"
-                    richText={bookingAvailabilityDescription}
-                />
-
-                <WorkshopBooking
-                    bookingLink={bookingLink}
-                    bookingNotifyButtonText={bookingNotifyButtonText}
-                    bookingStatus={bookingStatus}
-                    notifyTag={notifyTag}
-                />
-            </div>
+            <WorkshopBooking
+                bookingAvailability={bookingAvailability}
+                bookingAvailabilityDescription={bookingAvailabilityDescription}
+                bookingLink={bookingLink}
+                bookingNotifyButtonText={bookingNotifyButtonText}
+                bookingStatus={bookingStatus}
+                notifyTag={notifyTag}
+            />
 
             {privateWorkshopLinkAttrs && (
                 <ArrowLink
@@ -177,30 +167,8 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
 
     .workshopDetails {
         border-block: var(--double-border);
-        margin-block: var(--space-8);
+        margin-block: var(--space-7);
         padding-block: var(--space-6);
-    }
-
-    .ctaWrapper {
-        background-color: var(--color-ivory-1);
-        padding-block: var(--space-5);
-        padding-inline: var(--space-5);
-    }
-
-    .bookingAvailability {
-        font-size: var(--font-size-4-sc);
-        font-weight: var(--font-weight-bold);
-        margin-bottom: var(--space-4);
-        width: 100%;
-
-        &:has(+ .bookingAvailabilityDescription) {
-            margin-bottom: var(--space-1);
-        }
-    }
-
-    .bookingAvailabilityDescription {
-        font-size: var(--font-size-3-sc);
-        margin-bottom: var(--space-6);
     }
 
     .privateWorkshopLink {

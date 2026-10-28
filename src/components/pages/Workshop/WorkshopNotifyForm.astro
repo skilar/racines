@@ -1,0 +1,142 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+import { UI } from '@lib/i18n'
+
+import Button from '@components/common/Button.astro'
+import PrismicRichText from '@components/common/PrismicRichText.astro'
+import Input from '@components/common/forms/Input.astro'
+
+import type { WorkshopDocument } from '@typez/generated/prismic'
+
+interface Props {
+    bookingAvailability: WorkshopDocument['data']['booking_availability']
+    bookingAvailabilityDescription: WorkshopDocument['data']['booking_availability_description']
+    bookingNotifyButtonText: WorkshopDocument['data']['booking_availability_notify_button_text']
+    notifyTag: string
+}
+
+const {
+    bookingAvailability,
+    bookingAvailabilityDescription,
+    bookingNotifyButtonText,
+    notifyTag,
+} = Astro.props
+const { lang } = Astro.locals
+
+const caption = isFilled.keyText(bookingNotifyButtonText)
+    ? fixText(bookingNotifyButtonText, lang)
+    : UI[lang].notifyMe
+---
+
+<div class="ctaWrapper">
+    <PrismicRichText
+        class="bookingAvailability"
+        richText={bookingAvailability}
+    />
+
+    <PrismicRichText
+        class="bookingAvailabilityDescription"
+        richText={bookingAvailabilityDescription}
+    />
+
+    <form
+        action="https://buttondown.com/api/emails/embed-subscribe/agathegiraud"
+        class="notifyForm"
+        method="post"
+        target="_blank"
+    >
+        <div class="fields">
+            <Input
+                hideLabel
+                id="workshop-notify-email"
+                label={UI[lang].emailAddress}
+                name="email"
+                placeholder={UI[lang].emailAddress}
+                required
+                size="4"
+                type="email"
+            />
+
+            <Input
+                hideLabel
+                id="workshop-notify-tag"
+                label="Tag"
+                name="tag"
+                type="hidden"
+                value={notifyTag}
+            />
+
+            <Input
+                hideLabel
+                id="workshop-notify-tag-all"
+                label="Tag"
+                name="tag"
+                type="hidden"
+                value="ateliers"
+            />
+
+            <Input
+                hideLabel
+                label="Embed"
+                name="embed"
+                type="hidden"
+                value="1"
+            />
+
+            <Button
+                caption={caption}
+                inlineWithFormField
+                size="4"
+                type="submit"
+            />
+        </div>
+    </form>
+</div>
+
+<style>
+    .ctaWrapper {
+        background-color: var(--color-ivory-1);
+        padding-block: var(--space-5);
+        padding-inline: var(--space-5);
+    }
+
+    .bookingAvailability {
+        font-size: var(--font-size-4-sc);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: var(--space-4);
+        width: 100%;
+
+        &:has(+ .bookingAvailabilityDescription) {
+            margin-bottom: var(--space-1);
+        }
+    }
+
+    .bookingAvailabilityDescription {
+        font-size: var(--font-size-3-sc);
+        margin-bottom: var(--space-6);
+    }
+
+    .notifyForm {
+        width: 100%;
+    }
+
+    .fields {
+        align-items: end;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+
+        > :global(.inputWrapper:not(.visuallyHidden)) {
+            flex: 1 1 14rem;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    .newsletterOptIn {
+        margin-top: var(--space-3);
+    }
+</style>

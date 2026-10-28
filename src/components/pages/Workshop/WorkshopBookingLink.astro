@@ -1,0 +1,45 @@
+---
+import { isFilled } from '@prismicio/client'
+import { fixText } from '@lib/get-fixer'
+import { UI } from '@lib/i18n'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
+
+import Button from '@components/common/Button.astro'
+
+import type { WorkshopDocument } from '@typez/generated/prismic'
+
+interface Props {
+    bookingLink: WorkshopDocument['data']['booking_link']
+    bookingStatus: WorkshopDocument['data']['booking_status']
+    class?: string
+}
+
+const { bookingLink, bookingStatus, class: className, ...rest } = Astro.props
+const { lang } = Astro.locals
+
+// Renders nothing unless booking is open and the link is filled
+const bookingLinkAttrs =
+    bookingStatus === 'open' ? getLinkAttrs(bookingLink) : null
+
+const caption = isFilled.keyText(bookingLink.text)
+    ? fixText(bookingLink.text, lang)
+    : UI[lang].bookNow
+---
+
+{bookingLinkAttrs && (
+    <div class={className} {...rest}>
+        <Button
+            as="link"
+            caption={caption}
+            class="bookingLink"
+            {...bookingLinkAttrs}
+        />
+    </div>
+)}
+
+<style>
+    .bookingLink {
+        text-align: center;
+        width: 100%;
+    }
+</style>

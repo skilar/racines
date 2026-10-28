@@ -1,119 +1,44 @@
 ---
-import { isFilled } from '@prismicio/client'
-import { fixText } from '@lib/get-fixer'
-import { UI } from '@lib/i18n'
 import { getLinkAttrs } from '@lib/prismic-link-resolver'
 
-import Button from '@components/common/Button.astro'
-import Input from '@components/common/forms/Input.astro'
+import WorkshopBookingLink from './WorkshopBookingLink.astro'
+import WorkshopNotifyForm from './WorkshopNotifyForm.astro'
 
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
 interface Props {
+    bookingAvailability: WorkshopDocument['data']['booking_availability']
+    bookingAvailabilityDescription: WorkshopDocument['data']['booking_availability_description']
     bookingLink: WorkshopDocument['data']['booking_link']
     bookingNotifyButtonText: WorkshopDocument['data']['booking_availability_notify_button_text']
     bookingStatus: WorkshopDocument['data']['booking_status']
     notifyTag: string
 }
 
-const { bookingLink, bookingNotifyButtonText, bookingStatus, notifyTag } =
-    Astro.props
-const { lang } = Astro.locals
+const {
+    bookingAvailability,
+    bookingAvailabilityDescription,
+    bookingLink,
+    bookingNotifyButtonText,
+    bookingStatus,
+    notifyTag,
+} = Astro.props
 
 // If we don't have a booking form, we show the notify signup form
 const bookingLinkAttrs =
     bookingStatus === 'open' ? getLinkAttrs(bookingLink) : null
-
-// If we have a booking link, use that and its caption. If not, use
-// the notify button caption. If neither caption is filled, fall back
-// to the UI string.
-const caption = bookingLinkAttrs
-    ? isFilled.keyText(bookingLink.text)
-        ? fixText(bookingLink.text, lang)
-        : UI[lang].bookNow
-    : isFilled.keyText(bookingNotifyButtonText)
-      ? fixText(bookingNotifyButtonText, lang)
-      : UI[lang].notifyMe
 ---
 
 {bookingLinkAttrs ? (
-    <Button as="link" caption={caption} {...bookingLinkAttrs} />
+    <WorkshopBookingLink
+        bookingLink={bookingLink}
+        bookingStatus={bookingStatus}
+    />
 ) : (
-    <form
-        action="https://buttondown.com/api/emails/embed-subscribe/agathegiraud"
-        class="notifyForm"
-        method="post"
-        target="_blank"
-    >
-        <div class="fields">
-            <Input
-                hideLabel
-                id="workshop-notify-email"
-                label={UI[lang].emailAddress}
-                name="email"
-                placeholder={UI[lang].emailAddress}
-                required
-                size="4"
-                type="email"
-            />
-
-            <Input
-                hideLabel
-                id="workshop-notify-tag"
-                label="Tag"
-                name="tag"
-                type="hidden"
-                value={notifyTag}
-            />
-
-            <Input
-                hideLabel
-                id="workshop-notify-tag-all"
-                label="Tag"
-                name="tag"
-                type="hidden"
-                value="ateliers"
-            />
-
-            <Input
-                hideLabel
-                label="Embed"
-                name="embed"
-                type="hidden"
-                value="1"
-            />
-
-            <Button
-                caption={caption}
-                inlineWithFormField
-                size="4"
-                type="submit"
-            />
-        </div>
-    </form>
+    <WorkshopNotifyForm
+        bookingAvailability={bookingAvailability}
+        bookingAvailabilityDescription={bookingAvailabilityDescription}
+        bookingNotifyButtonText={bookingNotifyButtonText}
+        notifyTag={notifyTag}
+    />
 )}
-
-<style>
-    .notifyForm {
-        width: 100%;
-    }
-
-    .fields {
-        align-items: end;
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-3);
-
-        > :global(.inputWrapper:not(.visuallyHidden)) {
-            flex: 1 1 14rem;
-        }
-
-        button {
-            width: 100%;
-        }
-    }
-
-    .newsletterOptIn {
-        margin-top: var(--space-3);
-    }
-</style>
