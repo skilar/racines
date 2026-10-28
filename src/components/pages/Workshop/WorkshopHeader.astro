@@ -16,6 +16,7 @@ interface Props {
     bookingAvailability: WorkshopDocument['data']['booking_availability']
     bookingAvailabilityDescription: WorkshopDocument['data']['booking_availability_description']
     bookingLink: WorkshopDocument['data']['booking_link']
+    bookingNotifyButtonText: WorkshopDocument['data']['booking_availability_notify_button_text']
     bookingStatus: WorkshopDocument['data']['booking_status']
     capacity: WorkshopDocument['data']['capacity']
     description: WorkshopDocument['data']['description']
@@ -35,6 +36,7 @@ const {
     bookingAvailability,
     bookingAvailabilityDescription,
     bookingLink,
+    bookingNotifyButtonText,
     bookingStatus,
     capacity,
     description,
@@ -99,6 +101,7 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
 
                 <WorkshopBooking
                     bookingLink={bookingLink}
+                    bookingNotifyButtonText={bookingNotifyButtonText}
                     bookingStatus={bookingStatus}
                     notifyTag={notifyTag}
                 />

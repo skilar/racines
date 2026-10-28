@@ -11,22 +11,28 @@ import type { WorkshopDocument } from '@typez/generated/prismic'
 
 interface Props {
     bookingLink: WorkshopDocument['data']['booking_link']
+    bookingNotifyButtonText: WorkshopDocument['data']['booking_availability_notify_button_text']
     bookingStatus: WorkshopDocument['data']['booking_status']
     notifyTag: string
 }
 
-const { bookingLink, bookingStatus, notifyTag } = Astro.props
+const { bookingLink, bookingNotifyButtonText, bookingStatus, notifyTag } =
+    Astro.props
 const { lang } = Astro.locals
 
 // If we don't have a booking form, we show the notify signup form
 const bookingLinkAttrs =
     bookingStatus === 'open' ? getLinkAttrs(bookingLink) : null
 
-// If the Prismic link doesn't have a caption, we fall back to the UI string
-const caption = isFilled.keyText(bookingLink.text)
-    ? fixText(bookingLink.text, lang)
-    : bookingLinkAttrs
-      ? UI[lang].bookNow
+// If we have a booking link, use that and its caption. If not, use
+// the notify button caption. If neither caption is filled, fall back
+// to the UI string.
+const caption = bookingLinkAttrs
+    ? isFilled.keyText(bookingLink.text)
+        ? fixText(bookingLink.text, lang)
+        : UI[lang].bookNow
+    : isFilled.keyText(bookingNotifyButtonText)
+      ? fixText(bookingNotifyButtonText, lang)
       : UI[lang].notifyMe
 ---
 
