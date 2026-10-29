@@ -13,6 +13,7 @@ import WorkshopDetailsGrid from './WorkshopDetailsGrid.astro'
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
 interface Props {
+    ages: WorkshopDocument['data']['ages']
     bookingAvailability: WorkshopDocument['data']['booking_availability']
     bookingAvailabilityDescription: WorkshopDocument['data']['booking_availability_description']
     bookingLink: WorkshopDocument['data']['booking_link']
@@ -33,6 +34,7 @@ interface Props {
 }
 
 const {
+    ages,
     bookingAvailability,
     bookingAvailabilityDescription,
     bookingLink,
@@ -80,6 +82,7 @@ const privateWorkshopCaption = isFilled.keyText(privateWorkshopLink.text)
             <PrismicRichText class="description" richText={description} />
 
             <WorkshopDetailsGrid
+                ages={ages}
                 capacity={capacity}
                 class="workshopDetails"
                 duration={duration}

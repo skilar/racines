@@ -822,6 +822,17 @@ interface WorkshopDocumentData {
 	language: prismic.RichTextField;
 	
 	/**
+	 * Ages field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.ages
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	ages: prismic.RichTextField;
+	
+	/**
 	 * Level field in *Workshop*
 	 *
 	 * - **Field Type**: Rich Text

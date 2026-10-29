@@ -9,6 +9,7 @@ export type Lang = keyof typeof LOCALES
 export const UI = {
     'fr-fr': {
         aboutTheAuthor: 'À propos de l’autrice',
+        ageRange: 'Age',
         allergens: 'Allergènes',
         alsoSendNewsletter: 'M’envoyer aussi la newsletter',
         backToRef: (number: number) => `Retour à l’appel de note ${number}`,
@@ -43,6 +44,7 @@ export const UI = {
     },
     'en-us': {
         aboutTheAuthor: 'About the Author',
+        ageRange: 'Age Range',
         allergens: 'Allergens',
         alsoSendNewsletter: 'Also send me the newsletter',
         backToRef: (number: number) => `Back to note ${number}`,

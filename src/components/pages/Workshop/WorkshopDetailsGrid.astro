@@ -6,6 +6,7 @@ import WorkshopDetailsGridItem from './WorkshopDetailsGridItem.astro'
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
 interface Props {
+    ages: WorkshopDocument['data']['ages']
     allergens?: WorkshopDocument['data']['allergens']
     capacity: WorkshopDocument['data']['capacity']
     class?: string
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const {
+    ages,
     allergens,
     capacity,
     class: className,
@@ -34,6 +36,7 @@ const { lang } = Astro.locals
     <WorkshopDetailsGridItem item={price} title={UI[lang].price} />
     <WorkshopDetailsGridItem item={language} title={UI[lang].language} />
     <WorkshopDetailsGridItem item={level} title={UI[lang].level} />
+    <WorkshopDetailsGridItem item={ages} title={UI[lang].ageRange} />
     {allergens && (
         <WorkshopDetailsGridItem
             class="allergens"
