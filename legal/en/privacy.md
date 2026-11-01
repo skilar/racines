@@ -1,0 +1,54 @@
+# Privacy Policy
+
+This Privacy Policy describes how Racines Versailles processes the personal data of users of https://racinesversailles.com, in accordance with Regulation (EU) 2016/679 (GDPR). Last updated: 01/11/2026.
+
+## 1. Who is responsible for your data
+
+Data controller: Racines Versailles (sole trader).
+
+Registered address: 2b rue Saint-Honoré, 78000 Versailles, France.
+
+Website: https://racinesversailles.com.
+
+Privacy contact email: info@racinesversailles.com.
+
+## 2. Purposes and legal bases
+
+We process your personal data for the following purposes, each with its legal basis under Article 6 GDPR:
+
+- Handling enquiries received through our contact form or email. Legal basis: legitimate interest (Art. 6(1)(f) GDPR) in responding to your request, or pre-contractual measures (Art. 6(1)(b)).
+- Sending our newsletter and commercial communications. Legal basis: your consent (Art. 6(1)(a) GDPR), which you may withdraw at any time.
+- Processing orders, payments and delivery of products or services. Legal basis: performance of a contract (Art. 6(1)(b) GDPR) and legal obligations, e.g. tax and accounting rules (Art. 6(1)(c)).
+
+## 3. Categories of data
+
+The categories of personal data we process are:
+
+- Identity data (name and surname)
+- Contact data (email address, phone number, postal address)
+- Billing and payment data (invoicing details, payment references)
+
+## 4. Recipients
+
+Your data may be disclosed to:
+
+- Processors providing services to us: Ticket Tailor and Buttondown. A data processing agreement under Article 28 GDPR is in place with each of them.
+- Public administrations and competent authorities, where legally required.
+
+## 5. International transfers
+
+Some of our providers are located outside the European Economic Area. In those cases, transfers are covered by a European Commission adequacy decision (e.g. the EU-US Data Privacy Framework) or by the Standard Contractual Clauses under Article 46(2)(c) GDPR. You can request a copy of the safeguards at our contact email.
+
+## 6. Retention periods
+
+We keep your data for the duration of our relationship and, afterwards, blocked for the applicable statutory limitation periods (in general, 5 years). Data processed on the basis of consent is kept until you withdraw it.
+
+## 7. Your rights
+
+You may at any time exercise your rights of access, rectification, erasure, objection, restriction of processing and portability (Arts. 15–22 GDPR) by writing to info@racinesversailles.com and providing proof of identity. You may also withdraw your consent without affecting the lawfulness of prior processing.
+
+If you consider that the processing infringes the law, you may lodge a complaint with the supervisory authority: CNIL (https://www.cnil.fr).
+
+## 8. Security
+
+We apply appropriate technical and organisational measures (Art. 32 GDPR) to ensure the confidentiality, integrity and availability of the data, taking into account the state of the art and the risks of the processing.
