@@ -1,6 +1,18 @@
 # Changelog
 
-## [v1.3.3](https://github.com/skilar/racines/compare/v1.3.2...v1.3.3)
+## [v1.3.4](https://github.com/skilar/racines/compare/v1.3.3...v1.3.4)
+
+-   Bump dependencies [`dbfd18b`](https://github.com/skilar/racines/commit/dbfd18bea3216e4700698485d5bedc4475e9cfe5)
+-   Add legal docs [`dee6f37`](https://github.com/skilar/racines/commit/dee6f3794a6249f4c0675b51f57e52d76df571e3)
+-   Refactor WorkshopNotifyForm [`19d3a43`](https://github.com/skilar/racines/commit/19d3a43cdb1492f4a93987605eb08d17f8d70f97)
+-   Add Instagram and RSS icons [`ab286c9`](https://github.com/skilar/racines/commit/ab286c93d29d8fe1b3446db8dcbda0534e629281)
+-   Add booking_availability_notify_button_text [`2f604de`](https://github.com/skilar/racines/commit/2f604dede9836824526ebcba90d36302f07cd9d1)
+-   Add age range to workshop pages [`12af046`](https://github.com/skilar/racines/commit/12af046665af94fdfd0c1472b5c0e9a5b89038da)
+-   Improve prose h2 spacing [`5694041`](https://github.com/skilar/racines/commit/56940412a7002ffafefbfe2fe839d23b65a41785)
+-   Update details grid styles [`5af0615`](https://github.com/skilar/racines/commit/5af06156c987b17cbd3d724e01343ca72ffa64e7)
+-   Update detail grid item title styles [`cc21a21`](https://github.com/skilar/racines/commit/cc21a21a4c4aad547abed800a977d17de3264a2b)
+
+## [v1.3.3](https://github.com/skilar/racines/compare/v1.3.2...v1.3.3) (22 October 2026)
 
 -   Fix italics within italics [`9212b75`](https://github.com/skilar/racines/commit/9212b75b7bf6af0960e450c5fd48388185381dae)
 
