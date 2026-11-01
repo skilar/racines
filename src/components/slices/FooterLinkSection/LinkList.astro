@@ -2,6 +2,8 @@
 import { isFilled } from '@prismicio/client'
 import { fixText } from '@lib/get-fixer'
 import { getLinkAttrs } from '@lib/prismic-link-resolver'
+import InstagramIcon from '../../../assets/icons/instagram.svg'
+import RssIcon from '../../../assets/icons/rss.svg'
 
 import type {
     FooterLinkSectionSlice,
@@ -17,6 +19,11 @@ interface Props {
 const { slice, sliceType } = Astro.props
 const { lang } = Astro.locals
 
+const VARIANT_ICONS = {
+    Instagram: InstagramIcon,
+    RSS: RssIcon,
+}
+
 const toLink = (
     link: FooterLinkSectionSliceLinkListPrimaryLinkSectionItem['main_link'],
 ) => ({
@@ -26,6 +33,9 @@ const toLink = (
 
 const sections = slice.primary.link_section.flatMap((section) => {
     const main = toLink(section.main_link)
+    const { variant } = section.main_link
+    const Icon =
+        variant && variant !== 'Primary' ? VARIANT_ICONS[variant] : undefined
 
     const sublinks = isFilled.repeatable(section.sublinks)
         ? section.sublinks.flatMap((sublink) => {
@@ -38,41 +48,57 @@ const sections = slice.primary.link_section.flatMap((section) => {
 
     // A main link with text but no URL still heads its sublinks as plain text.
     // With neither a label nor a sublink there is nothing left to show.
-    return main.label || sublinks.length > 0 ? [{ main, sublinks }] : []
+    return main.label || sublinks.length > 0
+        ? [{ Icon, main, sublinks, variant }]
+        : []
 })
 ---
 
 <div class="container" data-slice-type={sliceType}>
-    {
-        sections.length > 0 && (
-            <ul class="linkList">
-                {sections.map(({ main, sublinks }) => (
-                    <li>
-                        {main.label &&
-                            (main.attrs ? (
-                                <a class="mainLink" {...main.attrs}>
-                                    {main.label}
-                                </a>
-                            ) : (
-                                <span class="mainLink">{main.label}</span>
-                            ))}
+    {sections.length > 0 && (
+        <ul class="linkList">
+            {sections.map(({ Icon, main, sublinks, variant }) => (
+                <li>
+                    {main.label &&
+                        (main.attrs ? (
+                            <a class="mainLink" {...main.attrs}>
+                                {Icon && (
+                                    <Icon
+                                        aria-hidden="true"
+                                        class="icon"
+                                        data-variant={variant}
+                                    />
+                                )}
+                                {main.label}
+                            </a>
+                        ) : (
+                            <span class="mainLink">
+                                {Icon && (
+                                    <Icon
+                                        aria-hidden="true"
+                                        class="icon"
+                                        data-variant={variant}
+                                    />
+                                )}
+                                {main.label}
+                            </span>
+                        ))}
 
-                        {sublinks.length > 0 && (
-                            <ul class="linkList">
-                                {sublinks.map(({ attrs, label }) => (
-                                    <li>
-                                        <a class="sublink" {...attrs}>
-                                            {label}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </li>
-                ))}
-            </ul>
-        )
-    }
+                    {sublinks.length > 0 && (
+                        <ul class="linkList">
+                            {sublinks.map(({ attrs, label }) => (
+                                <li>
+                                    <a class="sublink" {...attrs}>
+                                        {label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </li>
+            ))}
+        </ul>
+    )}
 </div>
 
 <style>
@@ -94,11 +120,26 @@ const sections = slice.primary.link_section.flatMap((section) => {
     }
 
     .mainLink {
-        display: inline-block;
+        align-items: center;
+        display: inline-flex;
         font-weight: var(--font-weight-bold);
+        gap: var(--space-2);
+        vertical-align: top;
 
         &:has(+ ul) {
             padding-bottom: var(--space-1);
+        }
+    }
+
+    .icon {
+        block-size: 1rem;
+        fill: currentcolor;
+        flex-shrink: 0;
+        inline-size: 1rem;
+
+        &[data-variant='RSS'] {
+            scale: 0.85;
+            transform-origin: center;
         }
     }
 

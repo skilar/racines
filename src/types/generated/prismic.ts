@@ -1153,7 +1153,7 @@ export interface FooterLinkSectionSliceLinkListPrimaryLinkSectionItem {
 	 * - **API ID Path**: footer_link_section.linkList.primary.link_section[].main_link
 	 * - **Documentation**: https://prismic.io/docs/fields/link
 	 */
-	main_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	main_link: prismic.LinkField<string, string, unknown, prismic.FieldState, "Primary" | "Instagram" | "RSS">;
 	
 	/**
 	 * Sublinks field in *FooterLinkSection → Link List → Primary → Link Section*

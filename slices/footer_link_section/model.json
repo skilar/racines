@@ -65,7 +65,12 @@
                   "select": null,
                   "allowTargetBlank": true,
                   "allowText": true,
-                  "repeat": false
+                  "repeat": false,
+                  "variants": [
+                    "Primary",
+                    "Instagram",
+                    "RSS"
+                  ]
                 }
               },
               "sublinks": {
