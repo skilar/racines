@@ -18,7 +18,7 @@
 
     :is(p, ol, ul) {
         &:has(+ h2) {
-            margin-bottom: calc(var(--post-line) * 4);
+            margin-bottom: calc(var(--post-line) * 2);
         }
 
         &:has(+ .block-img) {

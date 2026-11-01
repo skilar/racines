@@ -97,5 +97,11 @@ const description = isFilled.keyText(page.data.meta_description)
         :global(> div:has(+ div)) {
             margin-bottom: var(--space-8);
         }
+
+        :is(p, ol, ul) {
+            &:has(+ h2) {
+                margin-bottom: calc(var(--post-line) * 4);
+            }
+        }
     }
 </style>
