@@ -1,6 +1,11 @@
 # Changelog
 
-## [v1.3.4](https://github.com/skilar/racines/compare/v1.3.3...v1.3.4)
+## [v1.3.5](https://github.com/skilar/racines/compare/v1.3.4...v1.3.5)
+
+-   Bump dependencies [`15c8162`](https://github.com/skilar/racines/commit/15c816295b33e97e3a094cf96c63521069669836)
+-   Update workshop name [`592894c`](https://github.com/skilar/racines/commit/592894c27d006a0fe91ccf1a481288d7432447d7)
+
+## [v1.3.4](https://github.com/skilar/racines/compare/v1.3.3...v1.3.4) (1 November 2026)
 
 -   Bump dependencies [`dbfd18b`](https://github.com/skilar/racines/commit/dbfd18bea3216e4700698485d5bedc4475e9cfe5)
 -   Add legal docs [`dee6f37`](https://github.com/skilar/racines/commit/dee6f3794a6249f4c0675b51f57e52d76df571e3)
