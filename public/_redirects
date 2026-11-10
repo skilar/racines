@@ -1,3 +1,7 @@
+# Workshops whose UIDs changed in Prismic.
+/ateliers/gouter-de-marie-antoinette  /ateliers/gouter-du-roi-et-de-la-reine/  302
+/en/workshops/marie-antoinettes-tea-time  /en/workshops/the-king-and-queens-tea-time/  302
+
 # English visitors get the English not-found page. Netlify only serves the
 # root 404.html by default. The Astro adapter appends its own rules below.
 /en/*  /en/404/index.html  404
