@@ -20,22 +20,22 @@
         "typegen": "npx prismic-ts-codegen"
     },
     "dependencies": {
-        "@astrojs/netlify": "^8.2.10",
+        "@astrojs/netlify": "^8.2.12",
         "@astrojs/rss": "^4.0.19",
         "@astrojs/sitemap": "^3.7.4",
         "@prismicio/client": "^7.23.0",
         "@skilar/jolitypo-ts": "^0.1.0",
-        "astro": "^7.4.4"
+        "astro": "^7.4.8"
     },
     "devDependencies": {
         "@astrojs/check": "^0.9.12",
-        "@astrojs/ts-plugin": "^1.10.12",
+        "@astrojs/ts-plugin": "^1.11.0",
         "@eslint/js": "^10.0.1",
         "@netlify/edge-functions": "^4.0.2",
         "@prismicio/custom-types-client": "^2.1.0",
         "@prismicio/types": "^0.2.9",
         "@types/node": "^26.6.6",
-        "dotenv": "^18.0.9",
+        "dotenv": "^18.0.10",
         "dotenv-cli": "^11.1.0",
         "eslint": "^10.14.0",
         "eslint-config-prettier": "^10.1.8",
@@ -44,7 +44,7 @@
         "prettier-plugin-astro": "^1.1.2",
         "prismic-ts-codegen": "^0.1.31",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.72.1"
+        "typescript-eslint": "^8.72.2"
     },
     "prettier": {
         "tabWidth": 4,
