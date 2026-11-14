@@ -60,9 +60,10 @@ const zoomOffsets = slices.map((slice) => {
     return zoomImages ? offset : undefined
 })
 
-// Find first text slice so, if hasBigCap is true, the first letter can be a big cap
+// Find first text slice so, if hasBigCap is true, the first letter can be a big cap.
+// A blockquote is someone else's words, so an epigraph doesn't take the cap.
 const firstTextSliceIndex = slices.findIndex(
-    (slice) => slice.slice_type === 'text',
+    (slice) => slice.slice_type === 'text' && slice.variation !== 'blockquote',
 )
 ---
 

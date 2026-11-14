@@ -80,5 +80,11 @@ const hideHeading = !isFilled.richText(page.data.title)
         :global(> div:has(+ div)) {
             margin-bottom: var(--space-8);
         }
+
+        /* A blockquote sits closer to its neighbours than a new slice would. */
+        :global(> div:has(+ [data-slice-variation='blockquote'])),
+        :global(> [data-slice-variation='blockquote']:has(+ div)) {
+            margin-bottom: var(--space-6);
+        }
     }
 </style>

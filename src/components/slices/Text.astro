@@ -12,6 +12,8 @@ interface Props {
 }
 
 const { hasBigCap = false, noteOffset, slice } = Astro.props
+
+const isBlockquote = slice.variation === 'blockquote'
 ---
 
 {isFilled.richText(slice.primary.text) && (
@@ -21,17 +23,31 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
             {
                 hasBigCap,
                 isAside: slice.variation === 'aside',
+                isBlockquote,
                 isPullQuote: slice.variation === 'pullQuote',
             },
         ]}
         data-slice-type={slice.slice_type}
+        data-slice-variation={slice.variation}
     >
-        <PrismicRichText
-            class="prose textContents"
-            hideLeadingQuote={hasBigCap}
-            noteOffset={noteOffset}
-            richText={slice.primary.text}
-        />
+        {isBlockquote ? (
+            // The blockquote takes the grid placement, so the text inside it
+            // still lines up with the sidebar layout.
+            <blockquote class="textContents">
+                <PrismicRichText
+                    class="prose"
+                    noteOffset={noteOffset}
+                    richText={slice.primary.text}
+                />
+            </blockquote>
+        ) : (
+            <PrismicRichText
+                class="prose textContents"
+                hideLeadingQuote={hasBigCap}
+                noteOffset={noteOffset}
+                richText={slice.primary.text}
+            />
+        )}
     </div>
 )}
 
@@ -97,6 +113,14 @@ const { hasBigCap = false, noteOffset, slice } = Astro.props
         padding-inline: var(--space-6);
 
         .textContents {
+            font-size: var(--font-size-3-sc);
+        }
+    }
+
+    .isBlockquote .textContents {
+        padding-inline: var(--space-9);
+
+        .prose {
             font-size: var(--font-size-3-sc);
         }
     }
