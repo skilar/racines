@@ -99,6 +99,7 @@ const notes = collectNotes(slices, lang)
         padding-inline: var(--space-2);
         position: relative;
         text-decoration: none;
+        text-box: normal; /* Fix Firefox rendering bug */
         top: -0.2rem;
 
         &:hover {
