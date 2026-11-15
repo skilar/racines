@@ -92,7 +92,7 @@ const notes = collectNotes(slices, lang)
         background-color: var(--color-red-8);
         border-radius: 8px;
         color: var(--color-ivory-1);
-        font-size: var(--font-size-2-sc);
+        font-size: calc(1em * pow(var(--scaleInt), -1.5));
         font-variant-numeric: lining-nums;
         line-height: inherit;
         padding-block: 0;
@@ -100,7 +100,7 @@ const notes = collectNotes(slices, lang)
         position: relative;
         text-decoration: none;
         text-box: normal; /* Fix Firefox rendering bug */
-        top: -0.2rem;
+        top: -0.2em;
 
         &:hover {
             background-color: var(--color-red-6);
