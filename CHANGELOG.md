@@ -1,6 +1,14 @@
 # Changelog
 
-## [v1.3.5](https://github.com/skilar/racines/compare/v1.3.4...v1.3.5)
+## [v1.4.0](https://github.com/skilar/racines/compare/v1.3.5...v1.4.0)
+
+-   Bump dependencies [`3450508`](https://github.com/skilar/racines/commit/3450508de4857b140f9d2078ab633293203f430e)
+-   Add workshop sessions via Wix source [`fbd3e50`](https://github.com/skilar/racines/commit/fbd3e50a6aee36dfa761bbc6a447c3bcf32e8d8d)
+-   Add blockquotes [`e9a34e6`](https://github.com/skilar/racines/commit/e9a34e6d61b5996063ec20df7897758d2ca73523)
+-   Scale endnotes based on surrounding text [`cd1a640`](https://github.com/skilar/racines/commit/cd1a64006a25b7ba8ac0fb2393a4db5428237956)
+-   Fix endnote ref rendering bug [`2d7fa9a`](https://github.com/skilar/racines/commit/2d7fa9ac306ac5d5aa0da7a1cd44e4292a543223)
+
+## [v1.3.5](https://github.com/skilar/racines/compare/v1.3.4...v1.3.5) (10 November 2026)
 
 -   Bump dependencies [`15c8162`](https://github.com/skilar/racines/commit/15c816295b33e97e3a094cf96c63521069669836)
 -   Update workshop name [`592894c`](https://github.com/skilar/racines/commit/592894c27d006a0fe91ccf1a481288d7432447d7)
