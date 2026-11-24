@@ -18,7 +18,7 @@ export function getUpcomingSessions(
     return (sessions ?? [])
         .map((session) => ({
             start: asDate(session.start),
-            full: Boolean(session.full),
+            full: session.full,
         }))
         .filter(
             (session): session is WorkshopSession =>
