@@ -1,8 +1,10 @@
 ---
 import { getLinkAttrs } from '@lib/prismic-link-resolver'
+import { getUpcomingSessions } from '@lib/workshop-sessions'
 
 import WorkshopBookingLink from './WorkshopBookingLink.astro'
 import WorkshopNotifyForm from './WorkshopNotifyForm.astro'
+import WorkshopSessions from './WorkshopSessions.astro'
 
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
@@ -13,6 +15,7 @@ interface Props {
     bookingNotifyButtonText: WorkshopDocument['data']['booking_availability_notify_button_text']
     bookingStatus: WorkshopDocument['data']['booking_status']
     notifyTag: string
+    sessions: WorkshopDocument['data']['sessions']
 }
 
 const {
@@ -22,14 +25,21 @@ const {
     bookingNotifyButtonText,
     bookingStatus,
     notifyTag,
+    sessions,
 } = Astro.props
 
 // If we don't have a booking form, we show the notify signup form
 const bookingLinkAttrs =
     bookingStatus === 'open' ? getLinkAttrs(bookingLink) : null
+
+// With dates entered, list them instead of the single booking button
+const hasUpcomingSessions =
+    bookingLinkAttrs !== null && getUpcomingSessions(sessions).length > 0
 ---
 
-{bookingLinkAttrs ? (
+{hasUpcomingSessions ? (
+    <WorkshopSessions bookingLink={bookingLink} sessions={sessions} />
+) : bookingLinkAttrs ? (
     <WorkshopBookingLink
         bookingLink={bookingLink}
         bookingStatus={bookingStatus}

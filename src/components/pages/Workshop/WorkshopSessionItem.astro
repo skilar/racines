@@ -1,0 +1,115 @@
+---
+import { LOCALES, UI } from '@lib/i18n'
+import { SESSION_TIME_ZONE, withSessionDate } from '@lib/workshop-sessions'
+
+import type { LinkAttrs } from '@lib/prismic-link-resolver'
+import type { WorkshopSession } from '@lib/workshop-sessions'
+
+interface Props {
+    linkAttrs: LinkAttrs | null
+    session: WorkshopSession
+}
+
+const { linkAttrs, session } = Astro.props
+const { lang } = Astro.locals
+const { start, full } = session
+
+const locale = LOCALES[lang].bcp47
+const timeZone = SESSION_TIME_ZONE
+
+const day = new Intl.DateTimeFormat(locale, {
+    timeZone,
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+}).format(start)
+const time = new Intl.DateTimeFormat(locale, {
+    timeZone,
+    hour: 'numeric',
+    minute: '2-digit',
+}).format(start)
+const datetime = start.toISOString()
+---
+
+<li>
+    {full || !linkAttrs ? (
+        <span class="session">
+            <time datetime={datetime}>
+                <span class="day">{day}</span>
+                <span class="time">{time}</span>
+            </time>
+            {full && <span class="status isFull">{UI[lang].sessionFull}</span>}
+        </span>
+    ) : (
+        <a
+            class="session"
+            {...{
+                ...linkAttrs,
+                href: withSessionDate(linkAttrs.href, start),
+            }}
+        >
+            <time datetime={datetime}>
+                <span class="day">{day}</span>
+                <span class="time">{time}</span>
+            </time>
+            <span class="status">{UI[lang].bookNow}</span>
+        </a>
+    )}
+</li>
+
+<style>
+    .session {
+        align-items: baseline;
+        border-block-end: 1px solid var(--color-ivory-5);
+        color: var(--color-ivory-11);
+        display: grid;
+        font-size: var(--font-size-3-sc);
+        font-variant-numeric: tabular-nums;
+        font-weight: var(--font-weight-medium);
+        gap: var(--space-1) var(--space-3);
+        grid-template-columns: 1fr max-content;
+        padding-block: var(--space-3);
+        text-decoration: none;
+
+        @container sessionList (min-width: 35rem) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        time {
+            display: flex;
+            flex-direction: column;
+
+            @container sessionList (min-width: 35rem) {
+                display: flex;
+                flex-direction: row;
+                gap: var(--space-5);
+                justify-content: space-between;
+            }
+
+            .time {
+                font-weight: var(--font-weight-normal);
+            }
+        }
+
+        .day::first-letter {
+            text-transform: uppercase;
+        }
+
+        .status {
+            color: var(--color-red-8);
+            text-align: end;
+
+            &.isFull {
+                color: var(--color-ivory-9);
+            }
+        }
+
+        &:any-link .status {
+            text-decoration: underline;
+        }
+
+        &:any-link:is(:hover, :focus-visible) .status {
+            text-decoration-thickness: 2px;
+        }
+    }
+</style>

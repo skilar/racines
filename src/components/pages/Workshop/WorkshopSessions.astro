@@ -1,0 +1,167 @@
+---
+import { UI } from '@lib/i18n'
+import { getLinkAttrs } from '@lib/prismic-link-resolver'
+import { getUpcomingSessions } from '@lib/workshop-sessions'
+
+import WorkshopSessionItem from './WorkshopSessionItem.astro'
+
+import type { WorkshopDocument } from '@typez/generated/prismic'
+
+interface Props {
+    bookingLink: WorkshopDocument['data']['booking_link']
+    sessions: WorkshopDocument['data']['sessions']
+}
+
+const { bookingLink, sessions } = Astro.props
+const { lang } = Astro.locals
+
+const linkAttrs = getLinkAttrs(bookingLink)
+const upcoming = getUpcomingSessions(sessions)
+
+const VISIBLE_SESSIONS = 5
+const collapse = upcoming.length > VISIBLE_SESSIONS + 1
+const visible = collapse ? upcoming.slice(0, VISIBLE_SESSIONS) : upcoming
+const hidden = collapse ? upcoming.slice(VISIBLE_SESSIONS) : []
+---
+
+{upcoming.length > 0 && (
+    <div class="sessions">
+        <h2 class="heading">{UI[lang].upcomingDates}</h2>
+
+        <ul class="list">
+            {visible.map((session) => (
+                <WorkshopSessionItem linkAttrs={linkAttrs} session={session} />
+            ))}
+        </ul>
+
+        {hidden.length > 0 && (
+            <details class="more">
+                <summary>
+                    <span class="label whenClosed">
+                        {UI[lang].showMoreDates}
+                    </span>
+                    <span class="label whenOpen">
+                        {UI[lang].showFewerDates}
+                    </span>
+                    <span aria-hidden="true" class="icon" />
+                </summary>
+
+                <ul class="list">
+                    {hidden.map((session) => (
+                        <WorkshopSessionItem
+                            linkAttrs={linkAttrs}
+                            session={session}
+                        />
+                    ))}
+                </ul>
+            </details>
+        )}
+
+        <p class="note">{UI[lang].bookingHandledByVenue}</p>
+    </div>
+)}
+
+<style>
+    .sessions {
+        background-color: var(--color-ivory-1);
+        padding: var(--space-5);
+    }
+
+    .heading {
+        font-size: var(--font-size-4-sc);
+        font-weight: var(--font-weight-bold);
+        margin-block-end: var(--space-4);
+    }
+
+    .list {
+        border-block-start: 1px solid var(--color-ivory-5);
+        container: sessionList / inline-size;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .more {
+        display: flex;
+        flex-direction: column;
+        interpolate-size: allow-keywords;
+
+        &::details-content {
+            block-size: 0;
+            /* It's a flex item, which by default can't shrink below its
+               content, so the height would jump straight to full. */
+            min-block-size: 0;
+            overflow: clip;
+            transition:
+                block-size 300ms ease,
+                content-visibility 300ms allow-discrete;
+        }
+
+        &[open]::details-content {
+            block-size: auto;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            &::details-content {
+                transition: none;
+            }
+        }
+
+        .whenOpen {
+            display: none;
+        }
+
+        &[open] {
+            .whenClosed {
+                display: none;
+            }
+
+            .whenOpen {
+                display: inline;
+            }
+
+            .icon::before {
+                content: '−';
+            }
+        }
+
+        .list {
+            border-block-start: none;
+        }
+    }
+
+    summary {
+        align-items: baseline;
+        color: var(--color-red-8);
+        cursor: pointer;
+        display: flex;
+        font-size: var(--font-size-3-sc);
+        font-weight: var(--font-weight-medium);
+        gap: var(--space-2);
+        justify-content: center;
+        list-style: none;
+        order: 1;
+        padding-block: var(--space-3);
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        &:is(:hover, :focus-visible) .label {
+            text-decoration-thickness: 2px;
+        }
+    }
+
+    .label {
+        text-decoration: underline;
+    }
+
+    .icon::before {
+        content: '+';
+    }
+
+    .note {
+        font-size: var(--font-size-3);
+        margin-block-start: var(--space-4);
+    }
+</style>

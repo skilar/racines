@@ -730,6 +730,32 @@ export type TempHomepageDocument<Lang extends string = string> = prismic.Prismic
 type WorkshopDocumentDataSlicesSlice = ImageListSlice | ImageSlice | TextSlice | QuoteSlice | TestimonialSlice | HistoricalSourcesSlice | WorkshopExplanationSlice | NewsletterSignupFormSlice | WorkshopDetailsSlice | WorkshopAlternativesSlice
 
 /**
+ * Item in *Workshop → sessions*
+ */
+export interface WorkshopDocumentDataSessionsItem {
+	/**
+	 * Start field in *Workshop → sessions*
+	 *
+	 * - **Field Type**: Timestamp
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.sessions[].start
+	 * - **Documentation**: https://prismic.io/docs/fields/timestamp
+	 */
+	start: prismic.TimestampField;
+	
+	/**
+	 * Full field in *Workshop → sessions*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: workshop.sessions[].full
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	full: prismic.BooleanField;
+}
+
+/**
  * Content for Workshop documents
  */
 interface WorkshopDocumentData {
@@ -855,85 +881,6 @@ interface WorkshopDocumentData {
 	allergens: prismic.RichTextField;
 	
 	/**
-	 * Booking Status field in *Workshop*
-	 *
-	 * - **Field Type**: Select
-	 * - **Placeholder**: *None*
-	 * - **Default Value**: notify
-	 * - **API ID Path**: workshop.booking_status
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/select
-	 */
-	booking_status: prismic.SelectField<"notify" | "open", "filled">;
-	
-	/**
-	 * Booking Availability field in *Workshop*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: workshop.booking_availability
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	booking_availability: prismic.RichTextField;
-	
-	/**
-	 * Booking Availability Description field in *Workshop*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: workshop.booking_availability_description
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	booking_availability_description: prismic.RichTextField;
-	
-	/**
-	 * Booking Availability Notify Button Text field in *Workshop*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: workshop.booking_availability_notify_button_text
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	booking_availability_notify_button_text: prismic.KeyTextField;
-	
-	/**
-	 * Booking Link field in *Workshop*
-	 *
-	 * - **Field Type**: Link
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: workshop.booking_link
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/link
-	 */
-	booking_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-	
-	/**
-	 * Show Private Workshop Link field in *Workshop*
-	 *
-	 * - **Field Type**: Boolean
-	 * - **Placeholder**: *None*
-	 * - **Default Value**: true
-	 * - **API ID Path**: workshop.show_private_workshop_link
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/boolean
-	 */
-	show_private_workshop_link: prismic.BooleanField;
-	
-	/**
-	 * Private Workshop Link field in *Workshop*
-	 *
-	 * - **Field Type**: Link
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: workshop.private_workshop_link
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/link
-	 */
-	private_workshop_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-	
-	/**
 	 * Slice Zone field in *Workshop*
 	 *
 	 * - **Field Type**: Slice Zone
@@ -984,7 +931,95 @@ interface WorkshopDocumentData {
 	 * - **Tab**: SEO & Metadata
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
-	tickettailor_event_series_id: prismic.KeyTextField;
+	tickettailor_event_series_id: prismic.KeyTextField;/**
+	 * sessions field in *Workshop*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.sessions[]
+	 * - **Tab**: Booking
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	sessions: prismic.GroupField<Simplify<WorkshopDocumentDataSessionsItem>>;
+	
+	/**
+	 * Booking Status field in *Workshop*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: notify
+	 * - **API ID Path**: workshop.booking_status
+	 * - **Tab**: Booking
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	booking_status: prismic.SelectField<"notify" | "open", "filled">;
+	
+	/**
+	 * Booking Availability field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.booking_availability
+	 * - **Tab**: Booking
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	booking_availability: prismic.RichTextField;
+	
+	/**
+	 * Booking Availability Description field in *Workshop*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.booking_availability_description
+	 * - **Tab**: Booking
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	booking_availability_description: prismic.RichTextField;
+	
+	/**
+	 * Booking Availability Notify Button Text field in *Workshop*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.booking_availability_notify_button_text
+	 * - **Tab**: Booking
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	booking_availability_notify_button_text: prismic.KeyTextField;
+	
+	/**
+	 * Booking Link field in *Workshop*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.booking_link
+	 * - **Tab**: Booking
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	booking_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	
+	/**
+	 * Show Private Workshop Link field in *Workshop*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: workshop.show_private_workshop_link
+	 * - **Tab**: Booking
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	show_private_workshop_link: prismic.BooleanField;
+	
+	/**
+	 * Private Workshop Link field in *Workshop*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: workshop.private_workshop_link
+	 * - **Tab**: Booking
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	private_workshop_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
@@ -2927,6 +2962,7 @@ declare module "@prismicio/client" {
 			WorkshopDocument,
 			WorkshopDocumentData,
 			WorkshopDocumentDataSlicesSlice,
+			WorkshopDocumentDataSessionsItem,
 			AllDocumentTypes,
 			BigTextWithImageSlice,
 			BigTextWithImageSliceDefaultPrimary,
