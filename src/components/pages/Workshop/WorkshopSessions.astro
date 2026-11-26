@@ -5,14 +5,16 @@ import { getUpcomingSessions } from '@lib/workshop-sessions'
 
 import WorkshopSessionItem from './WorkshopSessionItem.astro'
 
+import type { LinkAttrs } from '@lib/prismic-link-resolver'
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
 interface Props {
     bookingLink: WorkshopDocument['data']['booking_link']
+    privateWorkshopLinkAttrs: LinkAttrs | null
     sessions: WorkshopDocument['data']['sessions']
 }
 
-const { bookingLink, sessions } = Astro.props
+const { bookingLink, privateWorkshopLinkAttrs, sessions } = Astro.props
 const { lang } = Astro.locals
 
 const linkAttrs = getLinkAttrs(bookingLink)
@@ -22,11 +24,32 @@ const VISIBLE_SESSIONS = 5
 const collapse = upcoming.length > VISIBLE_SESSIONS + 1
 const visible = collapse ? upcoming.slice(0, VISIBLE_SESSIONS) : upcoming
 const hidden = collapse ? upcoming.slice(VISIBLE_SESSIONS) : []
+
+// On the French site, if any date isn't in French, say French can be arranged
+const offerFrench =
+    lang === 'fr-fr' && upcoming.some((session) => session.language !== 'fr')
 ---
 
 {upcoming.length > 0 && (
     <div class="sessions">
         <h2 class="heading">{UI[lang].upcomingDates}</h2>
+
+        <p class="note">
+            {UI[lang].bookingHandledByVenue}
+            {offerFrench && (
+                <>
+                    {' '}
+                    {privateWorkshopLinkAttrs ? (
+                        <a {...privateWorkshopLinkAttrs}>
+                            {UI[lang].frenchOnRequest}
+                        </a>
+                    ) : (
+                        UI[lang].frenchOnRequest
+                    )}
+                    .
+                </>
+            )}
+        </p>
 
         <ul class="list">
             {visible.map((session) => (
@@ -56,8 +79,6 @@ const hidden = collapse ? upcoming.slice(VISIBLE_SESSIONS) : []
                 </ul>
             </details>
         )}
-
-        <p class="note">{UI[lang].bookingHandledByVenue}</p>
     </div>
 )}
 
@@ -70,7 +91,12 @@ const hidden = collapse ? upcoming.slice(VISIBLE_SESSIONS) : []
     .heading {
         font-size: var(--font-size-4-sc);
         font-weight: var(--font-weight-bold);
-        margin-block-end: var(--space-4);
+        margin-block-end: var(--space-1);
+    }
+
+    .note {
+        font-size: var(--font-size-3);
+        margin-block-end: var(--space-6);
     }
 
     .list {
@@ -158,10 +184,5 @@ const hidden = collapse ? upcoming.slice(VISIBLE_SESSIONS) : []
 
     .icon::before {
         content: '+';
-    }
-
-    .note {
-        font-size: var(--font-size-3);
-        margin-block-start: var(--space-4);
     }
 </style>

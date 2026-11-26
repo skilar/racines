@@ -753,6 +753,17 @@ export interface WorkshopDocumentDataSessionsItem {
 	 * - **Documentation**: https://prismic.io/docs/fields/boolean
 	 */
 	full: prismic.BooleanField;
+	
+	/**
+	 * Language field in *Workshop → sessions*
+	 *
+	 * - **Field Type**: Select
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: en
+	 * - **API ID Path**: workshop.sessions[].language
+	 * - **Documentation**: https://prismic.io/docs/fields/select
+	 */
+	language: prismic.SelectField<"en" | "fr", "filled">;
 }
 
 /**

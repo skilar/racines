@@ -1,6 +1,10 @@
 ---
 import { LOCALES, UI } from '@lib/i18n'
-import { SESSION_TIME_ZONE, withSessionDate } from '@lib/workshop-sessions'
+import {
+    SESSION_TIME_ZONE,
+    sessionLanguageDiffers,
+    withSessionDate,
+} from '@lib/workshop-sessions'
 
 import type { LinkAttrs } from '@lib/prismic-link-resolver'
 import type { WorkshopSession } from '@lib/workshop-sessions'
@@ -29,15 +33,22 @@ const time = new Intl.DateTimeFormat(locale, {
     minute: '2-digit',
 }).format(start)
 const datetime = start.toISOString()
+
+const languageTag = sessionLanguageDiffers(session, lang)
+    ? UI[lang].sessionInLanguage[session.language]
+    : null
 ---
 
 <li>
     {full || !linkAttrs ? (
         <span class="session">
-            <time datetime={datetime}>
-                <span class="day">{day}</span>
-                <span class="time">{time}</span>
-            </time>
+            <span class="when">
+                <time datetime={datetime}>
+                    <span class="day">{day}</span>
+                    <span class="time">{time}</span>
+                </time>
+                {languageTag && <span class="language">{languageTag}</span>}
+            </span>
             {full && <span class="status isFull">{UI[lang].sessionFull}</span>}
         </span>
     ) : (
@@ -48,10 +59,13 @@ const datetime = start.toISOString()
                 href: withSessionDate(linkAttrs.href, start),
             }}
         >
-            <time datetime={datetime}>
-                <span class="day">{day}</span>
-                <span class="time">{time}</span>
-            </time>
+            <span class="when">
+                <time datetime={datetime}>
+                    <span class="day">{day}</span>
+                    <span class="time">{time}</span>
+                </time>
+                {languageTag && <span class="language">{languageTag}</span>}
+            </span>
             <span class="status">{UI[lang].bookNow}</span>
         </a>
     )}
@@ -75,20 +89,42 @@ const datetime = start.toISOString()
             grid-template-columns: 1fr 1fr;
         }
 
-        time {
+        .when {
+            align-items: baseline;
+            column-gap: var(--space-2);
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
 
             @container sessionList (min-width: 35rem) {
-                display: flex;
-                flex-direction: row;
-                gap: var(--space-5);
-                justify-content: space-between;
+                column-gap: var(--space-5);
+                display: grid;
+                grid-template-columns: 1fr max-content;
             }
+        }
 
-            .time {
-                font-weight: var(--font-weight-normal);
+        time {
+            display: contents;
+        }
+
+        .day {
+            flex-basis: 100%;
+        }
+
+        .time {
+            @container sessionList (min-width: 35rem) {
+                grid-column: 2;
+                grid-row: 1;
             }
+        }
+
+        .time,
+        .language {
+            font-weight: var(--font-weight-normal);
+        }
+
+        .language {
+            color: var(--color-ivory-9);
+            font-size: var(--font-size-3);
         }
 
         .day::first-letter {

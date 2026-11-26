@@ -1,10 +1,16 @@
 import { asDate } from '@prismicio/client'
 
+import { LOCALES } from '@lib/i18n'
+
+import type { Lang } from '@lib/i18n'
 import type { WorkshopDocument } from '@typez/generated/prismic'
+
+export type SessionLanguage = 'en' | 'fr'
 
 export interface WorkshopSession {
     start: Date
     full: boolean
+    language: SessionLanguage
 }
 
 /**
@@ -19,12 +25,24 @@ export function getUpcomingSessions(
         .map((session) => ({
             start: asDate(session.start),
             full: session.full,
+            // Typed as filled because the field has a default, but sessions
+            // entered before the field existed still come back null
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            language: session.language ?? 'en',
         }))
         .filter(
             (session): session is WorkshopSession =>
                 session.start !== null && session.start > now,
         )
         .sort((a, b) => a.start.getTime() - b.start.getTime())
+}
+
+/** Whether a session is taught in a language other than the page's. */
+export function sessionLanguageDiffers(
+    session: WorkshopSession,
+    lang: Lang,
+): boolean {
+    return session.language !== LOCALES[lang].bcp47
 }
 
 export const SESSION_TIME_ZONE = 'Europe/Paris'

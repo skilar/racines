@@ -6,6 +6,7 @@ import WorkshopBookingLink from './WorkshopBookingLink.astro'
 import WorkshopNotifyForm from './WorkshopNotifyForm.astro'
 import WorkshopSessions from './WorkshopSessions.astro'
 
+import type { LinkAttrs } from '@lib/prismic-link-resolver'
 import type { WorkshopDocument } from '@typez/generated/prismic'
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
     bookingNotifyButtonText: WorkshopDocument['data']['booking_availability_notify_button_text']
     bookingStatus: WorkshopDocument['data']['booking_status']
     notifyTag: string
+    privateWorkshopLinkAttrs: LinkAttrs | null
     sessions: WorkshopDocument['data']['sessions']
 }
 
@@ -25,6 +27,7 @@ const {
     bookingNotifyButtonText,
     bookingStatus,
     notifyTag,
+    privateWorkshopLinkAttrs,
     sessions,
 } = Astro.props
 
@@ -38,7 +41,11 @@ const hasUpcomingSessions =
 ---
 
 {hasUpcomingSessions ? (
-    <WorkshopSessions bookingLink={bookingLink} sessions={sessions} />
+    <WorkshopSessions
+        bookingLink={bookingLink}
+        privateWorkshopLinkAttrs={privateWorkshopLinkAttrs}
+        sessions={sessions}
+    />
 ) : bookingLinkAttrs ? (
     <WorkshopBookingLink
         bookingLink={bookingLink}
