@@ -1,6 +1,11 @@
 # Changelog
 
-## [v1.4.0](https://github.com/skilar/racines/compare/v1.3.5...v1.4.0)
+## [v1.4.1](https://github.com/skilar/racines/compare/v1.4.0...v1.4.1)
+
+-   Add workshop language indicator [`c04a1c2`](https://github.com/skilar/racines/commit/c04a1c2a821565e98fb35af4f9cc2f15cafe8ec7)
+-   Use raw Prismic boolean [`0e63480`](https://github.com/skilar/racines/commit/0e63480467f6f6802e5aac8c4da2d7cd04d8c58b)
+
+## [v1.4.0](https://github.com/skilar/racines/compare/v1.3.5...v1.4.0) (24 November 2026)
 
 -   Bump dependencies [`3450508`](https://github.com/skilar/racines/commit/3450508de4857b140f9d2078ab633293203f430e)
 -   Add workshop sessions via Wix source [`fbd3e50`](https://github.com/skilar/racines/commit/fbd3e50a6aee36dfa761bbc6a447c3bcf32e8d8d)
